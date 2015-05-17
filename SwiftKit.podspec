@@ -7,32 +7,41 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
 
-Pod::Spec.new do |s|
-  s.name             = "SwiftKit"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of SwiftKit."
-  s.description      = <<-DESC
+Pod::Spec.new do |spec|
+  spec.name             = "SwiftKit"
+  spec.version          = "0.1.0"
+  spec.summary          = "SwiftKit is a great way to start your project."
+  spec.description      = <<-DESC
                        An optional longer description of SwiftKit
 
                        * Markdown format.
                        * Don't worry about the indent, we strip it!
                        DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/SwiftKit"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
-  s.license          = 'MIT'
-  s.author           = { "Tadeas Kriz" => "tadeas@brightify.org" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/SwiftKit.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
-  s.platform     = :ios, '7.0'
-  s.requires_arc = true
-
-  s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'SwiftKit' => ['Pod/Assets/*.png']
+  spec.homepage         = "https://github.com/brightify/SwiftKit"
+  spec.license          = 'MIT'
+  spec.author           = { "Tadeas Kriz" => "tadeas@brightify.org" }
+  spec.source           = { 
+    :git => "https://github.com/brightify/SwiftKit.git", 
+    :tag => spec.version.to_s
   }
+  spec.social_media_url = 'https://twitter.com/BrightifyOrg'
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  spec.platform     = :ios, '8.0'
+  spec.requires_arc = true
+
+  # spec.source_files = 'Pod/Classes/**/*'
+  # spec.resource_bundles = {
+  #   'SwiftKit' => ['Pod/Assets/*.png']
+  # }
+
+  spec.subspec 'Events' do |events|
+    eventu.source_files = 'Events/**/*.swift'
+    eventu.frameworks = 'UIKit'
+  end
+
+  # spec.public_header_files = 'Pod/Classes/**/*.h'
+  # spec.frameworks = 'UIKit', 'MapKit'
+  # spec.dependency 'AFNetworking', '~> 2.3'
+
+
 end
