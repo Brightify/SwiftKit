@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'SwiftKit', :exclusive => true do
+  pod "SwiftKit", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "SwiftKit", :path => "../"
+
+  pod 'Specta'
+  pod 'Expecta'
+end
