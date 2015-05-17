@@ -12,10 +12,8 @@ Pod::Spec.new do |spec|
   spec.version          = "0.1.0"
   spec.summary          = "SwiftKit is a great way to start your project."
   spec.description      = <<-DESC
-                       An optional longer description of SwiftKit
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
+                       SwiftKit's main purpose is to jumpstart iOS app development.
+                       Soon it will contain a lot of sub specs that will take care of most of the boilerplate.
                        DESC
   spec.homepage         = "https://github.com/brightify/SwiftKit"
   spec.license          = 'MIT'
@@ -35,8 +33,8 @@ Pod::Spec.new do |spec|
   # }
 
   spec.subspec 'Events' do |events|
-    eventu.source_files = 'Events/**/*.swift'
-    eventu.frameworks = 'UIKit'
+    events.source_files = 'Events/**/*.swift'
+    events.frameworks = 'UIKit'
   end
 
   # spec.public_header_files = 'Pod/Classes/**/*.h'
