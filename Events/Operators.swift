@@ -25,7 +25,3 @@ public func ~> <T: AnyObject, SENDER, IN>(target: T, closure: (T, EventData<SEND
 public func += <SENDER, IN>(event: Event<SENDER, IN>, listener: (EventData<SENDER, IN>) -> ()) {
     event.registerClosure(listener)
 }
-
-public func += <SENDER, IN>(event: Event<SENDER, IN>, listener: () -> ()) {
-    event.registerClosure(listener)
-}

@@ -33,12 +33,6 @@ public class Event<SENDER: AnyObject, INPUT> {
         listeners.append(closure)
     }
     
-    public func registerClosure(closure: () -> ()) {
-        registerClosure { (data: EventData<SENDER, INPUT>) in
-            closure()
-        }
-    }
-    
     public func registerClosure<T: AnyObject>(target: T, closure: (T, EventData<SENDER, INPUT>) -> ()) {
         registerClosure { [unowned target] data in
             closure(target, data)
@@ -52,7 +46,7 @@ public class Event<SENDER: AnyObject, INPUT> {
     }
     
     public func registerMethod<T: AnyObject>(target: T, method: (T) -> () -> ()) {
-        registerClosure { [unowned target] (data: EventData<SENDER, INPUT>) in
+        registerClosure { [unowned target] _ in
             method(target)()
         }
     }
