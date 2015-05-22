@@ -51,4 +51,8 @@ public class Event<SENDER: AnyObject, INPUT> {
         }
     }
     
+    public func clearEvents() {
+        listeners.removeAll()
+    }
+    
 }
