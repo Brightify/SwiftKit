@@ -27,11 +27,6 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios, '8.0'
   spec.requires_arc = true
 
-  # spec.source_files = 'Pod/Classes/**/*'
-  # spec.resource_bundles = {
-  #   'SwiftKit' => ['Pod/Assets/*.png']
-  # }
-
   spec.subspec 'Events' do |events|
     events.source_files = 'Events/**/*.swift'
     events.frameworks = 'UIKit'
@@ -41,10 +36,6 @@ Pod::Spec.new do |spec|
     injection.source_files = 'Injection/**/*.swift'
     injection.frameworks = 'Foundation'
   end
-
-  # spec.public_header_files = 'Pod/Classes/**/*.h'
-  # spec.frameworks = 'UIKit', 'MapKit'
-  # spec.dependency 'AFNetworking', '~> 2.3'
 
 
 end

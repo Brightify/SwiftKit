@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Injectable: class {
+public protocol Injectable {
     
     init(injector: Injector)
     

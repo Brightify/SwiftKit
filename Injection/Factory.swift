@@ -16,7 +16,13 @@ public class Factory<T> {
         factoryClosure = closure
     }
     
-    func create() -> T {
+    init(injector: Injector, closure: Injector -> T) {
+        factoryClosure = {
+            closure(injector)
+        }
+    }
+    
+    public func create() -> T {
         return factoryClosure()
     }
     

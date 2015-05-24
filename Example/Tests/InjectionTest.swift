@@ -28,15 +28,16 @@ class InjectionTest: XCTestCase {
         
         var injector = Injector.createInjector(module)
         
-        XCTAssertEqual(injector.get(UserDAO).getUser().name, "John Doe")
+        XCTAssertEqual(injector.get(UserService).userGreeting, "Hello, John Doe")
         
         module = Module()
         
-        module.bind(UserDAO).to(MockUserDAO)
+        module.bind(UserDAO).toNew(MockUserDAO())
+        module.bind(UserService).to { UserServiceImpl(injector: $0) }
         
         injector = Injector.createInjector(module)
         
-        XCTAssertEqual(injector.get(UserDAO).getUser().name, "John Mock")
+        XCTAssertEqual(injector.get(UserService).userGreeting, "Hello, John Mock")
     }
     
     
@@ -46,7 +47,36 @@ class InjectionTest: XCTestCase {
 class TestModule: Module {
     
     override func configure() {
-        bind(UserDAO)
+        bind(UserDAO).toNew(UserDAOImpl())
+        bind(UserService).to { UserServiceImpl(injector: $0) }
+    }
+    
+}
+
+protocol UserService: Injectable {
+    
+    var userGreeting: String { get }
+    
+}
+
+class UserServiceImpl: UserService {
+    
+    let dao: Factory<UserDAO>
+    
+    var userGreeting: String {
+        return "Hello, \(dao.create().getUser().name)"
+    }
+    
+    required init(injector: Injector) {
+        dao = injector.factory(UserDAO)
+    }
+    
+}
+
+class MockUserService: UserServiceImpl {
+    
+    override var userGreeting: String {
+        return "Guten tag, \(dao.create().getUser().name)"
     }
     
 }
@@ -65,11 +95,13 @@ class User {
     
 }
 
-class UserDAO: Constructable {
+protocol UserDAO {
+    
+    func getUser() -> User
+    
+}
 
-    required init() {
-        
-    }
+class UserDAOImpl: UserDAO {
     
     func getUser() -> User {
         return User()
@@ -79,7 +111,7 @@ class UserDAO: Constructable {
 
 class MockUserDAO: UserDAO {
     
-    override func getUser() -> User {
+    func getUser() -> User {
         return User(name: "John Mock")
     }
     
