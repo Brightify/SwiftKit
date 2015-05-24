@@ -37,6 +37,11 @@ Pod::Spec.new do |spec|
     events.frameworks = 'UIKit'
   end
 
+  spec.subspec 'Injection' do |injection|
+    injection.source_files = 'Injection/**/*.swift'
+    injection.frameworks = 'Foundation'
+  end
+
   # spec.public_header_files = 'Pod/Classes/**/*.h'
   # spec.frameworks = 'UIKit', 'MapKit'
   # spec.dependency 'AFNetworking', '~> 2.3'
