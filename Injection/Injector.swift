@@ -25,24 +25,16 @@ public class Injector {
     }
     
     public func getFactory<T: Injectable>(type: T.Type) -> Factory<T> {
-        let binding = module.bindingForType(type)
-        if let implementationType = binding?.implementation as? T.Type {
-            return Factory<T> {
-                implementationType(injector: self)
-            }
-        } else {
-            fatalError("Binding for type \(type) was \(binding)")
+        let implementationType = getImplementationType(type)
+        return Factory<T> {
+            implementationType(injector: self)
         }
     }
     
     public func getFactory<T: Constructable>(type: T.Type) -> Factory<T> {
-        let binding = module.bindingForType(type)
-        if let implementationType = binding?.implementation as? T.Type {
-            return Factory<T> {
-                implementationType()
-            }
-        } else {
-            fatalError("Binding for type \(type) was \(binding)")
+        let implementationType = getImplementationType(type)
+        return Factory<T> {
+            implementationType()
         }
     }
     
@@ -50,6 +42,15 @@ public class Injector {
         module.configure()
         let injector = Injector(module: module)
         return injector
+    }
+
+    private func getImplementationType<T: AnyObject>(type: T.Type) -> T.Type {
+        let binding = module.bindingForType(type)
+        if let implementationType = binding?.implementation as? T.Type {
+            return implementationType
+        } else {
+            fatalError("Binding for type \(type) was \(binding)")
+        }
     }
     
 }
