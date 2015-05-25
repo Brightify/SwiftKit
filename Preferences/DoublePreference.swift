@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class DoublePreferenceImpl<T>: BasePreference<Double> {
+public class DoublePreferenceImpl<T>: BaseValuePreference<Double> {
     
     override var valueDelegate: Double {
         get {

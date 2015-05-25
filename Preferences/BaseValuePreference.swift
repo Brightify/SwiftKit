@@ -1,5 +1,5 @@
 //
-//  BasePreference.swift
+//  BaseValuePreference.swift
 //  Pods
 //
 //  Created by Filip Dolník on 25.05.15.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class BasePreference<T> {
+public class BaseValuePreference<T> {
     
     let key: String
     let defaultValue: T
-    let onValueChangeEvent = Event<BasePreference<T>, T>()
+    let onValueChangeEvent = Event<BaseValuePreference<T>, T>()
     
     var preferences: NSUserDefaults {
         return NSUserDefaults.standardUserDefaults()

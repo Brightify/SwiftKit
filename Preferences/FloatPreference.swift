@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class FloatPreferenceImpl<T>: BasePreference<Float> {
+public class FloatPreferenceImpl<T>: BaseValuePreference<Float> {
     
     override var valueDelegate: Float {
         get {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class StringPreferenceImpl<T>: BasePreference<String> {
+public class StringPreferenceImpl<T>: BaseValuePreference<String> {
     
     private let backingPreference: ObjectPreference<NSString>
     

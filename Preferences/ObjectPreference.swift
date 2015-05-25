@@ -11,6 +11,7 @@ import Foundation
 public class ObjectPreference<T: AnyObject> {
     
     let key: String
+    let defaultValue: T?
     let onValueChangeEvent = Event<ObjectPreference<T>, T?>()
     
     private var preferences: NSUserDefaults {
@@ -19,7 +20,7 @@ public class ObjectPreference<T: AnyObject> {
     
     public var value: T? {
         get {
-            return preferences.objectForKey(key) as? T
+            return exists ? preferences.objectForKey(key) as? T : defaultValue
         } set {
             let currentValue = value
             preferences.setObject(newValue, forKey: key)
@@ -34,8 +35,9 @@ public class ObjectPreference<T: AnyObject> {
         }
     }
     
-    public init(key: String) {
+    public init(key: String, defaultValue: T? = nil) {
         self.key = key
+        self.defaultValue = defaultValue
     }
     
     public func delete() {
