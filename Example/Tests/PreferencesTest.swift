@@ -15,7 +15,7 @@ import SwiftKit
 class PreferencesTest: XCTestCase {
 
     func testPreferences() {
-        var preference = Preference<String>(key: "data", defaultValue: "")
+        var preference = StringPreference(key: "data")
         preference.value = "Hello"
         XCTAssertEqual(preference.value, "Hello")
     }
