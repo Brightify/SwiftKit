@@ -3,12 +3,12 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 target 'SwiftKit', :exclusive => true do
-  pod "SwiftKit", :path => "../"
+    pod "SwiftKit", :path => "../"
 end
 
 target 'Tests', :exclusive => true do
-  pod "SwiftKit", :path => "../"
-
-  pod 'Specta'
-  pod 'Expecta'
+    pod "SwiftKit", :path => "../"
+    
+    pod 'Specta'
+    pod 'Expecta'
 end

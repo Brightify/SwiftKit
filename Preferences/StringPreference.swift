@@ -6,26 +6,25 @@
 //
 //
 
-import Foundation
+public typealias StringPreference = __StringPreferencePrivate<String>
 
-public class StringPreferenceImpl<T>: Preference<String> {
+public class __StringPreferencePrivate<T>: Preference<T> {
     
-    override var valueDelegate: String {
-        get {
-            if let string = preferences.objectForKey(key) as? String {
-                return string
-            }
-            return defaultValue
-        } set {
-            let string = NSString(string: newValue)
-            preferences.setObject(string, forKey: key)
-        }
+    public convenience init(key: String) {
+        __StringPreferencePrivate.assertType(T.self)
+        
+        let defaultValue = ""
+        self.init(key: key, defaultValue: defaultValue as! T)
     }
     
-    public override init(key: String, defaultValue: String = "") {
+    public override init(key: String, defaultValue: T) {
+        __StringPreferencePrivate.assertType(T.self)
+        
         super.init(key: key, defaultValue: defaultValue)
     }
     
+    private class func assertType(type: Any.Type) {
+        assert(type is String.Type, "")
+    }
+    
 }
-
-public typealias StringPreference = StringPreferenceImpl<String>

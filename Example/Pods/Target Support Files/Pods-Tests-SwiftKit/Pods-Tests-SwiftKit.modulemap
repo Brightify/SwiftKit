@@ -1,0 +1,6 @@
+framework module SwiftKit {
+  umbrella header "Pods-Tests-SwiftKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
