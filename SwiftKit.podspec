@@ -27,6 +27,11 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios, '8.0'
   spec.requires_arc = true
 
+  spec.subspec 'Preferences' do |preferences|
+    preferences.source_files = 'Preferences/**/*.swift'
+    preferences.frameworks = 'UIKit', 'Events'
+  end
+
   spec.subspec 'Events' do |events|
     events.source_files = 'Events/**/*.swift'
     events.frameworks = 'UIKit'
@@ -36,6 +41,5 @@ Pod::Spec.new do |spec|
     injection.source_files = 'Injection/**/*.swift'
     injection.frameworks = 'Foundation'
   end
-
 
 end
