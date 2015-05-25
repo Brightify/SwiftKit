@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IntPreferenceImpl<T>: BaseValuePreference<Int> {
+public class IntPreferenceImpl<T>: Preference<Int> {
     
     override var valueDelegate: Int {
         get {
@@ -22,9 +22,6 @@ public class IntPreferenceImpl<T>: BaseValuePreference<Int> {
         super.init(key: key, defaultValue: defaultValue)
     }
     
-    override func areEquals(first: Int, _ second: Int) -> Bool {
-        return first == second
-    }
 }
 
 public typealias IntPreference = IntPreferenceImpl<Int>

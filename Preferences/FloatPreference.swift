@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class FloatPreferenceImpl<T>: BaseValuePreference<Float> {
+public class FloatPreferenceImpl<T>: Preference<Float> {
     
     override var valueDelegate: Float {
         get {
@@ -22,9 +22,6 @@ public class FloatPreferenceImpl<T>: BaseValuePreference<Float> {
         super.init(key: key, defaultValue: defaultValue)
     }
     
-    override func areEquals(first: Float, _ second: Float) -> Bool {
-        return first == second
-    }
 }
 
 public typealias FloatPreference = FloatPreferenceImpl<Float>

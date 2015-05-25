@@ -1,5 +1,5 @@
 //
-//  BaseValuePreference.swift
+//  Preference.swift
 //  Pods
 //
 //  Created by Filip Dolník on 25.05.15.
@@ -8,26 +8,22 @@
 
 import Foundation
 
-public class BaseValuePreference<T> {
+public class Preference<T> {
+    
+    public let onValueChange = Event<Preference<T>, T>()
     
     let key: String
     let defaultValue: T
-    let onValueChangeEvent = Event<BaseValuePreference<T>, T>()
     
-    var preferences: NSUserDefaults {
-        return NSUserDefaults.standardUserDefaults()
-    }
-    
+    lazy var preferences: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
     public var value: T {
         get {
             return exists ? valueDelegate : defaultValue
         } set {
-            let currentValue = value
             valueDelegate = newValue
             preferences.synchronize()
-            if (!areEquals(currentValue, newValue)) {
-                onValueChangeEvent.fire(self, input: newValue)
-            }
+            onValueChange.fire(self, input: newValue)
         }
     }
     
@@ -39,9 +35,15 @@ public class BaseValuePreference<T> {
     
     var valueDelegate: T {
         get {
-            fatalError("Value in BasePreference has not been implemented!")
+            let wrapper = preferences.objectForKey(key) as? Wrapper<T>
+            if let data = wrapper?.data {
+                return data
+            } else {
+                fatalError("Preference with key \(key) isn't of requested type.")
+            }
         } set {
-            fatalError("Value in BasePreference has not been implemented!")
+            let wrapper = Wrapper(data: newValue)
+            preferences.setObject(wrapper, forKey: key)
         }
     }
     
@@ -54,7 +56,4 @@ public class BaseValuePreference<T> {
         preferences.removeObjectForKey(key)
     }
     
-    func areEquals(first: T, _ second: T) -> Bool {
-        fatalError("areEquals in BasePreference has not been implemented!")
-    }
 }
