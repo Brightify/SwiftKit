@@ -26,7 +26,7 @@ public class BasePreference<T> {
             valueDelegate = newValue
             preferences.synchronize()
             if (!areEquals(currentValue, newValue)) {
-                event.fire(self, newValue)
+                onValueChangeEvent.fire(self, input: newValue)
             }
         }
     }
