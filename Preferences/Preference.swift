@@ -22,7 +22,6 @@ public class Preference<T> {
             return exists ? valueDelegate : defaultValue
         } set {
             valueDelegate = newValue
-            preferences.synchronize()
             onValueChange.fire(self, input: newValue)
         }
     }
@@ -35,15 +34,17 @@ public class Preference<T> {
     
     var valueDelegate: T {
         get {
-            let wrapper = preferences.objectForKey(key) as? Wrapper<T>
-            if let data = wrapper?.data {
+            if let data = preferences.objectForKey(key) as? T {
                 return data
             } else {
                 fatalError("Preference with key \(key) isn't of requested type.")
             }
         } set {
-            let wrapper = Wrapper(data: newValue)
-            preferences.setObject(wrapper, forKey: key)
+            if let newValue: AnyObject = newValue as? AnyObject {
+                preferences.setObject(newValue, forKey: key)
+            } else {
+                fatalError("Value is not of type AnyObject.")
+            }
         }
     }
     

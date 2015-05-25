@@ -29,7 +29,8 @@ Pod::Spec.new do |spec|
 
   spec.subspec 'Preferences' do |preferences|
     preferences.source_files = 'Preferences/**/*.swift'
-    preferences.frameworks = 'UIKit', 'Events'
+    preferences.frameworks = 'Foundation'
+    preferences.dependency 'SwiftKit/Events'
   end
 
   spec.subspec 'Events' do |events|

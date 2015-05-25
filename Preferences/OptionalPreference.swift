@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class OptionalPreference<T> {
+public class OptionalPreference<T: AnyObject> {
     
     public let onValueChange = Event<OptionalPreference<T>, T?>()
     
@@ -18,20 +18,16 @@ public class OptionalPreference<T> {
     
     public var value: T? {
         get {
-            let wrapper = preferences.objectForKey(key) as? Wrapper<T>
-            return wrapper?.data
+            return preferences.objectForKey(key) as? T
         } set {
-            let wrapper = Wrapper(data: newValue)
-            preferences.setObject(wrapper, forKey: key)
-            preferences.synchronize()
+            preferences.setObject(newValue, forKey: key)
             onValueChange.fire(self, input: newValue)
         }
     }
     
     public var exists: Bool {
         get {
-            let wrapper = preferences.objectForKey(key) as? Wrapper<T>
-            return wrapper?.data != nil
+            return preferences.objectForKey(key) != nil
         }
     }
     
