@@ -1,6 +1,6 @@
 //
 //  BoolPreference.swift
-//  
+//  Pods
 //
 //  Created by Filip Dolník on 25.05.15.
 //
@@ -18,7 +18,7 @@ public class BoolPreferenceImpl<T>: BasePreference<Bool> {
         }
     }
     
-    override init(key: String, defaultValue: Bool = false) {
+    public override init(key: String, defaultValue: Bool = false) {
         super.init(key: key, defaultValue: defaultValue)
     }
     

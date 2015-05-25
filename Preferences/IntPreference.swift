@@ -1,6 +1,6 @@
 //
 //  IntPreference.swift
-//
+//  Pods
 //
 //  Created by Filip Dolník on 25.05.15.
 //
@@ -18,7 +18,7 @@ public class IntPreferenceImpl<T>: BasePreference<Int> {
         }
     }
     
-    override init(key: String, defaultValue: Int = 0) {
+    public override init(key: String, defaultValue: Int = 0) {
         super.init(key: key, defaultValue: defaultValue)
     }
     

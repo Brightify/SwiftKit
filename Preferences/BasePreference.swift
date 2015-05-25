@@ -1,6 +1,6 @@
 //
 //  BasePreference.swift
-//  
+//  Pods
 //
 //  Created by Filip Dolník on 25.05.15.
 //
@@ -45,10 +45,9 @@ public class BasePreference<T> {
         }
     }
     
-    init(key: String, defaultValue: T) {
+    public init(key: String, defaultValue: T) {
         self.key = key
         self.defaultValue = defaultValue
-
     }
     
     public func delete() {

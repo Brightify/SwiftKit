@@ -1,6 +1,6 @@
 //
 //  StringPreference.swift
-//  
+//  Pods
 //
 //  Created by Filip Dolník on 25.05.15.
 //
@@ -10,15 +10,22 @@ import Foundation
 
 public class StringPreferenceImpl<T>: BasePreference<String> {
     
+    private let backingPreference: ObjectPreference<NSString>
+    
     override var valueDelegate: String {
         get {
-            return preferences.StringForKey(key)
+            if let value = backingPreference.value {
+                return value as String
+            }
+            return defaultValue
         } set {
-            preferences.setString(newValue, forKey: key)
+            backingPreference.value = NSString(UTF8String: newValue)
         }
     }
     
-    override init(key: String, defaultValue: String = "") {
+    public override init(key: String, defaultValue: String = "") {
+        backingPreference = ObjectPreference<NSString>(key: key)
+        
         super.init(key: key, defaultValue: defaultValue)
     }
     

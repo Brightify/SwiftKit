@@ -1,6 +1,6 @@
 //
 //  FloatPreference.swift
-//  
+//  Pods
 //
 //  Created by Filip Dolník on 25.05.15.
 //
@@ -18,7 +18,7 @@ public class FloatPreferenceImpl<T>: BasePreference<Float> {
         }
     }
     
-    override init(key: String, defaultValue: Float = 0) {
+    public override init(key: String, defaultValue: Float = 0) {
         super.init(key: key, defaultValue: defaultValue)
     }
     
