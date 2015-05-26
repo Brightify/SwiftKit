@@ -8,33 +8,38 @@
 
 import Foundation
 
-public typealias FloatPreference = __FloatPreferencePrivate<Float>
-
-public class __FloatPreferencePrivate<T>: Preference<T> {
+public class FloatPreference: Preference {
     
-    override var valueDelegate: T {
+    public typealias T = Float
+    
+    public private(set) lazy var onValueChange = Event<FloatPreference, T>()
+    
+    private lazy var preferences: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    
+    private let key: String
+    private let defaultValue: T
+    
+    public var value: T {
         get {
-            return preferences.floatForKey(key) as! T
+            return exists ? preferences.floatForKey(key) : defaultValue
         } set {
-            preferences.setFloat(newValue as! Float, forKey: key)
+            preferences.setFloat(newValue, forKey: key)
+            onValueChange.fire(self, input: newValue)
         }
     }
     
-    public convenience init(key: String) {
-        __FloatPreferencePrivate.assertType(T.self)
-        
-        let defaultValue: Float = 0
-        self.init(key: key, defaultValue: defaultValue as! T)
+    public var exists: Bool {
+        get {
+            return preferences.objectForKey(key) as? T != nil
+        }
     }
     
-    public override init(key: String, defaultValue: T) {
-        __FloatPreferencePrivate.assertType(T.self)
-        
-        super.init(key: key, defaultValue: defaultValue)
+    public required init(key: String, defaultValue: T = 0) {
+        self.key = key
+        self.defaultValue = defaultValue
     }
     
-    private class func assertType(type: Any.Type) {
-        assert(type is Float.Type, "")
+    public func delete() {
+        preferences.removeObjectForKey(key)
     }
-    
 }

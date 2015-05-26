@@ -53,7 +53,7 @@ class PreferencesTest: XCTestCase {
     }
     
     func testArrayPreferences() {
-        var preference = Preference<[NSString]>(key: key, defaultValue: [])
+        var preference = ArrayPreference<NSString>(key: key)
         preference.value.append("Hello")
         XCTAssertEqual(preference.value[0], "Hello")
     }

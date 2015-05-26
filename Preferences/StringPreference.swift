@@ -6,25 +6,38 @@
 //
 //
 
-public typealias StringPreference = __StringPreferencePrivate<String>
+public class StringPreference: Preference {
+    
+    public typealias T = String
+    
+    public private(set) lazy var onValueChange = Event<StringPreference, T>()
+    
+    private lazy var preferences: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    
+    private let key: String
+    private let defaultValue: T
 
-public class __StringPreferencePrivate<T>: Preference<T> {
-    
-    public convenience init(key: String) {
-        __StringPreferencePrivate.assertType(T.self)
-        
-        let defaultValue = ""
-        self.init(key: key, defaultValue: defaultValue as! T)
+    public var value: T {
+        get {
+            return exists ? preferences.objectForKey(key) as! T : defaultValue
+        } set {
+            preferences.setObject(newValue, forKey: key)
+            onValueChange.fire(self, input: newValue)
+        }
     }
     
-    public override init(key: String, defaultValue: T) {
-        __StringPreferencePrivate.assertType(T.self)
-        
-        super.init(key: key, defaultValue: defaultValue)
+    public var exists: Bool {
+        get {
+            return preferences.objectForKey(key) as? T != nil
+        }
     }
     
-    private class func assertType(type: Any.Type) {
-        assert(type is String.Type, "")
+    public required init(key: String, defaultValue: T = "") {
+        self.key = key
+        self.defaultValue = defaultValue
     }
     
+    public func delete() {
+        preferences.removeObjectForKey(key)
+    }
 }

@@ -8,33 +8,38 @@
 
 import Foundation
 
-public typealias BoolPreference = __BoolPreferencePrivate<Bool>
-
-public class __BoolPreferencePrivate<T>: Preference<T> {
+public class BoolPreference: Preference {
     
-    override var valueDelegate: T {
+    public typealias T = Bool
+    
+    public private(set) lazy var onValueChange = Event<BoolPreference, T>()
+    
+    private lazy var preferences: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    
+    private let key: String
+    private let defaultValue: T
+    
+    public var value: T {
         get {
-            return preferences.boolForKey(key) as! T
+            return exists ? preferences.boolForKey(key) : defaultValue
         } set {
-            preferences.setBool(newValue as! Bool, forKey: key)
+            preferences.setBool(newValue, forKey: key)
+            onValueChange.fire(self, input: newValue)
         }
     }
     
-    public convenience init(key: String) {
-        __BoolPreferencePrivate.assertType(T.self)
-        
-        let defaultValue: Bool = false
-        self.init(key: key, defaultValue: defaultValue as! T)
+    public var exists: Bool {
+        get {
+            return preferences.objectForKey(key) as? T != nil
+        }
     }
     
-    public override init(key: String, defaultValue: T) {
-        __BoolPreferencePrivate.assertType(T.self)
-        
-        super.init(key: key, defaultValue: defaultValue)
+    public required init(key: String, defaultValue: T = false) {
+        self.key = key
+        self.defaultValue = defaultValue
     }
     
-    private class func assertType(type: Any.Type) {
-        assert(type is Bool.Type, "")
+    public func delete() {
+        preferences.removeObjectForKey(key)
     }
-    
 }

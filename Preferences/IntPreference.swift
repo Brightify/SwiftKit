@@ -8,33 +8,38 @@
 
 import Foundation
 
-public typealias IntPreference = __IntPreferencePrivate<Int>
-
-public class __IntPreferencePrivate<T: Any>: Preference<T> {
+public class IntPreference: Preference {
     
-    override var valueDelegate: T {
+    public typealias T = Int
+    
+    public private(set) lazy var onValueChange = Event<IntPreference, T>()
+    
+    private lazy var preferences: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    
+    private let key: String
+    private let defaultValue: T
+    
+    public var value: T {
         get {
-            return preferences.integerForKey(key) as! T
+            return exists ? preferences.integerForKey(key) : defaultValue
         } set {
-            preferences.setInteger(newValue as! Int, forKey: key)
+            preferences.setInteger(newValue, forKey: key)
+            onValueChange.fire(self, input: newValue)
         }
     }
     
-    public convenience init(key: String) {
-        __IntPreferencePrivate.assertType(T.self)
-        
-        let defaultValue = 0
-        self.init(key: key, defaultValue: defaultValue as! T)
+    public var exists: Bool {
+        get {
+            return preferences.objectForKey(key) as? T != nil
+        }
     }
     
-    public override init(key: String, defaultValue: T) {
-        __IntPreferencePrivate.assertType(T.self)
-        
-        super.init(key: key, defaultValue: defaultValue)
-    }
-
-    private class func assertType(type: Any.Type) {
-        assert(type is Int.Type, "")
+    public required init(key: String, defaultValue: T = 0) {
+        self.key = key
+        self.defaultValue = defaultValue
     }
     
+    public func delete() {
+        preferences.removeObjectForKey(key)
+    }
 }

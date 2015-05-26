@@ -8,33 +8,38 @@
 
 import Foundation
 
-public typealias DoublePreference = __DoublePreferencePrivate<Double>
-
-public class __DoublePreferencePrivate<T>: Preference<T> {
+public class DoublePreference: Preference {
     
-    override var valueDelegate: T {
+    public typealias T = Double
+    
+    public private(set) lazy var onValueChange = Event<DoublePreference, T>()
+    
+    private lazy var preferences: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    
+    private let key: String
+    private let defaultValue: T
+    
+    public var value: T {
         get {
-            return preferences.doubleForKey(key) as! T
+            return exists ? preferences.doubleForKey(key) : defaultValue
         } set {
-            preferences.setDouble(newValue as! Double, forKey: key)
+            preferences.setDouble(newValue, forKey: key)
+            onValueChange.fire(self, input: newValue)
         }
     }
     
-    public convenience init(key: String) {
-        __DoublePreferencePrivate.assertType(T.self)
-        
-        let defaultValue: Double = 0
-        self.init(key: key, defaultValue: defaultValue as! T)
+    public var exists: Bool {
+        get {
+            return preferences.objectForKey(key) as? T != nil
+        }
     }
     
-    public override init(key: String, defaultValue: T) {
-        __DoublePreferencePrivate.assertType(T.self)
-        
-        super.init(key: key, defaultValue: defaultValue)
+    public required init(key: String, defaultValue: T = 0) {
+        self.key = key
+        self.defaultValue = defaultValue
     }
     
-    private class func assertType(type: Any.Type) {
-        assert(type is Double.Type, "")
+    public func delete() {
+        preferences.removeObjectForKey(key)
     }
-    
 }

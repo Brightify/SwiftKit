@@ -2,59 +2,22 @@
 //  Preference.swift
 //  Pods
 //
-//  Created by Filip Dolník on 25.05.15.
+//  Created by Filip Dolník on 26.05.15.
 //
 //
 
 import Foundation
 
-public class Preference<T> {
+public protocol Preference {
     
-    public let onValueChange = Event<Preference<T>, T>()
+    typealias T
     
-    let key: String
-    let defaultValue: T
+    var value: T { get set }
     
-    lazy var preferences: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-
-    public var value: T {
-        get {
-            return exists ? valueDelegate : defaultValue
-        } set {
-            valueDelegate = newValue
-            onValueChange.fire(self, input: newValue)
-        }
-    }
+    var exists: Bool { get }
     
-    public var exists: Bool {
-        get {
-            return preferences.objectForKey(key) != nil
-        }
-    }
+    init(key: String, defaultValue: T)
     
-    var valueDelegate: T {
-        get {
-            if let data = preferences.objectForKey(key) as? T {
-                return data
-            } else {
-                fatalError("Preference with key \(key) isn't of requested type.")
-            }
-        } set {
-            if let newValue: AnyObject = newValue as? AnyObject {
-                preferences.setObject(newValue, forKey: key)
-            } else {
-                fatalError("Value is not of type AnyObject.")
-            }
-        }
-    }
-    
-    public init(key: String, defaultValue: T) {
-        self.key = key
-        self.defaultValue = defaultValue
-    }
-    
-    public func delete() {
-        preferences.removeObjectForKey(key)
-    }
+    func delete()
     
 }

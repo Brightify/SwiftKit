@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Event<SENDER: AnyObject, INPUT> {
+public class Event<SENDER, INPUT> {
     
     typealias Listener = (EventData<SENDER, INPUT>) -> ()
     

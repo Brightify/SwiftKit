@@ -1,24 +1,25 @@
 //
-//  OptionalPreference.swift
+//  ArrayPreference.swift
 //  Pods
 //
 //  Created by Filip Dolník on 25.05.15.
 //
 //
 
-import Foundation
-
-public class OptionalPreference<T: AnyObject> {
+public class ArrayPreference<S: AnyObject>: Preference {
     
-    public private(set) lazy var onValueChange = Event<OptionalPreference<T>, T?>()
+    public typealias T = [S]
+    
+    public private(set) lazy var onValueChange = Event<ArrayPreference<S>, T>()
     
     private lazy var preferences: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     private let key: String
-    
-    public var value: T? {
+    private let defaultValue: T
+
+    public var value: T {
         get {
-            return preferences.objectForKey(key) as? T
+            return exists ? preferences.objectForKey(key) as! T : defaultValue
         } set {
             preferences.setObject(newValue, forKey: key)
             onValueChange.fire(self, input: newValue)
@@ -27,17 +28,16 @@ public class OptionalPreference<T: AnyObject> {
     
     public var exists: Bool {
         get {
-            return preferences.objectForKey(key) != nil
+            return preferences.objectForKey(key) as? T != nil
         }
     }
     
-    public init(key: String) {
+    public required init(key: String, defaultValue: T = []) {
         self.key = key
+        self.defaultValue = defaultValue
     }
     
     public func delete() {
         preferences.removeObjectForKey(key)
     }
-    
 }
-
