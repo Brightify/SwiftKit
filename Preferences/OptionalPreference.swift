@@ -27,7 +27,7 @@ public class OptionalPreference<T: AnyObject> {
     
     public var exists: Bool {
         get {
-            return preferences.objectForKey(key) != nil
+            return value != nil
         }
     }
     
