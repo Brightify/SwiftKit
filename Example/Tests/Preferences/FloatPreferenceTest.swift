@@ -14,7 +14,7 @@ import SwiftKit
 
 class FloatPreferenceTest: XCTestCase {
     
-    let parameters: [Float] = [-10.1234, 0, 10.1234]
+    private let parameters: [Float] = [-10.1234, 0, 10.1234]
     
     private let key = "data"
     

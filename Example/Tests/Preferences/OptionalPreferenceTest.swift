@@ -14,7 +14,7 @@ import SwiftKit
 
 class OptionalPreferenceTest: XCTestCase {
 
-    let parameters: [NSString?] = ["Hello", "", "Guten Tag", nil]
+    private let parameters: [NSString?] = ["Hello", "", "Guten Tag", nil]
     
     private let key = "data"
     

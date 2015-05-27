@@ -14,7 +14,7 @@ import SwiftKit
 
 class DoublePreferenceTest: XCTestCase {
 
-    let parameters = [-10.1234, 0, 10.1234]
+    private let parameters = [-10.1234, 0, 10.1234]
     
     private let key = "data"
     

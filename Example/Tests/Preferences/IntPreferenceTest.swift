@@ -14,7 +14,7 @@ import SwiftKit
 
 class IntPreferenceTest: XCTestCase {
 
-    let parameters = [-100, 0, 100, Int.min, Int.max]
+    private let parameters = [-100, 0, 100, Int.min, Int.max]
     
     private let key = "data"
     

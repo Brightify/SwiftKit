@@ -14,7 +14,7 @@ import SwiftKit
 
 class ArrayPreferenceTest: XCTestCase {
 
-    let array = ["Hello", "", "Gutten Tag"]
+    private let array = ["Hello", "", "Gutten Tag"]
     
     private let key = "data"
     

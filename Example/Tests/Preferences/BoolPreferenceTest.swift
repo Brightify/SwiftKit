@@ -14,7 +14,7 @@ import SwiftKit
 
 class BoolPreferenceTest: XCTestCase {
 
-    let parameters = [false, true]
+    private let parameters = [false, true]
     
     private let key = "data"
     

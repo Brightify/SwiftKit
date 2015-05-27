@@ -14,7 +14,7 @@ import SwiftKit
 
 class StringPreferenceTest: XCTestCase {
 
-    let parameters = ["Hello", "", "Guten Tag"]
+    private let parameters = ["Hello", "", "Guten Tag"]
     
     private let key = "data"
     
