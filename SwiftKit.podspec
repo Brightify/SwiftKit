@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |spec|
   spec.name             = "SwiftKit"
-  spec.version          = "0.1.0"
+  spec.version          = "0.2.0"
   spec.summary          = "SwiftKit is a great way to start your project."
   spec.description      = <<-DESC
                        SwiftKit's main purpose is to jumpstart iOS app development.
