@@ -125,6 +125,10 @@ public final class Route {
 }
 
 public class Router<T: RouteTarget> {
+    
+    public init() {
+        
+    }
 
     public func request(target: T, completion: RouterCompletion) -> Cancellable {
         var headers: [String: AnyObject] = [:]
@@ -171,6 +175,11 @@ public class Router<T: RouteTarget> {
 }
 
 public class ObjectMappingRouter<T: protocol<RouteTarget, MappableRouteTarget>>: Router<T> {
+    
+    public override init() {
+        
+    }
+    
     public func requestModel(token: T, callback: (data: ResponseData<T.Model>) -> ()) -> Cancellable {
         return request(token) {
             completion in
