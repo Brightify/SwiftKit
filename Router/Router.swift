@@ -181,7 +181,7 @@ public class ObjectMappingRouter<T: protocol<RouteTarget, MappableRouteTarget>>:
         
     }
     
-    public func requestModel(token: T, jsonPath: [SubscriptType] = [], callback: (data: ResponseData<T.Model>) -> ()) -> Cancellable {
+    public func requestModel(token: T, jsonPath: [SubscriptType]? = nil, callback: (data: ResponseData<T.Model>) -> ()) -> Cancellable {
         return request(token) {
             completion in
             
@@ -189,7 +189,13 @@ public class ObjectMappingRouter<T: protocol<RouteTarget, MappableRouteTarget>>:
             
             if completion.statusCode >= 200 && completion.statusCode <= 299, let data = completion.data {
                 let json = JSON(data: data)
-                model = Mapper<T.Model>().map(json[jsonPath].object)
+                let object: AnyObject
+                if let jsonPath = jsonPath {
+                    object = json[jsonPath].object
+                } else {
+                    object = json.object
+                }
+                model = Mapper<T.Model>().map(object)
             }
             
             let responseData = ResponseData<T.Model>(model: model, statusCode: completion.statusCode, response: completion.response, error: completion.error, rawData: completion.data)
@@ -198,7 +204,7 @@ public class ObjectMappingRouter<T: protocol<RouteTarget, MappableRouteTarget>>:
         }
     }
     
-    public func requestModelArray(token: T, arrayJsonPath: [SubscriptType] = [], itemJsonPath: [SubscriptType] = [], callback: (data: ResponseData<[T.Model]>) -> ()) -> Cancellable {
+    public func requestModelArray(token: T, arrayJsonPath: [SubscriptType]? = nil, itemJsonPath: [SubscriptType]? = nil, callback: (data: ResponseData<[T.Model]>) -> ()) -> Cancellable {
         return request(token) {
             completion in
             
@@ -206,8 +212,21 @@ public class ObjectMappingRouter<T: protocol<RouteTarget, MappableRouteTarget>>:
             
             if completion.statusCode >= 200 && completion.statusCode <= 299, let data = completion.data {
                 let json = JSON(data: data)
-                for item in json[arrayJsonPath].arrayValue {
-                    if let model = Mapper<T.Model>().map(item[itemJsonPath].object) {
+                let array: [JSON]
+                if let arrayJsonPath = arrayJsonPath {
+                    array = json[arrayJsonPath].arrayValue
+                } else {
+                    array = json.arrayValue
+                }
+                
+                for item in array {
+                    let object: AnyObject
+                    if let itemJsonPath = itemJsonPath {
+                        object = json[itemJsonPath].object
+                    } else {
+                        object = json.object
+                    }
+                    if let model = Mapper<T.Model>().map(object) {
                         models.append(model)
                     }
                 }
