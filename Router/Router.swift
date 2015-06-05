@@ -222,9 +222,9 @@ public class ObjectMappingRouter<T: protocol<RouteTarget, MappableRouteTarget>>:
                 for item in array {
                     let object: AnyObject
                     if let itemJsonPath = itemJsonPath {
-                        object = json[itemJsonPath].object
+                        object = item[itemJsonPath].object
                     } else {
-                        object = json.object
+                        object = item.object
                     }
                     if let model = Mapper<T.Model>().map(object) {
                         models.append(model)
