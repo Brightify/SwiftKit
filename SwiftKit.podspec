@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |spec|
   spec.name             = "SwiftKit"
-  spec.version          = "0.2.0"
+  spec.version          = "0.3.0"
   spec.summary          = "SwiftKit is a collection of simple libraries that make your life easier."
   spec.description      = <<-DESC
                        SwiftKit's main purpose is to jumpstart iOS app development. We strive to deliver multiple small libraries that will solve the most basic things so you will not have to do it yourself.
@@ -40,6 +40,13 @@ Pod::Spec.new do |spec|
   spec.subspec 'Injection' do |injection|
     injection.source_files = 'Injection/**/*.swift'
     injection.frameworks = 'Foundation'
+  end
+
+  spec.subspec 'Router' do |router|
+    router.source_files = 'Router/**/*.swift'
+    router.frameworks = 'Foundation'
+    router.dependency 'Alamofire'
+    router.dependency 'ObjectMapper'
   end
 
 end
