@@ -57,15 +57,15 @@ public final class Route {
     
     /// Represents an HTTP method.
     public enum Endpoint {
-        case GET(path: String)
-        case POST(path: String)
-        case PUT(path: String)
-        case DELETE(path: String)
-        case OPTIONS(path: String)
-        case HEAD(path: String)
-        case PATCH(path: String)
-        case TRACE(path: String)
-        case CONNECT(path: String)
+        case GET(String)
+        case POST(String)
+        case PUT(String)
+        case DELETE(String)
+        case OPTIONS(String)
+        case HEAD(String)
+        case PATCH(String)
+        case TRACE(String)
+        case CONNECT(String)
         
         func method() -> Alamofire.Method {
             switch self {
