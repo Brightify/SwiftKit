@@ -47,6 +47,7 @@ Pod::Spec.new do |spec|
     router.frameworks = 'Foundation'
     router.dependency 'Alamofire'
     router.dependency 'ObjectMapper'
+    router.dependency 'SwiftyJSON'
   end
 
 end

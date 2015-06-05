@@ -1,6 +1,7 @@
 import Foundation
 import Alamofire
 import ObjectMapper
+import SwiftyJSON
 
 public class ResponseData<T> {
     
@@ -180,14 +181,15 @@ public class ObjectMappingRouter<T: protocol<RouteTarget, MappableRouteTarget>>:
         
     }
     
-    public func requestModel(token: T, callback: (data: ResponseData<T.Model>) -> ()) -> Cancellable {
+    public func requestModel(token: T, jsonPath: [SubscriptType] = [], callback: (data: ResponseData<T.Model>) -> ()) -> Cancellable {
         return request(token) {
             completion in
             
             var model: T.Model? = nil
             
-            if completion.statusCode >= 200 && completion.statusCode <= 299, let data = completion.data, jsonString = NSString(data: data, encoding: NSUTF8StringEncoding) {
-                model = Mapper<T.Model>().map(jsonString)
+            if completion.statusCode >= 200 && completion.statusCode <= 299, let data = completion.data {
+                let json = JSON(data: data)
+                model = Mapper<T.Model>().map(json[jsonPath].object)
             }
             
             let responseData = ResponseData<T.Model>(model: model, statusCode: completion.statusCode, response: completion.response, error: completion.error, rawData: completion.data)
@@ -196,19 +198,22 @@ public class ObjectMappingRouter<T: protocol<RouteTarget, MappableRouteTarget>>:
         }
     }
     
-    public func requestModelArray(token: T, callback: (data: ResponseData<[T.Model]>) -> ()) -> Cancellable {
+    public func requestModelArray(token: T, arrayJsonPath: [SubscriptType] = [], itemJsonPath: [SubscriptType] = [], callback: (data: ResponseData<[T.Model]>) -> ()) -> Cancellable {
         return request(token) {
-            (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: NSError?) in
+            completion in
             
-            let models: [T.Model]
+            var models: [T.Model] = []
             
-            if let data = data, jsonString = NSString(data: data, encoding: NSUTF8StringEncoding) {
-                models = Mapper<T.Model>().mapArray(String(jsonString))
-            } else {
-                models = []
+            if completion.statusCode >= 200 && completion.statusCode <= 299, let data = completion.data {
+                let json = JSON(data: data)
+                for item in json[arrayJsonPath].arrayValue {
+                    if let model = Mapper<T.Model>().map(item[itemJsonPath].object) {
+                        models.append(model)
+                    }
+                }
             }
             
-            let responseData = ResponseData<[T.Model]>(model: models, statusCode: statusCode, response: response, error: error, rawData: data)
+            let responseData = ResponseData<[T.Model]>(model: models, statusCode: completion.statusCode, response: completion.response, error: completion.error, rawData: completion.data)
             
             callback(data: responseData)
         }
