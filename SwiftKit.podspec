@@ -50,4 +50,10 @@ Pod::Spec.new do |spec|
     router.dependency 'SwiftyJSON'
   end
 
+  spec.subspec 'ViewComposer' do |composer|
+    composer.source_files = 'ViewComposer/**/*.swift'
+    composer.frameworks = 'UIKit'
+    composer.dependency 'SwiftKit/Events'
+  end
+
 end
