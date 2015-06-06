@@ -20,8 +20,17 @@ public class Injector {
         return getInitializationClosure(type)(self)
     }
     
+    public func get<T>(key: Key<T>) -> T {
+        return getInitializationClosure(key)(self)
+    }
+    
     public func factory<T>(type: T.Type) -> Factory<T> {
         let initializationClosure = getInitializationClosure(type)
+        return Factory<T>(injector: self, closure: initializationClosure)
+    }
+    
+    public func factory<T>(key: Key<T>) -> Factory<T> {
+        let initializationClosure = getInitializationClosure(key)
         return Factory<T>(injector: self, closure: initializationClosure)
     }
     
@@ -37,6 +46,15 @@ public class Injector {
             return injectionClosure
         } else {
             fatalError("Binding for type \(type) was \(binding)")
+        }
+    }
+    
+    private func getInitializationClosure<T>(key: Key<T>) -> Injector -> T {
+        let binding = module.bindingForKey(key)
+        if let injectionClosure = binding?.implementation {
+            return injectionClosure
+        } else {
+            fatalError("Binding for key \(key) was \(binding) with implementation \(binding?.implementation)")
         }
     }
 }

@@ -40,7 +40,17 @@ class InjectionTest: XCTestCase {
         XCTAssertEqual(injector.get(UserService).userGreeting, "Hello, John Mock")
     }
     
-    
+    func testKeyInjection() {
+        var module = Module()
+        module.bindKey(Key<UINavigationController>(named: "InitialController")).toNew(UINavigationController())
+        module.bindKey(Key<UINavigationController>(named: "LastController")).toNew(UINavigationController())
+        
+        var injector = Injector.createInjector(module)
+        
+        XCTAssertNotEqual(
+            injector.get(Key<UINavigationController>(named: "InitialController")),
+            injector.get(Key<UINavigationController>(named: "LastController")))
+    }
 
 }
 
