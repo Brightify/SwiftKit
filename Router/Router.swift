@@ -7,9 +7,10 @@ public protocol Endpoint {
     typealias Input
     typealias Output
     
-    var path: String { get }
-
+    init(_ path: String)
+    
     var method: Alamofire.Method { get }
+    var path: String { get }
 }
 
 public class Response<T> {
