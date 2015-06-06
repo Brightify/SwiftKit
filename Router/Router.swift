@@ -98,7 +98,7 @@ public class Router {
         return runRequest(request, completion: Router.relayObjectArrayResponse(callback))
     }
     
-    private func request<ENDPOINT: Endpoint
+    public func request<ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == Void>
         (endpoint: ENDPOINT, input: [String], callback: EmptyResponse -> ()) -> Cancellable
     {
@@ -107,7 +107,7 @@ public class Router {
         }
     }
     
-    private func request<OUT: Mappable, ENDPOINT: Endpoint
+    public func request<OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, input: [String], callback: Response<OUT?> -> ()) -> Cancellable
     {
@@ -116,13 +116,20 @@ public class Router {
         }
     }
     
-    private func request<OUT: Mappable, ENDPOINT: Endpoint
+    public func request<OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, input: [String], callback: Response<[OUT]> -> ()) -> Cancellable
     {
         return jsonRequest(endpoint, input: JSON(input)) {
             Router.relayObjectArrayResponse(callback)(data: $0.rawData, statusCode: $0.statusCode, request: $0.rawRequest, response: $0.rawResponse, error: $0.error)
         }
+    }
+    
+    public func request<ENDPOINT: Endpoint
+        where ENDPOINT.Input == JSON, ENDPOINT.Output == JSON>
+        (endpoint: ENDPOINT, input: JSON, callback: Response<JSON?> -> ()) -> Cancellable
+    {
+        return jsonRequest(endpoint, input: input, callback: callback)
     }
     
     private func jsonRequest<ENDPOINT: Endpoint>
