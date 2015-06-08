@@ -8,7 +8,8 @@
 
 import Foundation
 
-public protocol PostInitInjectable {
+// If the protocol is not constrained to class only, compiler will fail when used with UIViewController
+public protocol PostInitInjectable: class {
     
     init()
     
