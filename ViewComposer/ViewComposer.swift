@@ -9,6 +9,20 @@
 
 import UIKit
 
+infix operator => { }
+
+public func => <VIEW_TYPE: UIView>(inout view: VIEW_TYPE!, parent: UIView) {
+    if (view == parent) {
+        fatalError("Cannot add view to itself!")
+    }
+    if (view == nil) {
+        view = ViewComposer.compose(VIEW_TYPE).addInto(parent)
+    } else {
+        view.removeFromSuperview()
+        parent.addSubview(view)
+    }
+}
+
 public class ViewComposer {
     
     private init() {
