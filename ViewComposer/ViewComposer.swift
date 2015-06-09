@@ -11,15 +11,28 @@ import UIKit
 
 infix operator => { }
 
-public func => <VIEW_TYPE: UIView>(inout view: VIEW_TYPE!, parent: UIView) {
-    if (view == parent) {
-        fatalError("Cannot add view to itself!")
-    }
-    if (view == nil) {
-        view = ViewComposer.compose(VIEW_TYPE).addInto(parent)
-    } else {
+public func => <VIEW_TYPE: UIView>(inout viewOrNil: VIEW_TYPE!, parent: UIView) {
+    var optionalView = viewOrNil as VIEW_TYPE?
+    
+    viewComposerOperator(&optionalView, parent)
+    
+    viewOrNil = optionalView
+}
+
+public func => <VIEW_TYPE: UIView>(inout viewOrNil: VIEW_TYPE?, parent: UIView) {
+    viewComposerOperator(&viewOrNil, parent)
+}
+
+private func viewComposerOperator<VIEW_TYPE: UIView>(inout viewOrNil: VIEW_TYPE?, parent: UIView) {
+    if let view = viewOrNil {
+        if (view == parent) {
+            fatalError("Cannot add view to itself!")
+        }
+        
         view.removeFromSuperview()
         parent.addSubview(view)
+    } else {
+        viewOrNil = ViewComposer.compose(VIEW_TYPE).addInto(parent)
     }
 }
 

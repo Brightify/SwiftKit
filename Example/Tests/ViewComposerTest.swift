@@ -15,13 +15,29 @@ class ViewComposerTest: XCTestCase {
     func testExample() {
         let superview = ViewComposer.compose(UIView).view
         
-        let view = ViewComposer.compose(UIView).addInto(superview)
+        var view: UIView!
+        var optionalView: UIView?
+        var view1: UIView!
+        var optionalView1: UIView?
+        
+        view = ViewComposer.compose(UIView).addInto(superview)
+        optionalView = ViewComposer.compose(UIView).addInto(superview)
+        
+        XCTAssertNotNil(view)
+        XCTAssertNotNil(optionalView)
         
         XCTAssertEqual(view.superview!, superview)
+        XCTAssertEqual(optionalView!.superview!, superview)
+
+        view1 => superview
+        optionalView1 => superview
         
-        //ViewComposer.compose(UIView.self)
         
-        //ViewComposer.compose(UIView)
+        XCTAssertNotNil(view1)
+        XCTAssertNotNil(optionalView1)
+        
+        XCTAssertEqual(view1.superview!, superview)
+        XCTAssertEqual(optionalView1!.superview!, superview)
         
     }
 
