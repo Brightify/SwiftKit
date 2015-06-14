@@ -16,17 +16,33 @@ public class Injector {
         self.module = module
     }
     
+    public func get<T>() -> T {
+        return get(T.self)
+    }
+    
     public func get<T>(type: T.Type) -> T {
         return getInitializationClosure(type)(self)
+    }
+    
+    public func get<T>(named name: String) -> T {
+        return get(Key<T>(named: name))
     }
     
     public func get<T>(key: Key<T>) -> T {
         return getInitializationClosure(key)(self)
     }
     
+    public func factory<T>() -> Factory<T> {
+        return factory(T.self)
+    }
+    
     public func factory<T>(type: T.Type) -> Factory<T> {
         let initializationClosure = getInitializationClosure(type)
         return Factory<T>(injector: self, closure: initializationClosure)
+    }
+    
+    public func factory<T>(named name: String) -> Factory<T> {
+        return factory(Key<T>(named: name))
     }
     
     public func factory<T>(key: Key<T>) -> Factory<T> {
