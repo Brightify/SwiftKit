@@ -56,6 +56,10 @@ public class Injector {
         return injector
     }
     
+    subscript(index: String) -> KeyedInjector {
+        return KeyedInjector(name: index, injector: self)
+    }
+    
     private func getInitializationClosure<T>(type: T.Type) -> Injector -> T {
         let binding = module.bindingForType(type)
         if let injectionClosure = binding?.implementation {
@@ -73,4 +77,24 @@ public class Injector {
             fatalError("Binding for key \(key) was \(binding) with implementation \(binding?.implementation)")
         }
     }
+}
+
+public class KeyedInjector {
+    
+    let name: String
+    let injector: Injector
+    
+    init(name: String, injector: Injector) {
+        self.name = name
+        self.injector = injector
+    }
+    
+    func get<T>(type: T.Type) -> T {
+        return injector.get(Key<T>(named: name))
+    }
+    
+    func factory<T>(type: T.Type) -> Factory<T> {
+        return injector.factory(Key<T>(named: name))
+    }
+    
 }
