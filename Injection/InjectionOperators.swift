@@ -10,7 +10,7 @@ import Foundation
 
 infix operator <- { }
 
-func <- <T>(inout injectable: T!, injector: Injector) {
+public func <- <T>(inout injectable: T!, injector: Injector) {
     var optionalInjectable: T? = injectable
     
     optionalInjectable <- injector
@@ -18,11 +18,11 @@ func <- <T>(inout injectable: T!, injector: Injector) {
     injectable = optionalInjectable
 }
 
-func <- <T>(inout injectable: T?, injector: Injector) {
+public func <- <T>(inout injectable: T?, injector: Injector) {
     injectable = injector.get(T.self)
 }
 
-func <- <T>(inout injectableFactory: Factory<T>!, injector: Injector) {
+public func <- <T>(inout injectableFactory: Factory<T>!, injector: Injector) {
     var optionalInjectableFactory: Factory<T>? = injectableFactory
     
     optionalInjectableFactory <- injector
@@ -30,11 +30,11 @@ func <- <T>(inout injectableFactory: Factory<T>!, injector: Injector) {
     injectableFactory = optionalInjectableFactory
 }
 
-func <- <T>(inout injectableFactory: Factory<T>?, injector: Injector) {
+public func <- <T>(inout injectableFactory: Factory<T>?, injector: Injector) {
     injectableFactory = injector.factory(T.self)
 }
 
-func <- <T>(inout injectable: T!, injector: KeyedInjector) {
+public func <- <T>(inout injectable: T!, injector: KeyedInjector) {
     var optionalInjectable: T? = injectable
     
     optionalInjectable <- injector
@@ -42,11 +42,11 @@ func <- <T>(inout injectable: T!, injector: KeyedInjector) {
     injectable = optionalInjectable
 }
 
-func <- <T>(inout injectable: T?, injector: KeyedInjector) {
+public func <- <T>(inout injectable: T?, injector: KeyedInjector) {
     injectable = injector.get(T.self)
 }
 
-func <- <T>(inout injectableFactory: Factory<T>!, injector: KeyedInjector) {
+public func <- <T>(inout injectableFactory: Factory<T>!, injector: KeyedInjector) {
     var optionalInjectableFactory: Factory<T>? = injectableFactory
     
     optionalInjectableFactory <- injector
@@ -54,6 +54,6 @@ func <- <T>(inout injectableFactory: Factory<T>!, injector: KeyedInjector) {
     injectableFactory = optionalInjectableFactory
 }
 
-func <- <T>(inout injectableFactory: Factory<T>?, injector: KeyedInjector) {
+public func <- <T>(inout injectableFactory: Factory<T>?, injector: KeyedInjector) {
     injectableFactory = injector.factory(T.self)
 }
