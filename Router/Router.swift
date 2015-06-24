@@ -177,12 +177,29 @@ public class Router {
     }
     
     private func prepareRequest<E: Endpoint>(endpoint: E) -> NSMutableURLRequest {
-        var url = baseURL.URLByAppendingPathComponent(endpoint.path)
+        let urlString: String
+        // FIXME should we fail? Or set a default?
+        let basePath = baseURL.absoluteString ?? ""
         
-        var request: NSMutableURLRequest = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = endpoint.method.rawValue
+        let basePathLastCharacter = basePath[basePath.endIndex.predecessor()]
+        let endpointPathFirstCharacter = endpoint.path[endpoint.path.startIndex]
         
-        return request
+        // We cannot use URLByAppendingPathComponent because it escapes the component which is something we do not want
+        if (basePathLastCharacter != "/" && endpointPathFirstCharacter != "/") {
+            urlString = basePath + "/" + endpoint.path
+        } else if (basePathLastCharacter == "/" && endpointPathFirstCharacter == "/") {
+            urlString = basePath + endpoint.path.substringFromIndex(endpoint.path.startIndex.successor())
+        } else {
+            urlString = basePath + endpoint.path
+        }
+        
+        if let url = NSURL(string: urlString) {
+            var request: NSMutableURLRequest = NSMutableURLRequest(URL: url)
+            request.HTTPMethod = endpoint.method.rawValue
+            return request
+        } else {
+            fatalError("URL could not be built using base URL: \(baseURL) and endpoint path: \(endpoint.path)")
+        }
     }
     
     private func runRequest(request: NSURLRequest, completion: Completion) -> Cancellable {
