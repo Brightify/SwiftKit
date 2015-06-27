@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |spec|
     spec.name             = "SwiftKit"
-    spec.version          = "0.3.7"
+    spec.version          = "0.4.0"
     spec.summary          = "SwiftKit is a collection of simple libraries that make your life easier."
     spec.description      = <<-DESC
                        SwiftKit's main purpose is to jumpstart iOS app development. We strive to deliver multiple small libraries that will solve the most basic things so you will not have to do it yourself.
@@ -59,6 +59,12 @@ Pod::Spec.new do |spec|
     spec.subspec 'ViewComposer' do |composer|
         composer.source_files = 'ViewComposer/**/*.swift'
         composer.frameworks = 'UIKit'
+        composer.dependency 'SwiftKit/Events'
+    end
+
+    spec.subspec 'TestUtils' do |composer|
+        composer.source_files = 'TestUtils/**/*.swift'
+        composer.frameworks = 'XCTest'
         composer.dependency 'SwiftKit/Events'
     end
 end
