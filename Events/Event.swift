@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-* Event submodule contains implementation of memory leak-less listeners using closures
+* Event submodule contains implementation of listeners using closures
 */
 public class Event<SENDER, INPUT> {
     
