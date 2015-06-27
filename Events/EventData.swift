@@ -8,9 +8,19 @@
 
 import Foundation
 
+/**
+* EventData is a struct that is being used to pass data through listeners and to create them.
+*/
 public struct EventData<SENDER, INPUT> {
     
+    /**
+    * Object that registers the listeners
+    */
     public let sender: SENDER
-    public let input: INPUT
     
+    /**
+    * Variable containing meaningful data passed through the listeners
+    */
+    public let input: INPUT
+
 }

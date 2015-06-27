@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+* Extension of UIBarButtonItem, that adds option to use closure instead of target and selector
+*/
 extension UIBarButtonItem {
     
     private struct AssociatedKey {
