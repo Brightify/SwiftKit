@@ -26,6 +26,8 @@ Pod::Spec.new do |spec|
     spec.platform     = :ios, '8.0'
     spec.requires_arc = true
 
+    spec.default_subspec = 'Events', 'Preferences', 'Injection', 'Router', 'ViewComposer'
+
     spec.subspec 'Events' do |events|
         events.source_files = 'Events/**/*.swift'
         events.frameworks = 'UIKit'
@@ -48,12 +50,6 @@ Pod::Spec.new do |spec|
         router.dependency 'Alamofire'
         router.dependency 'ObjectMapper'
         router.dependency 'SwiftyJSON'
-    end
-
-    spec.subspec 'ViewComposer' do |composer|
-        composer.source_files = 'ViewComposer/**/*.swift'
-        composer.frameworks = 'UIKit'
-        composer.dependency 'SwiftKit/Events'
     end
 
     spec.subspec 'ViewComposer' do |composer|
