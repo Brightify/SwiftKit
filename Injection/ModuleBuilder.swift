@@ -8,17 +8,28 @@
 
 import Foundation
 
+/**
+* Key is used in Key based injection
+* :param: T The parameter is the class type this Key is assigned to
+*/
 public class Key<T> {
     
+    /// Name of the key
     public let name: String
     
+    /**
+    * Initializes key with name
+    * :param: named The name of the key
+    */
     public init(named: String) {
         name = named
     }
 }
 
+/// Module is used to create all bindings in the project
 public class Module {
     
+    /// All bindings with keys
     public private(set) var bindings: [String: AnyObject] = [:]
     
     public init() {
