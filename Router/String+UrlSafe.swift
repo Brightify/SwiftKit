@@ -8,6 +8,7 @@
 
 extension String {
  
+    /// Contains String with valid characters for URL
     public var urlSafe: String! {
         return stringByAddingPercentEncodingWithAllowedCharacters(
             NSCharacterSet.URLHostAllowedCharacterSet())

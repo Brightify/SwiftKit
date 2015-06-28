@@ -82,9 +82,7 @@ public class Event<SENDER, INPUT> {
         }
     }
     
-    /**
-    * Removes all listeners from the Event
-    */
+    /// Removes all listeners from the Event
     public func clearListeners() {
         listeners.removeAll()
     }

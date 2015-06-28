@@ -8,9 +8,7 @@
 
 import Foundation
 
-/**
-* EventData is a struct that is being used to pass data through listeners and to create them.
-*/
+/// EventData is a struct that is being used to pass data through listeners and to create them.
 public struct EventData<SENDER, INPUT> {
     
     /**

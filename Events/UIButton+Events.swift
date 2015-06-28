@@ -8,9 +8,7 @@
 
 import UIKit
 
-/**
-* Extension of UIControl that adds Events of every possible action eg. ".TouchDown", ".ValueChanged"
-*/
+/// Extension of UIControl that adds Events of every possible action eg. ".TouchDown", ".ValueChanged"
 extension UIControl {
     
     private struct AssociatedKey {

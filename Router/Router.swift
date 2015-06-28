@@ -2,6 +2,8 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+
+/// Router submodule helps to use REST APIs
 public class Router {
     
     /// Block to be executed when a request has completed.
@@ -11,6 +13,12 @@ public class Router {
     public let objectMapper: ObjectMapper
     public let responseVerifier: ResponseVerifier
     
+    /**
+    * Initialize with URL of the API, an instance of ObjectMapper that will be used for the JSON mapping and a response verifier that is used to verify a response.
+    * :param: baseURL The URL of API
+    * :param: objectMapper An instance of ObjectMapper used to map object to and from JSON.
+    * :param: responseVerifier An instance of ResponseVerifier used to verify a response. By default a StatusCodeRangeVerifier is used with a range of 200...299.
+    */
     public init(
         baseURL: NSURL,
         objectMapper: ObjectMapper,
@@ -87,9 +95,15 @@ public class Router {
 
 }
 
-// Support for basic types
+/// Extension that adds support basic types - for requests with no input and output and no output
 extension Router {
-    // No input or output
+    
+    /**
+    * Performs request with no input data nor output data
+    * :param: endpoint The target Endpoint of the API
+    * :param: callback The callback that is executed when request succeeds or fails
+    * :returns: Cancellable
+    */
     public func request<ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == Void>
         (endpoint: ENDPOINT, callback: EmptyResponse -> ()) -> Cancellable
@@ -109,7 +123,13 @@ extension Router {
         return runRequest(request, completion: relayPlainTextResponse(callback))
     }
     
-    // No output requests
+    /**
+    * Performs request with no output data
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The array of strings that will be filled to the Endpoint
+    * :param: callback The callback that is executed when request succeeds or fails
+    * :returns: Cancellable
+    */
     public func request<ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == Void>
         (endpoint: ENDPOINT, input: [String], callback: EmptyResponse -> ()) -> Cancellable
@@ -134,10 +154,16 @@ extension Router {
     }
 }
 
-// MARK: Support for Mappable
+/// Extension that adds support for Mappable input and output parameters
 extension Router {
     
-    // No output requests
+    /**
+    * Performs request with Mappable input and no output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The Mappable that will be filled to the Endpoint
+    * :param: callback The callback that is executed when request succeeds or fails
+    * :returns: Cancellable
+    */
     public func request<IN: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == Void>
         (endpoint: ENDPOINT, input: IN, callback: EmptyResponse -> ()) -> Cancellable
@@ -147,6 +173,13 @@ extension Router {
         return runRequest(request, completion: relayEmptyResponse(callback))
     }
     
+    /**
+    * Performs request with input of array of Mappables and no output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The input array of Mappables that will be filled to the Endpoint
+    * :param: callback The callback that is executed when request succeeds or fails
+    * :returns: Cancellable
+    */
     public func request<IN: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == Void>
         (endpoint: ENDPOINT, input: [IN], callback: EmptyResponse -> ()) -> Cancellable
@@ -156,7 +189,12 @@ extension Router {
         return runRequest(request, completion: relayEmptyResponse(callback))
     }
 
-    // No input requests
+    /**
+    * Performs request with no input and Mappable output
+    * :param: endpoint The target Endpoint of the API
+    * :param: callback The callback with Mappable parameter
+    * :returns: Cancellable
+    */
     public func request<OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, callback: Response<OUT?> -> ()) -> Cancellable
@@ -166,6 +204,12 @@ extension Router {
         return runRequest(request, completion: relaySingleObjectResponse(callback))
     }
     
+    /**
+    * Performs request with no input and output of Mappable array
+    * :param: endpoint The target Endpoint of the API
+    * :param: callback The callback with Mappable array parameter
+    * :returns: Cancellable
+    */
     public func request<OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, callback: Response<[OUT]> -> ()) -> Cancellable
@@ -175,7 +219,13 @@ extension Router {
         return runRequest(request, completion: relayObjectArrayResponse(callback))
     }
     
-    // Input and output requests
+    /**
+    * Performs request with Mappable input and output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The Mappable input
+    * :param: callback The callback with Mappable parameter
+    * :returns: Cancellable
+    */
     public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<OUT?> -> ()) -> Cancellable
@@ -185,6 +235,13 @@ extension Router {
         return runRequest(request, completion: relaySingleObjectResponse(callback))
     }
     
+    /**
+    * Performs request with input of Mappable array and Mappable output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The input of Mappable array
+    * :param: callback The callback with Mappable parameter
+    * :returns: Cancellable
+    */
     public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<OUT?> -> ()) -> Cancellable
@@ -194,6 +251,13 @@ extension Router {
         return runRequest(request, completion: relaySingleObjectResponse(callback))
     }
     
+    /**
+    * Performs request with Mappable input and output of Mappable array
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The Mappable input
+    * :param: callback The callback with Mappable array parameter
+    * :returns: Cancellable
+    */
     public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<[OUT]> -> ()) -> Cancellable
@@ -203,6 +267,13 @@ extension Router {
         return runRequest(request, completion: relayObjectArrayResponse(callback))
     }
     
+    /**
+    * Performs request with Mappable array input and output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The input of Mappable array
+    * :param: callback The callback with Mappable arrayparameter
+    * :returns: Cancellable
+    */
     public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<[OUT]> -> ()) -> Cancellable
@@ -212,8 +283,13 @@ extension Router {
         return runRequest(request, completion: relayObjectArrayResponse(callback))
     }
     
-    
-    // [String] input requests
+    /**
+    * Performs request with input of String array and Mappable output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The input of String array
+    * :param: callback The Response with Mappable parameter
+    * :returns: Cancellable
+    */
     public func request<OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, input: [String], callback: Response<OUT?> -> ()) -> Cancellable
@@ -223,6 +299,13 @@ extension Router {
         return runRequest(request, completion: relaySingleObjectResponse(callback))
     }
     
+    /**
+    * Performs request with input of String array and Mappable array output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The input of String array
+    * :param: callback The Response with Mappable array parameter
+    * :returns: Cancellable
+    */
     public func request<OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<[OUT]> -> ()) -> Cancellable
@@ -278,10 +361,16 @@ extension Router {
     }
 }
 
-// Support for Transformable
+/// Extension of Router that adds support for requests with Transformable
 extension Router {
     
-    // No output requests
+    /**
+    * Performs request with Transformable input and no output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The Transformable to be put to the request
+    * :param: callback The callback called after completion
+    * :returns: Cancellable
+    */
     public func request<IN: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == Void>
         (endpoint: ENDPOINT, input: IN, callback: EmptyResponse -> ()) -> Cancellable
@@ -290,7 +379,13 @@ extension Router {
         
         return runRequest(request, completion: relayEmptyResponse(callback))
     }
-    
+    /**
+    * Performs request with Transformable array input and no output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The Transformable array to be put to the request
+    * :param: callback The callback called after completion
+    * :returns: Cancellable
+    */
     public func request<IN: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == Void>
         (endpoint: ENDPOINT, input: [IN], callback: EmptyResponse -> ()) -> Cancellable
@@ -300,8 +395,12 @@ extension Router {
         return runRequest(request, completion: relayEmptyResponse(callback))
     }
     
-    
-    // No input requests
+    /**
+    * Performs request with no input and Transformable output
+    * :param: endpoint The target Endpoint of the API
+    * :param: callback The callback called after completion with Transformable parameter
+    * :returns: Cancellable
+    */
     public func request<OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, callback: Response<OUT?> -> ()) -> Cancellable
@@ -311,6 +410,12 @@ extension Router {
         return runRequest(request, completion: relaySingleObjectResponse(callback))
     }
     
+    /**
+    * Performs request with no input and Transformable array output
+    * :param: endpoint The target Endpoint of the API
+    * :param: callback The callback called after completion with Transformable array parameter
+    * :returns: Cancellable
+    */
     public func request<OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, callback: Response<[OUT]> -> ()) -> Cancellable
@@ -320,8 +425,13 @@ extension Router {
         return runRequest(request, completion: relayObjectArrayResponse(callback))
     }
     
-    
-    // Input and output requests
+    /**
+    * Performs request with Transformable input and Transformable output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The Transformable input to be put into request
+    * :param: callback The callback called after completion with Transformable parameter
+    * :returns: Cancellable
+    */
     public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, input: IN, callback: Response<OUT?> -> ()) -> Cancellable
@@ -331,6 +441,13 @@ extension Router {
         return runRequest(request, completion: relaySingleObjectResponse(callback))
     }
     
+    /**
+    * Performs request with Transformable array input and Transformable output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The Transformable array input to be put into request
+    * :param: callback The callback called after completion with Transformable parameter
+    * :returns: Cancellable
+    */
     public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, input: [IN], callback: Response<OUT?> -> ()) -> Cancellable
@@ -340,6 +457,13 @@ extension Router {
         return runRequest(request, completion: relaySingleObjectResponse(callback))
     }
     
+    /**
+    * Performs request with Transformable input and Transformable array output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The Transformable input to be put into request
+    * :param: callback The callback called after completion with Transformable array parameter
+    * :returns: Cancellable
+    */
     public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, input: IN, callback: Response<[OUT]> -> ()) -> Cancellable
@@ -349,6 +473,13 @@ extension Router {
         return runRequest(request, completion: relayObjectArrayResponse(callback))
     }
     
+    /**
+    * Performs request with Transformable array input and Transformable array output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The Transformable array input to be put into request
+    * :param: callback The callback called after completion with Transformable array parameter
+    * :returns: Cancellable
+    */
     public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, input: [IN], callback: Response<[OUT]> -> ()) -> Cancellable
@@ -358,8 +489,13 @@ extension Router {
         return runRequest(request, completion: relayObjectArrayResponse(callback))
     }
     
-    
-    // [String] input requests
+    /**
+    * Performs request with String array input and Transformable output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The String array input to be put into request
+    * :param: callback The callback called after completion with Transformable parameter
+    * :returns: Cancellable
+    */
     public func request<OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, input: [String], callback: Response<OUT?> -> ()) -> Cancellable
@@ -370,6 +506,13 @@ extension Router {
         }
     }
     
+    /**
+    * Performs request with String array input and Transformable array output
+    * :param: endpoint The target Endpoint of the API
+    * :param: input The String array input to be put into request
+    * :param: callback The callback called after completion with Transformable array parameter
+    * :returns: Cancellable
+    */
     public func request<OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, input: [String], callback: Response<[OUT]> -> ()) -> Cancellable
@@ -447,8 +590,15 @@ extension Router {
     }
 }
 
-// Support for JSON
+/// Extension of Router tha adds JSON support
 extension Router {
+    
+    /**
+    * Performs request with input of JSON and output of JSON
+    * :param: input The input of JSON
+    * :param: callback The Response with parameter of JSON
+    * :returns: Cancellable
+    */
     public func request<ENDPOINT: Endpoint
         where ENDPOINT.Input == JSON, ENDPOINT.Output == JSON>
         (endpoint: ENDPOINT, input: JSON, callback: Response<JSON?> -> ()) -> Cancellable

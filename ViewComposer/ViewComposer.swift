@@ -59,9 +59,7 @@ public class ViewComposer {
     }
 }
 
-/**
- * Because Swift compiler fails when using tupple and generics, we need this class to overcome it.
- */
+/// Because Swift compiler fails when using tupple and generics, we need this class to overcome it.
 public class AddIntoSuperview<T: UIView> {
     
     public let view: T
