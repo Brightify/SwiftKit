@@ -8,21 +8,15 @@
 
 import Foundation
 
-/**
-* Protocol whose implementations help with accessing NSUserPreference
-*/
+/// Protocol whose implementations help with accessing NSUserDefaults
 public protocol Preference {
     
     typealias T
-    
-    /**
-    * Contains value of the Preference
-    */
+
+    /// Contains value of the Preference
     var value: T { get set }
     
-    /**
-    * This is true if the Preference with correct key and type exists
-    */
+    /// This is true if the Preference with correct key and type exists
     var exists: Bool { get }
     
     /**
@@ -32,9 +26,7 @@ public protocol Preference {
     */
     init(key: String, defaultValue: T)
     
-    /**
-    * Deletes the Preference from NSUserPreferences
-    */
+    /// Deletes the Preference from NSUserDefaults
     func delete()
     
 }
