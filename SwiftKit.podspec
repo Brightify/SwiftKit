@@ -48,8 +48,12 @@ Pod::Spec.new do |spec|
         router.source_files = 'Router/**/*.swift'
         router.frameworks = 'Foundation'
         router.dependency 'Alamofire'
-        router.dependency 'ObjectMapper'
+        router.dependency 'SwiftKit/ObjectMapper'
         router.dependency 'SwiftyJSON'
+    end
+
+    spec.subspec 'ObjectMapper' do |objectMapper|
+        objectMapper.source_files = 'ObjectMapper/**/*.swift'
     end
 
     spec.subspec 'ViewComposer' do |composer|
@@ -58,9 +62,9 @@ Pod::Spec.new do |spec|
         composer.dependency 'SwiftKit/Events'
     end
 
-    spec.subspec 'TestUtils' do |composer|
-        composer.source_files = 'TestUtils/**/*.swift'
-        composer.frameworks = 'XCTest'
-        composer.dependency 'SwiftKit/Events'
+    spec.subspec 'TestUtils' do |testUtils|
+        testUtils.source_files = 'TestUtils/**/*.swift'
+        testUtils.frameworks = 'XCTest'
+        testUtils.dependency 'SwiftKit/Events'
     end
 end

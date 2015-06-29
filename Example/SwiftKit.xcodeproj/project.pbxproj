@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		184A8FC81B114E92004665A5 /* InjectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A8FC71B114E92004665A5 /* InjectionTest.swift */; };
 		185ACDBB1B206DB700AAB902 /* ViewComposerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */; };
+		187C60A11B3CB73D00B8457A /* ObjectMapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */; };
+		18AB51FB1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */; };
 		3E76AF5D0D82F50F0D7893FB /* Pods_SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -56,6 +58,8 @@
 		184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		184A8FC71B114E92004665A5 /* InjectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectionTest.swift; sourceTree = "<group>"; };
 		185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComposerTest.swift; sourceTree = "<group>"; };
+		187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest.swift; sourceTree = "<group>"; };
+		18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperPolymorphismTest.swift; sourceTree = "<group>"; };
 		4284CCCCA8E65D344BE8D307 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5C7307647314AEE85DF42378 /* Pods-SwiftKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftKit/Pods-SwiftKit.release.xcconfig"; sourceTree = "<group>"; };
 		5CD3994B78FA578EFB85811A /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,7 +82,6 @@
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		6298A1A6CFCD74D07560058A /* SwiftKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SwiftKit.podspec; path = ../SwiftKit.podspec; sourceTree = "<group>"; };
 		A5CEF31739BAA8BA0BCCC47D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -124,6 +127,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		187C609F1B3CB71A00B8457A /* ObjectMapper */ = {
+			isa = PBXGroup;
+			children = (
+				187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */,
+				18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */,
+			);
+			path = ObjectMapper;
+			sourceTree = "<group>";
+		};
 		4B6D392234B65FB859FA366D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +213,7 @@
 				DC0A52EE1B3F150B00DEAE6C /* TestUtils */,
 				DC88270A1B3EF58D00F36530 /* Events */,
 				6003F5BB195388D20070C39A /* Tests.m */,
+				187C609F1B3CB71A00B8457A /* ObjectMapper */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				184A8FC71B114E92004665A5 /* InjectionTest.swift */,
 				184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */,
@@ -474,8 +487,9 @@
 				185ACDBB1B206DB700AAB902 /* ViewComposerTest.swift in Sources */,
 				DC0A52F01B3F150B00DEAE6C /* TestUtilsTest.swift in Sources */,
 				DC57B6301B14FDDE00D073C6 /* StringPreferenceTest.swift in Sources */,
-				6003F5BC195388D20070C39A /* Tests.m in Sources */,
 				184A8FC81B114E92004665A5 /* InjectionTest.swift in Sources */,
+				18AB51FB1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift in Sources */,
+				187C60A11B3CB73D00B8457A /* ObjectMapperTest.swift in Sources */,
 				DC57B6331B14FDDE00D073C6 /* BoolPreferenceTest.swift in Sources */,
 				DC9A43EA1B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift in Sources */,
 				DC0A52F61B402BAE00DEAE6C /* UIButtonDeinitTest.swift in Sources */,

@@ -11,6 +11,6 @@ target 'Tests', :exclusive => true do
     pod "SwiftKit", :path => "../"
     pod "SwiftKit/TestUtils", :path => "../"
     
-    pod 'Specta'
-    pod 'Expecta'
+    pod 'Quick', '0.3.1'
+    pod 'Nimble', '1.0.0-rc.1'
 end
