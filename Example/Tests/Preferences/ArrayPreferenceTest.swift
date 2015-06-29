@@ -77,7 +77,7 @@ class ArrayPreferenceTest: XCTestCase {
         
         preference.value = value
         
-        XCTAssertNotNil(eventData)
+        Assert.notNil(eventData)
         XCTAssertTrue(eventData!.input == value)
     }
     

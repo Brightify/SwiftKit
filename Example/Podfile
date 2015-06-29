@@ -4,10 +4,12 @@ use_frameworks!
 
 target 'SwiftKit', :exclusive => true do
     pod "SwiftKit", :path => "../"
+    pod "SwiftKit/TestUtils", :path => "../"
 end
 
 target 'Tests', :exclusive => true do
     pod "SwiftKit", :path => "../"
+    pod "SwiftKit/TestUtils", :path => "../"
     
     pod 'Specta'
     pod 'Expecta'

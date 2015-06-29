@@ -81,7 +81,7 @@ class StringPreferenceTest: XCTestCase {
         
         preference.value = value
         
-        XCTAssertNotNil(eventData)
+        Assert.notNil(eventData)
         XCTAssertTrue(eventData!.input == value)
     }
     
