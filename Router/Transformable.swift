@@ -6,8 +6,6 @@
 //
 //
 
-import ObjectMapper
-
 public protocol Transformable {
     
     static func transformFromJSON(value: AnyObject?) -> Self?

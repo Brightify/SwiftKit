@@ -46,8 +46,12 @@ Pod::Spec.new do |spec|
     router.source_files = 'Router/**/*.swift'
     router.frameworks = 'Foundation'
     router.dependency 'Alamofire'
-    router.dependency 'ObjectMapper'
+    router.dependency 'SwiftKit/ObjectMapper'
     router.dependency 'SwiftyJSON'
+  end
+
+  spec.subspec 'ObjectMapper' do |objectMapper|
+    objectMapper.source_files = 'ObjectMapper/**/*.swift'
   end
 
   spec.subspec 'ViewComposer' do |composer|
