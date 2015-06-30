@@ -26,7 +26,6 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		DC0A52F01B3F150B00DEAE6C /* TestUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0A52EF1B3F150B00DEAE6C /* TestUtilsTest.swift */; };
 		DC0A52F61B402BAE00DEAE6C /* UIButtonDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0A52F51B402BAE00DEAE6C /* UIButtonDeinitTest.swift */; };
 		DC57B6291B14FDB600D073C6 /* IntPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B6281B14FDB600D073C6 /* IntPreferenceTest.swift */; };
@@ -212,7 +211,6 @@
 			children = (
 				DC0A52EE1B3F150B00DEAE6C /* TestUtils */,
 				DC88270A1B3EF58D00F36530 /* Events */,
-				6003F5BB195388D20070C39A /* Tests.m */,
 				187C609F1B3CB71A00B8457A /* ObjectMapper */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				184A8FC71B114E92004665A5 /* InjectionTest.swift */,

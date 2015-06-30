@@ -54,6 +54,7 @@ Pod::Spec.new do |spec|
 
     spec.subspec 'ObjectMapper' do |objectMapper|
         objectMapper.source_files = 'ObjectMapper/**/*.swift'
+        objectMapper.dependency 'SwiftyJSON'
     end
 
     spec.subspec 'ViewComposer' do |composer|
