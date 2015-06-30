@@ -65,7 +65,7 @@ struct SubMappable: Mappable {
     
 }
 
-class ParentDTO: Mappable, JsonTypeInfoAnnotation {
+class ParentDTO: PolymorphicMappable {
     
     var subData: SubMappable?
     

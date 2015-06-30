@@ -6,39 +6,46 @@
 //  Copyright (c) 2015 Tadeas Kriz. All rights reserved.
 //
 
-import UIKit
-import XCTest
+import Quick
+import Nimble
 import SwiftKit
 
-class ViewComposerTest: XCTestCase {
+class ViewComposerTest: QuickSpec {
 
-    func testExample() {
-        let superview = ViewComposer.compose(UIView).view
-        
-        var view: UIView!
-        var optionalView: UIView?
-        var view1: UIView!
-        var optionalView1: UIView?
-        
-        view = ViewComposer.compose(UIView).addInto(superview)
-        optionalView = ViewComposer.compose(UIView).addInto(superview)
-        
-        XCTAssertNotNil(view)
-        XCTAssertNotNil(optionalView)
-        
-        XCTAssertEqual(view.superview!, superview)
-        XCTAssertEqual(optionalView!.superview!, superview)
+    override func spec() {
+        describe("ViewComposer") {
+            it("composes view and adds into super view using fluent api") {
+                let superview = ViewComposer.compose(UIView).view
 
-        view1 => superview
-        optionalView1 => superview
-        
-        
-        XCTAssertNotNil(view1)
-        XCTAssertNotNil(optionalView1)
-        
-        XCTAssertEqual(view1.superview!, superview)
-        XCTAssertEqual(optionalView1!.superview!, superview)
-        
+                var view: UIView!
+                var optionalView: UIView?
+                
+                view = ViewComposer.compose(UIView).addInto(superview)
+                optionalView = ViewComposer.compose(UIView).addInto(superview)
+             
+                expect(view).toNot(beNil())
+                expect(optionalView).toNot(beNil())
+            
+                expect(view.superview).to(equal(superview))
+                expect(optionalView?.superview).to(equal(superview))
+            }
+            
+            it("composes view and adds into superview using operator api") {
+                let superview = ViewComposer.compose(UIView).view
+                
+                var view: UIView!
+                var optionalView: UIView?
+                
+                view => superview
+                optionalView => superview
+                
+                expect(view).toNot(beNil())
+                expect(optionalView).toNot(beNil())
+                
+                expect(view.superview).to(equal(superview))
+                expect(optionalView?.superview).to(equal(superview))
+            }
+        }
     }
 
 }
