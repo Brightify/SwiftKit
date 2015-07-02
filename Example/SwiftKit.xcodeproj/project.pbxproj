@@ -47,6 +47,7 @@
 		DC9A43FE1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43FD1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift */; };
 		DC9A44001B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43FF1B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift */; };
 		DC9A44021B45B2B200D11BEC /* IntPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */; };
+		DC9A44041B45B4B600D11BEC /* UIButtonEventTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A44031B45B4B600D11BEC /* UIButtonEventTest.swift */; };
 		EED8602AE446AF1AF5E0EDE4 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD3994B78FA578EFB85811A /* Pods_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -115,6 +116,7 @@
 		DC9A43FD1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayPreferenceDeinitTest.swift; sourceTree = "<group>"; };
 		DC9A43FF1B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalPreferenceDeinitTest.swift; sourceTree = "<group>"; };
 		DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntPreferenceDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A44031B45B4B600D11BEC /* UIButtonEventTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonEventTest.swift; sourceTree = "<group>"; };
 		FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -305,6 +307,7 @@
 			children = (
 				DC9A43ED1B45A34600D11BEC /* Deinit */,
 				DC9A43EB1B452E5300D11BEC /* EventTest.swift */,
+				DC9A44031B45B4B600D11BEC /* UIButtonEventTest.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -548,6 +551,7 @@
 				DC9A43EC1B452E5300D11BEC /* EventTest.swift in Sources */,
 				DC9A43FE1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift in Sources */,
 				DC9A43F81B45A4B000D11BEC /* DoublePreferenceDeinitTest.swift in Sources */,
+				DC9A44041B45B4B600D11BEC /* UIButtonEventTest.swift in Sources */,
 				184A8FC81B114E92004665A5 /* InjectionTest.swift in Sources */,
 				1831E0191B58A7B20029C328 /* BoolMappingOperatorsTest.swift in Sources */,
 				DC9A44001B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift in Sources */,
