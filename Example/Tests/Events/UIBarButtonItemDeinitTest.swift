@@ -6,23 +6,26 @@
 //  Copyright (c) 2015 Tadeas Kriz. All rights reserved.
 //
 
-
-import XCTest
+import Quick
 import SwiftKit
 
-class UIBarButtonItemDeinitTest: XCTestCase {
+class UIBarButtonItemDeinitTest: QuickSpec {
     
-    func testDeinit_plainInit_wasCalled() {
-        TestUtils.assertDeinit { TestableUIBarButtonItem(title: "", style: .Plain) }
-    }
-    
-    func testDeinit_registeredTouchUpInside_wasCalled() {
-        TestUtils.assertDeinit {
-            let button = TestableUIBarButtonItem(title: "", style: .Plain)
-            button.selected += { _ in
-                
+    override func spec() {
+        describe("UIBarButtonItem") {
+            it("deinit") {
+                TestUtils.assertDeinit { TestableUIBarButtonItem(title: "", style: .Plain) }
             }
-            return button
+            
+            it("deinit if selected is registered") {
+                TestUtils.assertDeinit {
+                    let button = TestableUIBarButtonItem(title: "", style: .Plain)
+                    button.selected += { _ in
+                        
+                    }
+                    return button
+                }
+            }
         }
     }
     

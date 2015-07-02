@@ -65,7 +65,7 @@ Pod::Spec.new do |spec|
 
     spec.subspec 'TestUtils' do |testUtils|
         testUtils.source_files = 'TestUtils/**/*.swift'
-        testUtils.frameworks = 'XCTest'
+        testUtils.dependency 'Nimble'
         testUtils.dependency 'SwiftKit/Events'
     end
 end

@@ -6,58 +6,62 @@
 //  Copyright (c) 2015 Tadeas Kriz. All rights reserved.
 //
 
-import XCTest
+import Quick
 import SwiftKit
 
-class EventDeinitTest: XCTestCase {
+class EventDeinitTest: QuickSpec {
     
-    func testDeinit_plainInit_wasCalled() {
-        TestUtils.assertDeinit { TestableEvent<EventDeinitTest, Void>() }
-    }
-    
-    func testDeinit_registeredClosure_wasCalled() {
-        TestUtils.assertDeinit {
-            let event = TestableEvent<EventDeinitTest, Void>()
-            event.registerClosure { _ in
-                
+    override func spec() {
+        describe("Event") {
+            it("deinit") {
+                TestUtils.assertDeinit { TestableEvent<EventDeinitTest, Void>() }
             }
-            return event
-        }
-    }
-    
-    func testDeinit_registeredClosureWithTarget_wasCalled() {
-        TestUtils.assertDeinit {
-            let event = TestableEvent<EventDeinitTest, Void>()
-            event.registerClosure(self) { target, _ in
-                
+            
+            it("deinit if closure is registered") {
+                TestUtils.assertDeinit {
+                    let event = TestableEvent<EventDeinitTest, Void>()
+                    event.registerClosure { _ in
+                        
+                    }
+                    return event
+                }
             }
-            return event
-        }
-    }
-  
-    func testDeinit_registeredClosureWithOperator_wasCalled() {
-        TestUtils.assertDeinit {
-            let event = TestableEvent<EventDeinitTest, Void>()
-            event += { _ in
-                
+            
+            it("deinit if closure is registered with target") {
+                TestUtils.assertDeinit {
+                    let event = TestableEvent<EventDeinitTest, Void>()
+                    event.registerClosure(self) { target, _ in
+                        
+                    }
+                    return event
+                }
             }
-            return event
-        }
-    }
-    
-    func testDeinit_registeredMethod_wasCalled() {
-        TestUtils.assertDeinit {
-            let event = TestableEvent<EventDeinitTest, Void>()
-            event.registerMethod(self, method: EventDeinitTest.stubMethod)
-            return event
-        }
-    }
-    
-    func testDeinit_registeredMethodWithEventData_wasCalled() {
-        TestUtils.assertDeinit {
-            let event = TestableEvent<EventDeinitTest, Void>()
-            event.registerMethod(self, method: EventDeinitTest.stubMethodWithEventData)
-            return event
+            
+            it("deinit if closure is registered with operator") {
+                TestUtils.assertDeinit {
+                    let event = TestableEvent<EventDeinitTest, Void>()
+                    event += { _ in
+                        
+                    }
+                    return event
+                }
+            }
+            
+            it("deinit if method is registered") {
+                TestUtils.assertDeinit {
+                    let event = TestableEvent<EventDeinitTest, Void>()
+                    event.registerMethod(self, method: EventDeinitTest.stubMethod)
+                    return event
+                }
+            }
+            
+            it("deinit if method with EventData is registered") {
+                TestUtils.assertDeinit {
+                    let event = TestableEvent<EventDeinitTest, Void>()
+                    event.registerMethod(self, method: EventDeinitTest.stubMethodWithEventData)
+                    return event
+                }
+            }
         }
     }
 

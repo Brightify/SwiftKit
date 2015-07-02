@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Tadeas Kriz. All rights reserved.
 //
 
-import XCTest
+import Nimble
 import SwiftKit
 
 public protocol Deinitializable {
@@ -31,7 +31,7 @@ public class TestUtils {
         return wasDeinitialized
     }
     
-    public class func assertDeinit(@noescape instanceFactory: () -> Deinitializable) {
-        XCTAssertTrue(wasDeinit(instanceFactory), "Deinit wasn't called.")
+    public class func assertDeinit(instanceFactory: () -> Deinitializable) {
+        expect(self.wasDeinit(instanceFactory)) == true
     }
 }

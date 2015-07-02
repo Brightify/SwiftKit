@@ -38,8 +38,8 @@
 		DC57B6341B14FDDE00D073C6 /* ArrayPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62E1B14FDDE00D073C6 /* ArrayPreferenceTest.swift */; };
 		DC57B6351B14FDDE00D073C6 /* OptionalPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62F1B14FDDE00D073C6 /* OptionalPreferenceTest.swift */; };
 		DC88270C1B3EF58D00F36530 /* EventDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88270B1B3EF58D00F36530 /* EventDeinitTest.swift */; };
-		DC9A43E81B40753C00D11BEC /* EventTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43E71B40753C00D11BEC /* EventTest.swift */; };
 		DC9A43EA1B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43E91B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift */; };
+		DC9A43EC1B452E5300D11BEC /* EventTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43EB1B452E5300D11BEC /* EventTest.swift */; };
 		EED8602AE446AF1AF5E0EDE4 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD3994B78FA578EFB85811A /* Pods_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -99,8 +99,8 @@
 		DC57B62E1B14FDDE00D073C6 /* ArrayPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayPreferenceTest.swift; path = Preferences/ArrayPreferenceTest.swift; sourceTree = "<group>"; };
 		DC57B62F1B14FDDE00D073C6 /* OptionalPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OptionalPreferenceTest.swift; path = Preferences/OptionalPreferenceTest.swift; sourceTree = "<group>"; };
 		DC88270B1B3EF58D00F36530 /* EventDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDeinitTest.swift; sourceTree = "<group>"; };
-		DC9A43E71B40753C00D11BEC /* EventTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTest.swift; sourceTree = "<group>"; };
 		DC9A43E91B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A43EB1B452E5300D11BEC /* EventTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTest.swift; sourceTree = "<group>"; };
 		FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -291,7 +291,7 @@
 				DC9A43E91B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift */,
 				DC88270B1B3EF58D00F36530 /* EventDeinitTest.swift */,
 				DC0A52F51B402BAE00DEAE6C /* UIButtonDeinitTest.swift */,
-				DC9A43E71B40753C00D11BEC /* EventTest.swift */,
+				DC9A43EB1B452E5300D11BEC /* EventTest.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -507,6 +507,7 @@
 				185ACDBB1B206DB700AAB902 /* ViewComposerTest.swift in Sources */,
 				DC0A52F01B3F150B00DEAE6C /* TestUtilsTest.swift in Sources */,
 				DC57B6301B14FDDE00D073C6 /* StringPreferenceTest.swift in Sources */,
+				DC9A43EC1B452E5300D11BEC /* EventTest.swift in Sources */,
 				184A8FC81B114E92004665A5 /* InjectionTest.swift in Sources */,
 				1831E0191B58A7B20029C328 /* BoolMappingOperatorsTest.swift in Sources */,
 				18AB51FB1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift in Sources */,
@@ -517,7 +518,6 @@
 				DC57B6311B14FDDE00D073C6 /* DoublePreferenceTest.swift in Sources */,
 				186D2E761B4ECDAA005BC06D /* RouterTest.swift in Sources */,
 				DC57B6321B14FDDE00D073C6 /* FloatPreferenceTest.swift in Sources */,
-				DC9A43E81B40753C00D11BEC /* EventTest.swift in Sources */,
 				DC57B6341B14FDDE00D073C6 /* ArrayPreferenceTest.swift in Sources */,
 				DC57B6291B14FDB600D073C6 /* IntPreferenceTest.swift in Sources */,
 				DC57B6351B14FDDE00D073C6 /* OptionalPreferenceTest.swift in Sources */,
