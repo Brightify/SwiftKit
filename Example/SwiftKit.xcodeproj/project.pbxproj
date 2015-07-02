@@ -48,6 +48,7 @@
 		DC9A44001B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43FF1B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift */; };
 		DC9A44021B45B2B200D11BEC /* IntPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */; };
 		DC9A44041B45B4B600D11BEC /* UIButtonEventTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A44031B45B4B600D11BEC /* UIButtonEventTest.swift */; };
+		DC9A44061B45BBEF00D11BEC /* UIBarButtonItemEventTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A44051B45BBEF00D11BEC /* UIBarButtonItemEventTest.swift */; };
 		EED8602AE446AF1AF5E0EDE4 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD3994B78FA578EFB85811A /* Pods_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -117,6 +118,7 @@
 		DC9A43FF1B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalPreferenceDeinitTest.swift; sourceTree = "<group>"; };
 		DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntPreferenceDeinitTest.swift; sourceTree = "<group>"; };
 		DC9A44031B45B4B600D11BEC /* UIButtonEventTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonEventTest.swift; sourceTree = "<group>"; };
+		DC9A44051B45BBEF00D11BEC /* UIBarButtonItemEventTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemEventTest.swift; sourceTree = "<group>"; };
 		FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -308,6 +310,7 @@
 				DC9A43ED1B45A34600D11BEC /* Deinit */,
 				DC9A43EB1B452E5300D11BEC /* EventTest.swift */,
 				DC9A44031B45B4B600D11BEC /* UIButtonEventTest.swift */,
+				DC9A44051B45BBEF00D11BEC /* UIBarButtonItemEventTest.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 				DC57B6311B14FDDE00D073C6 /* DoublePreferenceTest.swift in Sources */,
 				186D2E761B4ECDAA005BC06D /* RouterTest.swift in Sources */,
 				DC9A43F61B45A36700D11BEC /* StringPreferenceDeinitTest.swift in Sources */,
+				DC9A44061B45BBEF00D11BEC /* UIBarButtonItemEventTest.swift in Sources */,
 				DC9A43F31B45A34600D11BEC /* UIButtonDeinitTest.swift in Sources */,
 				DC9A43F11B45A34600D11BEC /* EventDeinitTest.swift in Sources */,
 				DC57B6321B14FDDE00D073C6 /* FloatPreferenceTest.swift in Sources */,
