@@ -29,7 +29,6 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		DC0A52F01B3F150B00DEAE6C /* TestUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0A52EF1B3F150B00DEAE6C /* TestUtilsTest.swift */; };
-		DC0A52F61B402BAE00DEAE6C /* UIButtonDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0A52F51B402BAE00DEAE6C /* UIButtonDeinitTest.swift */; };
 		DC57B6291B14FDB600D073C6 /* IntPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B6281B14FDB600D073C6 /* IntPreferenceTest.swift */; };
 		DC57B6301B14FDDE00D073C6 /* StringPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62A1B14FDDE00D073C6 /* StringPreferenceTest.swift */; };
 		DC57B6311B14FDDE00D073C6 /* DoublePreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62B1B14FDDE00D073C6 /* DoublePreferenceTest.swift */; };
@@ -37,9 +36,17 @@
 		DC57B6331B14FDDE00D073C6 /* BoolPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62D1B14FDDE00D073C6 /* BoolPreferenceTest.swift */; };
 		DC57B6341B14FDDE00D073C6 /* ArrayPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62E1B14FDDE00D073C6 /* ArrayPreferenceTest.swift */; };
 		DC57B6351B14FDDE00D073C6 /* OptionalPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62F1B14FDDE00D073C6 /* OptionalPreferenceTest.swift */; };
-		DC88270C1B3EF58D00F36530 /* EventDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88270B1B3EF58D00F36530 /* EventDeinitTest.swift */; };
-		DC9A43EA1B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43E91B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift */; };
 		DC9A43EC1B452E5300D11BEC /* EventTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43EB1B452E5300D11BEC /* EventTest.swift */; };
+		DC9A43F11B45A34600D11BEC /* EventDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43EE1B45A34600D11BEC /* EventDeinitTest.swift */; };
+		DC9A43F21B45A34600D11BEC /* UIBarButtonItemDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43EF1B45A34600D11BEC /* UIBarButtonItemDeinitTest.swift */; };
+		DC9A43F31B45A34600D11BEC /* UIButtonDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43F01B45A34600D11BEC /* UIButtonDeinitTest.swift */; };
+		DC9A43F61B45A36700D11BEC /* StringPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43F51B45A36700D11BEC /* StringPreferenceDeinitTest.swift */; };
+		DC9A43F81B45A4B000D11BEC /* DoublePreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43F71B45A4B000D11BEC /* DoublePreferenceDeinitTest.swift */; };
+		DC9A43FA1B45A4E900D11BEC /* FloatPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43F91B45A4E900D11BEC /* FloatPreferenceDeinitTest.swift */; };
+		DC9A43FC1B45A50E00D11BEC /* BoolPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43FB1B45A50E00D11BEC /* BoolPreferenceDeinitTest.swift */; };
+		DC9A43FE1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43FD1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift */; };
+		DC9A44001B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A43FF1B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift */; };
+		DC9A44021B45B2B200D11BEC /* IntPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */; };
 		EED8602AE446AF1AF5E0EDE4 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD3994B78FA578EFB85811A /* Pods_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -90,7 +97,6 @@
 		A5CEF31739BAA8BA0BCCC47D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		BACC98F5132F5D2FA8DDF557 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		DC0A52EF1B3F150B00DEAE6C /* TestUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtilsTest.swift; sourceTree = "<group>"; };
-		DC0A52F51B402BAE00DEAE6C /* UIButtonDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonDeinitTest.swift; sourceTree = "<group>"; };
 		DC57B6281B14FDB600D073C6 /* IntPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntPreferenceTest.swift; path = Preferences/IntPreferenceTest.swift; sourceTree = "<group>"; };
 		DC57B62A1B14FDDE00D073C6 /* StringPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringPreferenceTest.swift; path = Preferences/StringPreferenceTest.swift; sourceTree = "<group>"; };
 		DC57B62B1B14FDDE00D073C6 /* DoublePreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DoublePreferenceTest.swift; path = Preferences/DoublePreferenceTest.swift; sourceTree = "<group>"; };
@@ -98,9 +104,17 @@
 		DC57B62D1B14FDDE00D073C6 /* BoolPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoolPreferenceTest.swift; path = Preferences/BoolPreferenceTest.swift; sourceTree = "<group>"; };
 		DC57B62E1B14FDDE00D073C6 /* ArrayPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayPreferenceTest.swift; path = Preferences/ArrayPreferenceTest.swift; sourceTree = "<group>"; };
 		DC57B62F1B14FDDE00D073C6 /* OptionalPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OptionalPreferenceTest.swift; path = Preferences/OptionalPreferenceTest.swift; sourceTree = "<group>"; };
-		DC88270B1B3EF58D00F36530 /* EventDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDeinitTest.swift; sourceTree = "<group>"; };
-		DC9A43E91B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemDeinitTest.swift; sourceTree = "<group>"; };
 		DC9A43EB1B452E5300D11BEC /* EventTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTest.swift; sourceTree = "<group>"; };
+		DC9A43EE1B45A34600D11BEC /* EventDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A43EF1B45A34600D11BEC /* UIBarButtonItemDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A43F01B45A34600D11BEC /* UIButtonDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A43F51B45A36700D11BEC /* StringPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringPreferenceDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A43F71B45A4B000D11BEC /* DoublePreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoublePreferenceDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A43F91B45A4E900D11BEC /* FloatPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatPreferenceDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A43FB1B45A50E00D11BEC /* BoolPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolPreferenceDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A43FD1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayPreferenceDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A43FF1B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalPreferenceDeinitTest.swift; sourceTree = "<group>"; };
+		DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntPreferenceDeinitTest.swift; sourceTree = "<group>"; };
 		FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -274,6 +288,7 @@
 		DC3B288C1B14F221007F14B1 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				DC9A43F41B45A35400D11BEC /* Deinit */,
 				DC57B62A1B14FDDE00D073C6 /* StringPreferenceTest.swift */,
 				DC57B62B1B14FDDE00D073C6 /* DoublePreferenceTest.swift */,
 				DC57B62C1B14FDDE00D073C6 /* FloatPreferenceTest.swift */,
@@ -288,12 +303,35 @@
 		DC88270A1B3EF58D00F36530 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				DC9A43E91B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift */,
-				DC88270B1B3EF58D00F36530 /* EventDeinitTest.swift */,
-				DC0A52F51B402BAE00DEAE6C /* UIButtonDeinitTest.swift */,
+				DC9A43ED1B45A34600D11BEC /* Deinit */,
 				DC9A43EB1B452E5300D11BEC /* EventTest.swift */,
 			);
 			path = Events;
+			sourceTree = "<group>";
+		};
+		DC9A43ED1B45A34600D11BEC /* Deinit */ = {
+			isa = PBXGroup;
+			children = (
+				DC9A43EE1B45A34600D11BEC /* EventDeinitTest.swift */,
+				DC9A43EF1B45A34600D11BEC /* UIBarButtonItemDeinitTest.swift */,
+				DC9A43F01B45A34600D11BEC /* UIButtonDeinitTest.swift */,
+			);
+			path = Deinit;
+			sourceTree = "<group>";
+		};
+		DC9A43F41B45A35400D11BEC /* Deinit */ = {
+			isa = PBXGroup;
+			children = (
+				DC9A43F51B45A36700D11BEC /* StringPreferenceDeinitTest.swift */,
+				DC9A43F71B45A4B000D11BEC /* DoublePreferenceDeinitTest.swift */,
+				DC9A43F91B45A4E900D11BEC /* FloatPreferenceDeinitTest.swift */,
+				DC9A43FB1B45A50E00D11BEC /* BoolPreferenceDeinitTest.swift */,
+				DC9A43FD1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift */,
+				DC9A43FF1B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift */,
+				DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */,
+			);
+			name = Deinit;
+			path = Preferences/Deinit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -508,20 +546,27 @@
 				DC0A52F01B3F150B00DEAE6C /* TestUtilsTest.swift in Sources */,
 				DC57B6301B14FDDE00D073C6 /* StringPreferenceTest.swift in Sources */,
 				DC9A43EC1B452E5300D11BEC /* EventTest.swift in Sources */,
+				DC9A43FE1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift in Sources */,
+				DC9A43F81B45A4B000D11BEC /* DoublePreferenceDeinitTest.swift in Sources */,
 				184A8FC81B114E92004665A5 /* InjectionTest.swift in Sources */,
 				1831E0191B58A7B20029C328 /* BoolMappingOperatorsTest.swift in Sources */,
+				DC9A44001B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift in Sources */,
 				18AB51FB1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift in Sources */,
+				DC9A43F21B45A34600D11BEC /* UIBarButtonItemDeinitTest.swift in Sources */,
 				187C60A11B3CB73D00B8457A /* ObjectMapperTest.swift in Sources */,
+				DC9A43FC1B45A50E00D11BEC /* BoolPreferenceDeinitTest.swift in Sources */,
 				DC57B6331B14FDDE00D073C6 /* BoolPreferenceTest.swift in Sources */,
-				DC9A43EA1B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift in Sources */,
-				DC0A52F61B402BAE00DEAE6C /* UIButtonDeinitTest.swift in Sources */,
 				DC57B6311B14FDDE00D073C6 /* DoublePreferenceTest.swift in Sources */,
 				186D2E761B4ECDAA005BC06D /* RouterTest.swift in Sources */,
+				DC9A43F61B45A36700D11BEC /* StringPreferenceDeinitTest.swift in Sources */,
+				DC9A43F31B45A34600D11BEC /* UIButtonDeinitTest.swift in Sources */,
+				DC9A43F11B45A34600D11BEC /* EventDeinitTest.swift in Sources */,
 				DC57B6321B14FDDE00D073C6 /* FloatPreferenceTest.swift in Sources */,
 				DC57B6341B14FDDE00D073C6 /* ArrayPreferenceTest.swift in Sources */,
 				DC57B6291B14FDB600D073C6 /* IntPreferenceTest.swift in Sources */,
+				DC9A43FA1B45A4E900D11BEC /* FloatPreferenceDeinitTest.swift in Sources */,
 				DC57B6351B14FDDE00D073C6 /* OptionalPreferenceTest.swift in Sources */,
-				DC88270C1B3EF58D00F36530 /* EventDeinitTest.swift in Sources */,
+				DC9A44021B45B2B200D11BEC /* IntPreferenceDeinitTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
