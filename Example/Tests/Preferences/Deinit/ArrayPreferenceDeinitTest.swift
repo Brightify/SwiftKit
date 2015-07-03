@@ -20,11 +20,11 @@ class ArrayPreferenceDeinitTest: QuickSpec {
             }
             
             it("deinit") {
-                TestUtils.assertDeinit { TestableArrayPreference<NSString>(key: key) }
+                QuickUtils.assertDeinit { TestableArrayPreference<NSString>(key: key) }
             }
             
             it("deinit if onValueChange is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let preference = TestableArrayPreference<NSString>(key: key)
                     preference.onValueChange += { _ in
                         
@@ -34,7 +34,7 @@ class ArrayPreferenceDeinitTest: QuickSpec {
             }
             
             it("deinit if value exists") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let preference = TestableArrayPreference<NSString>(key: key)
                     preference.value = ["Hello"]
                     return preference

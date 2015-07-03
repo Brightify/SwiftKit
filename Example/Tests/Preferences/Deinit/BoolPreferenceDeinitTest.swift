@@ -20,11 +20,11 @@ class BoolPreferenceDeinitTest: QuickSpec {
             }
             
             it("deinit") {
-                TestUtils.assertDeinit { TestableBoolPreference(key: key) }
+                QuickUtils.assertDeinit { TestableBoolPreference(key: key) }
             }
             
             it("deinit if onValueChange is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let preference = TestableBoolPreference(key: key)
                     preference.onValueChange += { _ in
                         
@@ -34,7 +34,7 @@ class BoolPreferenceDeinitTest: QuickSpec {
             }
             
             it("deinit if value exists") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let preference = TestableBoolPreference(key: key)
                     preference.value = true
                     return preference

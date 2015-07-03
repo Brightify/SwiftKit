@@ -14,11 +14,11 @@ class EventDeinitTest: QuickSpec {
     override func spec() {
         describe("Event") {
             it("deinit") {
-                TestUtils.assertDeinit { TestableEvent<EventDeinitTest, Void>() }
+                QuickUtils.assertDeinit { TestableEvent<EventDeinitTest, Void>() }
             }
             
             it("deinit if closure is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let event = TestableEvent<EventDeinitTest, Void>()
                     event.registerClosure { _ in
                         
@@ -28,7 +28,7 @@ class EventDeinitTest: QuickSpec {
             }
             
             it("deinit if closure is registered with target") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let event = TestableEvent<EventDeinitTest, Void>()
                     event.registerClosure(self) { target, _ in
                         
@@ -38,7 +38,7 @@ class EventDeinitTest: QuickSpec {
             }
             
             it("deinit if closure is registered with operator") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let event = TestableEvent<EventDeinitTest, Void>()
                     event += { _ in
                         
@@ -48,7 +48,7 @@ class EventDeinitTest: QuickSpec {
             }
             
             it("deinit if method is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let event = TestableEvent<EventDeinitTest, Void>()
                     event.registerMethod(self, method: EventDeinitTest.stubMethod)
                     return event
@@ -56,7 +56,7 @@ class EventDeinitTest: QuickSpec {
             }
             
             it("deinit if method with EventData is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let event = TestableEvent<EventDeinitTest, Void>()
                     event.registerMethod(self, method: EventDeinitTest.stubMethodWithEventData)
                     return event

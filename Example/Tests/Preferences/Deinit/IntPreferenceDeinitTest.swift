@@ -20,11 +20,11 @@ class IntPreferenceDeinitTest: QuickSpec {
             }
             
             it("deinit") {
-                TestUtils.assertDeinit { TestableIntPreference(key: key) }
+                QuickUtils.assertDeinit { TestableIntPreference(key: key) }
             }
             
             it("deinit if onValueChange is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let preference = TestableIntPreference(key: key)
                     preference.onValueChange += { _ in
                         
@@ -34,7 +34,7 @@ class IntPreferenceDeinitTest: QuickSpec {
             }
             
             it("deinit if value exists") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let preference = TestableIntPreference(key: key)
                     preference.value = 10
                     return preference

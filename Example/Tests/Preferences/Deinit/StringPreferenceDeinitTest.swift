@@ -20,11 +20,11 @@ class StringPreferenceDeinitTest: QuickSpec {
             }
             
             it("deinit") {
-                TestUtils.assertDeinit { TestableStringPreference(key: key) }
+                QuickUtils.assertDeinit { TestableStringPreference(key: key) }
             }
             
             it("deinit if onValueChange is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let preference = TestableStringPreference(key: key)
                     preference.onValueChange += { _ in
                         
@@ -34,7 +34,7 @@ class StringPreferenceDeinitTest: QuickSpec {
             }
             
             it("deinit if value exists") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let preference = TestableStringPreference(key: key)
                     preference.value = "Real value"
                     return preference

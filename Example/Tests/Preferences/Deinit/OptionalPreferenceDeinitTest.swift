@@ -20,11 +20,11 @@ class OptionalPreferenceDeinitTest: QuickSpec {
             }
             
             it("deinit") {
-                TestUtils.assertDeinit { TestableOptionalPreference<NSString>(key: key) }
+                QuickUtils.assertDeinit { TestableOptionalPreference<NSString>(key: key) }
             }
             
             it("deinit if onValueChange is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let preference = TestableOptionalPreference<NSString>(key: key)
                     preference.onValueChange += { _ in
                         
@@ -34,7 +34,7 @@ class OptionalPreferenceDeinitTest: QuickSpec {
             }
             
             it("deinit if value exists") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let preference = TestableOptionalPreference<NSString>(key: key)
                     preference.value = "Hello"
                     return preference

@@ -16,14 +16,14 @@ class TestUtilsTest: QuickSpec {
         describe("TestUtils") {
             describe("wasDeinit") {
                 it("returns true if instance has no reference cycle") {
-                    let result = TestUtils.wasDeinit {
+                    let result = QuickUtils.wasDeinit {
                         TestableClassWithoutReferenceCycle()
                     }
                     expect(result) == true
                 }
                 
                 it("returns true if instance has weak reference cycle") {
-                    let result = TestUtils.wasDeinit {
+                    let result = QuickUtils.wasDeinit {
                         var testableClass = TestableClassWithWeakReferenceCycle()
                         testableClass.classWithDelegate = ClassWithDelegate(delegate: testableClass)
                         return testableClass
@@ -32,7 +32,7 @@ class TestUtilsTest: QuickSpec {
                 }
                 
                 it("returns false if instance has strong reference cycle") {
-                    let result = TestUtils.wasDeinit {
+                    let result = QuickUtils.wasDeinit {
                         var testableClass = TestableClassWithStrongReferenceCycle()
                         testableClass.classWithDelegate = ClassWithDelegate(delegate: testableClass)
                         return testableClass
@@ -43,13 +43,13 @@ class TestUtilsTest: QuickSpec {
 
             describe("assertDeinit") {
                 it("passes if instance has no reference cycle") {
-                    TestUtils.assertDeinit {
+                    QuickUtils.assertDeinit {
                         TestableClassWithoutReferenceCycle()
                     }
                 }
                 
                 it("passes if instance has weak reference cycle") {
-                    TestUtils.assertDeinit {
+                    QuickUtils.assertDeinit {
                         var testableClass = TestableClassWithWeakReferenceCycle()
                         testableClass.classWithDelegate = ClassWithDelegate(delegate: testableClass)
                         return testableClass

@@ -14,11 +14,11 @@ class UIButtonDeinitTest: QuickSpec {
     override func spec() {
         describe("UIButton") {
             it("deinit") {
-                TestUtils.assertDeinit { TestableUIButton() }
+                QuickUtils.assertDeinit { TestableUIButton() }
             }
             
             it("deinit if touchDown is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.touchDown += { _ in
                         
@@ -28,7 +28,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if touchDownRepeat is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.touchDownRepeat += { _ in
                         
@@ -38,7 +38,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if touchDragInside is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.touchDragInside += { _ in
                         
@@ -48,7 +48,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if touchDragOutside is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.touchDragOutside += { _ in
                         
@@ -58,7 +58,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if touchDragEnter is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.touchDragEnter += { _ in
                         
@@ -68,7 +68,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if touchDragExit is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.touchDragExit += { _ in
                         
@@ -78,7 +78,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if touchUpInside is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.touchUpInside += { _ in
                         
@@ -88,7 +88,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if touchUpOutside is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.touchUpOutside += { _ in
                         
@@ -98,7 +98,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if valueChanged is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.valueChanged += { _ in
                         
@@ -108,7 +108,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if editingDidBegin is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.editingDidBegin += { _ in
                         
@@ -118,7 +118,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if editingChanged is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.editingChanged += { _ in
                         
@@ -128,7 +128,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if editingDidEnd is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.editingDidEnd += { _ in
                         
@@ -138,7 +138,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if editingDidEndOnExit is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.editingDidEndOnExit += { _ in
                         
@@ -148,7 +148,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if allTouchEvents is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.allTouchEvents += { _ in
                         
@@ -158,7 +158,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if allEditingEvents is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.allEditingEvents += { _ in
                         
@@ -168,7 +168,7 @@ class UIButtonDeinitTest: QuickSpec {
             }
             
             it("deinit if allEvents is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIButton()
                     button.allEvents += { _ in
                         

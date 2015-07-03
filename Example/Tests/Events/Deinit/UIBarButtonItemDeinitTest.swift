@@ -14,11 +14,11 @@ class UIBarButtonItemDeinitTest: QuickSpec {
     override func spec() {
         describe("UIBarButtonItem") {
             it("deinit") {
-                TestUtils.assertDeinit { TestableUIBarButtonItem(title: "", style: .Plain) }
+                QuickUtils.assertDeinit { TestableUIBarButtonItem(title: "", style: .Plain) }
             }
             
             it("deinit if selected is registered") {
-                TestUtils.assertDeinit {
+                QuickUtils.assertDeinit {
                     let button = TestableUIBarButtonItem(title: "", style: .Plain)
                     button.selected += { _ in
                         
