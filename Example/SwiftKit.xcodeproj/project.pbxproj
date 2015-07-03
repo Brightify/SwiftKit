@@ -49,6 +49,7 @@
 		DC9A44021B45B2B200D11BEC /* IntPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */; };
 		DC9A44041B45B4B600D11BEC /* UIButtonEventTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A44031B45B4B600D11BEC /* UIButtonEventTest.swift */; };
 		DC9A44061B45BBEF00D11BEC /* UIBarButtonItemEventTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A44051B45BBEF00D11BEC /* UIBarButtonItemEventTest.swift */; };
+		DC9A440B1B45CAB800D11BEC /* InjectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A440A1B45CAB800D11BEC /* InjectionTest.swift */; };
 		EED8602AE446AF1AF5E0EDE4 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD3994B78FA578EFB85811A /* Pods_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -67,7 +68,6 @@
 		128FEFA58CFC85CADACF8FC0 /* Pods-SwiftKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftKit/Pods-SwiftKit.debug.xcconfig"; sourceTree = "<group>"; };
 		1831E0181B58A7B20029C328 /* BoolMappingOperatorsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolMappingOperatorsTest.swift; sourceTree = "<group>"; };
 		184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Bridging-Header.h"; sourceTree = "<group>"; };
-		184A8FC71B114E92004665A5 /* InjectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectionTest.swift; sourceTree = "<group>"; };
 		185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComposerTest.swift; sourceTree = "<group>"; };
 		186D2E751B4ECDAA005BC06D /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
 		187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest.swift; sourceTree = "<group>"; };
@@ -119,6 +119,7 @@
 		DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntPreferenceDeinitTest.swift; sourceTree = "<group>"; };
 		DC9A44031B45B4B600D11BEC /* UIButtonEventTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonEventTest.swift; sourceTree = "<group>"; };
 		DC9A44051B45BBEF00D11BEC /* UIBarButtonItemEventTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemEventTest.swift; sourceTree = "<group>"; };
+		DC9A440A1B45CAB800D11BEC /* InjectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectionTest.swift; sourceTree = "<group>"; };
 		FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -249,11 +250,11 @@
 			isa = PBXGroup;
 			children = (
 				186D2E741B4ECD88005BC06D /* Router */,
+				DC9A44091B45CAB800D11BEC /* Injection */,
 				DC0A52EE1B3F150B00DEAE6C /* TestUtils */,
 				DC88270A1B3EF58D00F36530 /* Events */,
 				187C609F1B3CB71A00B8457A /* ObjectMapper */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
-				184A8FC71B114E92004665A5 /* InjectionTest.swift */,
 				184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */,
 				DC3B288C1B14F221007F14B1 /* Preferences */,
 				185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */,
@@ -338,6 +339,14 @@
 			);
 			name = Deinit;
 			path = Preferences/Deinit;
+			sourceTree = "<group>";
+		};
+		DC9A44091B45CAB800D11BEC /* Injection */ = {
+			isa = PBXGroup;
+			children = (
+				DC9A440A1B45CAB800D11BEC /* InjectionTest.swift */,
+			);
+			path = Injection;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -563,6 +572,7 @@
 				187C60A11B3CB73D00B8457A /* ObjectMapperTest.swift in Sources */,
 				DC9A43FC1B45A50E00D11BEC /* BoolPreferenceDeinitTest.swift in Sources */,
 				DC57B6331B14FDDE00D073C6 /* BoolPreferenceTest.swift in Sources */,
+				DC9A440B1B45CAB800D11BEC /* InjectionTest.swift in Sources */,
 				DC57B6311B14FDDE00D073C6 /* DoublePreferenceTest.swift in Sources */,
 				186D2E761B4ECDAA005BC06D /* RouterTest.swift in Sources */,
 				DC9A43F61B45A36700D11BEC /* StringPreferenceDeinitTest.swift in Sources */,

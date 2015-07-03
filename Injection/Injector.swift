@@ -12,7 +12,13 @@ public class Injector {
     
     let module: Module
     
-    init(module: Module) {
+    public class func createInjector(module: Module) -> Injector {
+        module.configure()
+        let injector = Injector(module: module)
+        return injector
+    }
+    
+    private init(module: Module) {
         self.module = module
     }
     
@@ -48,12 +54,6 @@ public class Injector {
     public func factory<T>(key: Key<T>) -> Factory<T> {
         let initializationClosure = getInitializationClosure(key)
         return Factory<T>(injector: self, closure: initializationClosure)
-    }
-    
-    public class func createInjector(module: Module) -> Injector {
-        module.configure()
-        let injector = Injector(module: module)
-        return injector
     }
     
     public subscript(index: String) -> KeyedInjector {

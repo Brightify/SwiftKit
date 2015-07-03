@@ -158,6 +158,7 @@ public class ClosureBindingBuilder<T> {
     }
 }
 
+// FIXME It seems like the Binding can't be access from outside, but yet is public. Also the name and type is not used.
 public class Binding<T> {
 
     public private(set) var name: String
