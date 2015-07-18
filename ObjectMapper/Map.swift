@@ -66,12 +66,25 @@ public protocol Map: class {
     func object<T: Mappable>() -> T?
     
     func objectArray<T: Mappable>() -> [T]?
-    
+
+    func objectDictionary<T: Mappable>() -> [String: T]?
+
     func setValue<T: AnyObject>(value: T?)
+    
+    func setValue<T, Transform: Transformation where Transform.Object == T>
+            (value: T?, transformWith transformation: Transform)
+    
+    func setValueArray<T, Transform: Transformation where Transform.Object == T>
+            (array: [T]?, transformWith transformation: Transform)
+    
+    func setValueDictionary<T, Transform: Transformation where Transform.Object == T>
+            (dictionary: [String: T]?, transformWith transformation: Transform)
     
     func setObject<T: Mappable>(object: T?)
     
     func setObjectArray<T: Mappable>(objectArray: [T]?)
+    
+    func setObjectDictionary<T: Mappable>(objectDictionary: [String: T]?)
     
     func assignValueTo<T>(inout field: T)
     
@@ -79,13 +92,50 @@ public protocol Map: class {
     
     func assignValueTo<T>(inout field: T?)
     
-    func assignObjectTo<T: Mappable>(inout field: T)
+    func assignValueTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: T, transformWith transformation: Transform)
     
+    func assignValueTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: T!, transformWith transformation: Transform)
+    
+    func assignValueTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: T?, transformWith transformation: Transform)
+
+    func assignValueArrayTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: [T], transformWith transformation: Transform)
+
+    func assignValueArrayTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: [T]!, transformWith transformation: Transform)
+
+    func assignValueArrayTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: [T]?, transformWith transformation: Transform)
+
+    func assignValueDictionaryTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: [String:T], transformWith transformation: Transform)
+
+    func assignValueDictionaryTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: [String:T]!, transformWith transformation: Transform)
+
+    func assignValueDictionaryTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: [String:T]?, transformWith transformation: Transform)
+
+    func assignObjectTo<T: Mappable>(inout field: T)
+
     func assignObjectTo<T: Mappable>(inout field: T!)
     
     func assignObjectTo<T: Mappable>(inout field: T?)
     
     func assignObjectArrayTo<T: Mappable>(inout field: [T])
+
+    func assignObjectArrayTo<T: Mappable>(inout field: [T]!)
+
+    func assignObjectArrayTo<T: Mappable>(inout field: [T]?)
+
+    func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T])
+
+    func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T]!)
+
+    func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T]?)
 }
 
 public class BaseMap: Map {
@@ -122,9 +172,32 @@ public class BaseMap: Map {
     public func objectArray<T: Mappable>() -> [T]? {
         return objectMapper.mapArray(json.unbox)
     }
+
+    public func objectDictionary<T: Mappable>() -> [String: T]? {
+        return objectMapper.mapDictionary(json.unbox)
+    }
     
     public func setValue<T: AnyObject>(value: T?) {
         json.unbox.object = value ?? NSNull()
+    }
+    
+    public func setValue<T, Transform: Transformation where Transform.Object == T>
+            (value: T?, transformWith transformation: Transform) {
+        json.unbox.object = transformation.transformToJSON(value).object
+    }
+    
+    public func setValueArray<T, Transform: Transformation where Transform.Object == T>
+            (array: [T]?, transformWith transformation: Transform) {
+        json.unbox.object = array?.map {
+            transformation.transformToJSON($0).object
+        } ?? NSNull()
+    }
+    
+    public func setValueDictionary<T, Transform: Transformation where Transform.Object == T>
+            (dictionary: [String: T]?, transformWith transformation: Transform) {
+        json.unbox.object = dictionary?.map {
+            transformation.transformToJSON($0).object
+        } ?? NSNull()
     }
     
     public func setObject<T: Mappable>(object: T?) {
@@ -138,6 +211,14 @@ public class BaseMap: Map {
     public func setObjectArray<T: Mappable>(objectArray: [T]?) {
         if let unwrappedObjectArray = objectArray {
             json.unbox.object = objectMapper.toJSONArray(unwrappedObjectArray).object
+        } else {
+            json.unbox.object = NSNull()
+        }
+    }
+    
+    public func setObjectDictionary<T : Mappable>(objectDictionary: [String : T]?) {
+        if let unwrappedObjectDictionary = objectDictionary {
+            json.unbox.object = objectMapper.toJSONDictionary(unwrappedObjectDictionary).object
         } else {
             json.unbox.object = NSNull()
         }
@@ -161,6 +242,69 @@ public class BaseMap: Map {
         }
     }
     
+    public func assignValueTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: T, transformWith transformation: Transform) {
+        if let value: T = transformation.transformFromJSON(json.unbox) {
+            field = value
+        }
+    }
+    
+    public func assignValueTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: T!, transformWith transformation: Transform) {
+        if let value: T = transformation.transformFromJSON(json.unbox) {
+            field = value
+        }
+    }
+    
+    public func assignValueTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: T?, transformWith transformation: Transform) {
+        if let value: T = transformation.transformFromJSON(json.unbox) {
+            field = value
+        }
+    }
+
+    public func assignValueArrayTo<T, Transform:Transformation where Transform.Object == T>
+            (inout field: [T]?, transformWith transformation: Transform) {
+        if let array = transformArrayWith(transformation) {
+            field = array
+        }
+    }
+
+    public func assignValueArrayTo<T, Transform:Transformation where Transform.Object == T>
+            (inout field: [T]!, transformWith transformation: Transform) {
+        if let array = transformArrayWith(transformation) {
+            field = array
+        }
+    }
+
+    public func assignValueArrayTo<T, Transform:Transformation where Transform.Object == T>
+            (inout field: [T], transformWith transformation: Transform) {
+        if let array = transformArrayWith(transformation) {
+            field = array
+        }
+    }
+
+    public func assignValueDictionaryTo<T, Transform: Transformation where Transform.Object == T>
+            (inout field: [String:T]?, transformWith transformation: Transform) {
+        if let dictionary = transformDictionaryWith(transformation) {
+            field = dictionary
+        }
+    }
+
+    public func assignValueDictionaryTo<T, Transform:Transformation where Transform.Object == T>
+            (inout field: [String:T]!, transformWith transformation: Transform) {
+        if let dictionary = transformDictionaryWith(transformation) {
+            field = dictionary
+        }
+    }
+
+    public func assignValueDictionaryTo<T, Transform:Transformation where Transform.Object == T>
+            (inout field: [String:T], transformWith transformation: Transform) {
+        if let dictionary = transformDictionaryWith(transformation) {
+            field = dictionary
+        }
+    }
+
     public func assignObjectTo<T: Mappable>(inout field: T) {
         if let object: T = object() {
             field = object
@@ -182,6 +326,64 @@ public class BaseMap: Map {
     public func assignObjectArrayTo<T: Mappable>(inout field: [T]) {
         if let objectArray: [T] = objectArray() {
             field = objectArray
+        }
+    }
+
+    public func assignObjectArrayTo<T: Mappable>(inout field: [T]!) {
+        if let objectArray: [T] = objectArray() {
+            field = objectArray
+        }
+    }
+
+    public func assignObjectArrayTo<T: Mappable>(inout field: [T]?) {
+        if let objectArray: [T] = objectArray() {
+            field = objectArray
+        }
+    }
+
+    public func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T]) {
+        if let objectDictionary: [String: T] = objectDictionary() {
+            field = objectDictionary
+        }
+    }
+
+    public func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T]!) {
+        if let objectDictionary: [String: T] = objectDictionary() {
+            field = objectDictionary
+        }
+    }
+
+    public func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T]?) {
+        if let objectDictionary: [String: T] = objectDictionary() {
+            field = objectDictionary
+        }
+    }
+
+    private func transformArrayWith<T: Transformation>(transformation: T) -> [T.Object]? {
+        if (json.unbox.type == .Array) {
+            var array: [T.Object] = []
+            for (index, jsonValue) in json.unbox {
+                if let value = transformation.transformFromJSON(jsonValue) {
+                    array.append(value)
+                }
+            }
+            return array
+        } else {
+            return nil
+        }
+    }
+
+    private func transformDictionaryWith<T: Transformation>(transformation: T) -> [String:T.Object]? {
+        if (json.unbox.type == .Dictionary) {
+            var dictionary: [String: T.Object] = [:]
+            for (key, jsonValue) in json.unbox {
+                if let value = transformation.transformFromJSON(jsonValue) {
+                    dictionary[key] = value
+                }
+            }
+            return dictionary
+        } else {
+            return nil
         }
     }
 }

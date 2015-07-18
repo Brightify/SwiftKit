@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 public class Target<ENDPOINT: Endpoint, PARAMS> {
-    private let path: (PARAMS) -> String
+    private let path: PARAMS -> String
     
     public init(_ path: PARAMS -> String) {
         self.path = path

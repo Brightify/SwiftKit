@@ -29,7 +29,10 @@ public class Response<T> {
     }
     
     public func emptyCopy() -> EmptyResponse {
-        return EmptyResponse(output: Void(), statusCode: statusCode, error: error,
-            rawRequest: rawRequest, rawResponse: rawResponse, rawData: rawData)
+        return map { _ in Void() }
+    }
+    
+    public func map<U>(transform: T -> U) -> Response<U> {
+        return Response<U>(output: transform(output), statusCode: statusCode, error: error, rawRequest: rawRequest, rawResponse: rawResponse, rawData: rawData)
     }
 }

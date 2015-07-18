@@ -40,7 +40,21 @@ public class ObjectMapper {
             return nil
         }
     }
- 
+
+    public func mapDictionary<M: Mappable>(json: JSON) -> [String: M]? {
+        if let jsonDictionary = json.dictionary {
+            var objects: [String: M] = [:]
+            for (key, item) in jsonDictionary {
+                if let object: M = map(item) {
+                    objects[key] = object
+                }
+            }
+            return objects
+        } else {
+            return nil
+        }
+    }
+
     public func toJSON<M: Mappable>(var object: M) -> JSON {
         let map = BaseMap(objectMapper: self, mappingDirection: .ToJSON)
         
@@ -53,6 +67,12 @@ public class ObjectMapper {
     public func toJSONArray<M: Mappable>(var objects: [M]) -> JSON {
         var json: JSON = []
         json.arrayObject = objects.map { self.toJSON($0).object }
+        return json
+    }
+    
+    public func toJSONDictionary<M: Mappable>(var dictionary: [String: M]) -> JSON {
+        var json: JSON = [:]
+        json.dictionaryObject = dictionary.map { self.toJSON($0).object }
         return json
     }
 

@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1831E0191B58A7B20029C328 /* BoolMappingOperatorsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831E0181B58A7B20029C328 /* BoolMappingOperatorsTest.swift */; };
 		184A8FC81B114E92004665A5 /* InjectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A8FC71B114E92004665A5 /* InjectionTest.swift */; };
 		185ACDBB1B206DB700AAB902 /* ViewComposerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */; };
+		186D2E761B4ECDAA005BC06D /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186D2E751B4ECDAA005BC06D /* RouterTest.swift */; };
 		187C60A11B3CB73D00B8457A /* ObjectMapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */; };
 		18AB51FB1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */; };
 		3E76AF5D0D82F50F0D7893FB /* Pods_SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -54,9 +56,11 @@
 /* Begin PBXFileReference section */
 		02ADDC5D3126AA265DD9EB31 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		128FEFA58CFC85CADACF8FC0 /* Pods-SwiftKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftKit/Pods-SwiftKit.debug.xcconfig"; sourceTree = "<group>"; };
+		1831E0181B58A7B20029C328 /* BoolMappingOperatorsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolMappingOperatorsTest.swift; sourceTree = "<group>"; };
 		184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		184A8FC71B114E92004665A5 /* InjectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectionTest.swift; sourceTree = "<group>"; };
 		185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComposerTest.swift; sourceTree = "<group>"; };
+		186D2E751B4ECDAA005BC06D /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
 		187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest.swift; sourceTree = "<group>"; };
 		18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperPolymorphismTest.swift; sourceTree = "<group>"; };
 		4284CCCCA8E65D344BE8D307 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -126,9 +130,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1831E0171B58A79F0029C328 /* Operators */ = {
+			isa = PBXGroup;
+			children = (
+				1831E0181B58A7B20029C328 /* BoolMappingOperatorsTest.swift */,
+			);
+			path = Operators;
+			sourceTree = "<group>";
+		};
+		186D2E741B4ECD88005BC06D /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				186D2E751B4ECDAA005BC06D /* RouterTest.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
 		187C609F1B3CB71A00B8457A /* ObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
+				1831E0171B58A79F0029C328 /* Operators */,
 				187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */,
 				18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */,
 			);
@@ -209,6 +230,7 @@
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				186D2E741B4ECD88005BC06D /* Router */,
 				DC0A52EE1B3F150B00DEAE6C /* TestUtils */,
 				DC88270A1B3EF58D00F36530 /* Events */,
 				187C609F1B3CB71A00B8457A /* ObjectMapper */,
@@ -486,12 +508,14 @@
 				DC0A52F01B3F150B00DEAE6C /* TestUtilsTest.swift in Sources */,
 				DC57B6301B14FDDE00D073C6 /* StringPreferenceTest.swift in Sources */,
 				184A8FC81B114E92004665A5 /* InjectionTest.swift in Sources */,
+				1831E0191B58A7B20029C328 /* BoolMappingOperatorsTest.swift in Sources */,
 				18AB51FB1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift in Sources */,
 				187C60A11B3CB73D00B8457A /* ObjectMapperTest.swift in Sources */,
 				DC57B6331B14FDDE00D073C6 /* BoolPreferenceTest.swift in Sources */,
 				DC9A43EA1B4135F700D11BEC /* UIBarButtonItemDeinitTest.swift in Sources */,
 				DC0A52F61B402BAE00DEAE6C /* UIButtonDeinitTest.swift in Sources */,
 				DC57B6311B14FDDE00D073C6 /* DoublePreferenceTest.swift in Sources */,
+				186D2E761B4ECDAA005BC06D /* RouterTest.swift in Sources */,
 				DC57B6321B14FDDE00D073C6 /* FloatPreferenceTest.swift in Sources */,
 				DC9A43E81B40753C00D11BEC /* EventTest.swift in Sources */,
 				DC57B6341B14FDDE00D073C6 /* ArrayPreferenceTest.swift in Sources */,

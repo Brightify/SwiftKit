@@ -33,3 +33,4 @@ DerivedData
 Podfile.lock
 *.xcworkspace
 Pods
+.idea

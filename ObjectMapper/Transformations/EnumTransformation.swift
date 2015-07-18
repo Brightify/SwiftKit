@@ -1,0 +1,27 @@
+//
+//  EnumTransformation.swift
+//  Pods
+//
+//  Created by Tadeas Kriz on 17/07/15.
+//
+//
+
+import Foundation
+import SwiftyJSON
+
+public class EnumTransformation<T: RawRepresentable>: Transformation {
+    
+    public init() { }
+    
+    public func transformFromJSON(json: JSON) -> T? {
+        if let rawValue = json.object as? T.RawValue {
+            return T(rawValue: rawValue)
+        }
+        return nil
+    }
+    
+    public func transformToJSON(object: T?) -> JSON {
+        let value: AnyObject = object?.rawValue as? AnyObject ?? NSNull()
+        return JSON(value)
+    }
+}
