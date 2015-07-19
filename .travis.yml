@@ -11,6 +11,7 @@ osx_image: xcode6.4
 xcode_workspace: Example/SwiftKit.xcworkspace
 xcode_scheme: SwiftKit-Example
 xcode_sdk: iphonesimulator
+podfile: Example/Podfile
 before_install:
 - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
 
