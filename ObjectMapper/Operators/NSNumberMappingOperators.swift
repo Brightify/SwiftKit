@@ -11,37 +11,37 @@ infix operator <- {}
 private let nsnumberTransformation = NSNumberTransformation()
 
 public func <- (inout field: NSNumber, map: Map) {
-    field <- map | nsnumberTransformation
+    field <- (map, nsnumberTransformation)
 }
 
 public func <- (inout field: NSNumber?, map: Map) {
-    field <- map | nsnumberTransformation
+    field <- (map, nsnumberTransformation)
 }
 
 public func <- (inout field: NSNumber!, map: Map) {
-    field <- map | nsnumberTransformation
+    field <- (map, nsnumberTransformation)
 }
 
 public func <- (inout field: [NSNumber], map: Map) {
-    field <- map | nsnumberTransformation
+    field <- (map, nsnumberTransformation)
 }
 
 public func <- (inout field: [NSNumber]!, map: Map) {
-    field <- map | nsnumberTransformation
+    field <- (map, nsnumberTransformation)
 }
 
 public func <- (inout field: [NSNumber]?, map: Map) {
-    field <- map | nsnumberTransformation
+    field <- (map, nsnumberTransformation)
 }
 
 public func <- (inout field: [String: NSNumber], map: Map) {
-    field <- map | nsnumberTransformation
+    field <- (map, nsnumberTransformation)
 }
 
 public func <- (inout field: [String: NSNumber]!, map: Map) {
-    field <- map | nsnumberTransformation
+    field <- (map, nsnumberTransformation)
 }
 
 public func <- (inout field: [String: NSNumber]?, map: Map) {
-    field <- map | nsnumberTransformation
+    field <- (map, nsnumberTransformation)
 }

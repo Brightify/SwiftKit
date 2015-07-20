@@ -8,17 +8,12 @@
 
 import Foundation
 
-infix operator <- {}
-infix operator | { precedence 150 }
-
-public func | <Transform: Transformation>(lhs: Map, rhs: Transform) -> (Map, Transform) {
-    return (lhs, rhs)
-}
+infix operator <- { }
 
 public func <- <T, Transform: Transformation where Transform.Object == T>(inout field: T, right: (Map, Transform)) {
     let map = right.0
     let transformation = right.1
-
+    
     switch(map.direction) {
     case .FromJSON:
         map.assignValueTo(&field, transformWith: transformation)

@@ -13,37 +13,37 @@ infix operator <- {}
 private let intTransformation = IntTransformation()
 
 public func <- (inout field: Int, map: Map) {
-    field <- map | intTransformation
+    field <- (map, intTransformation)
 }
 
 public func <- (inout field: Int?, map: Map) {
-    field <- map | intTransformation
+    field <- (map, intTransformation)
 }
 
 public func <- (inout field: Int!, map: Map) {
-    field <- map | intTransformation
+    field <- (map, intTransformation)
 }
 
 public func <- (inout field: [Int], map: Map) {
-    field <- map | intTransformation
+    field <- (map, intTransformation)
 }
 
 public func <- (inout field: [Int]!, map: Map) {
-    field <- map | intTransformation
+    field <- (map, intTransformation)
 }
 
 public func <- (inout field: [Int]?, map: Map) {
-    field <- map | intTransformation
+    field <- (map, intTransformation)
 }
 
 public func <- (inout field: [String: Int], map: Map) {
-    field <- map | intTransformation
+    field <- (map, intTransformation)
 }
 
 public func <- (inout field: [String: Int]!, map: Map) {
-    field <- map | intTransformation
+    field <- (map, intTransformation)
 }
 
 public func <- (inout field: [String: Int]?, map: Map) {
-    field <- map | intTransformation
+    field <- (map, intTransformation)
 }

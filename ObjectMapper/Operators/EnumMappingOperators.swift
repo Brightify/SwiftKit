@@ -11,37 +11,37 @@ import Foundation
 infix operator <- {}
 
 public func <- <T: RawRepresentable>(inout field: T, map: Map) {
-    field <- map | EnumTransformation()
+    field <- (map, EnumTransformation())
 }
 
 public func <- <T: RawRepresentable>(inout field: T?, map: Map) {
-    field <- map | EnumTransformation()
+    field <- (map, EnumTransformation())
 }
 
 public func <- <T: RawRepresentable>(inout field: T!, map: Map) {
-    field <- map | EnumTransformation()
+    field <- (map, EnumTransformation())
 }
 
 public func <- <T: RawRepresentable>(inout field: [T], map: Map) {
-    field <- map | EnumTransformation()
+    field <- (map, EnumTransformation())
 }
 
 public func <- <T: RawRepresentable>(inout field: [T]?, map: Map) {
-    field <- map | EnumTransformation()
+    field <- (map, EnumTransformation())
 }
 
 public func <- <T: RawRepresentable>(inout field: [T]!, map: Map) {
-    field <- map | EnumTransformation()
+    field <- (map, EnumTransformation())
 }
 
 public func <- <T: RawRepresentable>(inout field: [String: T], map: Map) {
-    field <- map | EnumTransformation()
+    field <- (map, EnumTransformation())
 }
 
 public func <- <T: RawRepresentable>(inout field: [String: T]?, map: Map) {
-    field <- map | EnumTransformation()
+    field <- (map, EnumTransformation())
 }
 
 public func <- <T: RawRepresentable>(inout field: [String: T]!, map: Map) {
-    field <- map | EnumTransformation()
+    field <- (map, EnumTransformation())
 }

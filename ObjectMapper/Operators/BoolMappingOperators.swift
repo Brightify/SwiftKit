@@ -24,37 +24,37 @@ infix operator <- {}
 private let boolTransformation = BoolTransformation()
 
 public func <- (inout field: Bool, map: Map) {
-    field <- map | boolTransformation
+    field <- (map, boolTransformation)
 }
 
 public func <- (inout field: Bool?, map: Map) {
-    field <- map | boolTransformation
+    field <- (map, boolTransformation)
 }
 
 public func <- (inout field: Bool!, map: Map) {
-    field <- map | boolTransformation
+    field <- (map, boolTransformation)
 }
 
 public func <- (inout field: [Bool], map: Map) {
-    field <- map | boolTransformation
+    field <- (map, boolTransformation)
 }
 
 public func <- (inout field: [Bool]!, map: Map) {
-    field <- map | boolTransformation
+    field <- (map, boolTransformation)
 }
 
 public func <- (inout field: [Bool]?, map: Map) {
-    field <- map | boolTransformation
+    field <- (map, boolTransformation)
 }
 
 public func <- (inout field: [String: Bool], map: Map) {
-    field <- map | boolTransformation
+    field <- (map, boolTransformation)
 }
 
 public func <- (inout field: [String: Bool]!, map: Map) {
-    field <- map | boolTransformation
+    field <- (map, boolTransformation)
 }
 
 public func <- (inout field: [String: Bool]?, map: Map) {
-    field <- map | boolTransformation
+    field <- (map, boolTransformation)
 }
