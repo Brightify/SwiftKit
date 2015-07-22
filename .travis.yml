@@ -14,6 +14,7 @@ xcode_sdk: iphonesimulator
 podfile: Example/Podfile
 before_install:
 - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
+- echo "deduplicate_targets: false" > ~/.cocoapods/config.yaml
 
 notifications:
   slack:
