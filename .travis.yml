@@ -15,7 +15,7 @@ podfile: Example/Podfile
 before_install:
 - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
 - mkdir -p ~/.cocoapods/
-- echo "deduplicate_targets: false" > ~/.cocoapods/config.yaml
+- echo 'deduplicate_targets: false' > ~/.cocoapods/config.yaml
 
 notifications:
   slack:
