@@ -103,15 +103,19 @@ public class BindingBuilder<T: protocol<AnyObject, Injectable>> {
         self.binding = binding
         
         // We use the same type as a default implementation.
-        binding.implementation = { injector in
-            T(injector: injector)
-        }
+        to(T)
     }
 
-    public func to(implementation: T.Type) {
+    public func to(implementation: T.Type) -> SingletonBinder<T> {
         binding.implementation = { injector in
             implementation(injector: injector)
         }
+        
+        return SingletonBinder<T>(binding: binding)
+    }
+    
+    public func asSingleton() {
+        SingletonBinder(binding: binding).asSingleton()
     }
 }
 
@@ -121,19 +125,22 @@ public class PostInitInjectableBindingBuilder<T: protocol<AnyObject, PostInitInj
     private init(binding: Binding<T>) {
         self.binding = binding
         
-        binding.implementation = { injector in
-            let injectable = T()
-            injectable.inject(injector)
-            return injectable
-        }
+        // We use the same type as a default implementation.
+        to(T)
     }
     
-    public func to(implementation: T.Type) {
+    public func to(implementation: T.Type) -> SingletonBinder<T> {
         binding.implementation = { injector in
             let injectable = implementation()
             injectable.inject(injector)
             return injectable
         }
+        
+        return SingletonBinder(binding: binding)
+    }
+    
+    public func asSingleton() {
+        SingletonBinder(binding: binding).asSingleton()
     }
 }
 
@@ -143,17 +150,49 @@ public class ClosureBindingBuilder<T> {
     
     private init(binding: Binding<T>) {
         self.binding = binding
-    }
-    
-    public func to(closure: (injector: Injector) -> T) {
-        binding.implementation = { injector in
-            closure(injector: injector)
+        
+        binding.implementation = { _ in
+            fatalError("Implementation type was not set! You need to call method 'to' or 'toNew' if the binded type is not Injectable or PostInitInjectable!")
+            // Without this line the compiler thinks this closure is not (Injector -> T) and does not compile.
+            return nil as T!
         }
     }
     
-    public func toNew(@autoclosure(escaping) closure: () -> T) {
-        to { _ in
+    public func to(closure: (injector: Injector) -> T) -> SingletonBinder<T> {
+        binding.implementation = { injector in
+            closure(injector: injector)
+        }
+        
+        return SingletonBinder(binding: binding)
+    }
+    
+    public func toNew(@autoclosure(escaping) closure: () -> T) -> SingletonBinder<T> {
+        return to { _ in
             closure()
+        }
+    }
+}
+
+public class SingletonBinder<T> {
+    private var binding: Binding<T>
+    
+    private init(binding: Binding<T>) {
+        self.binding = binding
+    }
+    
+    public func asSingleton() {
+        let implementation = binding.implementation
+        var singleton: T? = nil
+        binding.implementation = { injector in
+            if singleton == nil {
+                singleton = implementation?(injector)
+            }
+            
+            if let singleton = singleton {
+                return singleton
+            } else {
+                fatalError("Could not instantiate the singleton of type \(T.self)!")
+            }
         }
     }
 }

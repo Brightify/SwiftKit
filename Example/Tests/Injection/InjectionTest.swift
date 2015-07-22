@@ -41,7 +41,32 @@ class InjectionTest: QuickSpec {
                 
                 let initialController = injector.get(Key<UIViewController>(named: "InitialController"))
                 let lastController = injector.get(Key<UIViewController>(named: "LastController"))
-                expect(NSStringFromClass(initialController.dynamicType)) != NSStringFromClass(lastController.dynamicType)
+                expect(initialController.dynamicType !== lastController.dynamicType) == true
+            }
+            
+            it("creates only one instance when singleton") {
+                let module = Module()
+                module.bind(InitCalledCounter).asSingleton()
+                let injector = Injector.createInjector(module)
+                expect(InitCalledCounter.timesInitCalled) == 0
+                
+                let firstInject = injector.get(InitCalledCounter)
+                expect(InitCalledCounter.timesInitCalled) == 1
+                
+                let secondInject = injector.get(InitCalledCounter)
+                expect(InitCalledCounter.timesInitCalled) == 1
+                expect(firstInject) === secondInject
+                
+                let factory = injector.factory(InitCalledCounter)
+                expect(InitCalledCounter.timesInitCalled) == 1
+                
+                let factoryFirstInject = factory.create()
+                expect(InitCalledCounter.timesInitCalled) == 1
+                expect(firstInject) === factoryFirstInject
+                
+                let factorySecondInject = factory.create()
+                expect(InitCalledCounter.timesInitCalled) == 1
+                expect(factoryFirstInject) === factorySecondInject
             }
         }
     }
@@ -110,4 +135,12 @@ private class MockUserDAO: UserDAO {
         return User(name: "John Mock")
     }
     
+}
+
+private final class InitCalledCounter: Injectable {
+    static var timesInitCalled = 0
+    
+    init(injector: Injector) {
+        InitCalledCounter.timesInitCalled++
+    }
 }
