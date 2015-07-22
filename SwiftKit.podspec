@@ -22,7 +22,6 @@ Pod::Spec.new do |spec|
         :tag => spec.version.to_s
     }
     spec.social_media_url = 'https://twitter.com/BrightifyOrg'
-
     spec.platform     = :ios, '8.0'
     spec.requires_arc = true
 
@@ -63,20 +62,24 @@ Pod::Spec.new do |spec|
         composer.dependency 'SwiftKit/Events'
     end
 
-    spec.subspec 'BaseTestUtils' do |baseTestUtils|
-        baseTestUtils.source_files = 'BaseTestUtils/**/*.swift'
-        baseTestUtils.dependency 'SwiftKit/Events'
-    end
-
     spec.subspec 'TestUtils' do |testUtils|
-        testUtils.source_files = 'TestUtils/**/*.swift'
-        testUtils.frameworks = 'XCTest'
-        testUtils.dependency 'SwiftKit/BaseTestUtils'
-    end
+        testUtils.default_subspec = 'Base', 'XCTest'
 
-    spec.subspec 'QuickUtils' do |quickUtils|
-        quickUtils.source_files = 'QuickUtils/**/*.swift'
-        quickUtils.dependency 'SwiftKit/BaseTestUtils'
-        quickUtils.dependency 'Nimble'
+        testUtils.subspec 'Base' do |baseTestUtils|
+            baseTestUtils.source_files = 'TestUtils/Base/**/*.swift'
+            baseTestUtils.dependency 'SwiftKit/Events'
+        end
+
+        testUtils.subspec 'XCTest' do |xctestUtils|
+            xctestUtils.source_files = 'TestUtils/XCTest/**/*.swift'
+            xctestUtils.frameworks = 'XCTest'
+            xctestUtils.dependency 'SwiftKit/TestUtils/Base'
+        end
+
+        testUtils.subspec 'Quick' do |quickTestUtils|
+            quickTestUtils.source_files = 'TestUtils/Quick/**/*.swift'
+            quickTestUtils.dependency 'SwiftKit/TestUtils/Base'
+            quickTestUtils.dependency 'Nimble'
+        end
     end
 end

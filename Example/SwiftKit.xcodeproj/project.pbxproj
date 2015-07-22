@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1831E0191B58A7B20029C328 /* BoolMappingOperatorsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831E0181B58A7B20029C328 /* BoolMappingOperatorsTest.swift */; };
-		184A8FC81B114E92004665A5 /* InjectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A8FC71B114E92004665A5 /* InjectionTest.swift */; };
 		185ACDBB1B206DB700AAB902 /* ViewComposerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */; };
 		186D2E761B4ECDAA005BC06D /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186D2E751B4ECDAA005BC06D /* RouterTest.swift */; };
 		187C60A11B3CB73D00B8457A /* ObjectMapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */; };
@@ -564,7 +563,6 @@
 				DC9A43FE1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift in Sources */,
 				DC9A43F81B45A4B000D11BEC /* DoublePreferenceDeinitTest.swift in Sources */,
 				DC9A44041B45B4B600D11BEC /* UIButtonEventTest.swift in Sources */,
-				184A8FC81B114E92004665A5 /* InjectionTest.swift in Sources */,
 				1831E0191B58A7B20029C328 /* BoolMappingOperatorsTest.swift in Sources */,
 				DC9A44001B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift in Sources */,
 				18AB51FB1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift in Sources */,

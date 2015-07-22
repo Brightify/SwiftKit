@@ -1,16 +1,14 @@
 source 'https://github.com/CocoaPods/Specs.git'
-
+platform :ios, '8.0'
 use_frameworks!
 
 target 'SwiftKit', :exclusive => true do
     pod "SwiftKit", :path => "../"
-    pod "SwiftKit/TestUtils", :path => "../"
-    pod "SwiftKit/QuickUtils", :path => "../"
 end
 
 target 'Tests', :exclusive => true do
     pod "SwiftKit", :path => "../"
-    pod "SwiftKit/QuickUtils", :path => "../"
+    pod "SwiftKit/TestUtils/Quick", :path => "../"
     
     pod 'Quick', '0.3.1'
     pod 'Nimble', '1.0.0-rc.1'
