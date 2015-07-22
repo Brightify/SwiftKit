@@ -31,15 +31,15 @@ extension UIControl {
     }
     
     public var touchDragOutside: Event<UIControl, UIEvent> {
-        return events_getEvent("events_touchDragOutside", forEvents: .TouchDragOutside)
+        return events_getEvent("events_touchDragOutside:forEvent:", forEvents: .TouchDragOutside)
     }
     
     public var touchDragEnter: Event<UIControl, UIEvent> {
-        return events_getEvent("events_touchDragEnter", forEvents: .TouchDragEnter)
+        return events_getEvent("events_touchDragEnter:forEvent:", forEvents: .TouchDragEnter)
     }
     
     public var touchDragExit: Event<UIControl, UIEvent> {
-        return events_getEvent("events_touchDragExit", forEvents: .TouchDragExit)
+        return events_getEvent("events_touchDragExit:forEvent:", forEvents: .TouchDragExit)
     }
     
     public var touchUpInside: Event<UIControl, UIEvent> {
@@ -47,7 +47,7 @@ extension UIControl {
     }
     
     public var touchUpOutside: Event<UIControl, UIEvent> {
-        return events_getEvent("events_touchUpOutside:forEvent:", forEvents: .TouchUpInside)
+        return events_getEvent("events_touchUpOutside:forEvent:", forEvents: .TouchUpOutside)
     }
     
     public var valueChanged: Event<UIControl, UIEvent> {
