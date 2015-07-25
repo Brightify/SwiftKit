@@ -19,66 +19,88 @@ extension UIControl {
         var events:[Selector: Event<UIControl, UIEvent>] = [:]
     }
     
+    /// A touch-down event in the control.
     public var touchDown: Event<UIControl, UIEvent> {
         return events_getEvent("events_touchDown:forEvent:", forEvents: .TouchDown)
     }
 
+    /// A repeated touch-down event in the control. For this event the value of the UITouch tapCount method is greater 
+    /// than one.
     public var touchDownRepeat: Event<UIControl, UIEvent> {
         return events_getEvent("events_touchDownRepeat:forEvent:", forEvents: .TouchDownRepeat)
     }
     
+    /// An event where a finger is dragged inside the bounds of the control.
     public var touchDragInside: Event<UIControl, UIEvent> {
         return events_getEvent("events_touchDragInside:forEvent:", forEvents: .TouchDragInside)
     }
     
+    /// An event where a finger is dragged just outside the bounds of control.
     public var touchDragOutside: Event<UIControl, UIEvent> {
         return events_getEvent("events_touchDragOutside:forEvent:", forEvents: .TouchDragOutside)
     }
     
+    /// An event where a finger is dragged into the bounds of the control.
     public var touchDragEnter: Event<UIControl, UIEvent> {
         return events_getEvent("events_touchDragEnter:forEvent:", forEvents: .TouchDragEnter)
     }
     
+    /// An event where a finger is dragged from within a control to outside its bounds.
     public var touchDragExit: Event<UIControl, UIEvent> {
         return events_getEvent("events_touchDragExit:forEvent:", forEvents: .TouchDragExit)
     }
     
+    /// A touch-up event in the control where the finger is inside the bounds of the control.
     public var touchUpInside: Event<UIControl, UIEvent> {
         return events_getEvent("events_touchUpInside:forEvent:", forEvents: .TouchUpInside)
     }
     
+    /// A touch-up event in the control where the finger is outside the bounds of the control.
     public var touchUpOutside: Event<UIControl, UIEvent> {
         return events_getEvent("events_touchUpOutside:forEvent:", forEvents: .TouchUpOutside)
     }
     
+    /// A system event canceling the current touches for the control.
+    public var touchCancel: Event<UIControl, UIEvent> {
+        return events_getEvent("events_touchCancel:forEvent:", forEvents: .TouchCancel)
+    }
+    
+    /// A touch dragging or otherwise manipulating a control, causing it to emit a series of different values.
     public var valueChanged: Event<UIControl, UIEvent> {
         return events_getEvent("events_valueChanged:forEvent:", forEvents: .ValueChanged)
     }
 
+    /// A touch initiating an editing session in a `UITextField` object by entering its bounds.
     public var editingDidBegin: Event<UIControl, UIEvent> {
         return events_getEvent("events_editingDidBegin:forEvent:", forEvents: .EditingDidBegin)
     }
     
+    /// A touch making an editing change in a `UITextField` object.
     public var editingChanged: Event<UIControl, UIEvent> {
         return events_getEvent("events_editingChanged:forEvent:", forEvents: .EditingChanged)
     }
     
+    /// A touch ending an editing session in a `UITextField` object by leaving its bounds.
     public var editingDidEnd: Event<UIControl, UIEvent> {
         return events_getEvent("events_editingDidEnd:forEvent:", forEvents: .EditingDidEnd)
     }
     
+    /// A touch ending an editing session in a `UITextField` object.
     public var editingDidEndOnExit: Event<UIControl, UIEvent> {
         return events_getEvent("events_editingDidEndOnExit:forEvent:", forEvents: .EditingDidEndOnExit)
     }
     
+    /// All touch events.
     public var allTouchEvents: Event<UIControl, UIEvent> {
         return events_getEvent("events_allTouchEvents:forEvent:", forEvents: .AllTouchEvents)
     }
     
+    /// All editing touches for UITextField objects
     public var allEditingEvents: Event<UIControl, UIEvent> {
         return events_getEvent("events_allEditingEvents:forEvent:", forEvents: .AllEditingEvents)
     }
     
+    /// All events, including system events.
     public var allEvents: Event<UIControl, UIEvent> {
         return events_getEvent("events_allEvents:forEvent:", forEvents: .AllEvents)
     }
@@ -113,6 +135,10 @@ extension UIControl {
     
     func events_touchUpOutside(sender: UIControl, forEvent event: UIEvent) {
         touchUpOutside.fire(sender, input: event)
+    }
+    
+    func events_touchCancel(sender: UIControl, forEvent event: UIEvent) {
+        touchCancel.fire(sender, input: event)
     }
     
     func events_valueChanged(sender: UIControl, forEvent event: UIEvent) {

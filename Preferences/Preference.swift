@@ -20,9 +20,10 @@ public protocol Preference {
     var exists: Bool { get }
     
     /**
-    * Initializer
-    * :param: key The key that will be used to access the Preference
-    * :param: defaultValue value of unsetted Preference
+        Initializer
+    
+        :param: key The key that will be used to access the Preference
+        :param: defaultValue value of unsetted Preference
     */
     init(key: String, defaultValue: T)
     

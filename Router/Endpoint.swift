@@ -19,8 +19,9 @@ public protocol Endpoint {
     typealias Output
     
     /**
-    * Initializes Endpoint with path
-    * :param: path The path to the API
+        Initializes Endpoint with path
+    
+        :param: path The path to the API
     */
     init(_ path: String)
     

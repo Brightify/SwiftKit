@@ -110,6 +110,18 @@ class UIButtonEventTest: QuickSpec {
                 expect(calledTimes) == 1
             }
             
+            it("calls touchCancel event") {
+                let button = UIButton()
+                var calledTimes = 0
+                button.touchCancel += { _ in
+                    calledTimes++
+                }
+                
+                button.sendActionsForControlEvents(.TouchCancel)
+                
+                expect(calledTimes) == 1
+            }
+            
             it("calls valueChanged event") {
                 let button = UIButton()
                 var calledTimes = 0

@@ -16,8 +16,9 @@ public protocol PostInitInjectable: class {
     init()
     
     /**
-    * Injects dependencies to the target class
-    * :param: injector The Injector used to inject dependencies
+        Injects dependencies to the target class
+    
+        :param: injector The Injector used to inject dependencies
     */
     func inject(injector: Injector)
     

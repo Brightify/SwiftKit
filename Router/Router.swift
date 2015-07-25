@@ -14,10 +14,12 @@ public class Router {
     public let responseVerifier: ResponseVerifier
     
     /**
-    * Initialize with URL of the API, an instance of ObjectMapper that will be used for the JSON mapping and a response verifier that is used to verify a response.
-    * :param: baseURL The URL of API
-    * :param: objectMapper An instance of ObjectMapper used to map object to and from JSON.
-    * :param: responseVerifier An instance of ResponseVerifier used to verify a response. By default a StatusCodeRangeVerifier is used with a range of 200...299.
+        Initialize with URL of the API, an instance of ObjectMapper that will be used for the JSON mapping and a 
+        response verifier that is used to verify a response.
+    
+        :param: baseURL The URL of API
+        :param: objectMapper An instance of ObjectMapper used to map object to and from JSON.
+        :param: responseVerifier An instance of ResponseVerifier used to verify a response. By default a StatusCodeRangeVerifier is used with a range of 200...299.
     */
     public init(
         baseURL: NSURL,
@@ -99,10 +101,11 @@ public class Router {
 extension Router {
     
     /**
-    * Performs request with no input data nor output data
-    * :param: endpoint The target Endpoint of the API
-    * :param: callback The callback that is executed when request succeeds or fails
-    * :returns: Cancellable
+        Performs request with no input data nor output data
+    
+        :param: endpoint The target Endpoint of the API
+        :param: callback A callback that will be executed when the request is completed.
+        :returns: Cancellable
     */
     public func request<ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == Void>
@@ -113,7 +116,12 @@ extension Router {
         return runRequest(request, completion: relayEmptyResponse(callback))
     }
     
-    // No input requests
+    /**
+        Performs a request with no input data and a single String output.
+    
+        :param: endpoint The target Endpoint of the API
+        :param: callback A callback that will be executed when the requests is completed.
+    */
     public func request<ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == String>
         (endpoint: ENDPOINT, callback: Response<String?> -> ()) -> Cancellable
@@ -124,11 +132,12 @@ extension Router {
     }
     
     /**
-    * Performs request with no output data
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The array of strings that will be filled to the Endpoint
-    * :param: callback The callback that is executed when request succeeds or fails
-    * :returns: Cancellable
+        Performs request with no output data
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The array of strings that will be filled to the Endpoint
+        :param: callback The callback that is executed when request succeeds or fails
+        :returns: Cancellable
     */
     public func request<ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == Void>
@@ -158,11 +167,12 @@ extension Router {
 extension Router {
     
     /**
-    * Performs request with Mappable input and no output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The Mappable that will be filled to the Endpoint
-    * :param: callback The callback that is executed when request succeeds or fails
-    * :returns: Cancellable
+        Performs request with Mappable input and no output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The Mappable that will be filled to the Endpoint
+        :param: callback The callback that is executed when request succeeds or fails
+        :returns: Cancellable
     */
     public func request<IN: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == Void>
@@ -174,11 +184,12 @@ extension Router {
     }
     
     /**
-    * Performs request with input of array of Mappables and no output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The input array of Mappables that will be filled to the Endpoint
-    * :param: callback The callback that is executed when request succeeds or fails
-    * :returns: Cancellable
+        Performs request with input of array of Mappables and no output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The input array of Mappables that will be filled to the Endpoint
+        :param: callback The callback that is executed when request succeeds or fails
+        :returns: Cancellable
     */
     public func request<IN: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == Void>
@@ -190,10 +201,11 @@ extension Router {
     }
 
     /**
-    * Performs request with no input and Mappable output
-    * :param: endpoint The target Endpoint of the API
-    * :param: callback The callback with Mappable parameter
-    * :returns: Cancellable
+        Performs request with no input and Mappable output
+        
+        :param: endpoint The target Endpoint of the API
+        :param: callback The callback with Mappable parameter
+        :returns: Cancellable
     */
     public func request<OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == OUT>
@@ -205,10 +217,11 @@ extension Router {
     }
     
     /**
-    * Performs request with no input and output of Mappable array
-    * :param: endpoint The target Endpoint of the API
-    * :param: callback The callback with Mappable array parameter
-    * :returns: Cancellable
+        Performs request with no input and output of Mappable array
+        
+        :param: endpoint The target Endpoint of the API
+        :param: callback The callback with Mappable array parameter
+        :returns: Cancellable
     */
     public func request<OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == [OUT]>
@@ -220,11 +233,12 @@ extension Router {
     }
     
     /**
-    * Performs request with Mappable input and output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The Mappable input
-    * :param: callback The callback with Mappable parameter
-    * :returns: Cancellable
+        Performs request with Mappable input and output
+        
+        :param: endpoint The target Endpoint of the API
+        :param: input The Mappable input
+        :param: callback The callback with Mappable parameter
+        :returns: Cancellable
     */
     public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == OUT>
@@ -236,11 +250,12 @@ extension Router {
     }
     
     /**
-    * Performs request with input of Mappable array and Mappable output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The input of Mappable array
-    * :param: callback The callback with Mappable parameter
-    * :returns: Cancellable
+        Performs request with input of Mappable array and Mappable output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The input of Mappable array
+        :param: callback The callback with Mappable parameter
+        :returns: Cancellable
     */
     public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == OUT>
@@ -252,11 +267,12 @@ extension Router {
     }
     
     /**
-    * Performs request with Mappable input and output of Mappable array
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The Mappable input
-    * :param: callback The callback with Mappable array parameter
-    * :returns: Cancellable
+        Performs request with Mappable input and output of Mappable array
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The Mappable input
+        :param: callback The callback with Mappable array parameter
+        :returns: Cancellable
     */
     public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == [OUT]>
@@ -268,11 +284,12 @@ extension Router {
     }
     
     /**
-    * Performs request with Mappable array input and output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The input of Mappable array
-    * :param: callback The callback with Mappable arrayparameter
-    * :returns: Cancellable
+        Performs request with Mappable array input and output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The input of Mappable array
+        :param: callback The callback with Mappable arrayparameter
+        :returns: Cancellable
     */
     public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == [OUT]>
@@ -284,11 +301,12 @@ extension Router {
     }
     
     /**
-    * Performs request with input of String array and Mappable output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The input of String array
-    * :param: callback The Response with Mappable parameter
-    * :returns: Cancellable
+        Performs request with input of String array and Mappable output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The input of String array
+        :param: callback The Response with Mappable parameter
+        :returns: Cancellable
     */
     public func request<OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == OUT>
@@ -300,11 +318,12 @@ extension Router {
     }
     
     /**
-    * Performs request with input of String array and Mappable array output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The input of String array
-    * :param: callback The Response with Mappable array parameter
-    * :returns: Cancellable
+        Performs request with input of String array and Mappable array output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The input of String array
+        :param: callback The Response with Mappable array parameter
+        :returns: Cancellable
     */
     public func request<OUT: Mappable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == [OUT]>
@@ -314,7 +333,6 @@ extension Router {
         
         return runRequest(request, completion: relayObjectArrayResponse(callback))
     }
-    
 
     private func prepareRequest<E: Endpoint, IN: Mappable where E.Input == IN>(endpoint: E, input: IN) -> NSMutableURLRequest {
         let json = objectMapper.toJSON(input)
@@ -365,11 +383,12 @@ extension Router {
 extension Router {
     
     /**
-    * Performs request with Transformable input and no output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The Transformable to be put to the request
-    * :param: callback The callback called after completion
-    * :returns: Cancellable
+        Performs request with Transformable input and no output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The Transformable to be put to the request
+        :param: callback The callback called after completion
+        :returns: Cancellable
     */
     public func request<IN: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == Void>
@@ -380,11 +399,12 @@ extension Router {
         return runRequest(request, completion: relayEmptyResponse(callback))
     }
     /**
-    * Performs request with Transformable array input and no output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The Transformable array to be put to the request
-    * :param: callback The callback called after completion
-    * :returns: Cancellable
+        Performs request with Transformable array input and no output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The Transformable array to be put to the request
+        :param: callback The callback called after completion
+        :returns: Cancellable
     */
     public func request<IN: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == Void>
@@ -396,10 +416,11 @@ extension Router {
     }
     
     /**
-    * Performs request with no input and Transformable output
-    * :param: endpoint The target Endpoint of the API
-    * :param: callback The callback called after completion with Transformable parameter
-    * :returns: Cancellable
+        Performs request with no input and Transformable output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: callback The callback called after completion with Transformable parameter
+        :returns: Cancellable
     */
     public func request<OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == OUT>
@@ -411,10 +432,11 @@ extension Router {
     }
     
     /**
-    * Performs request with no input and Transformable array output
-    * :param: endpoint The target Endpoint of the API
-    * :param: callback The callback called after completion with Transformable array parameter
-    * :returns: Cancellable
+        Performs request with no input and Transformable array output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: callback The callback called after completion with Transformable array parameter
+        :returns: Cancellable
     */
     public func request<OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == [OUT]>
@@ -426,11 +448,12 @@ extension Router {
     }
     
     /**
-    * Performs request with Transformable input and Transformable output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The Transformable input to be put into request
-    * :param: callback The callback called after completion with Transformable parameter
-    * :returns: Cancellable
+        Performs request with Transformable input and Transformable output
+        
+        :param: endpoint The target Endpoint of the API
+        :param: input The Transformable input to be put into request
+        :param: callback The callback called after completion with Transformable parameter
+        :returns: Cancellable
     */
     public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == OUT>
@@ -442,11 +465,12 @@ extension Router {
     }
     
     /**
-    * Performs request with Transformable array input and Transformable output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The Transformable array input to be put into request
-    * :param: callback The callback called after completion with Transformable parameter
-    * :returns: Cancellable
+        Performs request with Transformable array input and Transformable output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The Transformable array input to be put into request
+        :param: callback The callback called after completion with Transformable parameter
+        :returns: Cancellable
     */
     public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == OUT>
@@ -458,11 +482,12 @@ extension Router {
     }
     
     /**
-    * Performs request with Transformable input and Transformable array output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The Transformable input to be put into request
-    * :param: callback The callback called after completion with Transformable array parameter
-    * :returns: Cancellable
+        Performs request with Transformable input and Transformable array output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The Transformable input to be put into request
+        :param: callback The callback called after completion with Transformable array parameter
+        :returns: Cancellable
     */
     public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == [OUT]>
@@ -474,11 +499,12 @@ extension Router {
     }
     
     /**
-    * Performs request with Transformable array input and Transformable array output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The Transformable array input to be put into request
-    * :param: callback The callback called after completion with Transformable array parameter
-    * :returns: Cancellable
+        Performs request with Transformable array input and Transformable array output
+        
+        :param: endpoint The target Endpoint of the API
+        :param: input The Transformable array input to be put into request
+        :param: callback The callback called after completion with Transformable array parameter
+        :returns: Cancellable
     */
     public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == [OUT]>
@@ -490,11 +516,12 @@ extension Router {
     }
     
     /**
-    * Performs request with String array input and Transformable output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The String array input to be put into request
-    * :param: callback The callback called after completion with Transformable parameter
-    * :returns: Cancellable
+        Performs request with String array input and Transformable output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The String array input to be put into request
+        :param: callback The callback called after completion with Transformable parameter
+        :returns: Cancellable
     */
     public func request<OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == OUT>
@@ -507,11 +534,12 @@ extension Router {
     }
     
     /**
-    * Performs request with String array input and Transformable array output
-    * :param: endpoint The target Endpoint of the API
-    * :param: input The String array input to be put into request
-    * :param: callback The callback called after completion with Transformable array parameter
-    * :returns: Cancellable
+        Performs request with String array input and Transformable array output
+    
+        :param: endpoint The target Endpoint of the API
+        :param: input The String array input to be put into request
+        :param: callback The callback called after completion with Transformable array parameter
+        :returns: Cancellable
     */
     public func request<OUT: Transformable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == [OUT]>
@@ -594,10 +622,11 @@ extension Router {
 extension Router {
     
     /**
-    * Performs request with input of JSON and output of JSON
-    * :param: input The input of JSON
-    * :param: callback The Response with parameter of JSON
-    * :returns: Cancellable
+        Performs request with input of JSON and output of JSON
+    
+        :param: input The input of JSON
+        :param: callback The Response with parameter of JSON
+        :returns: Cancellable
     */
     public func request<ENDPOINT: Endpoint
         where ENDPOINT.Input == JSON, ENDPOINT.Output == JSON>

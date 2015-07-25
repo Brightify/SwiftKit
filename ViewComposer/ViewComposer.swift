@@ -12,18 +12,20 @@ import UIKit
 infix operator => { }
 
 /**
-* Operator that adds view to the parent and creates it if it is nil
-* :param: viewOrNil The view to be added to the parent
-* :param: parent The parent view which will be used as a target view for viewOrNil addition
+    Operator that adds view to the parent and creates it if it is nil
+    
+    :param: viewOrNil The view to be added to the parent
+    :param: parent The parent view which will be used as a target view for viewOrNil addition
 */
 public func => <VIEW_TYPE: UIView>(inout viewOrNil: VIEW_TYPE!, parent: UIView) {
     viewOrNil = viewComposerOperator(viewOrNil, parent)
 }
 
 /**
-* Operator that adds view to the parent and creates it if it is nil
-* :param: viewOrNil The view to be added to the parent
-* :param: parent The parent view which will be used as a target view for viewOrNil addition
+    Operator that adds view to the parent and creates it if it is nil
+
+    :param: viewOrNil The view to be added to the parent
+    :param: parent The parent view which will be used as a target view for viewOrNil addition
 */
 public func => <VIEW_TYPE: UIView>(inout viewOrNil: VIEW_TYPE?, parent: UIView) {
     viewOrNil = viewComposerOperator(viewOrNil, parent)
@@ -44,8 +46,8 @@ private func viewComposerOperator<VIEW_TYPE: UIView>(viewOrNil: VIEW_TYPE?, pare
 }
 
 /**
-* ViewComposer is a utility class that should provide the best experience with creating views, 
-* adding them into superview and assigning listeners to them
+    ViewComposer is a utility class that should provide the best experience with creating views,
+    adding them into superview and assigning listeners to them
 */
 public class ViewComposer {
     
@@ -59,7 +61,7 @@ public class ViewComposer {
     }
 }
 
-/// Because Swift compiler fails when using tupple and generics, we need this class to overcome it.
+// Because Swift compiler fails when using tupple and generics, we need this class to overcome it.
 public class AddIntoSuperview<T: UIView> {
     
     public let view: T

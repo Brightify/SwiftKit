@@ -9,7 +9,10 @@
 import Foundation
 
 /**
-* Event submodule contains implementation of listeners using closures
+    Event class is a convenient way to deliver information about an event without using selectors or closures.
+
+    :param: SENDER Type of the owner of this event.
+    :param: INPUT Type of the data that will be sent in the event.
 */
 public class Event<SENDER, INPUT> {
     
@@ -21,9 +24,10 @@ public class Event<SENDER, INPUT> {
     }
     
     /**
-    * Invokes all closures registered in this Event
-    * :param: sender The object that invokes the closure
-    * :param: input The data that are passed back through the listener from the sender object
+        Invokes all closures registered to this instance.
+        
+        :param: sender Instance of the owner object.
+        :param: input Data that are passed into registered listeners.
     */
     public func fire(sender: SENDER, input: INPUT) {
         let data = EventData(sender: sender, input: input)
@@ -32,8 +36,9 @@ public class Event<SENDER, INPUT> {
     }
     
     /**
-    * Invokes all closures registered in this Event
-    * :param: data The data structure that is passed to the listeners
+        Invokes all closures registered to this instance.
+    
+        :param: data An EventData structure that is passed to the listeners.
     */
     public func fire(data: EventData<SENDER, INPUT>) {
         for listener in listeners {
@@ -42,18 +47,31 @@ public class Event<SENDER, INPUT> {
     }
     
     /**
-    * Registers new closure
-    * :param: The closure that is called when the Event is fired
+        Registers a new listener closure.
+    
+        :param: closure A closure that is called when the event is fired.
     */
     public func registerClosure(closure: (EventData<SENDER, INPUT>) -> ()) {
         listeners.append(closure)
     }
     
     /**
-    * Registers new closure with target handling for proper memory management
-    * :param: target The object that registers the closure
-    * :param: The closure that is called when the Event is fired
+        Registers a new listener closure with a target object that will be captured as `unowned`, thus not 
+        leaking memory. The proper usage would be:
+    
+          event.registerClosure(self) { target, data in
+              target.doSomething()
+          }
+    
+        This is equivalent to:
+          event.registerClosure() { [unowned self] data in
+              self.doSomething()
+          }
+        
+        :param: target Object that will be captured as `unowned`.
+        :param: closure A closure that is called when the event is fired.
     */
+    @availability(*, deprecated=0.4.3, message="Capturing something as unowned is dangerous and better to be done visibly when registering the closure.")
     public func registerClosure<T: AnyObject>(target: T, closure: (T, EventData<SENDER, INPUT>) -> ()) {
         registerClosure { [unowned target] data in
             closure(target, data)
@@ -61,28 +79,34 @@ public class Event<SENDER, INPUT> {
     }
     
     /**
-    * Registers new method
-    * :param: The object that registers the closure
-    * :param: The method that is called when the Event is fired, method has a parameter of type EventData
+        Registers a new listener method.
+    
+        :param: target The object that the method is declared in.
+        :param: method A method that is called when the Event is fired, method has a parameter of type EventData.
     */
     public func registerMethod<T: AnyObject>(target: T, method: (T) -> (EventData<SENDER, INPUT>) -> ()) {
-        registerClosure { [unowned target] data in
-            method(target)(data)
+        registerClosure { [weak target] data in
+            if let target = target {
+                method(target)(data)
+            }
         }
     }
     
     /**
-    * Registers new method
-    * :param: The object that registers the closure
-    * :param: The method that is called when the Event is fired, method has a parameter of type EventData
+        Registers new listener method.
+        
+        :param: target The object that the method is declared in.
+        :param: method A method that is called when the Event is fired, method has no parameters.
     */
     public func registerMethod<T: AnyObject>(target: T, method: (T) -> () -> ()) {
-        registerClosure { [unowned target] _ in
-            method(target)()
+        registerClosure { [weak target] _ in
+            if let target = target {
+                method(target)()
+            }
         }
     }
     
-    /// Removes all listeners from the Event
+    /// Removes all listeners from the Event instance
     public func clearListeners() {
         listeners.removeAll()
     }
