@@ -56,18 +56,48 @@ private struct UserProfile: Mappable {
     }
 }
 
+private struct TestEnhancer: RequestEnhancer {
+    private struct TestModifier: RequestModifier { }
+    
+    private let onRequest: () -> ()
+    private let onResponse: () -> ()
+    
+    private var priority = 0
+    
+    private init(onRequest: () -> (), onResponse: () -> ()) {
+        self.onRequest = onRequest
+        self.onResponse = onResponse
+    }
+    
+    private func canEnhance(request: Request, modifier: RequestModifier) -> Bool {
+        return modifier is TestModifier
+    }
+    
+    private func enhanceRequest(inout request: Request, modifier: RequestModifier) {
+        onRequest()
+    }
+    
+    private func deenhanceResponse(response: Response<NSData?>, modifier: RequestModifier) -> Response<NSData?> {
+        onResponse()
+        return response
+    }
+}
+
 class RouterTest: QuickSpec {
     
     private struct GitHubEndpoints {
         static let zen = GET<Void, String>("/zen")
         static let userProfile = Target<GET<Void, UserProfile>, String> { "/users/\($0.urlSafe)" }
         static let userRepositories = Target<GET<Void, String>, String> { "/users/\($0.urlSafe)/repos" }
+        static let test = GET<Void, String>("/zen", TestEnhancer.TestModifier())
     }
     
     override func spec() {
         describe("Router") {
-            let router = Router(baseURL: NSURL(string: "https://api.github.com")!, objectMapper: ObjectMapper())
-
+            var router: Router!
+            beforeEach {
+                router = Router(baseURL: NSURL(string: "https://api.github.com")!, objectMapper: ObjectMapper())
+            }
             it("supports Void to String request") {
                 var zensponse: String?
                 router.request(GitHubEndpoints.zen) { response in
@@ -88,70 +118,54 @@ class RouterTest: QuickSpec {
                 expect(profile).toEventuallyNot(beNil(), timeout: 10)
                 expect(profile?.type).toEventually(equal(UserProfile.ProfileType.Organization), timeout: 10)
             }
+            
+            it("supports custom RequestEnhancers") {
+                var firstEnhancerCalledTimes: (request: Int, response: Int) = (0, 0)
+                var secondEnhancerCalledTimes: (request: Int, response: Int) = (0, 0)
+
+                var firstEnhancer = TestEnhancer(onRequest:
+                    {
+                        expect(firstEnhancerCalledTimes.request) == 0
+                        expect(firstEnhancerCalledTimes.response) == 0
+                        expect(secondEnhancerCalledTimes.request) == 0
+                        expect(secondEnhancerCalledTimes.response) == 0
+                        firstEnhancerCalledTimes.request++
+                    }, onResponse: {
+                        expect(firstEnhancerCalledTimes.request) == 1
+                        expect(firstEnhancerCalledTimes.response) == 0
+                        expect(secondEnhancerCalledTimes.request) == 1
+                        expect(secondEnhancerCalledTimes.response) == 0
+                        firstEnhancerCalledTimes.response++
+                    })
+                var secondEnhancer = TestEnhancer(onRequest:
+                    {
+                        expect(firstEnhancerCalledTimes.request) == 1
+                        expect(firstEnhancerCalledTimes.response) == 0
+                        expect(secondEnhancerCalledTimes.request) == 0
+                        expect(secondEnhancerCalledTimes.response) == 0
+                        secondEnhancerCalledTimes.request++
+                    }, onResponse: {
+                        expect(firstEnhancerCalledTimes.request) == 1
+                        expect(firstEnhancerCalledTimes.response) == 1
+                        expect(secondEnhancerCalledTimes.request) == 1
+                        expect(secondEnhancerCalledTimes.response) == 0
+                        secondEnhancerCalledTimes.response++
+                    })
+                secondEnhancer.priority = 100
+                
+                router.registerRequestEnhancer(firstEnhancer)
+                router.registerRequestEnhancer(secondEnhancer)
+                
+                router.request(GitHubEndpoints.test) { _ in }
+                
+                expect(firstEnhancerCalledTimes.request) == 1
+                expect(secondEnhancerCalledTimes.request) == 1
+                
+                expect(firstEnhancerCalledTimes.response).toEventually(equal(1), timeout: 10)
+                expect(secondEnhancerCalledTimes.response).toEventually(equal(1), timeout: 10)
+            }
         }
+        
     }
     
 }
-
-/*
-import Foundation
-import Moya
-
-// MARK: - Provider setup
-
-let GitHubProvider = MoyaProvider<GitHub>()
-
-
-// MARK: - Provider support
-
-private extension String {
-    var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
-    }
-}
-
-public enum GitHub {
-    case Zen
-    case UserProfile(String)
-    case UserRepositories(String)
-}
-
-extension GitHub : MoyaTarget {
-    public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
-    public var path: String {
-        switch self {
-        case .Zen:
-            return "/zen"
-        case .UserProfile(let name):
-            return "/users/\(name.URLEscapedString)"
-        case .UserRepositories(let name):
-            return "/users/\(name.URLEscapedString)/repos"
-        }
-    }
-    public var method: Moya.Method {
-        return .GET
-    }
-    public var parameters: [String: AnyObject] {
-        switch self {
-        case .UserRepositories(_):
-            return ["sort": "pushed"]
-        default:
-            return [:]
-        }
-    }
-    
-    public var sampleData: NSData {
-        switch self {
-        case .Zen:
-            return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
-        case .UserProfile(let name):
-            return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
-        case .UserRepositories(let name):
-            return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
-        }
-    }
-}
-
-public func url(route: MoyaTarget) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString!
-}*/

@@ -27,16 +27,6 @@ class EventDeinitTest: QuickSpec {
                 }
             }
             
-            it("deinit if closure is registered with target") {
-                QuickUtils.assertDeinit {
-                    let event = TestableEvent<EventDeinitTest, Void>()
-                    event.registerClosure(self) { target, _ in
-                        
-                    }
-                    return event
-                }
-            }
-            
             it("deinit if closure is registered with operator") {
                 QuickUtils.assertDeinit {
                     let event = TestableEvent<EventDeinitTest, Void>()
@@ -50,7 +40,7 @@ class EventDeinitTest: QuickSpec {
             it("deinit if method is registered") {
                 QuickUtils.assertDeinit {
                     let event = TestableEvent<EventDeinitTest, Void>()
-                    event.registerMethod(self, method: EventDeinitTest.stubMethod)
+                    event.registerMethod(EventDeinitTest.stubMethod, ownedBy: self)
                     return event
                 }
             }
@@ -58,7 +48,7 @@ class EventDeinitTest: QuickSpec {
             it("deinit if method with EventData is registered") {
                 QuickUtils.assertDeinit {
                     let event = TestableEvent<EventDeinitTest, Void>()
-                    event.registerMethod(self, method: EventDeinitTest.stubMethodWithEventData)
+                    event.registerMethod(EventDeinitTest.stubMethodWithEventData, ownedBy: self)
                     return event
                 }
             }

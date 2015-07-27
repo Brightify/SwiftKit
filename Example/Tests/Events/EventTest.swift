@@ -58,32 +58,6 @@ class EventTest: QuickSpec {
                 }
             }
             
-            context("listener registered as closure with target") {
-                it("fires event") {
-                    self.assertEventFired { event, listener in
-                        event.registerClosure(self) { _, data in
-                            listener(data: data)
-                        }
-                    }
-                }
-                
-                it("fires event with correct input") {
-                    self.assertEventFiredWithCorrectInput { event, listener in
-                        event.registerClosure(self) { _, data in
-                            listener(data: data)
-                        }
-                    }
-                }
-                
-                it("fires event with correct sender") {
-                    self.assertEventFiredWithCorrectSender { event, listener in
-                        event.registerClosure(self) { _, data in
-                            listener(data: data)
-                        }
-                    }
-                }
-            }
-            
             context("listener registered as method") {
                 beforeEach {
                     self.wasMethodCalled = false
@@ -93,7 +67,7 @@ class EventTest: QuickSpec {
                 
                 it("fires event") {
                     let event = Event<EventTest, Void>()
-                    event.registerMethod(self, method: EventTest.stubMethod)
+                    event.registerMethod(EventTest.stubMethod, ownedBy: self)
                     
                     event.fire(self, input: Void())
                     
@@ -102,7 +76,7 @@ class EventTest: QuickSpec {
                 
                 it("fires event with correct input") {
                     let event = Event<EventTest, Int>()
-                    event.registerMethod(self, method: EventTest.stubMethodWithInput)
+                    event.registerMethod(EventTest.stubMethodWithInput, ownedBy: self)
                     let input = 10
                     
                     event.fire(self, input: input)
@@ -112,7 +86,7 @@ class EventTest: QuickSpec {
                 
                 it("fires event with correct sender") {
                     let event = Event<EventTest, Void>()
-                    event.registerMethod(self, method: EventTest.stubMethodWithSender)
+                    event.registerMethod(EventTest.stubMethodWithSender, ownedBy: self)
                     
                     event.fire(self, input: Void())
                     

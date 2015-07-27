@@ -165,7 +165,8 @@ public class ClosureBindingBuilder<T> {
         self.binding = binding
         
         binding.implementation = { _ in
-            fatalError("Implementation type was not set! You need to call method 'to' or 'toNew' if the binded type is not Injectable or PostInitInjectable!")
+            // We need to use `assert(false, ...)` because if `fatalError` is used, we get a warning on the return line.
+            assert(false, "Implementation type was not set! You need to call method 'to' or 'toNew' if the binded type is not Injectable or PostInitInjectable!")
             // Without this line the compiler thinks this closure is not (Injector -> T) and does not compile.
             return nil as T!
         }

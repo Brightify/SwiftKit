@@ -13,6 +13,8 @@ public class Router {
     public let objectMapper: ObjectMapper
     public let responseVerifier: ResponseVerifier
     
+    public private(set) var requestEnhancers: [RequestEnhancer] = []
+    
     /**
         Initialize with URL of the API, an instance of ObjectMapper that will be used for the JSON mapping and a 
         response verifier that is used to verify a response.
@@ -29,57 +31,51 @@ public class Router {
         self.baseURL = baseURL
         self.objectMapper = objectMapper
         self.responseVerifier = responseVerifier
+        
+        registerRequestEnhancer(HeaderRequestEnhancer())
     }
     
-    private func prepareRequest<E: Endpoint>(endpoint: E, headers: [Header] = []) -> NSMutableURLRequest {
-        let urlString: String
-        // FIXME should we fail? Or set a default?
-        let basePath = baseURL.absoluteString ?? ""
-        
-        let basePathLastCharacter = basePath[basePath.endIndex.predecessor()]
-        let endpointPathFirstCharacter = endpoint.path[endpoint.path.startIndex]
-        
-        // We cannot use URLByAppendingPathComponent because it escapes the component which is something we do not want
-        if (basePathLastCharacter != "/" && endpointPathFirstCharacter != "/") {
-            urlString = basePath + "/" + endpoint.path
-        } else if (basePathLastCharacter == "/" && endpointPathFirstCharacter == "/") {
-            urlString = basePath + endpoint.path.substringFromIndex(endpoint.path.startIndex.successor())
-        } else {
-            urlString = basePath + endpoint.path
-        }
-        
-        if let url = NSURL(string: urlString) {
-            var request: NSMutableURLRequest = NSMutableURLRequest(URL: url)
-            request.HTTPMethod = endpoint.method.rawValue
-            
-            for header in headers {
-                request.setHeader(header)
-            }
-            
-            return request
+    public func registerRequestEnhancer(enhancer: RequestEnhancer) {
+        requestEnhancers.append(enhancer)
+        requestEnhancers.sort { $0.priority < $1.priority }
+    }
+    
+    private func prepareRequest<E: Endpoint>(endpoint: E, extraModifiers: [RequestModifier] = []) -> Request {
+        var request: Request
+        if let url = baseURL.URLByAppendingPathComponentWithoutEscape(endpoint.path) {
+            request = Request(URL: url)
         } else {
             fatalError("URL could not be built using base URL: \(baseURL) and endpoint path: \(endpoint.path)")
         }
+        
+        request.HTTPMethod = endpoint.method.rawValue
+        request.modifiers = endpoint.modifiers.arrayByAdding(extraModifiers)
+        request.enhancements = requestEnhancers.product(request.modifiers)
+            .filter { $0.canEnhance(request, modifier: $1) }
+            .each { $0.enhanceRequest(&request, modifier: $1) }
+
+        return request
     }
     
-    private func prepareRequest<E: Endpoint>(endpoint: E, input: NSData?, contentType: Headers.ContentType, headers: [Header] = []) -> NSMutableURLRequest {
-        var request = prepareRequest(endpoint, headers: headers)
+    private func prepareRequest<E: Endpoint>(endpoint: E, input: NSData?, contentType: Headers.ContentType, extraModifiers: [RequestModifier] = []) -> Request {
+        var request = prepareRequest(endpoint, extraModifiers: extraModifiers.arrayByAdding(contentType))
         
-        prepareRequest(endpoint, headers: headers)
-        
-        request.setHeader(contentType)
         request.HTTPBody = input
         
         return request
     }
     
-    private func runRequest(request: NSURLRequest, completion: Completion) -> Cancellable {
+    private func runRequest(request: Request, completion: Completion) -> Cancellable {
         let alamofireRequest = Alamofire.Manager.sharedInstance
-            .request(request)
-            .response { (request: NSURLRequest, httpResponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+            .request(request.urlRequest)
+            .response { (urlRequest: NSURLRequest, httpResponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                 let statusCode = httpResponse?.statusCode
                 
-                let response = Response<NSData?>(output: data as? NSData, statusCode: statusCode, error: error, rawRequest: request, rawResponse: httpResponse, rawData: data as? NSData)
+                var response = Response<NSData?>(output: data as? NSData, statusCode: statusCode, error: error, rawRequest: urlRequest, rawResponse: httpResponse, rawData: data as? NSData)
+                
+                response = request.enhancements.reduce(response) { accumulator, enhancement in
+                    enhancement.0.deenhanceResponse(accumulator, modifier: enhancement.1)
+                }
                 
                 completion(response)
         }
@@ -334,13 +330,13 @@ extension Router {
         return runRequest(request, completion: relayObjectArrayResponse(callback))
     }
 
-    private func prepareRequest<E: Endpoint, IN: Mappable where E.Input == IN>(endpoint: E, input: IN) -> NSMutableURLRequest {
+    private func prepareRequest<E: Endpoint, IN: Mappable where E.Input == IN>(endpoint: E, input: IN) -> Request {
         let json = objectMapper.toJSON(input)
         
         return prepareRequest(endpoint, input: json.rawData(), contentType: .ApplicationJson)
     }
     
-    private func prepareRequest<E: Endpoint, IN: Mappable where E.Input == [IN]>(endpoint: E, input: [IN]) -> NSMutableURLRequest {
+    private func prepareRequest<E: Endpoint, IN: Mappable where E.Input == [IN]>(endpoint: E, input: [IN]) -> Request {
         let json = objectMapper.toJSONArray(input)
         
         return prepareRequest(endpoint, input: json.rawData(), contentType: .ApplicationJson)
@@ -372,245 +368,6 @@ extension Router {
                 }
                 
                 return models ?? []
-            }
-            
-            callback(modelResponse)
-        }
-    }
-}
-
-/// Extension of Router that adds support for requests with Transformable
-extension Router {
-    
-    /**
-        Performs request with Transformable input and no output
-    
-        :param: endpoint The target Endpoint of the API
-        :param: input The Transformable to be put to the request
-        :param: callback The callback called after completion
-        :returns: Cancellable
-    */
-    public func request<IN: Transformable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == IN, ENDPOINT.Output == Void>
-        (endpoint: ENDPOINT, input: IN, callback: EmptyResponse -> ()) -> Cancellable
-    {
-        let request = prepareRequest(endpoint, input: input)
-        
-        return runRequest(request, completion: relayEmptyResponse(callback))
-    }
-    /**
-        Performs request with Transformable array input and no output
-    
-        :param: endpoint The target Endpoint of the API
-        :param: input The Transformable array to be put to the request
-        :param: callback The callback called after completion
-        :returns: Cancellable
-    */
-    public func request<IN: Transformable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == [IN], ENDPOINT.Output == Void>
-        (endpoint: ENDPOINT, input: [IN], callback: EmptyResponse -> ()) -> Cancellable
-    {
-        let request = prepareRequest(endpoint, input: input)
-        
-        return runRequest(request, completion: relayEmptyResponse(callback))
-    }
-    
-    /**
-        Performs request with no input and Transformable output
-    
-        :param: endpoint The target Endpoint of the API
-        :param: callback The callback called after completion with Transformable parameter
-        :returns: Cancellable
-    */
-    public func request<OUT: Transformable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == Void, ENDPOINT.Output == OUT>
-        (endpoint: ENDPOINT, callback: Response<OUT?> -> ()) -> Cancellable
-    {
-        let request = prepareRequest(endpoint)
-        
-        return runRequest(request, completion: relaySingleObjectResponse(callback))
-    }
-    
-    /**
-        Performs request with no input and Transformable array output
-    
-        :param: endpoint The target Endpoint of the API
-        :param: callback The callback called after completion with Transformable array parameter
-        :returns: Cancellable
-    */
-    public func request<OUT: Transformable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == Void, ENDPOINT.Output == [OUT]>
-        (endpoint: ENDPOINT, callback: Response<[OUT]> -> ()) -> Cancellable
-    {
-        let request = prepareRequest(endpoint)
-        
-        return runRequest(request, completion: relayObjectArrayResponse(callback))
-    }
-    
-    /**
-        Performs request with Transformable input and Transformable output
-        
-        :param: endpoint The target Endpoint of the API
-        :param: input The Transformable input to be put into request
-        :param: callback The callback called after completion with Transformable parameter
-        :returns: Cancellable
-    */
-    public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == IN, ENDPOINT.Output == OUT>
-        (endpoint: ENDPOINT, input: IN, callback: Response<OUT?> -> ()) -> Cancellable
-    {
-        let request = prepareRequest(endpoint, input: input)
-        
-        return runRequest(request, completion: relaySingleObjectResponse(callback))
-    }
-    
-    /**
-        Performs request with Transformable array input and Transformable output
-    
-        :param: endpoint The target Endpoint of the API
-        :param: input The Transformable array input to be put into request
-        :param: callback The callback called after completion with Transformable parameter
-        :returns: Cancellable
-    */
-    public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == [IN], ENDPOINT.Output == OUT>
-        (endpoint: ENDPOINT, input: [IN], callback: Response<OUT?> -> ()) -> Cancellable
-    {
-        let request = prepareRequest(endpoint, input: input)
-        
-        return runRequest(request, completion: relaySingleObjectResponse(callback))
-    }
-    
-    /**
-        Performs request with Transformable input and Transformable array output
-    
-        :param: endpoint The target Endpoint of the API
-        :param: input The Transformable input to be put into request
-        :param: callback The callback called after completion with Transformable array parameter
-        :returns: Cancellable
-    */
-    public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == IN, ENDPOINT.Output == [OUT]>
-        (endpoint: ENDPOINT, input: IN, callback: Response<[OUT]> -> ()) -> Cancellable
-    {
-        let request = prepareRequest(endpoint, input: input)
-        
-        return runRequest(request, completion: relayObjectArrayResponse(callback))
-    }
-    
-    /**
-        Performs request with Transformable array input and Transformable array output
-        
-        :param: endpoint The target Endpoint of the API
-        :param: input The Transformable array input to be put into request
-        :param: callback The callback called after completion with Transformable array parameter
-        :returns: Cancellable
-    */
-    public func request<IN: Transformable, OUT: Transformable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == [IN], ENDPOINT.Output == [OUT]>
-        (endpoint: ENDPOINT, input: [IN], callback: Response<[OUT]> -> ()) -> Cancellable
-    {
-        let request = prepareRequest(endpoint, input: input)
-        
-        return runRequest(request, completion: relayObjectArrayResponse(callback))
-    }
-    
-    /**
-        Performs request with String array input and Transformable output
-    
-        :param: endpoint The target Endpoint of the API
-        :param: input The String array input to be put into request
-        :param: callback The callback called after completion with Transformable parameter
-        :returns: Cancellable
-    */
-    public func request<OUT: Transformable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == [String], ENDPOINT.Output == OUT>
-        (endpoint: ENDPOINT, input: [String], callback: Response<OUT?> -> ()) -> Cancellable
-    {
-        return jsonRequest(endpoint, input: JSON(input)) { response in
-            self.relaySingleObjectResponse(callback)
-            //self.relaySingleObjectResponse(callback)(response)
-        }
-    }
-    
-    /**
-        Performs request with String array input and Transformable array output
-    
-        :param: endpoint The target Endpoint of the API
-        :param: input The String array input to be put into request
-        :param: callback The callback called after completion with Transformable array parameter
-        :returns: Cancellable
-    */
-    public func request<OUT: Transformable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == [String], ENDPOINT.Output == [OUT]>
-        (endpoint: ENDPOINT, input: [String], callback: Response<[OUT]> -> ()) -> Cancellable
-    {
-        let request = prepareRequest(endpoint, input: JSON(input))
-        
-        return runRequest(request, completion: relayObjectArrayResponse(callback))
-    }
-    
-    
-    private func prepareRequest<E: Endpoint, IN: Transformable where E.Input == IN>(endpoint: E, input: IN) -> NSMutableURLRequest {
-        var request = prepareRequest(endpoint)
-        
-        let json = JSON(IN.transformToJSON(input) ?? NSNull())
-        
-        if let data = json.rawData() {
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.HTTPBody = data
-        }
-        
-        return request
-    }
-    
-    private func prepareRequest<E: Endpoint, IN: Transformable where E.Input == [IN]>(endpoint: E, input: [IN]) -> NSMutableURLRequest {
-        var request = prepareRequest(endpoint)
-        
-        let output = input.map {
-            return IN.transformToJSON($0) ?? NSNull()
-        }
-        let json = JSON(output)
-        
-        if let data = json.rawData() {
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.HTTPBody = data
-        }
-        
-        return request
-    }
-    
-    private func relaySingleObjectResponse<OBJECT: Transformable>(callback: Response<OBJECT?> -> ()) -> Completion {
-        return { response in
-            let modelResponse: Response<OBJECT?> = response.map {
-                var model: OBJECT? = nil
-                
-                if self.responseVerifier.verify(response), let data = $0 {
-                    let json = JSON(data: data)
-                    model = OBJECT.transformFromJSON(json.object)
-                }
-        
-                return model
-            }
-            
-            callback(modelResponse)
-        }
-    }
-    
-    private func relayObjectArrayResponse<OBJECT: Transformable>(callback: Response<[OBJECT]> -> ()) -> Completion {
-        return { response in
-            let modelResponse: Response<[OBJECT]> = response.map {
-                var models: [OBJECT] = []
-
-                if self.responseVerifier.verify(response), let data = $0, let jsonArray = JSON(data: data).array {
-                    for item in jsonArray {
-                        if let model = OBJECT.transformFromJSON(item.object) {
-                            models.append(model)
-                        }
-                    }
-                }
-                
-                return models
             }
             
             callback(modelResponse)
@@ -651,8 +408,8 @@ extension Router {
         return runRequest(request, completion: relayJSONResponse(callback))
     }
     
-    private func prepareRequest<E: Endpoint>(endpoint: E, input: JSON, headers: [Header] = []) -> NSMutableURLRequest {
-        return prepareRequest(endpoint, input: input.rawData(), contentType: .ApplicationJson, headers: headers)
+    private func prepareRequest<E: Endpoint>(endpoint: E, input: JSON) -> Request {
+        return prepareRequest(endpoint, input: input.rawData(), contentType: .ApplicationJson)
     }
     
     private func relayJSONResponse(callback: Response<JSON?> -> ()) -> Completion {

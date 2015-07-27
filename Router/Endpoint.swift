@@ -23,11 +23,14 @@ public protocol Endpoint {
     
         :param: path The path to the API
     */
-    init(_ path: String)
+    init(_ path: String, _ modifiers: [RequestModifier])
     
     /// Contains HTTP Method such as GET, POST, etc.
     var method: Alamofire.Method { get }
     
     /// Contains path to the API
     var path: String { get }
+    
+    /// Flags that will be used by registered RequestEnhancers to modify the request and/or response.
+    var modifiers: [RequestModifier] { get }
 }

@@ -56,38 +56,15 @@ public class Event<SENDER, INPUT> {
     }
     
     /**
-        Registers a new listener closure with a target object that will be captured as `unowned`, thus not 
-        leaking memory. The proper usage would be:
-    
-          event.registerClosure(self) { target, data in
-              target.doSomething()
-          }
-    
-        This is equivalent to:
-          event.registerClosure() { [unowned self] data in
-              self.doSomething()
-          }
-        
-        :param: target Object that will be captured as `unowned`.
-        :param: closure A closure that is called when the event is fired.
-    */
-    @availability(*, deprecated=0.4.3, message="Capturing something as unowned is dangerous and better to be done visibly when registering the closure.")
-    public func registerClosure<T: AnyObject>(target: T, closure: (T, EventData<SENDER, INPUT>) -> ()) {
-        registerClosure { [unowned target] data in
-            closure(target, data)
-        }
-    }
-    
-    /**
         Registers a new listener method.
     
-        :param: target The object that the method is declared in.
         :param: method A method that is called when the Event is fired, method has a parameter of type EventData.
+        :param: owner The object that the method is declared in.
     */
-    public func registerMethod<T: AnyObject>(target: T, method: (T) -> (EventData<SENDER, INPUT>) -> ()) {
-        registerClosure { [weak target] data in
-            if let target = target {
-                method(target)(data)
+    public func registerMethod<T: AnyObject>(method: T -> (EventData<SENDER, INPUT>) -> (), ownedBy owner: T) {
+        registerClosure { [weak owner] data in
+            if let owner = owner {
+                method(owner)(data)
             }
         }
     }
@@ -98,10 +75,10 @@ public class Event<SENDER, INPUT> {
         :param: target The object that the method is declared in.
         :param: method A method that is called when the Event is fired, method has no parameters.
     */
-    public func registerMethod<T: AnyObject>(target: T, method: (T) -> () -> ()) {
-        registerClosure { [weak target] _ in
-            if let target = target {
-                method(target)()
+    public func registerMethod<T: AnyObject>(method: T -> () -> (), ownedBy owner: T) {
+        registerClosure { [weak owner] _ in
+            if let owner = owner {
+                method(owner)()
             }
         }
     }

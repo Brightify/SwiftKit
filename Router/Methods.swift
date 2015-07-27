@@ -16,7 +16,7 @@ import Alamofire
     :param: PARAMS The parameters to be filled in the endpoint URL
 */
 public class Target<ENDPOINT: Endpoint, PARAMS> {
-    private let path: PARAMS -> String
+    private let pathAndModifiers: PARAMS -> (String, [RequestModifier])
     
     /**
         Initializes Target with closure that returns path costructed
@@ -25,7 +25,15 @@ public class Target<ENDPOINT: Endpoint, PARAMS> {
         :param: path The closure that accepts PARAMS and returns the constructed URL
     */
     public init(_ path: PARAMS -> String) {
-        self.path = path
+        self.pathAndModifiers = { (path($0), []) }
+    }
+    
+    public init(_ modifiers: [RequestModifier], _ path: PARAMS -> String) {
+        self.pathAndModifiers = { (path($0), modifiers) }
+    }
+    
+    public init(_ pathAndModifiers: PARAMS -> (String, [RequestModifier])) {
+        self.pathAndModifiers = pathAndModifiers
     }
     
     /**
@@ -34,7 +42,8 @@ public class Target<ENDPOINT: Endpoint, PARAMS> {
         :param: params The parameters used to construct the Endpoint URL
     */
     public func endpoint(params: PARAMS) -> ENDPOINT {
-        return ENDPOINT(path(params))
+        let (path, modifiers) = pathAndModifiers(params)
+        return ENDPOINT(path, modifiers)
     }
 }
 
@@ -44,13 +53,15 @@ class BaseEndpoint<IN, OUT>: Endpoint {
     
     let method: Alamofire.Method
     let path: String
+    let modifiers: [RequestModifier]
     
-    init(path: String, method: Alamofire.Method) {
+    init(path: String, method: Alamofire.Method, modifiers: [RequestModifier]) {
         self.path = path
         self.method = method
+        self.modifiers = modifiers
     }
     
-    required init(_ path: String) {
+    required init(_ path: String, _ modifiers: [RequestModifier] = []) {
         fatalError("Initializer init(path:String) cannot be used in BaseEndpoint!")
     }
 }
@@ -68,8 +79,8 @@ public class GET<IN, OUT>: BaseEndpoint<IN, OUT> {
     
         :param: path The path in the API
     */
-    public required init(_ path: String) {
-        super.init(path: path, method: .GET)
+    public required init(_ path: String, _ modifiers: RequestModifier...) {
+        super.init(path: path, method: .GET, modifiers: modifiers)
     }
 }
 
@@ -86,8 +97,8 @@ public class POST<IN, OUT>: BaseEndpoint<IN, OUT> {
     
         :param: path The path in the API
     */
-    public required init(_ path: String) {
-        super.init(path: path, method: .POST)
+    public required init(_ path: String, _ modifiers: RequestModifier...) {
+        super.init(path: path, method: .POST, modifiers: modifiers)
     }
 }
 
@@ -104,8 +115,8 @@ public class PUT<IN, OUT>: BaseEndpoint<IN, OUT> {
     
         :param: path The path in the API
     */
-    public required init(_ path: String) {
-        super.init(path: path, method: .PUT)
+    public required init(_ path: String, _ modifiers: RequestModifier...) {
+        super.init(path: path, method: .PUT, modifiers: modifiers)
     }
 }
 
@@ -122,8 +133,8 @@ public class DELETE<IN, OUT>: BaseEndpoint<IN, OUT> {
     
         :param: path The path in the API
     */
-    public required init(_ path: String) {
-        super.init(path: path, method: .DELETE)
+    public required init(_ path: String, _ modifiers: RequestModifier...) {
+        super.init(path: path, method: .DELETE, modifiers: modifiers)
     }
 }
 
@@ -140,8 +151,8 @@ public class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT> {
     
         :param: path The path in the API
     */
-    public required init(_ path: String) {
-        super.init(path: path, method: .OPTIONS)
+    public required init(_ path: String, _ modifiers: RequestModifier...) {
+        super.init(path: path, method: .OPTIONS, modifiers: modifiers)
     }
 }
 
@@ -158,8 +169,8 @@ public class HEAD<IN, OUT>: BaseEndpoint<IN, OUT> {
         
         :param: path The path in the API
     */
-    public required init(_ path: String) {
-        super.init(path: path, method: .HEAD)
+    public required init(_ path: String, _ modifiers: RequestModifier...) {
+        super.init(path: path, method: .HEAD, modifiers: modifiers)
     }
 }
 
@@ -176,8 +187,8 @@ public class PATCH<IN, OUT>: BaseEndpoint<IN, OUT> {
         
         :param: path The path in the API
     */
-    public required init(_ path: String) {
-        super.init(path: path, method: .PATCH)
+    public required init(_ path: String, _ modifiers: RequestModifier...) {
+        super.init(path: path, method: .PATCH, modifiers: modifiers)
     }
 }
 
@@ -194,8 +205,8 @@ public class TRACE<IN, OUT>: BaseEndpoint<IN, OUT> {
         
         :param: path The path in the API
     */
-    public required init(_ path: String) {
-        super.init(path: path, method: .TRACE)
+    public required init(_ path: String, _ modifiers: RequestModifier...) {
+        super.init(path: path, method: .TRACE, modifiers: modifiers)
     }
 }
 
@@ -212,7 +223,7 @@ public class CONNECT<IN, OUT>: BaseEndpoint<IN, OUT> {
     
         :param: path The path in the API
     */
-    public required init(_ path: String) {
-        super.init(path: path, method: .CONNECT)
+    public required init(_ path: String, _ modifiers: RequestModifier...) {
+        super.init(path: path, method: .CONNECT, modifiers: modifiers)
     }
 }

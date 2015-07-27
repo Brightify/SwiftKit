@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |spec|
     spec.name             = "SwiftKit"
-    spec.version          = "0.4.3"
+    spec.version          = "0.5.0"
     spec.summary          = "SwiftKit is a collection of simple libraries that make your life easier."
     spec.description      = <<-DESC
                        SwiftKit's main purpose is to jumpstart iOS app development. We strive to deliver multiple small libraries that will solve the most basic things so you will not have to do it yourself.
@@ -27,38 +27,48 @@ Pod::Spec.new do |spec|
 
     spec.default_subspec = 'Events', 'Preferences', 'Injection', 'Router', 'ViewComposer'
 
+    spec.subspec 'Internal' do |internal|
+        internal.source_files = 'Internal/**/*.swift'
+    end
+
     spec.subspec 'Events' do |events|
         events.source_files = 'Events/**/*.swift'
         events.frameworks = 'UIKit'
+        events.dependency 'SwiftKit/Internal'
     end
 
     spec.subspec 'Preferences' do |preferences|
         preferences.source_files = 'Preferences/**/*.swift'
         preferences.frameworks = 'Foundation'
+        preferences.dependency 'SwiftKit/Internal'
         preferences.dependency 'SwiftKit/Events'
     end
 
     spec.subspec 'Injection' do |injection|
         injection.source_files = 'Injection/**/*.swift'
         injection.frameworks = 'Foundation'
+        injection.dependency 'SwiftKit/Internal'
     end
 
     spec.subspec 'Router' do |router|
         router.source_files = 'Router/**/*.swift'
         router.frameworks = 'Foundation'
-        router.dependency 'Alamofire'
+        router.dependency 'SwiftKit/Internal'
         router.dependency 'SwiftKit/ObjectMapper'
+        router.dependency 'Alamofire'
         router.dependency 'SwiftyJSON'
     end
 
     spec.subspec 'ObjectMapper' do |objectMapper|
         objectMapper.source_files = 'ObjectMapper/**/*.swift'
+        objectMapper.dependency 'SwiftKit/Internal'
         objectMapper.dependency 'SwiftyJSON'
     end
 
     spec.subspec 'ViewComposer' do |composer|
         composer.source_files = 'ViewComposer/**/*.swift'
         composer.frameworks = 'UIKit'
+        composer.dependency 'SwiftKit/Internal'
         composer.dependency 'SwiftKit/Events'
     end
 
@@ -67,6 +77,7 @@ Pod::Spec.new do |spec|
 
         testUtils.subspec 'Base' do |baseTestUtils|
             baseTestUtils.source_files = 'TestUtils/Base/**/*.swift'
+            baseTestUtils.dependency 'SwiftKit/Internal'
             baseTestUtils.dependency 'SwiftKit/Events'
         end
 

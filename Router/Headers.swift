@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Header {
+public protocol Header: RequestModifier {
     var name: String { get }
     var value: String { get }
 }
@@ -26,6 +26,16 @@ public extension NSMutableURLRequest {
 }
 
 public struct Headers {
+    
+    public struct Custom: Header {
+        public var name: String
+        public var value: String
+        
+        public init(_ name: String, _ value: String) {
+            self.name = name
+            self.value = value
+        }
+    }
     
     public enum Accept: Header {
         case ApplicationJson
@@ -68,4 +78,27 @@ public struct Headers {
             }
         }
     }
+}
+
+public class HeaderRequestEnhancer: RequestEnhancer {
+    
+    public let priority: Int = DEFAULT_ENHANCER_PRIORITY
+    
+    public func canEnhance(request: Request, modifier: RequestModifier) -> Bool {
+        return modifier is Header
+    }
+    
+    public func enhanceRequest(inout request: Request, modifier: RequestModifier) {
+        switch(modifier) {
+        case let header as Header:
+            request.addHeader(header)
+        default:
+            break
+        }
+    }
+    
+    public func deenhanceResponse(response: Response<NSData?>, modifier: RequestModifier) -> Response<NSData?> {
+        return response
+    }
+    
 }
