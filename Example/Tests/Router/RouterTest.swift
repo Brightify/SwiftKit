@@ -14,19 +14,7 @@ private struct UserProfile: Mappable {
     
     var login: String?
     var id: Int?
-    var avatarUrl: String?
-    var gravatarId: String?
     var type: ProfileType = .User
-    var siteAdmin: Bool = false
-    var company: String?
-    var blog: String?
-    var location: String?
-    var email: String?
-    var hireable: Bool = false
-    var publicRepositories: Int = 0
-    var publicGists: Int = 0
-    var followers: Int = 0
-    var following: Int = 0
     
     init?(_ map: Map) {
         mapping(map)
@@ -35,19 +23,7 @@ private struct UserProfile: Mappable {
     private mutating func mapping(map: Map) {
         login <- map["login"]
         id <- map["id"]
-        avatarUrl <- map["avatar_url"]
-        gravatarId <- map["gravatar_id"]
         type <- map["type"]
-        siteAdmin <- map["site_admin"]
-        company <- map["company"]
-        blog <- map["blog"]
-        location <- map["location"]
-        email <- map["email"]
-        hireable <- map["hireable"]
-        publicRepositories <- map["public_repos"]
-        publicGists <- map["public_gists"]
-        followers <- map["followers"]
-        following <- map["following"]
     }
     
     enum ProfileType: String {
@@ -92,34 +68,44 @@ class RouterTest: QuickSpec {
         static let test = GET<Void, String>("/zen", TestEnhancer.TestModifier())
     }
     
+    private struct GitHubMockEndpoints {
+        static let zen: MockEndpoint = (method: "GET", url: "https://api.github.com/zen", response: "Practicality beats purity.", statusCode: 200)
+        static let userProfile: String -> MockEndpoint = { (method: "GET", url: "https://api.github.com/users/\($0.urlSafe)", response: "{\"login\": \"\($0)\", \"id\": 100, \"type\": \"Organization\"}", statusCode: 200) }
+    }
+    
     override func spec() {
         describe("Router") {
+            var performer: MockRequestPerformer!
             var router: Router!
             beforeEach {
-                router = Router(baseURL: NSURL(string: "https://api.github.com")!, objectMapper: ObjectMapper())
+                performer = MockRequestPerformer()
+                router = Router(baseURL: NSURL(string: "https://api.github.com")!, objectMapper: ObjectMapper(), requestPerformer: performer)
             }
             it("supports Void to String request") {
+                performer.endpoints.append(GitHubMockEndpoints.zen)
                 var zensponse: String?
                 router.request(GitHubEndpoints.zen) { response in
-                    println("### Zen: \(response.output)")
                     zensponse = response.output
                 }
                 
-                expect(zensponse).toEventuallyNot(beNil(), timeout: 10)
+                expect(zensponse).toEventually(equal("Practicality beats purity."))
             }
 
             it("supports Void to Object request") {
+                performer.endpoints.append(GitHubMockEndpoints.userProfile("brightify"))
                 var profile: UserProfile?
                 router.request(GitHubEndpoints.userProfile.endpoint("brightify")) { response in
-                    println("### Profile: \(response.output)")
                     profile = response.output
                 }
                 
-                expect(profile).toEventuallyNot(beNil(), timeout: 10)
-                expect(profile?.type).toEventually(equal(UserProfile.ProfileType.Organization), timeout: 10)
+                expect(profile).toEventuallyNot(beNil())
+                expect(profile?.id).toEventually(equal(100))
+                expect(profile?.login).toEventually(equal("brightify"))
+                expect(profile?.type).toEventually(equal(UserProfile.ProfileType.Organization))
             }
             
             it("supports custom RequestEnhancers") {
+                performer.endpoints.append(GitHubMockEndpoints.zen)
                 var firstEnhancerCalledTimes: (request: Int, response: Int) = (0, 0)
                 var secondEnhancerCalledTimes: (request: Int, response: Int) = (0, 0)
 

@@ -12,6 +12,7 @@
 		186D2E761B4ECDAA005BC06D /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186D2E751B4ECDAA005BC06D /* RouterTest.swift */; };
 		187C60A11B3CB73D00B8457A /* ObjectMapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */; };
 		18AB51FB1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */; };
+		18B120061B66EFC1003E29E1 /* MockRequestPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */; };
 		3E76AF5D0D82F50F0D7893FB /* Pods_SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -71,6 +72,7 @@
 		186D2E751B4ECDAA005BC06D /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
 		187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest.swift; sourceTree = "<group>"; };
 		18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperPolymorphismTest.swift; sourceTree = "<group>"; };
+		18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequestPerformer.swift; sourceTree = "<group>"; };
 		4284CCCCA8E65D344BE8D307 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5C7307647314AEE85DF42378 /* Pods-SwiftKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftKit/Pods-SwiftKit.release.xcconfig"; sourceTree = "<group>"; };
 		5CD3994B78FA578EFB85811A /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				186D2E751B4ECDAA005BC06D /* RouterTest.swift */,
+				18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -582,6 +585,7 @@
 				DC57B6291B14FDB600D073C6 /* IntPreferenceTest.swift in Sources */,
 				DC9A43FA1B45A4E900D11BEC /* FloatPreferenceDeinitTest.swift in Sources */,
 				DC57B6351B14FDDE00D073C6 /* OptionalPreferenceTest.swift in Sources */,
+				18B120061B66EFC1003E29E1 /* MockRequestPerformer.swift in Sources */,
 				DC9A44021B45B2B200D11BEC /* IntPreferenceDeinitTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

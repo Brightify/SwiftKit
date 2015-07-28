@@ -2,6 +2,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+public typealias DefaultRequestPerformer = AlamofireRequestPerformer
 
 /// Router submodule helps to use REST APIs
 public class Router {
@@ -11,6 +12,7 @@ public class Router {
     
     public let baseURL: NSURL
     public let objectMapper: ObjectMapper
+    public let requestPerformer: RequestPerformer
     public let responseVerifier: ResponseVerifier
     
     public private(set) var requestEnhancers: [RequestEnhancer] = []
@@ -26,10 +28,12 @@ public class Router {
     public init(
         baseURL: NSURL,
         objectMapper: ObjectMapper,
+        requestPerformer: RequestPerformer = DefaultRequestPerformer(),
         responseVerifier: ResponseVerifier = StatusCodeRangeVerifier(range: 200...299))
     {
         self.baseURL = baseURL
         self.objectMapper = objectMapper
+        self.requestPerformer = requestPerformer
         self.responseVerifier = responseVerifier
         
         registerRequestEnhancer(HeaderRequestEnhancer())
@@ -66,22 +70,12 @@ public class Router {
     }
     
     private func runRequest(request: Request, completion: Completion) -> Cancellable {
-        let alamofireRequest = Alamofire.Manager.sharedInstance
-            .request(request.urlRequest)
-            .response { (urlRequest: NSURLRequest, httpResponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
-                let statusCode = httpResponse?.statusCode
-                
-                var response = Response<NSData?>(output: data as? NSData, statusCode: statusCode, error: error, rawRequest: urlRequest, rawResponse: httpResponse, rawData: data as? NSData)
-                
-                response = request.enhancements.reduce(response) { accumulator, enhancement in
-                    enhancement.0.deenhanceResponse(accumulator, modifier: enhancement.1)
-                }
-                
-                completion(response)
-        }
-        
-        return CancellableToken {
-            alamofireRequest.cancel()
+        return requestPerformer.performRequest(request) { (var response) in
+            response = request.enhancements.reduce(response) { accumulator, enhancement in
+                enhancement.0.deenhanceResponse(accumulator, modifier: enhancement.1)
+            }
+            
+            completion(response)
         }
     }
     
