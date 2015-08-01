@@ -79,10 +79,8 @@ public class Router {
         }
     }
     
-    private func relayEmptyResponse(callback: EmptyResponse -> ()) -> Completion {
-        return { response in
-            callback(response.emptyCopy())
-        }
+    private func relayEmptyResponse(callback: EmptyResponse -> ())(response: Response<NSData?>) {
+        callback(response.emptyCopy())
     }
 
 }
@@ -121,6 +119,15 @@ extension Router {
         return runRequest(request, completion: relayPlainTextResponse(callback))
     }
     
+    public func request<ENDPOINT: Endpoint
+        where ENDPOINT.Input == Void, ENDPOINT.Output == [String]>
+        (endpoint: ENDPOINT, callback: Response<[String]> -> ()) -> Cancellable
+    {
+        let request = prepareRequest(endpoint)
+        
+        return runRequest(request, completion: relayStringArrayResponse(callback))
+    }
+
     /**
         Performs request with no output data
     
@@ -138,18 +145,33 @@ extension Router {
         }
     }
     
-    private func relayPlainTextResponse(callback: Response<String?> -> ()) -> Completion {
-        return { response in
-            let textResponse: Response<String?> = response.map {
-                var text: String? = nil
-                if self.responseVerifier.verify(response), let data = $0 {
-                    text = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
-                }
-                return text
+    private func relayPlainTextResponse(callback: Response<String?> -> ())(response: Response<NSData?>) {
+        let textResponse: Response<String?> = response.map {
+            var text: String? = nil
+            if self.responseVerifier.verify(response), let data = $0 {
+                text = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
             }
-            
-            callback(textResponse)
+            return text
         }
+        
+        callback(textResponse)
+    }
+    
+    private func relayStringArrayResponse(callback: Response<[String]> -> ())(response: Response<NSData?>) {
+        let stringArrayResponse: Response<[String]> = response.map {
+            var array: [String] = []
+            if self.responseVerifier.verify(response), let data = $0 {
+                let json = JSON(data: data)
+                for (key, value) in json {
+                    if let string = value.string {
+                        array.append(string)
+                    }
+                }
+            }
+            return array
+        }
+        
+        callback(stringArrayResponse)
     }
 }
 
@@ -336,36 +358,32 @@ extension Router {
         return prepareRequest(endpoint, input: json.rawData(), contentType: .ApplicationJson)
     }
     
-    private func relaySingleObjectResponse<OBJECT: Mappable>(callback: Response<OBJECT?> -> ()) -> Completion {
-        return { response in
-            let modelResponse: Response<OBJECT?> = response.map {
-                var model: OBJECT? = nil
-                if self.responseVerifier.verify(response), let data = $0 {
-                    let json = JSON(data: data)
-                    model = self.objectMapper.map(json)
-                }
-                return model
+    private func relaySingleObjectResponse<OBJECT: Mappable>(callback: Response<OBJECT?> -> ())(response: Response<NSData?>) {
+        let modelResponse: Response<OBJECT?> = response.map {
+            var model: OBJECT? = nil
+            if self.responseVerifier.verify(response), let data = $0 {
+                let json = JSON(data: data)
+                model = self.objectMapper.map(json)
             }
-            
-            callback(modelResponse)
+            return model
         }
+        
+        callback(modelResponse)
     }
     
-    private func relayObjectArrayResponse<OBJECT: Mappable>(callback: Response<[OBJECT]> -> ()) -> Completion {
-        return { response in
-            let modelResponse: Response<[OBJECT]> = response.map {
-                var models: [OBJECT]?
-                
-                if self.responseVerifier.verify(response), let data = $0 {
-                    let json = JSON(data: data)
-                    models = self.objectMapper.mapArray(json)
-                }
-                
-                return models ?? []
+    private func relayObjectArrayResponse<OBJECT: Mappable>(callback: Response<[OBJECT]> -> ())(response: Response<NSData?>) {
+        let modelResponse: Response<[OBJECT]> = response.map {
+            var models: [OBJECT]?
+            
+            if self.responseVerifier.verify(response), let data = $0 {
+                let json = JSON(data: data)
+                models = self.objectMapper.mapArray(json)
             }
             
-            callback(modelResponse)
+            return models ?? []
         }
+        
+        callback(modelResponse)
     }
 }
 
@@ -406,20 +424,18 @@ extension Router {
         return prepareRequest(endpoint, input: input.rawData(), contentType: .ApplicationJson)
     }
     
-    private func relayJSONResponse(callback: Response<JSON?> -> ()) -> Completion {
-        return { response in
-            let jsonResponse: Response<JSON?> = response.map {
-                var json: JSON? = nil
-                
-                if self.responseVerifier.verify(response), let data = $0 {
-                    json = JSON(data: data)
-                }
-                
-                return json
+    private func relayJSONResponse(callback: Response<JSON?> -> ())(response: Response<NSData?>) {
+        let jsonResponse: Response<JSON?> = response.map {
+            var json: JSON? = nil
+            
+            if self.responseVerifier.verify(response), let data = $0 {
+                json = JSON(data: data)
             }
             
-            callback(jsonResponse)
+            return json
         }
+        
+        callback(jsonResponse)
     }
 }
 
