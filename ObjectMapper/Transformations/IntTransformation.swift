@@ -5,6 +5,9 @@
 import SwiftyJSON
 
 public struct IntTransformation: Transformation {
+    
+    public init() { }
+    
     public func transformFromJSON(json: JSON) -> Int? {
         return json.int
     }

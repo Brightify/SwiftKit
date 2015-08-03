@@ -10,6 +10,8 @@ import SwiftyJSON
 
 public struct NSURLTransformation: Transformation {
     
+    public init() { }
+    
     public func transformFromJSON(json: JSON) -> NSURL? {
         return json.URL
     }

@@ -5,6 +5,9 @@
 import SwiftyJSON
 
 public struct StringTransformation: Transformation {
+    
+    public init() { }
+    
     public func transformFromJSON(json: JSON) -> String? {
         return json.string
     }

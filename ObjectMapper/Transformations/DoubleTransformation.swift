@@ -6,6 +6,8 @@ import SwiftyJSON
 
 public struct DoubleTransformation: Transformation {
 
+    public init() { }
+    
     public func transformFromJSON(json: JSON) -> Double? {
         return json.double
     }

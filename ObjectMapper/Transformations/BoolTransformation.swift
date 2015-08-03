@@ -6,6 +6,8 @@ import SwiftyJSON
 
 public struct BoolTransformation: Transformation {
 
+    public init() { }
+    
     public func transformFromJSON(json: JSON) -> Bool? {
         return json.bool
     }

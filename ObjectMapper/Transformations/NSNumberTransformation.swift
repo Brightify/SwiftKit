@@ -5,6 +5,9 @@
 import SwiftyJSON
 
 public struct NSNumberTransformation: Transformation {
+    
+    public init() { }
+    
     public func transformFromJSON(json: JSON) -> NSNumber? {
         return json.number
     }

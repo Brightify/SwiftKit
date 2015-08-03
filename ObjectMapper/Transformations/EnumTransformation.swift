@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-public class EnumTransformation<T: RawRepresentable>: Transformation {
+public struct EnumTransformation<T: RawRepresentable>: Transformation {
     
     public init() { }
     

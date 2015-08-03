@@ -5,6 +5,9 @@
 import SwiftyJSON
 
 public struct FloatTransformation: Transformation {
+    
+    public init() { }
+    
     public func transformFromJSON(json: JSON) -> Float? {
         return json.float
     }
