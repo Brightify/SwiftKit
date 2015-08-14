@@ -18,13 +18,13 @@ public class ObjectMapper {
     }
     
     public func map<M: Mappable>(json: JSON) -> M? {
-        if (json.type == .Dictionary) {
-            let map = BaseMap(objectMapper: self, mappingDirection: .FromJSON, json: json)
-            let type = polymorph.concreteTypeFor(M.self, inMap: map)
-            return type(map)
-        } else {
+        if json.type == .Null {
             return nil
         }
+        
+        let map = BaseMap(objectMapper: self, mappingDirection: .FromJSON, json: json)
+        let type = polymorph.concreteTypeFor(M.self, inMap: map)
+        return type(map)
     }
     
     public func mapArray<M: Mappable>(json: JSON) -> [M]? {
