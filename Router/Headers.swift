@@ -84,20 +84,15 @@ public class HeaderRequestEnhancer: RequestEnhancer {
     
     public let priority: Int = DEFAULT_ENHANCER_PRIORITY
     
-    public func canEnhance(request: Request, modifier: RequestModifier) -> Bool {
-        return modifier is Header
+    public func canEnhance(request: Request) -> Bool {
+        return request.modifiers.filter { $0 is Header }.count > 0
     }
     
-    public func enhanceRequest(inout request: Request, modifier: RequestModifier) {
-        switch(modifier) {
-        case let header as Header:
-            request.addHeader(header)
-        default:
-            break
-        }
+    public func enhanceRequest(inout request: Request) {
+        request.modifiers.map { $0 as? Header }.filter { $0 != nil }.each { request.addHeader($0!) }
     }
     
-    public func deenhanceResponse(response: Response<NSData?>, modifier: RequestModifier) -> Response<NSData?> {
+    public func deenhanceResponse(response: Response<NSData?>) -> Response<NSData?> {
         return response
     }
     

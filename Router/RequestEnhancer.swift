@@ -14,10 +14,10 @@ public protocol RequestEnhancer {
 
     var priority: Int { get }
     
-    func canEnhance(request: Request, modifier: RequestModifier) -> Bool
+    func canEnhance(request: Request) -> Bool
     
-    func enhanceRequest(inout request: Request, modifier: RequestModifier)
+    func enhanceRequest(inout request: Request)
     
-    func deenhanceResponse(response: Response<NSData?>, modifier: RequestModifier) -> Response<NSData?>
+    func deenhanceResponse(response: Response<NSData?>) -> Response<NSData?>
     
 }

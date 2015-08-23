@@ -54,9 +54,9 @@ public class Router {
         
         request.HTTPMethod = endpoint.method.rawValue
         request.modifiers = endpoint.modifiers.arrayByAdding(extraModifiers)
-        request.enhancements = requestEnhancers.product(request.modifiers)
-            .filter { $0.canEnhance(request, modifier: $1) }
-            .each { $0.enhanceRequest(&request, modifier: $1) }
+        request.enhancedBy = requestEnhancers
+            .filter { $0.canEnhance(request) }
+            .each { $0.enhanceRequest(&request) }
 
         return request
     }
@@ -71,8 +71,8 @@ public class Router {
     
     private func runRequest(request: Request, completion: Completion) -> Cancellable {
         return requestPerformer.performRequest(request) { (var response) in
-            response = request.enhancements.reduce(response) { accumulator, enhancement in
-                enhancement.0.deenhanceResponse(accumulator, modifier: enhancement.1)
+            response = request.enhancedBy.reduce(response) { accumulator, enhancer in
+                enhancer.deenhanceResponse(accumulator)
             }
             
             completion(response)

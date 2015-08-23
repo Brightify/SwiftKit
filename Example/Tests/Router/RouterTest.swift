@@ -45,15 +45,15 @@ private struct TestEnhancer: RequestEnhancer {
         self.onResponse = onResponse
     }
     
-    private func canEnhance(request: Request, modifier: RequestModifier) -> Bool {
-        return modifier is TestModifier
+    private func canEnhance(request: Request) -> Bool {
+        return request.modifiers.filter { $0 is TestModifier }.count > 0
     }
     
-    private func enhanceRequest(inout request: Request, modifier: RequestModifier) {
+    private func enhanceRequest(inout request: Request) {
         onRequest()
     }
     
-    private func deenhanceResponse(response: Response<NSData?>, modifier: RequestModifier) -> Response<NSData?> {
+    private func deenhanceResponse(response: Response<NSData?>) -> Response<NSData?> {
         onResponse()
         return response
     }

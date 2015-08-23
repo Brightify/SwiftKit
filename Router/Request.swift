@@ -116,7 +116,7 @@ public struct Request {
     }
     
     public var modifiers: [RequestModifier] = []
-    public var enhancements: [Enhancement] = []
+    public var enhancedBy: [RequestEnhancer] = []
     
     public init(URL: NSURL) {
         backingURLRequest = NSMutableURLRequest(URL: URL)
