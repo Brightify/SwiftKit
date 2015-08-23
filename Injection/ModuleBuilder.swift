@@ -100,9 +100,7 @@ public class Module {
         } else if type is Protocol {
             return NSStringFromProtocol(type as! Protocol)
         } else {
-            let name = reflect(type).summary
-            println("Name :\(name)")
-            return name
+            return reflect(type).summary
         }
     }
 
