@@ -13,7 +13,6 @@
 		187C60A11B3CB73D00B8457A /* ObjectMapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */; };
 		18AB51FB1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */; };
 		18B120061B66EFC1003E29E1 /* MockRequestPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */; };
-		18E23C431B8A387500B29FC9 /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = 18E23C421B8A387500B29FC9 /* CHANGELOG.md */; };
 		3E76AF5D0D82F50F0D7893FB /* Pods_SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -555,7 +554,6 @@
 				6003F59E195388D20070C39A /* BFYAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* BFYViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
-				18E23C431B8A387500B29FC9 /* CHANGELOG.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

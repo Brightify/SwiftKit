@@ -33,6 +33,10 @@ public class Module {
     
     /// All bindings with keys
     public private(set) var bindings: [String: AnyObject] = [:]
+
+    public var allowUnboundFactories: Bool {
+        return false
+    }
     
     public init() {
         

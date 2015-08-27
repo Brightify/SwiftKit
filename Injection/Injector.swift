@@ -10,7 +10,8 @@ import Foundation
 
 public class Injector {
     
-    let module: Module
+    private let module: Module
+    private let allowsUnboundFactories: Bool
     
     /**
         Creates an injector with a specified module.
@@ -23,6 +24,7 @@ public class Injector {
     
     private init(module: Module) {
         self.module = module
+        self.allowsUnboundFactories = module.allowUnboundFactories
     }
     
     /// Returns an implementation binded to type `T` which is resolved from the callsite.
@@ -83,6 +85,8 @@ public class Injector {
         let binding = module.bindingForType(type)
         if let injectionClosure = binding?.implementation {
             return injectionClosure
+        } else if allowsUnboundFactories {
+            return Injector.unboundFactory
         } else {
             fatalError("Binding for type \(type) was \(binding)")
         }
@@ -92,8 +96,14 @@ public class Injector {
         let binding = module.bindingForKey(key)
         if let injectionClosure = binding?.implementation {
             return injectionClosure
+        } else if allowsUnboundFactories {
+            return Injector.unboundFactory
         } else {
             fatalError("Binding for key \(key) was \(binding) with implementation \(binding?.implementation)")
         }
+    }
+    
+    private static func unboundFactory<T>(injector: Injector) -> T {
+        fatalError("Unbound factory of type \(T.self) cannot be invoked!")
     }
 }
