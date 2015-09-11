@@ -66,11 +66,13 @@ class RouterTest: QuickSpec {
         static let userProfile = Target<GET<Void, UserProfile>, String> { "/users/\($0.urlSafe)" }
         static let userRepositories = Target<GET<Void, String>, String> { "/users/\($0.urlSafe)/repos" }
         static let test = GET<Void, String>("/zen", TestEnhancer.TestModifier())
+        static let nonGithubEndpoint = GET<Void, String>("ftp://test")
     }
     
     private struct GitHubMockEndpoints {
         static let zen: MockEndpoint = (method: "GET", url: "https://api.github.com/zen", response: "Practicality beats purity.", statusCode: 200)
         static let userProfile: String -> MockEndpoint = { (method: "GET", url: "https://api.github.com/users/\($0.urlSafe)", response: "{\"login\": \"\($0)\", \"id\": 100, \"type\": \"Organization\"}", statusCode: 200) }
+        static let nonGithubEndpoint: MockEndpoint = (method: "GET", url: "ftp://test", response: "Works like a charmer.", statusCode: 200)
     }
     
     override func spec() {
@@ -102,6 +104,16 @@ class RouterTest: QuickSpec {
                 expect(profile?.id).toEventually(equal(100))
                 expect(profile?.login).toEventually(equal("brightify"))
                 expect(profile?.type).toEventually(equal(UserProfile.ProfileType.Organization))
+            }
+            
+            it("supports absolute url in endpoint") {
+                performer.endpoints.append(GitHubMockEndpoints.nonGithubEndpoint)
+                var stringData: String?
+                router.request(GitHubEndpoints.nonGithubEndpoint) { response in
+                    stringData = response.output
+                }
+                
+                expect(stringData).toEventually(equal("Works like a charmer."))
             }
             
             it("supports custom RequestEnhancers") {

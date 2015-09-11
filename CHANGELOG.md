@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.9
+
+* Added support for absolute urls in endpoints.
+
 ## 0.5.8
 
 * Added event relaying methods to `Event` class and `map` methods to `EventData` struct.

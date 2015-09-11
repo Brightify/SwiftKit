@@ -46,7 +46,10 @@ public class Router {
     
     private func prepareRequest<E: Endpoint>(endpoint: E, extraModifiers: [RequestModifier] = []) -> Request {
         var request: Request
-        if let url = baseURL.URLByAppendingPathComponentWithoutEscape(endpoint.path) {
+        // Checking for scheme being non-nil allows endpoints with absolute urls without appending the baseURL.
+        if let endpointUrl = NSURL(string: endpoint.path) where endpointUrl.scheme != nil {
+            request = Request(URL: endpointUrl)
+        } else if let url = baseURL.URLByAppendingPathComponentWithoutEscape(endpoint.path) {
             request = Request(URL: url)
         } else {
             fatalError("URL could not be built using base URL: \(baseURL) and endpoint path: \(endpoint.path)")
