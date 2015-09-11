@@ -88,4 +88,39 @@ public class Event<SENDER, INPUT> {
         listeners.removeAll()
     }
     
+    public func relayTo<TRANSFORMED_SENDER, TRANSFORMED_INPUT>(otherEvent: Event<TRANSFORMED_SENDER, TRANSFORMED_INPUT>, transformation: EventData<SENDER, INPUT> -> EventData<TRANSFORMED_SENDER, TRANSFORMED_INPUT>) {
+        registerClosure { [weak otherEvent] data in
+            otherEvent?.fire(transformation(data))
+        }
+    }
+    
+    public func relayTo<TRANSFORMED_INPUT>(otherEvent: Event<SENDER, TRANSFORMED_INPUT>, transformation: INPUT -> TRANSFORMED_INPUT) {
+        registerClosure { [weak otherEvent] data in
+            otherEvent?.fire(data.sender, input: transformation(data.input))
+        }
+    }
+    
+    public func relayTo<NEW_SENDER: AnyObject>(otherEvent: Event<NEW_SENDER, INPUT>, sentBy newSender: NEW_SENDER) {
+        registerClosure { [weak otherEvent, weak newSender] data in
+            if let newSender = newSender {
+                otherEvent?.fire(newSender, input: data.input)
+            }
+        }
+    }
+    
+    public func relayTo<NEW_SENDER: AnyObject, TRANSFORMED_INPUT>(otherEvent: Event<NEW_SENDER, TRANSFORMED_INPUT>, sentBy newSender: NEW_SENDER, transformation: INPUT -> TRANSFORMED_INPUT) {
+        registerClosure { [weak otherEvent, weak newSender] data in
+            if let newSender = newSender {
+                otherEvent?.fire(newSender, input: transformation(data.input))
+            }
+        }
+    }
+    
+    public func relayTo<NEW_SENDER: AnyObject, NEW_INPUT>(otherEvent: Event<NEW_SENDER, NEW_INPUT>, sentBy newSender: NEW_SENDER, withInput newInput: NEW_INPUT) {
+        registerClosure { [weak otherEvent, weak newSender] _ in
+            if let newSender = newSender {
+                otherEvent?.fire(newSender, input: newInput)
+            }
+        }
+    }
 }

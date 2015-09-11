@@ -93,6 +93,26 @@ class EventTest: QuickSpec {
                     expect(self.passedSender) === self
                 }
             }
+            
+            context("relayed to another event") {
+                it("fires other event") {
+                    var eventFired = false
+                    let event = Event<EventTest, Void>()
+                    let otherEvent = Event<SomeSender, Bool>()
+                    otherEvent += { _ in
+                        eventFired = true
+                    }
+                    
+                    event.relayTo(otherEvent) {
+                        $0.mapSender { _ in SomeSender() }.mapInput { _ in true }
+                    }
+                    
+                    event.fire(self, input: Void())
+                    
+                    expect(eventFired) == true
+                }
+                
+            }
         }
     }
     
@@ -148,3 +168,5 @@ class EventTest: QuickSpec {
         passedSender = data.sender
     }
 }
+
+private class SomeSender { }

@@ -1,12 +1,16 @@
 # Changelog
 
+## 0.5.8
+
+* Added event relaying methods to `Event` class and `map` methods to `EventData` struct.
+
 ## 0.5.7
 
-* Add `allowUnboundFactories` variable into DI `Module` to make mocking easier. This means that if your code heavily uses factories, you will not need to bind each type. Instead you can just override the varibable and return `true` to inform the Injector that you do not care about the injection-time safety for factories. This does not change the behavior of instance injection.
+* Added `allowUnboundFactories` variable into DI `Module` to make mocking easier. This means that if your code heavily uses factories, you will not need to bind each type. Instead you can just override the varibable and return `true` to inform the Injector that you do not care about the injection-time safety for factories. This does not change the behavior of instance injection.
 
 ## 0.5.6
 
-* Remove forgotten `println` in `ModuleBuilder`.
+* Removed forgotten `println` in `ModuleBuilder`.
 
 ## 0.5.5
 
