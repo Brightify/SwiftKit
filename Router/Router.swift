@@ -44,15 +44,23 @@ public class Router {
         requestEnhancers.sort { $0.priority < $1.priority }
     }
     
-    private func prepareRequest<E: Endpoint>(endpoint: E, extraModifiers: [RequestModifier] = []) -> Request {
-        var request: Request
+    public func resolveEndpointUrl<E: Endpoint>(endpoint: E) -> NSURL? {
         // Checking for scheme being non-nil allows endpoints with absolute urls without appending the baseURL.
         if let endpointUrl = NSURL(string: endpoint.path) where endpointUrl.scheme != nil {
-            request = Request(URL: endpointUrl)
+            return endpointUrl
         } else if let url = baseURL.URLByAppendingPathComponentWithoutEscape(endpoint.path) {
+            return url
+        } else {
+            return nil
+        }
+    }
+    
+    private func prepareRequest<E: Endpoint>(endpoint: E, extraModifiers: [RequestModifier] = []) -> Request {
+        var request: Request
+        if let url = resolveEndpointUrl(endpoint) {
             request = Request(URL: url)
         } else {
-            fatalError("URL could not be built using base URL: \(baseURL) and endpoint path: \(endpoint.path)")
+            fatalError("URL could not be resolved using base URL: \(baseURL) and endpoint path: \(endpoint.path)")
         }
         
         request.HTTPMethod = endpoint.method.rawValue

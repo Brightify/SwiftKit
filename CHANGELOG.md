@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.10
+
+* Added a method `resolveEndpointUrl` into `Router` to let users get the full URL of an endpoint.
+
 ## 0.5.9
 
 * Added support for absolute urls in endpoints.
