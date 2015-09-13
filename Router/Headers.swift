@@ -89,7 +89,7 @@ public class HeaderRequestEnhancer: RequestEnhancer {
     }
     
     public func enhanceRequest(inout request: Request) {
-        request.modifiers.map { $0 as? Header }.filter { $0 != nil }.each { request.addHeader($0!) }
+        request.modifiers.map { $0 as? Header }.filter { $0 != nil }.forEach { request.addHeader($0!) }
     }
     
     public func deenhanceResponse(response: Response<NSData?>) -> Response<NSData?> {

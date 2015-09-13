@@ -213,7 +213,7 @@ class UIButtonEventTest: QuickSpec {
                     calledTimes++
                 }
                 
-                button.sendActionsForControlEvents(.AllEvents)
+                button.sendActionsForControlEvents(.AllTouchEvents)
                 
                 expect(calledTimes) == 1
             }

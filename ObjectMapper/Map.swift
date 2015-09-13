@@ -9,6 +9,8 @@
 import Foundation
 import SwiftyJSON
 
+public typealias SubscriptType = JSONSubscriptType
+
 // Needed because of: http://stackoverflow.com/questions/31127786/compilation-fails-with-valid-code-when-fastest-o-optimizations-are-set/31127787#31127787
 public class JSONBox {
     
@@ -362,8 +364,8 @@ public class BaseMap: Map {
     private func transformArrayWith<T: Transformation>(transformation: T) -> [T.Object]? {
         if (json.unbox.type == .Array) {
             var array: [T.Object] = []
-            for (index, jsonValue) in json.unbox {
-                if let value = transformation.transformFromJSON(jsonValue) {
+            json.unbox.forEach {
+                if let value = transformation.transformFromJSON($1) {
                     array.append(value)
                 }
             }

@@ -7,7 +7,6 @@
 //
 
 import Nimble
-import SwiftKit
 
 public class QuickUtils: BaseTestUtils {
     

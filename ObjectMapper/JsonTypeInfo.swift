@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class JsonTypeInfo {
+public class JsonTypeInfo: NSObject {
     public let baseType: PolymorphicMappable.Type
     public let registeredTypes: [PolymorphicType]
     
@@ -41,7 +41,7 @@ public class JsonTypeInfoBuilder<T: PolymorphicMappable> {
     }
     
     public func registerSubtype(type: T.Type, property: String = "@class") {
-        let className = reflect(type).summary
+        let className = Mirror(reflecting: type).description
         let id = JsonTypeInfo.Id.Class(property: property, className: className)
         let polymorphicType = PolymorphicType(type: type, use: id)
         

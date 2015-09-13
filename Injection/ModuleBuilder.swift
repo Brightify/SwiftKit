@@ -17,7 +17,7 @@ public class Key<T> {
     
     /// Name of the key
     public let name: String
-    
+
     /**
         Initializes key with name
     
@@ -28,15 +28,33 @@ public class Key<T> {
     }
 }
 
+private func == (lhs: Module.KeyedBindingsMapKey, rhs: Module.KeyedBindingsMapKey) -> Bool {
+    return lhs.name == rhs.name && lhs.typeIdentifier == rhs.typeIdentifier
+}
+
 /// Module is used to create all bindings in the project
 public class Module {
     
-    /// All bindings with keys
-    public private(set) var bindings: [String: AnyObject] = [:]
-
-    public var allowUnboundFactories: Bool {
-        return false
+    private struct KeyedBindingsMapKey: Hashable {
+        let name: String
+        let typeIdentifier: ObjectIdentifier
+        
+        var hashValue: Int {
+            return name.hashValue
+        }
+        
+        init<T>(key: Key<T>) {
+            name = key.name
+            typeIdentifier = ObjectIdentifier(T.self)
+        }
     }
+    
+    /// All bindings with keys
+    private var plainBindings: [ObjectIdentifier: AnyObject] = [:]
+    // We need to use Int as the key because of the missing generic covariance in Swift. The key's value has to be the Key<T>'s hashValue.
+    private var keyedBindings: [KeyedBindingsMapKey: AnyObject] = [:] // [Key<Any>: AnyObject] = [:]
+    
+    public var allowUnboundFactories: Bool = false
     
     public init() {
         
@@ -70,42 +88,25 @@ public class Module {
     }
     
     func bindingForType<T>(type: T.Type) -> Binding<T>? {
-        let typeName = stringFromType(type)
-        return bindings[typeName] as? Binding<T>
+        return plainBindings[ObjectIdentifier(type)] as? Binding<T>
     }
     
     func bindingForKey<T>(key: Key<T>) -> Binding<T>? {
-        let bindingName = bindingNameForKey(key)
-        return bindings[bindingName] as? Binding<T>
+        let bindingKey = KeyedBindingsMapKey(key: key)
+        return keyedBindings[bindingKey] as? Binding<T>
     }
     
     private func createTypeBinding<T>(type: T.Type) -> Binding<T> {
-        let typeName = stringFromType(type)
-        let binding: Binding = Binding<T>(name: typeName, type: type)
-        bindings[typeName] = binding
+        let binding: Binding = Binding<T>(type: type)
+        plainBindings[ObjectIdentifier(type)] = binding
         return binding
     }
     
     private func createKeyBinding<T>(key: Key<T>) -> Binding<T> {
-        let bindingName = bindingNameForKey(key)
-        let binding = Binding<T>(name: bindingName, type: T.self)
-        bindings[bindingName] = binding
+        let bindingKey = KeyedBindingsMapKey(key: key)
+        let binding = Binding<T>(type: T.self)
+        keyedBindings[bindingKey] = binding
         return binding
-    }
-    
-    private func bindingNameForKey<T>(key: Key<T>) -> String {
-        let typeName = stringFromType(T.self)
-        return "Key: \(key.name), \(typeName)"
-    }
-    
-    private func stringFromType<T>(type: T.Type) -> String {
-        if let classType: AnyClass = type as? AnyClass {
-            return "Class: \(NSStringFromClass(classType))"
-        } else if type is Protocol {
-            return NSStringFromProtocol(type as! Protocol)
-        } else {
-            return reflect(type).summary
-        }
     }
 
 }
@@ -123,7 +124,7 @@ public class BindingBuilder<T: protocol<AnyObject, Injectable>> {
 
     public func to(implementation: T.Type) -> SingletonBinder<T> {
         binding.implementation = { injector in
-            implementation(injector: injector)
+            implementation.init(injector: injector)
         }
         
         return SingletonBinder<T>(binding: binding)
@@ -146,7 +147,7 @@ public class PostInitInjectableBindingBuilder<T: protocol<AnyObject, PostInitInj
     
     public func to(implementation: T.Type) -> SingletonBinder<T> {
         binding.implementation = { injector in
-            let injectable = implementation()
+            let injectable = implementation.init()
             injectable.inject(injector)
             return injectable
         }
@@ -216,12 +217,10 @@ public class SingletonBinder<T> {
 // FIXME It seems like the Binding can't be access from outside, but yet is public. Also the name and type is not used.
 public class Binding<T> {
 
-    public private(set) var name: String
     public private(set) var type: T.Type
     public private(set) var implementation: (Injector -> T)?
     
-    private init(name: String, type: T.Type) {
-        self.name = name
+    private init(type: T.Type) {
         self.type = type
     }
 

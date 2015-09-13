@@ -26,7 +26,7 @@ public class MockRequestPerformer: RequestPerformer {
                 output: responseData,
                 statusCode: endpoint.statusCode,
                 error: nil,
-                rawRequest: request.urlRequest,
+                request: request,
                 rawResponse: nil,
                 rawData: responseData)
         } else {
@@ -34,7 +34,7 @@ public class MockRequestPerformer: RequestPerformer {
                 output: nil,
                 statusCode: 404,
                 error: nil,
-                rawRequest: request.urlRequest,
+                request: request,
                 rawResponse: nil,
                 rawData: nil)
         }

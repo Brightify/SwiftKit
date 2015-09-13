@@ -24,7 +24,7 @@ public class ObjectMapper {
         
         let map = BaseMap(objectMapper: self, mappingDirection: .FromJSON, json: json)
         let type = polymorph.concreteTypeFor(M.self, inMap: map)
-        return type(map)
+        return type.init(map)
     }
     
     public func mapArray<M: Mappable>(json: JSON) -> [M]? {
@@ -64,13 +64,13 @@ public class ObjectMapper {
         return map.json.unbox
     }
     
-    public func toJSONArray<M: Mappable>(var objects: [M]) -> JSON {
+    public func toJSONArray<M: Mappable>(objects: [M]) -> JSON {
         var json: JSON = []
         json.arrayObject = objects.map { self.toJSON($0).object }
         return json
     }
     
-    public func toJSONDictionary<M: Mappable>(var dictionary: [String: M]) -> JSON {
+    public func toJSONDictionary<M: Mappable>(dictionary: [String: M]) -> JSON {
         var json: JSON = [:]
         json.dictionaryObject = dictionary.map { self.toJSON($0).object }
         return json

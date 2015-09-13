@@ -3,16 +3,18 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'SwiftKit', :exclusive => true do
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'xcode7'
     pod "SwiftKit", :path => "../"
     pod "SwiftKit/TestUtils/XCTest", :path => "../"
     pod "SwiftKit/TestUtils/Quick", :path => "../"
 end
 
 target 'Tests', :exclusive => true do
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'xcode7'
     pod "SwiftKit", :path => "../"
     pod "SwiftKit/TestUtils/Quick", :path => "../"
     pod 'performSelector-swift'
 
-    pod 'Quick', '0.3.1'
-    pod 'Nimble', '1.0.0'
+    pod 'Quick', '~> 0.6'
+    pod 'Nimble', '~> 2.0.0-rc.3'
 end

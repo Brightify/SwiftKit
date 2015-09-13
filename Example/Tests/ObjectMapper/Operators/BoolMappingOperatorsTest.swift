@@ -65,8 +65,7 @@ class BoolMappingOperatorsTest: QuickSpec {
                 boolArray <- map["[Bool]([true,false,true,false])"]
                 
                 expect(map.json.unbox["[Bool]([])"].array).to(equal([]))
-                expect(map.json.unbox["[Bool]([true,false,true,false])"].array)
-                    .to(equal([JSON(true), JSON(false), JSON(true), JSON(false)]))
+                expect(map.json.unbox["[Bool]([true,false,true,false])"].array) == [JSON(true), JSON(false), JSON(true), JSON(false)] as [JSON]
             }
             
             it("serializes String Bool dictionary") {

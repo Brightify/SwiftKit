@@ -24,7 +24,7 @@ class TestUtilsTest: QuickSpec {
                 
                 it("returns true if instance has weak reference cycle") {
                     let result = QuickUtils.wasDeinit {
-                        var testableClass = TestableClassWithWeakReferenceCycle()
+                        let testableClass = TestableClassWithWeakReferenceCycle()
                         testableClass.classWithDelegate = ClassWithDelegate(delegate: testableClass)
                         return testableClass
                     }
@@ -33,7 +33,7 @@ class TestUtilsTest: QuickSpec {
                 
                 it("returns false if instance has strong reference cycle") {
                     let result = QuickUtils.wasDeinit {
-                        var testableClass = TestableClassWithStrongReferenceCycle()
+                        let testableClass = TestableClassWithStrongReferenceCycle()
                         testableClass.classWithDelegate = ClassWithDelegate(delegate: testableClass)
                         return testableClass
                     }
@@ -50,7 +50,7 @@ class TestUtilsTest: QuickSpec {
                 
                 it("passes if instance has weak reference cycle") {
                     QuickUtils.assertDeinit {
-                        var testableClass = TestableClassWithWeakReferenceCycle()
+                        let testableClass = TestableClassWithWeakReferenceCycle()
                         testableClass.classWithDelegate = ClassWithDelegate(delegate: testableClass)
                         return testableClass
                     }

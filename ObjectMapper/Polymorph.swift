@@ -84,7 +84,7 @@ class Polymorph {
     private class func extractTypeInfo(type: PolymorphicMappable.Type) -> JsonTypeInfo? {
         // We cast the type to `AnyClass` so we can dynamically invoke the static method.
         // TODO When Swift' protocol class level access is implemented we should switch to it
-        return (type as? AnyClass)?.jsonTypeInfo()
+        return type.jsonTypeInfo()
     }
     
     private class func collectAllRegisteredTypes(type: PolymorphicMappable.Type) -> [PolymorphicType] {

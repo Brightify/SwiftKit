@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0 [next release]
+
+* Migrated to Swift 2.0.
+
 ## 0.5.10
 
 * Added a method `resolveEndpointUrl` into `Router` to let users get the full URL of an endpoint.

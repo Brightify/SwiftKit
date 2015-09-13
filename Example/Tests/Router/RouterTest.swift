@@ -121,7 +121,7 @@ class RouterTest: QuickSpec {
                 var firstEnhancerCalledTimes: (request: Int, response: Int) = (0, 0)
                 var secondEnhancerCalledTimes: (request: Int, response: Int) = (0, 0)
 
-                var firstEnhancer = TestEnhancer(onRequest:
+                let firstEnhancer = TestEnhancer(onRequest:
                     {
                         expect(firstEnhancerCalledTimes.request) == 0
                         expect(firstEnhancerCalledTimes.response) == 0

@@ -41,12 +41,12 @@ public class Router {
     
     public func registerRequestEnhancer(enhancer: RequestEnhancer) {
         requestEnhancers.append(enhancer)
-        requestEnhancers.sort { $0.priority < $1.priority }
+        requestEnhancers.sortInPlace { $0.priority < $1.priority }
     }
     
     public func resolveEndpointUrl<E: Endpoint>(endpoint: E) -> NSURL? {
         // Checking for scheme being non-nil allows endpoints with absolute urls without appending the baseURL.
-        if let endpointUrl = NSURL(string: endpoint.path) where endpointUrl.scheme != nil {
+        if let endpointUrl = NSURL(string: endpoint.path) where endpointUrl.scheme != "" {
             return endpointUrl
         } else if let url = baseURL.URLByAppendingPathComponentWithoutEscape(endpoint.path) {
             return url
@@ -65,9 +65,10 @@ public class Router {
         
         request.HTTPMethod = endpoint.method.rawValue
         request.modifiers = endpoint.modifiers.arrayByAdding(extraModifiers)
-        request.enhancedBy = requestEnhancers
-            .filter { $0.canEnhance(request) }
-            .each { $0.enhanceRequest(&request) }
+        request.enhancedBy = requestEnhancers.filter { $0.canEnhance(request) }.map {
+            $0.enhanceRequest(&request)
+            return $0
+        }
 
         return request
     }
@@ -173,7 +174,7 @@ extension Router {
             var array: [String] = []
             if self.responseVerifier.verify(response), let data = $0 {
                 let json = JSON(data: data)
-                for (key, value) in json {
+                for (_, value) in json {
                     if let string = value.string {
                         array.append(string)
                     }
@@ -360,13 +361,13 @@ extension Router {
     private func prepareRequest<E: Endpoint, IN: Mappable where E.Input == IN>(endpoint: E, input: IN) -> Request {
         let json = objectMapper.toJSON(input)
         
-        return prepareRequest(endpoint, input: json.rawData(), contentType: .ApplicationJson)
+        return prepareRequest(endpoint, input: try? json.rawData(), contentType: .ApplicationJson)
     }
     
     private func prepareRequest<E: Endpoint, IN: Mappable where E.Input == [IN]>(endpoint: E, input: [IN]) -> Request {
         let json = objectMapper.toJSONArray(input)
         
-        return prepareRequest(endpoint, input: json.rawData(), contentType: .ApplicationJson)
+        return prepareRequest(endpoint, input: try? json.rawData(), contentType: .ApplicationJson)
     }
     
     private func relaySingleObjectResponse<OBJECT: Mappable>(callback: Response<OBJECT?> -> ())(response: Response<NSData?>) {
@@ -432,7 +433,7 @@ extension Router {
     }
     
     private func prepareRequest<E: Endpoint>(endpoint: E, input: JSON) -> Request {
-        return prepareRequest(endpoint, input: input.rawData(), contentType: .ApplicationJson)
+        return prepareRequest(endpoint, input: try? input.rawData(), contentType: .ApplicationJson)
     }
     
     private func relayJSONResponse(callback: Response<JSON?> -> ())(response: Response<NSData?>) {

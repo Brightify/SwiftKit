@@ -18,7 +18,7 @@ infix operator => { }
     :param: parent The parent view which will be used as a target view for viewOrNil addition
 */
 public func => <VIEW_TYPE: UIView>(inout viewOrNil: VIEW_TYPE!, parent: UIView) {
-    viewOrNil = viewComposerOperator(viewOrNil, parent)
+    viewOrNil = viewComposerOperator(viewOrNil, parent: parent)
 }
 
 /**
@@ -28,7 +28,7 @@ public func => <VIEW_TYPE: UIView>(inout viewOrNil: VIEW_TYPE!, parent: UIView) 
     :param: parent The parent view which will be used as a target view for viewOrNil addition
 */
 public func => <VIEW_TYPE: UIView>(inout viewOrNil: VIEW_TYPE?, parent: UIView) {
-    viewOrNil = viewComposerOperator(viewOrNil, parent)
+    viewOrNil = viewComposerOperator(viewOrNil, parent: parent)
 }
 
 private func viewComposerOperator<VIEW_TYPE: UIView>(viewOrNil: VIEW_TYPE?, parent: UIView) -> VIEW_TYPE {
@@ -55,8 +55,8 @@ public class ViewComposer {
     }
     
     public class func compose<T: UIView>(type: T.Type) -> AddIntoSuperview<T> {
-        var view = T()
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        let view = T()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return AddIntoSuperview(view: view)
     }
 }

@@ -22,7 +22,7 @@ class ObjectMapperPolymorphismTest: QuickSpec {
                 
                 let objectArray = [object1, object2, object3]
                 let json = objectMapper.toJSONArray(objectArray)
-                debugPrintln(json)
+                debugPrint(json)
                 
                 
             }
@@ -38,7 +38,7 @@ class ObjectMapperPolymorphismTest: QuickSpec {
                 let objectArray = [object1, object2, object3]
                 let json = objectMapper.toJSONArray(objectArray)
                 
-                debugPrintln(json)
+                debugPrint(json)
                 
                 let deserializedObjects: [ParentDTO]? = objectMapper.mapArray(json)
                 

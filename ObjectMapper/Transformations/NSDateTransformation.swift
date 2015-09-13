@@ -14,7 +14,7 @@ public struct NSDateTransformation: Transformation {
     
     public func transformFromJSON(json: JSON) -> NSDate? {
         if let timeInt = json.double {
-            return NSDate(timeIntervalSince1970: NSTimeInterval())
+            return NSDate(timeIntervalSince1970: NSTimeInterval(timeInt))
         }
         return nil
     }

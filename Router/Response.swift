@@ -25,10 +25,10 @@ public class Response<T> {
     public let statusCode: Int?
     
     /// Error of the API request
-    public let error: NSError?
+    public let error: ErrorType?
     
-    /// Raw API request
-    public let rawRequest: NSURLRequest
+    /// Request that was used to obtain this response
+    public let request: Request
     
     /// Raw API response
     public let rawResponse: NSURLResponse?
@@ -46,11 +46,11 @@ public class Response<T> {
         :param: rawResponse The raw response
         :param: rawData The raw data of the Response
     */
-    public init(output: T, statusCode: Int?, error: NSError?, rawRequest: NSURLRequest, rawResponse: NSURLResponse?, rawData: NSData?) {
+    public init(output: T, statusCode: Int?, error: ErrorType?, request: Request, rawResponse: NSURLResponse?, rawData: NSData?) {
         self.output = output
         self.statusCode = statusCode
         self.error = error
-        self.rawRequest = rawRequest
+        self.request = request
         self.rawResponse = rawResponse
         self.rawData = rawData
     }
@@ -65,6 +65,6 @@ public class Response<T> {
     }
     
     public func map<U>(transform: T -> U) -> Response<U> {
-        return Response<U>(output: transform(output), statusCode: statusCode, error: error, rawRequest: rawRequest, rawResponse: rawResponse, rawData: rawData)
+        return Response<U>(output: transform(output), statusCode: statusCode, error: error, request: request, rawResponse: rawResponse, rawData: rawData)
     }
 }

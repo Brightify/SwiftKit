@@ -18,7 +18,7 @@ class PolymorphCache {
         deserializationProperties[propertyValue] = type
         deserializationMap[propertyName] = deserializationProperties
         
-        let identifier = ObjectIdentifier(type as! Any.Type)
+        let identifier = ObjectIdentifier(type as Any.Type)
         serializationMap[identifier] = (name: propertyName, value: propertyValue)
     }
 }

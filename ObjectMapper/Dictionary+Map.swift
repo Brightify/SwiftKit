@@ -10,8 +10,7 @@ extension Dictionary {
     func map<V>(transform: Value -> V) -> [Key: V] {
         var output: [Key: V] = [:]
         for (key, value) in self {
-            var newValue = transform(value)
-            output[key] = newValue
+            output[key] = transform(value)
         }
         return output
     }
@@ -19,7 +18,7 @@ extension Dictionary {
     func map<K: Hashable, V>(transform: (Key, Value) -> (K, V)) -> [K: V] {
         var output: [K: V] = [:]
         for (key, value) in self {
-            var newElement = transform(key, value)
+            let newElement = transform(key, value)
             output[newElement.0] = newElement.1
         }
         return output

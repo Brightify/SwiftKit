@@ -170,6 +170,7 @@ extension UIControl {
     }
     
     func events_allEvents(sender: UIControl, forEvent event: UIEvent) {
+        allTargets().forEach { print($0) }
         allEvents.fire(sender, input: event)
     }
     
@@ -189,7 +190,7 @@ extension UIControl {
             return eventMapWrapper
         } else {
             let eventMapWrapper = EventMapWrapper()
-            objc_setAssociatedObject(self, &AssociatedKey.eventMap, eventMapWrapper, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN))
+            objc_setAssociatedObject(self, &AssociatedKey.eventMap, eventMapWrapper, .OBJC_ASSOCIATION_RETAIN)
             return eventMapWrapper
         }
     }

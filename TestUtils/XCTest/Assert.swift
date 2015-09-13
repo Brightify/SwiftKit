@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import SwiftKit
 
 public struct Assert {
     

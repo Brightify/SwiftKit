@@ -70,7 +70,7 @@ public struct Request {
         }
     }
     
-    public var allHTTPHeaderFields: [NSObject: AnyObject]? {
+    public var allHTTPHeaderFields: [String: String]? {
         get {
             return backingURLRequest.allHTTPHeaderFields
         }

@@ -9,9 +9,7 @@
 internal extension Int {
     
     internal func times(@noescape closure: () -> ()) {
-        for i in 0..<self {
-            closure()
-        }
+        (0..<self).forEach { _ in closure() }
     }
     
 }

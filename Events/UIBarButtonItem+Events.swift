@@ -60,7 +60,7 @@ extension UIBarButtonItem {
             let event = Event<UIBarButtonItem, Void>()
             target = self
             action = "events_selectedAction:"
-            objc_setAssociatedObject(self, &AssociatedKey.selectedEvent, event, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN))
+            objc_setAssociatedObject(self, &AssociatedKey.selectedEvent, event, .OBJC_ASSOCIATION_RETAIN)
             return event
         }
     }
