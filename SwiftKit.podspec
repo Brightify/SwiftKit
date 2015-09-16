@@ -28,30 +28,30 @@ Pod::Spec.new do |spec|
     spec.default_subspec = 'Events', 'Preferences', 'Injection', 'Router', 'ViewComposer'
 
     spec.subspec 'Internal' do |internal|
-        internal.source_files = 'Internal/**/*.swift'
+        internal.source_files = 'SwiftKit/Internal/**/*.swift'
     end
 
     spec.subspec 'Events' do |events|
-        events.source_files = 'Events/**/*.swift'
+        events.source_files = 'SwiftKit/Events/**/*.swift'
         events.frameworks = 'UIKit'
         events.dependency 'SwiftKit/Internal'
     end
 
     spec.subspec 'Preferences' do |preferences|
-        preferences.source_files = 'Preferences/**/*.swift'
+        preferences.source_files = 'SwiftKit/Preferences/**/*.swift'
         preferences.frameworks = 'Foundation'
         preferences.dependency 'SwiftKit/Internal'
         preferences.dependency 'SwiftKit/Events'
     end
 
     spec.subspec 'Injection' do |injection|
-        injection.source_files = 'Injection/**/*.swift'
+        injection.source_files = 'SwiftKit/Injection/**/*.swift'
         injection.frameworks = 'Foundation'
         injection.dependency 'SwiftKit/Internal'
     end
 
     spec.subspec 'Router' do |router|
-        router.source_files = 'Router/**/*.swift'
+        router.source_files = 'SwiftKit/Router/**/*.swift'
         router.frameworks = 'Foundation'
         router.dependency 'SwiftKit/Internal'
         router.dependency 'SwiftKit/ObjectMapper'
@@ -60,13 +60,13 @@ Pod::Spec.new do |spec|
     end
 
     spec.subspec 'ObjectMapper' do |objectMapper|
-        objectMapper.source_files = 'ObjectMapper/**/*.swift'
+        objectMapper.source_files = 'SwiftKit/ObjectMapper/**/*.swift'
         objectMapper.dependency 'SwiftKit/Internal'
         objectMapper.dependency 'SwiftyJSON'
     end
 
     spec.subspec 'ViewComposer' do |composer|
-        composer.source_files = 'ViewComposer/**/*.swift'
+        composer.source_files = 'SwiftKit/ViewComposer/**/*.swift'
         composer.frameworks = 'UIKit'
         composer.dependency 'SwiftKit/Internal'
         composer.dependency 'SwiftKit/Events'
@@ -76,21 +76,21 @@ Pod::Spec.new do |spec|
         testUtils.default_subspec = 'Base', 'XCTest'
 
         testUtils.subspec 'Base' do |baseTestUtils|
-            baseTestUtils.source_files = 'TestUtils/Base/**/*.swift'
+            baseTestUtils.source_files = 'SwiftKit/TestUtils/Base/**/*.swift'
             baseTestUtils.dependency 'SwiftKit/Internal'
             baseTestUtils.dependency 'SwiftKit/Events'
         end
 
         testUtils.subspec 'XCTest' do |xctestUtils|
-            xctestUtils.source_files = 'TestUtils/XCTest/**/*.swift'
+            xctestUtils.source_files = 'SwiftKit/TestUtils/XCTest/**/*.swift'
             xctestUtils.frameworks = 'XCTest'
             xctestUtils.dependency 'SwiftKit/TestUtils/Base'
         end
 
         testUtils.subspec 'Quick' do |quickTestUtils|
-            quickTestUtils.source_files = 'TestUtils/Quick/**/*.swift'
+            quickTestUtils.source_files = 'SwiftKit/TestUtils/Quick/**/*.swift'
             quickTestUtils.dependency 'SwiftKit/TestUtils/Base'
-            quickTestUtils.dependency 'Nimble'
+            quickTestUtils.dependency 'Nimble', '~> 2.0.0-rc.3'
         end
     end
 end

@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6003F589195388D20070C39A"
-               BuildableName = "SwiftKit.app"
-               BlueprintName = "SwiftKit"
+               BuildableName = "Showcase.app"
+               BlueprintName = "Showcase"
                ReferencedContainer = "container:SwiftKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -38,13 +38,23 @@
                ReferencedContainer = "container:SwiftKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "18E484551BA8BFB1004CB09A"
+               BuildableName = "SwiftKitTests.xctest"
+               BlueprintName = "SwiftKitTests"
+               ReferencedContainer = "container:SwiftKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "SwiftKit.app"
-            BlueprintName = "SwiftKit"
+            BuildableName = "Showcase.app"
+            BlueprintName = "Showcase"
             ReferencedContainer = "container:SwiftKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -66,8 +76,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "SwiftKit.app"
-            BlueprintName = "SwiftKit"
+            BuildableName = "Showcase.app"
+            BlueprintName = "Showcase"
             ReferencedContainer = "container:SwiftKit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -85,8 +95,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6003F589195388D20070C39A"
-            BuildableName = "SwiftKit.app"
-            BlueprintName = "SwiftKit"
+            BuildableName = "Showcase.app"
+            BlueprintName = "Showcase"
             ReferencedContainer = "container:SwiftKit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

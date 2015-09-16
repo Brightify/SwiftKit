@@ -9,7 +9,6 @@
 import Quick
 import Nimble
 import SwiftKit
-import performSelector_swift
 
 class UIBarButtonItemEventTest: QuickSpec {
     
@@ -22,7 +21,7 @@ class UIBarButtonItemEventTest: QuickSpec {
                     calledTimes++
                 }
                 
-                button.target?.swift_performSelector(button.action, withObject: nil)
+                button.target?.performSelector(button.action, withObject: nil)
                 
                 expect(calledTimes) == 1
             }
