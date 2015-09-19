@@ -10,6 +10,8 @@
 		016B8B31A982017DD07172B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1C57433A6E87B4863BE0A9 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		186F7D671BA962FA004E190B /* BaseTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484BA1BA8C054004CB09A /* BaseTestUtils.swift */; settings = {ASSET_TAGS = (); }; };
 		186F7D681BA9632C004E190B /* QuickUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484BC1BA8C054004CB09A /* QuickUtils.swift */; settings = {ASSET_TAGS = (); }; };
+		186F7D6B1BA96D03004E190B /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186F7D6A1BA96D03004E190B /* Promise.swift */; settings = {ASSET_TAGS = (); }; };
+		186F7D6E1BA970D3004E190B /* PromiseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186F7D6D1BA970D3004E190B /* PromiseTest.swift */; settings = {ASSET_TAGS = (); }; };
 		187BD17B1BA8C55200E08759 /* StringPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62A1B14FDDE00D073C6 /* StringPreferenceTest.swift */; };
 		187BD17C1BA8C55200E08759 /* DoublePreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62B1B14FDDE00D073C6 /* DoublePreferenceTest.swift */; };
 		187BD17D1BA8C55200E08759 /* FloatPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62C1B14FDDE00D073C6 /* FloatPreferenceTest.swift */; };
@@ -170,6 +172,8 @@
 		184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Tests-Bridging-Header.h"; path = "../Tests/Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewComposerTest.swift; path = ../Tests/ViewComposerTest.swift; sourceTree = "<group>"; };
 		186D2E751B4ECDAA005BC06D /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
+		186F7D6A1BA96D03004E190B /* Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
+		186F7D6D1BA970D3004E190B /* PromiseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseTest.swift; sourceTree = "<group>"; };
 		187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest.swift; sourceTree = "<group>"; };
 		18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperPolymorphismTest.swift; sourceTree = "<group>"; };
 		18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequestPerformer.swift; sourceTree = "<group>"; };
@@ -358,6 +362,22 @@
 			path = ../Tests/Router;
 			sourceTree = "<group>";
 		};
+		186F7D691BA96CC5004E190B /* Promises */ = {
+			isa = PBXGroup;
+			children = (
+				186F7D6A1BA96D03004E190B /* Promise.swift */,
+			);
+			path = Promises;
+			sourceTree = "<group>";
+		};
+		186F7D6C1BA970BE004E190B /* Promises */ = {
+			isa = PBXGroup;
+			children = (
+				186F7D6D1BA970D3004E190B /* PromiseTest.swift */,
+			);
+			path = Promises;
+			sourceTree = "<group>";
+		};
 		187C609F1B3CB71A00B8457A /* ObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
@@ -377,6 +397,7 @@
 				18E4847A1BA8C054004CB09A /* Internal */,
 				18E4847E1BA8C054004CB09A /* ObjectMapper */,
 				18E484A01BA8C054004CB09A /* Preferences */,
+				186F7D691BA96CC5004E190B /* Promises */,
 				18E484A91BA8C054004CB09A /* Router */,
 				18E484B81BA8C054004CB09A /* TestUtils */,
 				18E484C01BA8C054004CB09A /* ViewComposer */,
@@ -389,6 +410,7 @@
 		18E4845C1BA8BFB1004CB09A /* SwiftKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				186F7D6C1BA970BE004E190B /* Promises */,
 				186D2E741B4ECD88005BC06D /* Router */,
 				DC9A44091B45CAB800D11BEC /* Injection */,
 				DC0A52EE1B3F150B00DEAE6C /* TestUtils */,
@@ -1055,6 +1077,7 @@
 				18E484C61BA8C054004CB09A /* UIButton+Events.swift in Sources */,
 				18E484DF1BA8C054004CB09A /* StringMappingOperators.swift in Sources */,
 				18E484FB1BA8C054004CB09A /* Headers.swift in Sources */,
+				186F7D6B1BA96D03004E190B /* Promise.swift in Sources */,
 				18E484CF1BA8C054004CB09A /* Array+MoreFunctionalMethods.swift in Sources */,
 				18E485031BA8C054004CB09A /* ResponseVerifier.swift in Sources */,
 				18E484FA1BA8C054004CB09A /* Endpoint.swift in Sources */,
@@ -1082,6 +1105,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				187BD1861BA8C55800E08759 /* BoolPreferenceDeinitTest.swift in Sources */,
+				186F7D6E1BA970D3004E190B /* PromiseTest.swift in Sources */,
 				187BD18C1BA8C57A00E08759 /* ObjectMapperPolymorphismTest.swift in Sources */,
 				187BD17F1BA8C55200E08759 /* ArrayPreferenceTest.swift in Sources */,
 				187BD1821BA8C55200E08759 /* ViewComposerTest.swift in Sources */,
