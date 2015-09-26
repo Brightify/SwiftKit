@@ -17,7 +17,7 @@ public class BaseTestUtils {
     public class func wasDeinit(@noescape instanceFactory: () -> Deinitializable) -> Bool {
         var instance: Deinitializable! = instanceFactory()
         var wasDeinitialized = false
-        instance!.onDeinit += { _ in
+        instance.onDeinit += { _ in
             wasDeinitialized = true
         }
         instance = nil

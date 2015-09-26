@@ -198,11 +198,13 @@ public class SingletonBinder<T> {
     }
     
     public func asSingleton() {
-        let implementation = binding.implementation
+        var implementation = binding.implementation
         var singleton: T? = nil
         binding.implementation = { injector in
             if singleton == nil {
                 singleton = implementation?(injector)
+                // We need to release the original closure after we run it.
+                implementation = nil
             }
             
             if let singleton = singleton {
@@ -214,7 +216,7 @@ public class SingletonBinder<T> {
     }
 }
 
-// FIXME It seems like the Binding can't be access from outside, but yet is public. Also the name and type is not used.
+// FIXME It seems like the Binding can't be accessed from outside, but yet is public. Also the name and type is not used.
 public class Binding<T> {
 
     public private(set) var type: T.Type

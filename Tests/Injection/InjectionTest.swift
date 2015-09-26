@@ -68,6 +68,21 @@ class InjectionTest: QuickSpec {
                 expect(InitCalledCounter.timesInitCalled) == 1
                 expect(factoryFirstInject) === factorySecondInject
             }
+            
+            it("releases factory closure after instantiation when singleton") {
+                let module = Module()
+                var capturedObject: User? = User()
+                weak var weakCapturedObject = capturedObject
+                module.bind(InitCalledCounter).to { [capturedObject] in
+                    capturedObject?.name
+                    return InitCalledCounter(injector: $0)
+                }.asSingleton()
+                capturedObject = nil
+                let injector = Injector.createInjector(module)
+                expect(weakCapturedObject).toNot(beNil())
+                let _ = injector.get(InitCalledCounter)
+                expect(weakCapturedObject).to(beNil())
+            }
         }
     }
 }
