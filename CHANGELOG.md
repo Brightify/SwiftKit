@@ -4,6 +4,7 @@
 
 * Migrated to Swift 2.0.
 * Added `Serializable` and `Deserializable` to allow single-way mapping.
+* Added releasing of an initialization closure bound as a singleton when the object is first injected.
 * Removed @objc annotation that was previously required for polymorphic object mapping.
 
 ## 0.5.10
