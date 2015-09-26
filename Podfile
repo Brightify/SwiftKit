@@ -20,6 +20,6 @@ end
 target 'SwiftKitTests' do
 #    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'xcode7'
 
-    pod 'Quick', '~> 0.6'
+    pod 'Quick', :git => 'https://github.com/Quick/Quick'
     pod 'Nimble', '~> 2.0.0-rc.3'
 end
