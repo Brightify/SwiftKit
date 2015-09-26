@@ -17,7 +17,7 @@ public class ObjectMapper {
     public init() {
     }
     
-    public func map<M: Mappable>(json: JSON) -> M? {
+    public func map<M: Deserializable>(json: JSON) -> M? {
         if json.type == .Null {
             return nil
         }
@@ -27,7 +27,7 @@ public class ObjectMapper {
         return type.init(map)
     }
     
-    public func mapArray<M: Mappable>(json: JSON) -> [M]? {
+    public func mapArray<M: Deserializable>(json: JSON) -> [M]? {
         if let jsonArray = json.array {
             var objects: [M] = []
             for item in jsonArray {
@@ -41,7 +41,7 @@ public class ObjectMapper {
         }
     }
 
-    public func mapDictionary<M: Mappable>(json: JSON) -> [String: M]? {
+    public func mapDictionary<M: Deserializable>(json: JSON) -> [String: M]? {
         if let jsonDictionary = json.dictionary {
             var objects: [String: M] = [:]
             for (key, item) in jsonDictionary {
@@ -55,7 +55,7 @@ public class ObjectMapper {
         }
     }
 
-    public func toJSON<M: Mappable>(var object: M) -> JSON {
+    public func toJSON<M: Serializable>(var object: M) -> JSON {
         let map = BaseMap(objectMapper: self, mappingDirection: .ToJSON)
         
         polymorph.writeTypeInfoToMap(map, ofType: M.self, forObject: object)
@@ -64,13 +64,13 @@ public class ObjectMapper {
         return map.json.unbox
     }
     
-    public func toJSONArray<M: Mappable>(objects: [M]) -> JSON {
+    public func toJSONArray<M: Serializable>(objects: [M]) -> JSON {
         var json: JSON = []
         json.arrayObject = objects.map { self.toJSON($0).object }
         return json
     }
     
-    public func toJSONDictionary<M: Mappable>(dictionary: [String: M]) -> JSON {
+    public func toJSONDictionary<M: Serializable>(dictionary: [String: M]) -> JSON {
         var json: JSON = [:]
         json.dictionaryObject = dictionary.map { self.toJSON($0).object }
         return json

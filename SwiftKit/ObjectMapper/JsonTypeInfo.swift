@@ -8,8 +8,7 @@
 
 import Foundation
 
-@objc
-public class JsonTypeInfo: NSObject {
+public struct JsonTypeInfo {
     public let baseType: PolymorphicMappable.Type
     public let registeredTypes: [PolymorphicType]
     

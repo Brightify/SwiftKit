@@ -55,7 +55,7 @@ class Polymorph {
         return cache
     }
     
-    func concreteTypeFor<M: Mappable>(type: M.Type, inMap map: Map) -> M.Type {
+    func concreteTypeFor<M: Deserializable>(type: M.Type, inMap map: Map) -> M.Type {
         if let annotatedType = type as? PolymorphicMappable.Type {
             let cache = self.cache(annotatedType)
             
@@ -69,7 +69,7 @@ class Polymorph {
         return type
     }
     
-    func writeTypeInfoToMap<M: Mappable>(map: Map, ofType type: M.Type, forObject object: M) {
+    func writeTypeInfoToMap<M: Serializable>(map: Map, ofType type: M.Type, forObject object: M) {
         if let annotatedType = type as? PolymorphicMappable.Type {
             let identifier = ObjectIdentifier(object.dynamicType)
             let cache = self.cache(annotatedType)
@@ -81,27 +81,18 @@ class Polymorph {
         
     }
     
-    private class func extractTypeInfo(type: PolymorphicMappable.Type) -> JsonTypeInfo? {
-        // We cast the type to `AnyClass` so we can dynamically invoke the static method.
-        // TODO When Swift' protocol class level access is implemented we should switch to it
-        return type.jsonTypeInfo()
-    }
-    
     private class func collectAllRegisteredTypes(type: PolymorphicMappable.Type) -> [PolymorphicType] {
-        return extractTypeInfo(type)?.registeredTypes.flatMap(collectChildRegisteredTypes(type)) ?? []
+        return type.jsonTypeInfo().registeredTypes.flatMap(collectChildRegisteredTypes(type)) ?? []
     }
     
-    private class func collectChildRegisteredTypes(parentBaseType: PolymorphicMappable.Type) -> PolymorphicType -> [PolymorphicType] {
-        return { type in
-            var output = [type]
-            
-            if let typeInfo = self.extractTypeInfo(type.type) {
-                if(ObjectIdentifier(typeInfo.baseType) != ObjectIdentifier(parentBaseType)) {
-                    output += typeInfo.registeredTypes.flatMap(self.collectChildRegisteredTypes(typeInfo.baseType))
-                }
-            }
-            
-            return output
+    private class func collectChildRegisteredTypes(parentBaseType: PolymorphicMappable.Type)(type: PolymorphicType) -> [PolymorphicType] {
+        var output = [type]
+        
+        let typeInfo = type.type.jsonTypeInfo()
+        if(ObjectIdentifier(typeInfo.baseType) != ObjectIdentifier(parentBaseType)) {
+            output += typeInfo.registeredTypes.flatMap(self.collectChildRegisteredTypes(typeInfo.baseType))
         }
+        
+        return output
     }
 }

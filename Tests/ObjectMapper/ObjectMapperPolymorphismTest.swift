@@ -79,7 +79,7 @@ class ParentDTO: PolymorphicMappable {
         subData <- map["submappable"]
     }
     
-    @objc class func jsonTypeInfo() -> JsonTypeInfo {
+    class func jsonTypeInfo() -> JsonTypeInfo {
         let builder = JsonTypeInfoBuilder<ParentDTO>()
         builder.registerSubtype(ChildADTO.self, named: "ChildADTO")
         builder.registerSubtype(ChildBDTO.self, named: "VeryRandomName")
@@ -92,7 +92,7 @@ class ChildADTO: ParentDTO {
 }
 
 class ChildBDTO: ParentDTO {
-    @objc override class func jsonTypeInfo() -> JsonTypeInfo {
+    override class func jsonTypeInfo() -> JsonTypeInfo {
         let builder = JsonTypeInfoBuilder<ChildBDTO>()
         builder.registerSubtype(ChildB2DTO.self, named: "ChildB2DTO")
         return builder.build()
