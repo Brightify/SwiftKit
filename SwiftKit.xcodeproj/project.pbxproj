@@ -1345,7 +1345,7 @@
 				GCC_PREFIX_HEADER = "Showcase/Showcase-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Showcase/Showcase-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.brightify.SwiftKit.Showcase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1362,7 +1362,7 @@
 				GCC_PREFIX_HEADER = "Showcase/Showcase-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Showcase/Showcase-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.brightify.SwiftKit.Showcase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
