@@ -8,7 +8,6 @@
 
 import Foundation
 
-@objc
 public protocol JsonTypeInfoAnnotation {
     static func jsonTypeInfo() -> JsonTypeInfo
 }

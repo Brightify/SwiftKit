@@ -8,8 +8,12 @@
 
 import Foundation
 
-public protocol Mappable {
-    init?(_ map: Map)
-    
+public protocol Serializable {
     mutating func mapping(map: Map)
 }
+
+public protocol Deserializable {
+    init?(_ map: Map)
+}
+
+public protocol Mappable: Serializable, Deserializable { }

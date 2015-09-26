@@ -3,6 +3,8 @@
 ## 1.0.0 [next release]
 
 * Migrated to Swift 2.0.
+* Added `Serializable` and `Deserializable` to allow single-way mapping.
+* Removed @objc annotation that was previously required for polymorphic object mapping.
 
 ## 0.5.10
 
