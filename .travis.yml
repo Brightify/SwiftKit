@@ -8,10 +8,10 @@
 
 language: objective-c
 osx_image: xcode7
-xcode_workspace: Example/SwiftKit.xcworkspace
-xcode_scheme: SwiftKit-Example
+xcode_workspace: SwiftKit.xcworkspace
+xcode_scheme: SwiftKit
 xcode_sdk: iphonesimulator
-podfile: Example/Podfile
+podfile: Podfile
 before_install:
 - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
 - mkdir -p ~/.cocoapods/
