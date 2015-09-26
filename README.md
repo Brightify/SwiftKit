@@ -1,6 +1,6 @@
 # SwiftKit
 
-[![CI Status](http://img.shields.io/travis/Tadeas Kriz/SwiftKit.svg?style=flat)](https://travis-ci.org/brightify/SwiftKit)
+[![CI Status](http://img.shields.io/travis/brightify/SwiftKit.svg?style=flat)](https://travis-ci.org/brightify/SwiftKit)
 [![Version](https://img.shields.io/cocoapods/v/SwiftKit.svg?style=flat)](http://cocoapods.org/pods/SwiftKit)
 [![License](https://img.shields.io/cocoapods/l/SwiftKit.svg?style=flat)](http://cocoapods.org/pods/SwiftKit)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftKit.svg?style=flat)](http://cocoapods.org/pods/SwiftKit)
