@@ -10,6 +10,7 @@
 import UIKit
 
 infix operator => { }
+infix operator >> { }
 
 /**
     Operator that adds view to the parent and creates it if it is nil
@@ -31,18 +32,28 @@ public func => <VIEW_TYPE: UIView>(inout viewOrNil: VIEW_TYPE?, parent: UIView) 
     viewOrNil = viewComposerOperator(viewOrNil, parent: parent)
 }
 
+public func >> <VIEW_TYPE: UIView>(view: VIEW_TYPE, parent: UIView) {
+    viewComposerOperator(view, parent: parent)
+}
+
+public func >> <VIEW_TYPE: UIView>(viewOrNil: VIEW_TYPE?, parent: UIView) {
+    if let view = viewOrNil {
+        viewComposerOperator(view, parent: parent)
+    }
+}
+
 private func viewComposerOperator<VIEW_TYPE: UIView>(viewOrNil: VIEW_TYPE?, parent: UIView) -> VIEW_TYPE {
+    let addInto: AddIntoSuperview<VIEW_TYPE>
     if let view = viewOrNil {
         if (view === parent) {
             fatalError("Cannot add view to itself!")
         }
         
-        view.removeFromSuperview()
-        parent.addSubview(view)
-        return view
+        addInto = ViewComposer.configure(view)
     } else {
-        return ViewComposer.compose(VIEW_TYPE).addInto(parent)
+        addInto = ViewComposer.compose(VIEW_TYPE)
     }
+    return addInto.addInto(parent)
 }
 
 /**
@@ -54,10 +65,14 @@ public class ViewComposer {
     private init() {
     }
     
-    public class func compose<T: UIView>(type: T.Type) -> AddIntoSuperview<T> {
-        let view = T()
+    public class func configure<T: UIView>(view: T) -> AddIntoSuperview<T> {
         view.translatesAutoresizingMaskIntoConstraints = false
         return AddIntoSuperview(view: view)
+    }
+    
+    public class func compose<T: UIView>(type: T.Type) -> AddIntoSuperview<T> {
+        let view = T()
+        return configure(view)
     }
 }
 
@@ -71,6 +86,7 @@ public class AddIntoSuperview<T: UIView> {
     }
     
     public func addInto(superview: UIView) -> T {
+        view.removeFromSuperview()
         superview.addSubview(view)
         return view
     }
