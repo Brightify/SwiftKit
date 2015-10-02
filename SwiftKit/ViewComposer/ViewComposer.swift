@@ -32,10 +32,6 @@ public func => <VIEW_TYPE: UIView>(inout viewOrNil: VIEW_TYPE?, parent: UIView) 
     viewOrNil = viewComposerOperator(viewOrNil, parent: parent)
 }
 
-public func >> <VIEW_TYPE: UIView>(view: VIEW_TYPE, parent: UIView) {
-    viewComposerOperator(view, parent: parent)
-}
-
 public func >> <VIEW_TYPE: UIView>(viewOrNil: VIEW_TYPE?, parent: UIView) {
     if let view = viewOrNil {
         viewComposerOperator(view, parent: parent)
