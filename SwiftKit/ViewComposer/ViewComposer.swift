@@ -10,7 +10,10 @@
 import UIKit
 
 infix operator => { }
-infix operator >> { }
+infix operator >> {
+    associativity none
+    precedence 160
+}
 
 /**
     Operator that adds view to the parent and creates it if it is nil

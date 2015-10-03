@@ -26,6 +26,9 @@ class ViewComposerTest: QuickSpec {
                 expect(view).toNot(beNil())
                 expect(optionalView).toNot(beNil())
             
+                expect(view.translatesAutoresizingMaskIntoConstraints).to(beFalse())
+                expect(optionalView?.translatesAutoresizingMaskIntoConstraints).to(beFalse())
+                
                 expect(view.superview).to(equal(superview))
                 expect(optionalView?.superview).to(equal(superview))
             }
@@ -42,8 +45,35 @@ class ViewComposerTest: QuickSpec {
                 expect(view).toNot(beNil())
                 expect(optionalView).toNot(beNil())
                 
+                expect(view.translatesAutoresizingMaskIntoConstraints).to(beFalse())
+                expect(optionalView?.translatesAutoresizingMaskIntoConstraints).to(beFalse())
+                
                 expect(view.superview).to(equal(superview))
                 expect(optionalView?.superview).to(equal(superview))
+            }
+            
+            it("configures existing view and adds into superview using operator api") {
+                let superview = ViewComposer.compose(UIView).view
+                
+                let view: UIView = UIView()
+                let optionalView: UIView? = UIView()
+                let implicitlyUnwrappedView: UIView! = UIView()
+                
+                view >> superview
+                optionalView >> superview
+                implicitlyUnwrappedView >> superview
+                
+                expect(view).toNot(beNil())
+                expect(optionalView).toNot(beNil())
+                expect(implicitlyUnwrappedView).toNot(beNil())
+                
+                expect(view.translatesAutoresizingMaskIntoConstraints).to(beFalse())
+                expect(optionalView?.translatesAutoresizingMaskIntoConstraints).to(beFalse())
+                expect(implicitlyUnwrappedView?.translatesAutoresizingMaskIntoConstraints).to(beFalse())
+                
+                expect(view.superview).to(equal(superview))
+                expect(optionalView?.superview).to(equal(superview))
+                expect(implicitlyUnwrappedView?.superview).to(equal(superview))
             }
         }
     }
