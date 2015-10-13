@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		016B8B31A982017DD07172B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1C57433A6E87B4863BE0A9 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		184606021BCAED9400AFFA31 /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184606011BCAED9400AFFA31 /* Instance.swift */; settings = {ASSET_TAGS = (); }; };
 		186F7D671BA962FA004E190B /* BaseTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484BA1BA8C054004CB09A /* BaseTestUtils.swift */; settings = {ASSET_TAGS = (); }; };
 		186F7D681BA9632C004E190B /* QuickUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484BC1BA8C054004CB09A /* QuickUtils.swift */; settings = {ASSET_TAGS = (); }; };
 		187BD17B1BA8C55200E08759 /* StringPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62A1B14FDDE00D073C6 /* StringPreferenceTest.swift */; };
@@ -38,6 +39,14 @@
 		187BD1941BA8C58C00E08759 /* InjectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A440A1B45CAB800D11BEC /* InjectionTest.swift */; };
 		187BD1951BA8C59000E08759 /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186D2E751B4ECDAA005BC06D /* RouterTest.swift */; };
 		187BD1961BA8C59000E08759 /* MockRequestPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */; };
+		18977DBC1BCD3E1700154305 /* InjectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBB1BCD3E1700154305 /* InjectionError.swift */; settings = {ASSET_TAGS = (); }; };
+		18977DBE1BCD3E3E00154305 /* ParametrizedInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBD1BCD3E3E00154305 /* ParametrizedInjector.swift */; settings = {ASSET_TAGS = (); }; };
+		18977DC01BCD42E000154305 /* ParametrizedFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBF1BCD42E000154305 /* ParametrizedFactory.swift */; settings = {ASSET_TAGS = (); }; };
+		18977DC21BCD42FB00154305 /* Parametrizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC11BCD42FB00154305 /* Parametrizable.swift */; settings = {ASSET_TAGS = (); }; };
+		18977DC41BCD431900154305 /* ParametrizedInjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC31BCD431900154305 /* ParametrizedInjectable.swift */; settings = {ASSET_TAGS = (); }; };
+		18977DC61BCD438300154305 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC51BCD438300154305 /* GlobalFunctions.swift */; settings = {ASSET_TAGS = (); }; };
+		18977DC81BCD439900154305 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC71BCD439900154305 /* Key.swift */; settings = {ASSET_TAGS = (); }; };
+		18977DCA1BCD453800154305 /* OptionalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC91BCD453800154305 /* OptionalInstance.swift */; settings = {ASSET_TAGS = (); }; };
 		18E484501BA8BFB1004CB09A /* SwiftKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E4844F1BA8BFB1004CB09A /* SwiftKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18E484571BA8BFB1004CB09A /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */; };
 		18E4845E1BA8BFB1004CB09A /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */; };
@@ -167,10 +176,19 @@
 
 /* Begin PBXFileReference section */
 		1831E0181B58A7B20029C328 /* BoolMappingOperatorsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolMappingOperatorsTest.swift; sourceTree = "<group>"; };
+		184606011BCAED9400AFFA31 /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
 		184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Tests-Bridging-Header.h"; path = "../Tests/Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewComposerTest.swift; path = ../Tests/ViewComposerTest.swift; sourceTree = "<group>"; };
 		186D2E751B4ECDAA005BC06D /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
 		187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest.swift; sourceTree = "<group>"; };
+		18977DBB1BCD3E1700154305 /* InjectionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectionError.swift; sourceTree = "<group>"; };
+		18977DBD1BCD3E3E00154305 /* ParametrizedInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParametrizedInjector.swift; sourceTree = "<group>"; };
+		18977DBF1BCD42E000154305 /* ParametrizedFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParametrizedFactory.swift; sourceTree = "<group>"; };
+		18977DC11BCD42FB00154305 /* Parametrizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parametrizable.swift; sourceTree = "<group>"; };
+		18977DC31BCD431900154305 /* ParametrizedInjectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParametrizedInjectable.swift; sourceTree = "<group>"; };
+		18977DC51BCD438300154305 /* GlobalFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
+		18977DC71BCD439900154305 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
+		18977DC91BCD453800154305 /* OptionalInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalInstance.swift; sourceTree = "<group>"; };
 		18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperPolymorphismTest.swift; sourceTree = "<group>"; };
 		18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequestPerformer.swift; sourceTree = "<group>"; };
 		18E23C421B8A387500B29FC9 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
@@ -425,6 +443,14 @@
 				18E484771BA8C054004CB09A /* KeyedInjector.swift */,
 				18E484781BA8C054004CB09A /* ModuleBuilder.swift */,
 				18E484791BA8C054004CB09A /* PostInitInjectable.swift */,
+				184606011BCAED9400AFFA31 /* Instance.swift */,
+				18977DBB1BCD3E1700154305 /* InjectionError.swift */,
+				18977DBD1BCD3E3E00154305 /* ParametrizedInjector.swift */,
+				18977DBF1BCD42E000154305 /* ParametrizedFactory.swift */,
+				18977DC11BCD42FB00154305 /* Parametrizable.swift */,
+				18977DC31BCD431900154305 /* ParametrizedInjectable.swift */,
+				18977DC71BCD439900154305 /* Key.swift */,
+				18977DC91BCD453800154305 /* OptionalInstance.swift */,
 			);
 			path = Injection;
 			sourceTree = "<group>";
@@ -435,6 +461,7 @@
 				18E4847B1BA8C054004CB09A /* Array+MoreFunctionalMethods.swift */,
 				18E4847C1BA8C054004CB09A /* Int+Functionals.swift */,
 				18E4847D1BA8C054004CB09A /* MoreFunctionalGlobals.swift */,
+				18977DC51BCD438300154305 /* GlobalFunctions.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -1008,6 +1035,8 @@
 				18E484F11BA8C054004CB09A /* ArrayPreference.swift in Sources */,
 				18E484D71BA8C054004CB09A /* ObjectMapper.swift in Sources */,
 				18E484E71BA8C054004CB09A /* DoubleTransformation.swift in Sources */,
+				18977DC21BCD42FB00154305 /* Parametrizable.swift in Sources */,
+				18977DBC1BCD3E1700154305 /* InjectionError.swift in Sources */,
 				18E484ED1BA8C054004CB09A /* NSDateTransformation.swift in Sources */,
 				18E484FD1BA8C054004CB09A /* NSURL+AppendWithoutEscaping.swift in Sources */,
 				18E484E31BA8C054004CB09A /* PolymorphCache.swift in Sources */,
@@ -1031,30 +1060,37 @@
 				18E485041BA8C054004CB09A /* Router.swift in Sources */,
 				18E484EF1BA8C054004CB09A /* NSURLTransformation.swift in Sources */,
 				18E484E01BA8C054004CB09A /* TransformationOperators.swift in Sources */,
+				18977DC81BCD439900154305 /* Key.swift in Sources */,
 				18E484CB1BA8C054004CB09A /* Injector.swift in Sources */,
 				18E484FC1BA8C054004CB09A /* Methods.swift in Sources */,
 				18E484E81BA8C054004CB09A /* EnumTransformation.swift in Sources */,
+				18977DC41BCD431900154305 /* ParametrizedInjectable.swift in Sources */,
+				184606021BCAED9400AFFA31 /* Instance.swift in Sources */,
 				18E484D51BA8C054004CB09A /* Map.swift in Sources */,
 				18E484DC1BA8C054004CB09A /* IntMappingOperators.swift in Sources */,
 				18E484DB1BA8C054004CB09A /* FloatMappingOperators.swift in Sources */,
 				18E484F31BA8C054004CB09A /* DoublePreference.swift in Sources */,
 				18E484F81BA8C054004CB09A /* StringPreference.swift in Sources */,
+				18977DCA1BCD453800154305 /* OptionalInstance.swift in Sources */,
 				18E484F51BA8C054004CB09A /* IntPreference.swift in Sources */,
 				18E484EC1BA8C054004CB09A /* NSDateFormatterTransformation.swift in Sources */,
 				18E484EE1BA8C054004CB09A /* NSNumberTransformation.swift in Sources */,
 				18E484E11BA8C054004CB09A /* PolymorhicType.swift in Sources */,
 				18E484D11BA8C054004CB09A /* MoreFunctionalGlobals.swift in Sources */,
+				18977DC61BCD438300154305 /* GlobalFunctions.swift in Sources */,
 				18E484DA1BA8C054004CB09A /* EnumMappingOperators.swift in Sources */,
 				18E485011BA8C054004CB09A /* RequestPerformer.swift in Sources */,
 				18E484E21BA8C054004CB09A /* Polymorph.swift in Sources */,
 				18E484FE1BA8C054004CB09A /* Request.swift in Sources */,
 				18E484D61BA8C054004CB09A /* Mappable.swift in Sources */,
 				18E484F01BA8C054004CB09A /* StringTransformation.swift in Sources */,
+				18977DC01BCD42E000154305 /* ParametrizedFactory.swift in Sources */,
 				18E484F91BA8C054004CB09A /* AlamofireRequestPerformer.swift in Sources */,
 				18E484E51BA8C054004CB09A /* BoolTransformation.swift in Sources */,
 				18E484C61BA8C054004CB09A /* UIButton+Events.swift in Sources */,
 				18E484DF1BA8C054004CB09A /* StringMappingOperators.swift in Sources */,
 				18E484FB1BA8C054004CB09A /* Headers.swift in Sources */,
+				18977DBE1BCD3E3E00154305 /* ParametrizedInjector.swift in Sources */,
 				18E484CF1BA8C054004CB09A /* Array+MoreFunctionalMethods.swift in Sources */,
 				18E485031BA8C054004CB09A /* ResponseVerifier.swift in Sources */,
 				18E484FA1BA8C054004CB09A /* Endpoint.swift in Sources */,

@@ -6,6 +6,8 @@
 * Added `Serializable` and `Deserializable` to allow single-way mapping.
 * Added releasing of an initialization closure bound as a singleton when the object is first injected.
 * Added `>>` operator to ViewComposer to allow configuration of existing views.
+* Added parameterized injections.
+* Added `Instance<T>` to allow immutable properties in `PostInitInjectable` classes.
 * Removed `@objc` annotation that was previously required for polymorphic object mapping.
 
 ## 0.5.10

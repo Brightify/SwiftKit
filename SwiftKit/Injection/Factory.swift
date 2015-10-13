@@ -6,8 +6,6 @@
 //
 //
 
-import Foundation
-
 public class Factory<T> {
     
     let factoryClosure: () -> T

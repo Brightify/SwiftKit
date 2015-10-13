@@ -27,5 +27,4 @@ internal extension NSURL {
         
         return NSURL(string: urlString)
     }
-    
 }
