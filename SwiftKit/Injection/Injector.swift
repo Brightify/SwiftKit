@@ -6,15 +6,13 @@
 //
 //
 
-import Foundation
-
 public class Injector {
     
     private let module: Module
     private let allowsUnboundFactories: Bool
     
     /**
-        Creates an injector with a specified module.
+    Creates an injector with a specified module.
     */
     public class func createInjector(module: Module) -> Injector {
         module.configure()
@@ -33,30 +31,84 @@ public class Injector {
     }
     
     /**
-        Returns an implementation binded to type specified by parameter `type`.
+    Returns an implementation binded to type specified by parameter `type`.
     
-        :param: type The type you want to inject.
+    - parameter type: The type you want to inject.
     */
     public func get<T>(type: T.Type) -> T {
-        return getInitializationClosure(type)(self)
+        do {
+            return try getInitializationClosure(type)(self)
+        } catch let error as InjectionError<T> {
+            error.crash()
+        } catch let error {
+            fatalError("Could not inject because of reasons. \(error)")
+        }
+    }
+    
+    public func get<T: Parametrizable>(parameters: T.Parameters) -> T {
+        return get(T.self, withParameters: parameters)
+    }
+    
+    public func get<T: Parametrizable>(type: T.Type, withParameters parameters: T.Parameters) -> T {
+        do {
+            let closure: (T.Parameters -> T) = try getInitializationClosure(inferredType())(self)
+            return closure(parameters)
+        } catch let error as InjectionError<T> {
+            error.crash()
+        } catch let error {
+            fatalError("Could not inject because of reasons. \(error)")
+        }
     }
     
     /** 
-        Returns an implementation binded to type `T` which is resolved from the callsite and the key name.
+    Returns an implementation binded to type `T` which is resolved from the callsite and the key name.
 
-        :param: named A name of the binding key.
+    - parameter named: A name of the binding key.
     */
     public func get<T>(named name: String) -> T {
         return get(Key<T>(named: name))
     }
     
     /** 
-        Returns an implementation binded to the specified key.
+    Returns an implementation binded to the specified key.
         
-        :param: key A key used to retrieve the binded type.
+    - parameter key: A key used to retrieve the binded type.
     */
     public func get<T>(key: Key<T>) -> T {
-        return getInitializationClosure(key)(self)
+        do {
+            return try getInitializationClosure(key)(self)
+        } catch let error as InjectionError<T> {
+            error.crash()
+        } catch let error {
+            fatalError("Could not inject because of reasons. \(error)")
+        }
+    }
+    
+    public func inject<T>(instance: Instance<T>) {
+        instance.set(get())
+    }
+    
+    public func inject<T>(instance: OptionalInstance<T>) {
+        let closure = try? getInitializationClosure(T)
+        instance.set(closure?(self))
+    }
+    
+    public func inject<T>(instance: Instance<T>, usingKey key: Key<T>) {
+        instance.set(get(key))
+    }
+    
+    public func inject<T>(instance: OptionalInstance<T>, usingKey key: Key<T>) {
+        let closure = try? getInitializationClosure(key)
+        instance.set(closure?(self))
+    }
+    
+    public func inject<T: Parametrizable>(instance: Instance<T>, withParameters parameters: T.Parameters) {
+        instance.set(get(parameters))
+    }
+    
+    public func inject<T: Parametrizable>(instance: OptionalInstance<T>, withParameters parameters: T.Parameters) {
+        let closure = try? getInitializationClosure(T)
+        instance.set(closure?(self))
     }
     
     public func factory<T>() -> Factory<T> {
@@ -64,8 +116,55 @@ public class Injector {
     }
     
     public func factory<T>(type: T.Type) -> Factory<T> {
-        let initializationClosure = getInitializationClosure(type)
+        let initializationClosure: Injector -> T
+        do {
+            initializationClosure = try getInitializationClosure(type)
+        } catch is InjectionError<T> where allowsUnboundFactories {
+            initializationClosure = Injector.unboundFactory
+        } catch let error as InjectionError<T> {
+            error.crash()
+        } catch let error {
+            fatalError("Could not inject because of reasons. \(error)")
+        }
         return Factory<T>(injector: self, closure: initializationClosure)
+    }
+    
+    public func factory<T: Parametrizable>() -> ParametrizedFactory<T> {
+        return factory(T.self)
+    }
+    
+    public func factory<T: Parametrizable>(type: T.Type) -> ParametrizedFactory<T> {
+        let initializationClosure: Injector -> T.Parameters -> T
+        do {
+            initializationClosure = try getInitializationClosure(inferredType())
+        } catch is InjectionError<T> where allowsUnboundFactories {
+            initializationClosure = Injector.unboundFactory
+        } catch let error as InjectionError<T> {
+            error.crash()
+        } catch let error {
+            fatalError("Could not inject because of reasons. \(error)")
+        }
+        return ParametrizedFactory<T>(injector: self, closure: initializationClosure)
+    }
+    
+    public func factory<T: Parametrizable>(parameters: T.Parameters) -> Factory<T> {
+        return factory(T.self, withParameters: parameters)
+    }
+    
+    public func factory<T: Parametrizable>(type: T.Type, withParameters parameters: T.Parameters) -> Factory<T> {
+        let initializationClosure: Injector -> T.Parameters -> T
+        do {
+            initializationClosure = try getInitializationClosure(inferredType())
+        } catch is InjectionError<T> where allowsUnboundFactories {
+            initializationClosure = Injector.unboundFactory
+        } catch let error as InjectionError<T> {
+            error.crash()
+        } catch let error {
+            fatalError("Could not inject because of reasons. \(error)")
+        }
+        return Factory<T>(injector: self) {
+            initializationClosure($0)(parameters)
+        }
     }
     
     public func factory<T>(named name: String) -> Factory<T> {
@@ -73,7 +172,16 @@ public class Injector {
     }
     
     public func factory<T>(key: Key<T>) -> Factory<T> {
-        let initializationClosure = getInitializationClosure(key)
+        let initializationClosure: Injector -> T
+        do {
+            initializationClosure = try getInitializationClosure(key)
+        } catch is InjectionError<T> where allowsUnboundFactories {
+            initializationClosure = Injector.unboundFactory
+        } catch let error as InjectionError<T> {
+            error.crash()
+        } catch let error {
+            fatalError("Could not inject because of reasons. \(error)")
+        }
         return Factory<T>(injector: self, closure: initializationClosure)
     }
     
@@ -81,25 +189,30 @@ public class Injector {
         return KeyedInjector(name: index, injector: self)
     }
     
-    private func getInitializationClosure<T>(type: T.Type) -> Injector -> T {
+    private func getInitializationClosure<T>(type: T.Type) throws -> Injector -> T {
         let binding = module.bindingForType(type)
         if let injectionClosure = binding?.implementation {
             return injectionClosure
-        } else if allowsUnboundFactories {
-            return Injector.unboundFactory
         } else {
-            fatalError("Binding for type \(type) was \(binding)")
+            throw InjectionError(binding)
         }
     }
     
-    private func getInitializationClosure<T>(key: Key<T>) -> Injector -> T {
+    private func getInitializationClosure<T>(key: Key<T>) throws -> Injector -> T {
         let binding = module.bindingForKey(key)
         if let injectionClosure = binding?.implementation {
             return injectionClosure
-        } else if allowsUnboundFactories {
-            return Injector.unboundFactory
         } else {
-            fatalError("Binding for key \(key) was \(binding) with implementation \(binding?.implementation)")
+            throw InjectionError(binding)
+        }
+    }
+    
+    private func getInitializationClosure<T: ParametrizedInjectable>(type: T.Type) throws -> Injector -> T.Parameters -> T {
+        let binding: Binding<T.Parameters -> T>? = module.bindingForType(inferredType())
+        if let injectionClosure = binding?.implementation {
+            return injectionClosure
+        } else {
+            throw InjectionError(binding)
         }
     }
     

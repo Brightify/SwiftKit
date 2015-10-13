@@ -67,6 +67,7 @@ class RouterTest: QuickSpec {
         static let userRepositories = Target<GET<Void, String>, String> { "/users/\($0.urlSafe)/repos" }
         static let test = GET<Void, String>("/zen", TestEnhancer.TestModifier())
         static let nonGithubEndpoint = GET<Void, String>("ftp://test")
+        static let multipleInputTarget = Target<GET<Void, String>, (string: String, int: Int)> { "/zen/\($0)/\($1)" }
     }
     
     private struct GitHubMockEndpoints {
@@ -114,6 +115,10 @@ class RouterTest: QuickSpec {
                 }
                 
                 expect(stringData).toEventually(equal("Works like a charmer."))
+            }
+            
+            it("supports multiple inputs in target") {
+                //    let endpoint = GitHubEndpoints.multipleInputTarget.endpoint(string: "", int: 4)
             }
             
             it("supports custom RequestEnhancers") {

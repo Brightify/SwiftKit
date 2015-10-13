@@ -16,10 +16,19 @@ public protocol PostInitInjectable: class {
     init()
     
     /**
-        Injects dependencies to the target class
+    Injects dependencies to the target class
     
-        :param: injector The Injector used to inject dependencies
+    - parameter injector: The Injector used to inject dependencies
     */
     func inject(injector: Injector)
     
+}
+
+public protocol PostInitParametrizedInjectable: Parametrizable {
+    typealias PostInitParameters
+    typealias Parameters = PostInitParameters
+    
+    init()
+    
+    func inject(injector: Injector, _ parameters: PostInitParameters)
 }

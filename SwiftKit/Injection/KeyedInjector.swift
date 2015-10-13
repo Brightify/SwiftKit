@@ -6,8 +6,6 @@
 //
 //
 
-import Foundation
-
 public class KeyedInjector {
     
     let name: String
@@ -20,6 +18,10 @@ public class KeyedInjector {
     
     public func get<T>(type: T.Type) -> T {
         return injector.get(Key<T>(named: name))
+    }
+    
+    public func inject<T>(instance: Instance<T>) {
+        injector.inject(instance, usingKey: Key<T>(named: name))
     }
     
     public func factory<T>(type: T.Type) -> Factory<T> {

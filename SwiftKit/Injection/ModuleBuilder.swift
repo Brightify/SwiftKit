@@ -6,28 +6,6 @@
 //
 //
 
-import Foundation
-
-/**
-    Key is used in Key based injection
-
-    :param: T The parameter is the class type this Key is assigned to
-*/
-public class Key<T> {
-    
-    /// Name of the key
-    public let name: String
-
-    /**
-        Initializes key with name
-    
-        :param: named The name of the key
-    */
-    public init(named: String) {
-        name = named
-    }
-}
-
 private func == (lhs: Module.KeyedBindingsMapKey, rhs: Module.KeyedBindingsMapKey) -> Bool {
     return lhs.name == rhs.name && lhs.typeIdentifier == rhs.typeIdentifier
 }
@@ -73,6 +51,14 @@ public class Module {
     
     public func bind<T: protocol<AnyObject, PostInitInjectable>>(type: T.Type) -> PostInitInjectableBindingBuilder<T> {
         return PostInitInjectableBindingBuilder(binding: createTypeBinding(type))
+    }
+    
+    public func bind<T: protocol<AnyObject, ParametrizedInjectable>>(type: T.Type) -> ParametrizedInjectableBindingBuilder<T> {
+        return ParametrizedInjectableBindingBuilder(binding: createTypeBinding(inferredType()))
+    }
+    
+    public func bind<T: protocol<AnyObject, PostInitParametrizedInjectable>>(type: T.Type) -> PostInitParametrizedInjectableBindingBuilder<T> {
+        return PostInitParametrizedInjectableBindingBuilder(binding: createTypeBinding(inferredType()))
     }
     
     public func bindKey<T>(key: Key<T>) -> ClosureBindingBuilder<T> {
@@ -157,6 +143,44 @@ public class PostInitInjectableBindingBuilder<T: protocol<AnyObject, PostInitInj
     
     public func asSingleton() {
         SingletonBinder(binding: binding).asSingleton()
+    }
+}
+
+public class ParametrizedInjectableBindingBuilder<T: ParametrizedInjectable> {
+    private var binding: Binding<T.InitParameters -> T>
+    
+    private init(binding: Binding<T.InitParameters -> T>) {
+        self.binding = binding
+        
+        to(T)
+    }
+    
+    public func to(implementation: T.Type) {
+        binding.implementation = { injector in
+            { parameters in
+                implementation.init(injector: injector, parameters)
+            }
+        }
+    }
+}
+
+public class PostInitParametrizedInjectableBindingBuilder<T: PostInitParametrizedInjectable> {
+    private var binding: Binding<T.PostInitParameters -> T>
+    
+    private init(binding: Binding<T.PostInitParameters -> T>) {
+        self.binding = binding
+        
+        to(T)
+    }
+    
+    public func to(implementation: T.Type) {
+        binding.implementation = { injector in
+            { parameters in
+                let injectable = implementation.init()
+                injectable.inject(injector, parameters)
+                return injectable
+            }
+        }
     }
 }
 

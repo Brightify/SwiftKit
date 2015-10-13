@@ -16,20 +16,21 @@ class InjectionTest: QuickSpec {
         describe("Injector") {
             it("injects implementation") {
                 let module = Module()
-                
                 module.bind(UserDAO).toNew(MockUserDAO())
                 module.bind(UserService).to { UserServiceImpl(injector: $0) }
                 
                 let injector = Injector.createInjector(module)
                 
-                expect(injector.get(UserService).userGreeting) == "Hello, John Mock"
+                let userService = injector.get(UserService)
+                expect(userService.userGreeting) == "Hello, John Mock"
             }
             
             it("injects implementation from extended Module") {
                 let module = TestModule()
                 let injector = Injector.createInjector(module)
                 
-                expect(injector.get(UserService).userGreeting) == "Hello, John Doe"
+                let userService = injector.get(UserService)
+                expect(userService.userGreeting) == "Hello, John Doe"
             }
             
             it("injects implementation with key") {
@@ -42,6 +43,43 @@ class InjectionTest: QuickSpec {
                 let initialController = injector.get(Key<UIViewController>(named: "InitialController"))
                 let lastController = injector.get(Key<UIViewController>(named: "LastController"))
                 expect(initialController.dynamicType !== lastController.dynamicType) == true
+            }
+            
+            it("injects an instance object") {
+                let module = Module()
+                module.bind(UserDAO).toNew(MockUserDAO())
+                module.bind(UserService).to { UserServiceImpl(injector: $0) }
+                
+                let injector = Injector.createInjector(module)
+                let instance: Instance<UserService> = .init()
+                
+                instance <- injector
+                
+                expect(instance.get().userGreeting) == "Hello, John Mock"
+            }
+            
+            it("injects an optional instance object") {
+                let module = Module()
+                module.bind(UserDAO).toNew(MockUserDAO())
+                module.bind(UserService).to { UserServiceImpl(injector: $0) }
+                
+                let injector = Injector.createInjector(module)
+                let instance: OptionalInstance<UserService> = .init()
+                
+                instance <- injector
+                
+                expect(instance.get()?.userGreeting) == "Hello, John Mock"
+            }
+            
+            it("does not fail for OptionalInstance if not bound") {
+                let module = Module()
+                
+                let injector = Injector.createInjector(module)
+                let instance: OptionalInstance<UserService> = .init()
+                
+                instance <- injector
+                
+                expect(instance.get()).to(beNil())
             }
             
             it("creates only one instance when singleton") {
@@ -76,12 +114,40 @@ class InjectionTest: QuickSpec {
                 module.bind(InitCalledCounter).to { [capturedObject] in
                     capturedObject?.name
                     return InitCalledCounter(injector: $0)
-                }.asSingleton()
+                    }.asSingleton()
                 capturedObject = nil
                 let injector = Injector.createInjector(module)
                 expect(weakCapturedObject).toNot(beNil())
                 let _ = injector.get(InitCalledCounter)
                 expect(weakCapturedObject).to(beNil())
+            }
+            
+            it("works with parameters") {
+                let module = Module()
+                module.bind(ParametrizedService)
+                let injector = Injector.createInjector(module)
+                let service = injector.get(ParametrizedService.self, withParameters: (string: "Hello world", int: 4))
+                expect(service.string) == "Hello world"
+                expect(service.int) == 4
+            }
+            
+            it("works with postinitparameters") {
+                let module = Module()
+                module.bind(PostInitParametrizedService)
+                let injector = Injector.createInjector(module)
+                let service = injector.get(PostInitParametrizedService.self, withParameters: (string: "Hello world", int: 4))
+                expect(service.string) == "Hello world"
+                expect(service.int) == 4
+            }
+            
+            it("works with parameterized factories") {
+                let module = Module()
+                module.bind(ParametrizedService)
+                let injector = Injector.createInjector(module)
+                let serviceFactory = injector.factory(ParametrizedService)
+                let service = serviceFactory.create((string: "Hello world, Joe", int: 10))
+                expect(service.string) == "Hello world, Joe"
+                expect(service.int) == 10
             }
         }
     }
@@ -97,9 +163,7 @@ private class TestModule: Module {
 }
 
 private protocol UserService: Injectable {
-    
     var userGreeting: String { get }
-    
 }
 
 private class UserServiceImpl: UserService {
@@ -158,4 +222,29 @@ private final class InitCalledCounter: Injectable {
     init(injector: Injector) {
         InitCalledCounter.timesInitCalled++
     }
+}
+
+private class ParametrizedService: ParametrizedInjectable {
+    let string: String
+    let int: Int
+    
+    required init(injector: Injector, _ p: (string: String, int: Int)) {
+        self.string = p.string
+        self.int = p.int
+    }
+    
+}
+
+private class PostInitParametrizedService: PostInitParametrizedInjectable {    
+    var string: String!
+    var int: Int!
+
+    required init() { }
+    
+    private func inject(injector: Injector, _ parameters: (string: String, int: Int)) {
+        self.string = parameters.string
+        self.int = parameters.int
+        
+    }
+    
 }
