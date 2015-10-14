@@ -108,16 +108,20 @@ public class BindingBuilder<T: protocol<AnyObject, Injectable>> {
         to(T)
     }
 
-    public func to(implementation: T.Type) -> SingletonBinder<T> {
+    public func to(implementation: T.Type) -> AdvancedUseBinder<T> {
         binding.implementation = { injector in
             implementation.init(injector: injector)
         }
         
-        return SingletonBinder<T>(binding: binding)
+        return AdvancedUseBinder<T>(binding: binding)
     }
     
     public func asSingleton() {
-        SingletonBinder(binding: binding).asSingleton()
+        AdvancedUseBinder(binding: binding).asSingleton()
+    }
+    
+    public func asThreadLocal() {
+        AdvancedUseBinder(binding: binding).asThreadLocal()
     }
 }
 
@@ -131,18 +135,22 @@ public class PostInitInjectableBindingBuilder<T: protocol<AnyObject, PostInitInj
         to(T)
     }
     
-    public func to(implementation: T.Type) -> SingletonBinder<T> {
+    public func to(implementation: T.Type) -> AdvancedUseBinder<T> {
         binding.implementation = { injector in
             let injectable = implementation.init()
             injectable.inject(injector)
             return injectable
         }
         
-        return SingletonBinder(binding: binding)
+        return AdvancedUseBinder(binding: binding)
     }
     
     public func asSingleton() {
-        SingletonBinder(binding: binding).asSingleton()
+        AdvancedUseBinder(binding: binding).asSingleton()
+    }
+    
+    public func asThreadLocal() {
+        AdvancedUseBinder(binding: binding).asThreadLocal()
     }
 }
 
@@ -199,28 +207,30 @@ public class ClosureBindingBuilder<T> {
         }
     }
     
-    public func to(closure: (injector: Injector) -> T) -> SingletonBinder<T> {
+    public func to(closure: (injector: Injector) -> T) -> AdvancedUseBinder<T> {
         binding.implementation = { injector in
             closure(injector: injector)
         }
         
-        return SingletonBinder(binding: binding)
+        return AdvancedUseBinder(binding: binding)
     }
     
-    public func toNew(@autoclosure(escaping) closure: () -> T) -> SingletonBinder<T> {
+    public func toNew(@autoclosure(escaping) closure: () -> T) -> AdvancedUseBinder<T> {
         return to { _ in
             closure()
         }
     }
 }
 
-public class SingletonBinder<T> {
+public class AdvancedUseBinder<T> {
     private var binding: Binding<T>
     
     private init(binding: Binding<T>) {
         self.binding = binding
     }
-    
+}
+
+extension AdvancedUseBinder where T:AnyObject {
     public func asSingleton() {
         var implementation = binding.implementation
         var singleton: T? = nil
@@ -238,13 +248,24 @@ public class SingletonBinder<T> {
             }
         }
     }
+    
+    public func asThreadLocal() {
+        guard let implementation = binding.implementation else {
+            fatalError("Implementation was nil! Cannot create ThreadLocal with nil implementation.")
+        }
+        
+        let container = ThreadLocalParametrized(create: implementation)
+        binding.implementation = { injector in
+            return container.get(injector)
+        }
+    }
 }
 
 // FIXME It seems like the Binding can't be accessed from outside, but yet is public. Also the name and type is not used.
-public class Binding<T> {
+internal class Binding<T> {
 
-    public private(set) var type: T.Type
-    public private(set) var implementation: (Injector -> T)?
+    internal private(set) var type: T.Type
+    internal private(set) var implementation: (Injector -> T)?
     
     private init(type: T.Type) {
         self.type = type
