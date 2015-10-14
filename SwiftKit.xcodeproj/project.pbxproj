@@ -47,6 +47,7 @@
 		18977DC61BCD438300154305 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC51BCD438300154305 /* GlobalFunctions.swift */; settings = {ASSET_TAGS = (); }; };
 		18977DC81BCD439900154305 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC71BCD439900154305 /* Key.swift */; settings = {ASSET_TAGS = (); }; };
 		18977DCA1BCD453800154305 /* OptionalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC91BCD453800154305 /* OptionalInstance.swift */; settings = {ASSET_TAGS = (); }; };
+		18977DCC1BCD74B100154305 /* ThreadLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DCB1BCD74B100154305 /* ThreadLocal.swift */; settings = {ASSET_TAGS = (); }; };
 		18E484501BA8BFB1004CB09A /* SwiftKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E4844F1BA8BFB1004CB09A /* SwiftKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18E484571BA8BFB1004CB09A /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */; };
 		18E4845E1BA8BFB1004CB09A /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */; };
@@ -189,6 +190,7 @@
 		18977DC51BCD438300154305 /* GlobalFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		18977DC71BCD439900154305 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		18977DC91BCD453800154305 /* OptionalInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalInstance.swift; sourceTree = "<group>"; };
+		18977DCB1BCD74B100154305 /* ThreadLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadLocal.swift; sourceTree = "<group>"; };
 		18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperPolymorphismTest.swift; sourceTree = "<group>"; };
 		18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequestPerformer.swift; sourceTree = "<group>"; };
 		18E23C421B8A387500B29FC9 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				18E4847C1BA8C054004CB09A /* Int+Functionals.swift */,
 				18E4847D1BA8C054004CB09A /* MoreFunctionalGlobals.swift */,
 				18977DC51BCD438300154305 /* GlobalFunctions.swift */,
+				18977DCB1BCD74B100154305 /* ThreadLocal.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -1078,6 +1081,7 @@
 				18E484E11BA8C054004CB09A /* PolymorhicType.swift in Sources */,
 				18E484D11BA8C054004CB09A /* MoreFunctionalGlobals.swift in Sources */,
 				18977DC61BCD438300154305 /* GlobalFunctions.swift in Sources */,
+				18977DCC1BCD74B100154305 /* ThreadLocal.swift in Sources */,
 				18E484DA1BA8C054004CB09A /* EnumMappingOperators.swift in Sources */,
 				18E485011BA8C054004CB09A /* RequestPerformer.swift in Sources */,
 				18E484E21BA8C054004CB09A /* Polymorph.swift in Sources */,

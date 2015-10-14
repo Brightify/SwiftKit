@@ -8,6 +8,7 @@
 * Added `>>` operator to ViewComposer to allow configuration of existing views.
 * Added parameterized injections.
 * Added `Instance<T>` to allow immutable properties in `PostInitInjectable` classes.
+* Added thread-local object injections.
 * Removed `@objc` annotation that was previously required for polymorphic object mapping.
 
 ## 0.5.10
