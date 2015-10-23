@@ -17,7 +17,7 @@ class InjectionTest: QuickSpec {
             it("injects implementation") {
                 let module = Module()
                 module.bind(UserDAO).toNew(MockUserDAO())
-                module.bind(UserService).to { UserServiceImpl(injector: $0) }
+                module.bind(UserService).to(UserServiceImpl.init)
                 
                 let injector = Injector.createInjector(module)
                 
@@ -48,7 +48,7 @@ class InjectionTest: QuickSpec {
             it("injects an instance object") {
                 let module = Module()
                 module.bind(UserDAO).toNew(MockUserDAO())
-                module.bind(UserService).to { UserServiceImpl(injector: $0) }
+                module.bind(UserService).to(UserServiceImpl.init)
                 
                 let injector = Injector.createInjector(module)
                 let instance: Instance<UserService> = .init()
@@ -61,7 +61,7 @@ class InjectionTest: QuickSpec {
             it("injects an optional instance object") {
                 let module = Module()
                 module.bind(UserDAO).toNew(MockUserDAO())
-                module.bind(UserService).to { UserServiceImpl(injector: $0) }
+                module.bind(UserService).to(UserServiceImpl.init)
                 
                 let injector = Injector.createInjector(module)
                 let instance: OptionalInstance<UserService> = .init()

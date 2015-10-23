@@ -231,7 +231,8 @@ public class AdvancedUseBinder<T> {
     }
 }
 
-extension AdvancedUseBinder where T:AnyObject {
+// TODO T should be AnyObject, because it does not make sense to have ThreadLocal structs. Swift however does not support more complex generic constructs yet
+extension AdvancedUseBinder /*where T: AnyObject*/ {
     public func asSingleton() {
         var implementation = binding.implementation
         var singleton: T? = nil
@@ -250,19 +251,27 @@ extension AdvancedUseBinder where T:AnyObject {
         }
     }
     
+    // We need to use the Box<T>, because we cannot constrain T to "AnyObject" yet
     public func asThreadLocal() {
         guard let implementation = binding.implementation else {
             fatalError("Implementation was nil! Cannot create ThreadLocal with nil implementation.")
         }
-        
-        let container = ThreadLocalParametrized(create: implementation)
+        let container = ThreadLocalParametrized {
+            Box(implementation($0))
+        }
         binding.implementation = { injector in
-            return container.get(injector)
+            return container.get(injector).value
         }
     }
 }
 
-// FIXME It seems like the Binding can't be accessed from outside, but yet is public. Also the name and type is not used.
+private class Box<T> {
+    private let value: T
+    private init(_ value: T) {
+        self.value = value
+    }
+}
+
 internal class Binding<T> {
 
     internal private(set) var type: T.Type
