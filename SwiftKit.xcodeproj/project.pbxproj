@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		016B8B31A982017DD07172B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1C57433A6E87B4863BE0A9 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		184606021BCAED9400AFFA31 /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184606011BCAED9400AFFA31 /* Instance.swift */; settings = {ASSET_TAGS = (); }; };
-		186F7D671BA962FA004E190B /* BaseTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484BA1BA8C054004CB09A /* BaseTestUtils.swift */; settings = {ASSET_TAGS = (); }; };
-		186F7D681BA9632C004E190B /* QuickUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484BC1BA8C054004CB09A /* QuickUtils.swift */; settings = {ASSET_TAGS = (); }; };
+		016B8B31A982017DD07172B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1C57433A6E87B4863BE0A9 /* Pods.framework */; };
+		184606021BCAED9400AFFA31 /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184606011BCAED9400AFFA31 /* Instance.swift */; };
+		186F7D671BA962FA004E190B /* BaseTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484BA1BA8C054004CB09A /* BaseTestUtils.swift */; };
+		186F7D681BA9632C004E190B /* QuickUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484BC1BA8C054004CB09A /* QuickUtils.swift */; };
 		187BD17B1BA8C55200E08759 /* StringPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62A1B14FDDE00D073C6 /* StringPreferenceTest.swift */; };
 		187BD17C1BA8C55200E08759 /* DoublePreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62B1B14FDDE00D073C6 /* DoublePreferenceTest.swift */; };
 		187BD17D1BA8C55200E08759 /* FloatPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62C1B14FDDE00D073C6 /* FloatPreferenceTest.swift */; };
@@ -39,15 +39,15 @@
 		187BD1941BA8C58C00E08759 /* InjectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A440A1B45CAB800D11BEC /* InjectionTest.swift */; };
 		187BD1951BA8C59000E08759 /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186D2E751B4ECDAA005BC06D /* RouterTest.swift */; };
 		187BD1961BA8C59000E08759 /* MockRequestPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */; };
-		18977DBC1BCD3E1700154305 /* InjectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBB1BCD3E1700154305 /* InjectionError.swift */; settings = {ASSET_TAGS = (); }; };
-		18977DBE1BCD3E3E00154305 /* ParametrizedInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBD1BCD3E3E00154305 /* ParametrizedInjector.swift */; settings = {ASSET_TAGS = (); }; };
-		18977DC01BCD42E000154305 /* ParametrizedFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBF1BCD42E000154305 /* ParametrizedFactory.swift */; settings = {ASSET_TAGS = (); }; };
-		18977DC21BCD42FB00154305 /* Parametrizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC11BCD42FB00154305 /* Parametrizable.swift */; settings = {ASSET_TAGS = (); }; };
-		18977DC41BCD431900154305 /* ParametrizedInjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC31BCD431900154305 /* ParametrizedInjectable.swift */; settings = {ASSET_TAGS = (); }; };
-		18977DC61BCD438300154305 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC51BCD438300154305 /* GlobalFunctions.swift */; settings = {ASSET_TAGS = (); }; };
-		18977DC81BCD439900154305 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC71BCD439900154305 /* Key.swift */; settings = {ASSET_TAGS = (); }; };
-		18977DCA1BCD453800154305 /* OptionalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC91BCD453800154305 /* OptionalInstance.swift */; settings = {ASSET_TAGS = (); }; };
-		18977DCC1BCD74B100154305 /* ThreadLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DCB1BCD74B100154305 /* ThreadLocal.swift */; settings = {ASSET_TAGS = (); }; };
+		18977DBC1BCD3E1700154305 /* InjectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBB1BCD3E1700154305 /* InjectionError.swift */; };
+		18977DBE1BCD3E3E00154305 /* ParametrizedInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBD1BCD3E3E00154305 /* ParametrizedInjector.swift */; };
+		18977DC01BCD42E000154305 /* ParametrizedFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBF1BCD42E000154305 /* ParametrizedFactory.swift */; };
+		18977DC21BCD42FB00154305 /* Parametrizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC11BCD42FB00154305 /* Parametrizable.swift */; };
+		18977DC41BCD431900154305 /* ParametrizedInjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC31BCD431900154305 /* ParametrizedInjectable.swift */; };
+		18977DC61BCD438300154305 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC51BCD438300154305 /* GlobalFunctions.swift */; };
+		18977DC81BCD439900154305 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC71BCD439900154305 /* Key.swift */; };
+		18977DCA1BCD453800154305 /* OptionalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC91BCD453800154305 /* OptionalInstance.swift */; };
+		18977DCC1BCD74B100154305 /* ThreadLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DCB1BCD74B100154305 /* ThreadLocal.swift */; };
 		18E484501BA8BFB1004CB09A /* SwiftKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E4844F1BA8BFB1004CB09A /* SwiftKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18E484571BA8BFB1004CB09A /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */; };
 		18E4845E1BA8BFB1004CB09A /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */; };
@@ -123,7 +123,7 @@
 		18E4850B1BA8C054004CB09A /* ViewComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484C11BA8C054004CB09A /* ViewComposer.swift */; };
 		3E76AF5D0D82F50F0D7893FB /* Pods_SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		404205EC9C1FFDC1EBE9097B /* Pods_Showcase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E313D335DB88DEA06923A524 /* Pods_Showcase.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		58544A645E75FE5F06DDF908 /* Pods_SwiftKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C49AF8355E81CE6EEBADB2 /* Pods_SwiftKitTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		58544A645E75FE5F06DDF908 /* Pods_SwiftKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C49AF8355E81CE6EEBADB2 /* Pods_SwiftKitTests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -134,6 +134,7 @@
 		6003F5A4195388D20070C39A /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A2195388D20070C39A /* Main_iPad.storyboard */; };
 		6003F5A7195388D20070C39A /* BFYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* BFYViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
+		8C42AABF2396FA81794E4532 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1C57433A6E87B4863BE0A9 /* Pods.framework */; };
 		B69129E73AD1D2F2EA2C7C98 /* Pods_SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -354,6 +355,7 @@
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 				3E76AF5D0D82F50F0D7893FB /* Pods_SwiftKit.framework in Frameworks */,
 				404205EC9C1FFDC1EBE9097B /* Pods_Showcase.framework in Frameworks */,
+				8C42AABF2396FA81794E4532 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -949,7 +951,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Showcase/Pods-Showcase-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A0E09AEAEF8A8E15D4D30F17 /* Copy Pods Resources */ = {
@@ -979,7 +981,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Showcase/Pods-Showcase-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BE6B0A3C5BE36468955B9956 /* Check Pods Manifest.lock */ = {
@@ -1334,7 +1336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1367,7 +1369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1380,7 +1382,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Showcase/Showcase-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Showcase/Showcase-Info.plist";
@@ -1397,7 +1399,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Showcase/Showcase-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Showcase/Showcase-Info.plist";
