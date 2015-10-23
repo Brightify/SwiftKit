@@ -1,25 +1,12 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
+link_with 'SwiftKit', 'Showcase'
 
-pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'xcode7'
+pod 'SwiftyJSON', '~> 2.3.0'
 pod 'Alamofire', '~> 2.0'
-pod 'Nimble', '~> 2.0.0-rc.3'
-
-target 'SwiftKit' do
-
-end
-
-target 'Showcase' do
-    #pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'xcode7'
-    #pod "SwiftKit", :path => "./"
-    #pod "SwiftKit/TestUtils/XCTest", :path => "./"
-    #pod "SwiftKit/TestUtils/Quick", :path => "./"
-end
+pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git', :branch => 'xcode7.1'
 
 target 'SwiftKitTests' do
-#    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'xcode7'
-
-    pod 'Quick', :git => 'https://github.com/Quick/Quick'
-    pod 'Nimble', '~> 2.0.0-rc.3'
+    pod 'Quick', :git => 'https://github.com/Quick/Quick.git', :branch => 'xcode7.1'
 end

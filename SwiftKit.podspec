@@ -90,7 +90,7 @@ Pod::Spec.new do |spec|
         testUtils.subspec 'Quick' do |quickTestUtils|
             quickTestUtils.source_files = 'SwiftKit/TestUtils/Quick/**/*.swift'
             quickTestUtils.dependency 'SwiftKit/TestUtils/Base'
-            quickTestUtils.dependency 'Nimble', '~> 2.0.0-rc.3'
+            quickTestUtils.dependency 'Nimble', '~> 2.0.0'
         end
     end
 end

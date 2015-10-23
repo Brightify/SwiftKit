@@ -185,7 +185,8 @@ public class PostInitParametrizedInjectableBindingBuilder<T: PostInitParametrize
         binding.implementation = { injector in
             { parameters in
                 let injectable = implementation.init()
-                injectable.inject(injector, parameters)
+                injectable.inject(injector)
+                injectable.postInject(parameters)
                 return injectable
             }
         }

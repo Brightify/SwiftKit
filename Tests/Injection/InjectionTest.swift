@@ -241,10 +241,12 @@ private class PostInitParametrizedService: PostInitParametrizedInjectable {
 
     required init() { }
     
-    private func inject(injector: Injector, _ parameters: (string: String, int: Int)) {
+    private func inject(injector: Injector) {
+    }
+    
+    private func postInject(parameters: (string: String, int: Int)) {
         self.string = parameters.string
         self.int = parameters.int
-        
     }
     
 }
