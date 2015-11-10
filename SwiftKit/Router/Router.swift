@@ -187,18 +187,18 @@ extension Router {
     }
 }
 
-/// Extension that adds support for Mappable input and output parameters
+/// Extension that adds support for Serializable input and Deserializable output parameters
 extension Router {
     
     /**
-        Performs request with Mappable input and no output
+        Performs request with Serializable input and no output
     
         :param: endpoint The target Endpoint of the API
-        :param: input The Mappable that will be filled to the Endpoint
+        :param: input The Serializable that will be filled to the Endpoint
         :param: callback The callback that is executed when request succeeds or fails
         :returns: Cancellable
     */
-    public func request<IN: Mappable, ENDPOINT: Endpoint
+    public func request<IN: Serializable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == Void>
         (endpoint: ENDPOINT, input: IN, callback: EmptyResponse -> ()) -> Cancellable
     {
@@ -208,14 +208,14 @@ extension Router {
     }
     
     /**
-        Performs request with input of array of Mappables and no output
+        Performs request with input of array of Serializables and no output
     
         :param: endpoint The target Endpoint of the API
-        :param: input The input array of Mappables that will be filled to the Endpoint
+        :param: input The input array of Serializables that will be filled to the Endpoint
         :param: callback The callback that is executed when request succeeds or fails
         :returns: Cancellable
     */
-    public func request<IN: Mappable, ENDPOINT: Endpoint
+    public func request<IN: Serializable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == Void>
         (endpoint: ENDPOINT, input: [IN], callback: EmptyResponse -> ()) -> Cancellable
     {
@@ -225,13 +225,13 @@ extension Router {
     }
 
     /**
-        Performs request with no input and Mappable output
+        Performs request with no input and Deserializable output
         
         :param: endpoint The target Endpoint of the API
-        :param: callback The callback with Mappable parameter
+        :param: callback The callback with Deserializable parameter
         :returns: Cancellable
     */
-    public func request<OUT: Mappable, ENDPOINT: Endpoint
+    public func request<OUT: Deserializable, ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, callback: Response<OUT?> -> ()) -> Cancellable
     {
@@ -241,13 +241,13 @@ extension Router {
     }
     
     /**
-        Performs request with no input and output of Mappable array
+        Performs request with no input and output of Deserializable array
         
         :param: endpoint The target Endpoint of the API
-        :param: callback The callback with Mappable array parameter
+        :param: callback The callback with Deserializable array parameter
         :returns: Cancellable
     */
-    public func request<OUT: Mappable, ENDPOINT: Endpoint
+    public func request<OUT: Deserializable, ENDPOINT: Endpoint
         where ENDPOINT.Input == Void, ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, callback: Response<[OUT]> -> ()) -> Cancellable
     {
@@ -257,14 +257,14 @@ extension Router {
     }
     
     /**
-        Performs request with Mappable input and output
+        Performs request with Serializable input and Deserializable output
         
         :param: endpoint The target Endpoint of the API
-        :param: input The Mappable input
-        :param: callback The callback with Mappable parameter
+        :param: input The Serializable input
+        :param: callback The callback with Deserializable parameter
         :returns: Cancellable
     */
-    public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
+    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<OUT?> -> ()) -> Cancellable
     {
@@ -274,14 +274,14 @@ extension Router {
     }
     
     /**
-        Performs request with input of Mappable array and Mappable output
+        Performs request with input of Serializable array and Deserializable output
     
         :param: endpoint The target Endpoint of the API
-        :param: input The input of Mappable array
-        :param: callback The callback with Mappable parameter
+        :param: input The input of Serializable array
+        :param: callback The callback with Deserializable parameter
         :returns: Cancellable
     */
-    public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
+    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<OUT?> -> ()) -> Cancellable
     {
@@ -291,14 +291,14 @@ extension Router {
     }
     
     /**
-        Performs request with Mappable input and output of Mappable array
+        Performs request with Serializable input and output of Deserializable array
     
         :param: endpoint The target Endpoint of the API
-        :param: input The Mappable input
-        :param: callback The callback with Mappable array parameter
+        :param: input The Serializable input
+        :param: callback The callback with Deserializable array parameter
         :returns: Cancellable
     */
-    public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
+    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint
         where ENDPOINT.Input == IN, ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<[OUT]> -> ()) -> Cancellable
     {
@@ -308,14 +308,14 @@ extension Router {
     }
     
     /**
-        Performs request with Mappable array input and output
+        Performs request with Serializable array input and Deserializable output
     
         :param: endpoint The target Endpoint of the API
-        :param: input The input of Mappable array
-        :param: callback The callback with Mappable arrayparameter
+        :param: input The input of Serializable array
+        :param: callback The callback with Deserializable arrayparameter
         :returns: Cancellable
     */
-    public func request<IN: Mappable, OUT: Mappable, ENDPOINT: Endpoint
+    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [IN], ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<[OUT]> -> ()) -> Cancellable
     {
@@ -325,14 +325,14 @@ extension Router {
     }
     
     /**
-        Performs request with input of String array and Mappable output
+        Performs request with input of String array and Deserializable output
     
         :param: endpoint The target Endpoint of the API
         :param: input The input of String array
-        :param: callback The Response with Mappable parameter
+        :param: callback The Response with Deserializable parameter
         :returns: Cancellable
     */
-    public func request<OUT: Mappable, ENDPOINT: Endpoint
+    public func request<OUT: Deserializable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == OUT>
         (endpoint: ENDPOINT, input: [String], callback: Response<OUT?> -> ()) -> Cancellable
     {
@@ -342,14 +342,14 @@ extension Router {
     }
     
     /**
-        Performs request with input of String array and Mappable array output
+        Performs request with input of String array and Deserializable array output
     
         :param: endpoint The target Endpoint of the API
         :param: input The input of String array
-        :param: callback The Response with Mappable array parameter
+        :param: callback The Response with Deserializable array parameter
         :returns: Cancellable
     */
-    public func request<OUT: Mappable, ENDPOINT: Endpoint
+    public func request<OUT: Deserializable, ENDPOINT: Endpoint
         where ENDPOINT.Input == [String], ENDPOINT.Output == [OUT]>
         (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<[OUT]> -> ()) -> Cancellable
     {
@@ -358,19 +358,19 @@ extension Router {
         return runRequest(request, completion: relayObjectArrayResponse(callback))
     }
 
-    private func prepareRequest<E: Endpoint, IN: Mappable where E.Input == IN>(endpoint: E, input: IN) -> Request {
+    private func prepareRequest<E: Endpoint, IN: Serializable where E.Input == IN>(endpoint: E, input: IN) -> Request {
         let json = objectMapper.toJSON(input)
         
         return prepareRequest(endpoint, input: try? json.rawData(), contentType: .ApplicationJson)
     }
     
-    private func prepareRequest<E: Endpoint, IN: Mappable where E.Input == [IN]>(endpoint: E, input: [IN]) -> Request {
+    private func prepareRequest<E: Endpoint, IN: Serializable where E.Input == [IN]>(endpoint: E, input: [IN]) -> Request {
         let json = objectMapper.toJSONArray(input)
         
         return prepareRequest(endpoint, input: try? json.rawData(), contentType: .ApplicationJson)
     }
     
-    private func relaySingleObjectResponse<OBJECT: Mappable>(callback: Response<OBJECT?> -> ())(response: Response<NSData?>) {
+    private func relaySingleObjectResponse<OBJECT: Deserializable>(callback: Response<OBJECT?> -> ())(response: Response<NSData?>) {
         let modelResponse: Response<OBJECT?> = response.map {
             var model: OBJECT? = nil
             if self.responseVerifier.verify(response), let data = $0 {
@@ -383,7 +383,7 @@ extension Router {
         callback(modelResponse)
     }
     
-    private func relayObjectArrayResponse<OBJECT: Mappable>(callback: Response<[OBJECT]> -> ())(response: Response<NSData?>) {
+    private func relayObjectArrayResponse<OBJECT: Deserializable>(callback: Response<[OBJECT]> -> ())(response: Response<NSData?>) {
         let modelResponse: Response<[OBJECT]> = response.map {
             var models: [OBJECT]?
             

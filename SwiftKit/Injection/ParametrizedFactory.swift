@@ -6,7 +6,7 @@
 //  Copyright © 2015 Tadeas Kriz. All rights reserved.
 //
 
-public class ParametrizedFactory<T: ParametrizedInjectable>: Factory<T.Parameters -> T> {
+public class ParametrizedFactory<T: Parametrizable>: Factory<T.Parameters -> T> {
     
     override init(closure: () -> T.Parameters -> T) {
         super.init(closure: closure)
