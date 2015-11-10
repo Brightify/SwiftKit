@@ -8,7 +8,7 @@
 
 import Quick
 import Nimble
-import SwiftKit
+@testable import SwiftKit
 
 private struct UserProfile: Mappable {
     
