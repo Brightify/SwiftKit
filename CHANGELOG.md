@@ -9,6 +9,7 @@
 * Added parameterized injections.
 * Added `Instance<T>` to allow immutable properties in `PostInitInjectable` classes.
 * Added thread-local object injections.
+* Changed visibility of `BaseEndpoint` from `internal` to `public`.
 * Removed `@objc` annotation that was previously required for polymorphic object mapping.
 
 ## 0.5.10
