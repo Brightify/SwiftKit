@@ -47,21 +47,21 @@ public class Target<ENDPOINT: Endpoint, PARAMS> {
     }
 }
 
-class BaseEndpoint<IN, OUT>: Endpoint {
-    typealias Input = IN
-    typealias Output = OUT
+public class BaseEndpoint<IN, OUT>: Endpoint {
+    public typealias Input = IN
+    public typealias Output = OUT
     
-    let method: Alamofire.Method
-    let path: String
-    let modifiers: [RequestModifier]
+    public let method: Alamofire.Method
+    public let path: String
+    public let modifiers: [RequestModifier]
     
-    init(path: String, method: Alamofire.Method, modifiers: [RequestModifier]) {
+    public init(path: String, method: Alamofire.Method, modifiers: [RequestModifier]) {
         self.path = path
         self.method = method
         self.modifiers = modifiers
     }
     
-    required init(_ path: String, _ modifiers: [RequestModifier] = []) {
+    public required init(_ path: String, _ modifiers: [RequestModifier] = []) {
         fatalError("Initializer init(path:String) cannot be used in BaseEndpoint!")
     }
 }
