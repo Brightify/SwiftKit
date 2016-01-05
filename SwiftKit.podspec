@@ -56,6 +56,7 @@ Pod::Spec.new do |spec|
         router.dependency 'SwiftKit/Internal'
         router.dependency 'SwiftKit/ObjectMapper'
         router.dependency 'Alamofire', '~> 2.0'
+        router.dependency 'HTTPStatusCodes'
         router.dependency 'SwiftyJSON'
     end
 

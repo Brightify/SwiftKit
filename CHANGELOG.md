@@ -10,6 +10,7 @@
 * Added `Instance<T>` to allow immutable properties in `PostInitInjectable` classes.
 * Added thread-local object injections.
 * Changed visibility of `BaseEndpoint` from `internal` to `public`.
+* Changed the statusCode to `HTTPStatusCode` from new `HTTPStatusCodes` dependency for easier usage.
 * Removed `@objc` annotation that was previously required for polymorphic object mapping.
 * Removed injection operators
 * Removed injection type inference

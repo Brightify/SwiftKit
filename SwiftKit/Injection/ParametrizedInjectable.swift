@@ -7,8 +7,6 @@
 //
 
 public protocol ParametrizedInjectable: Parametrizable {
-    typealias InitParameters
-    typealias Parameters = InitParameters
     
-    init(injector: Injector, _ parameters: InitParameters)
+    init(injector: Injector, _ parameters: Parameters)
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import HTTPStatusCodes
 
 /// Response with no output data
 public typealias EmptyResponse = Response<Void>
@@ -22,7 +23,7 @@ public class Response<T> {
     public let output: T
     
     /// Status code of the API request
-    public let statusCode: Int?
+    public let statusCode: HTTPStatusCode?
     
     /// Error of the API request
     public let error: ErrorType?
@@ -46,7 +47,7 @@ public class Response<T> {
         :param: rawResponse The raw response
         :param: rawData The raw data of the Response
     */
-    public init(output: T, statusCode: Int?, error: ErrorType?, request: Request, rawResponse: NSURLResponse?, rawData: NSData?) {
+    public init(output: T, statusCode: HTTPStatusCode?, error: ErrorType?, request: Request, rawResponse: NSURLResponse?, rawData: NSData?) {
         self.output = output
         self.statusCode = statusCode
         self.error = error

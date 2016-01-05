@@ -225,6 +225,8 @@ private final class InitCalledCounter: Injectable {
 }
 
 private class ParametrizedService: ParametrizedInjectable {
+    typealias Parameters = (string: String, int: Int)
+    
     let string: String
     let int: Int
     

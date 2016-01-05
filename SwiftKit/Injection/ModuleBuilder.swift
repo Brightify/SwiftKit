@@ -155,9 +155,9 @@ public class PostInitInjectableBindingBuilder<T: protocol<AnyObject, PostInitInj
 }
 
 public class ParametrizedInjectableBindingBuilder<T: ParametrizedInjectable> {
-    private var binding: Binding<T.InitParameters -> T>
+    private var binding: Binding<T.Parameters -> T>
     
-    private init(binding: Binding<T.InitParameters -> T>) {
+    private init(binding: Binding<T.Parameters -> T>) {
         self.binding = binding
         
         to(T)
@@ -173,9 +173,9 @@ public class ParametrizedInjectableBindingBuilder<T: ParametrizedInjectable> {
 }
 
 public class PostInitParametrizedInjectableBindingBuilder<T: PostInitParametrizedInjectable> {
-    private var binding: Binding<T.PostInitParameters -> T>
+    private var binding: Binding<T.Parameters -> T>
     
-    private init(binding: Binding<T.PostInitParameters -> T>) {
+    private init(binding: Binding<T.Parameters -> T>) {
         self.binding = binding
         
         to(T)

@@ -25,8 +25,7 @@ public protocol PostInitInjectable: class {
 }
 
 public protocol PostInitParametrizedInjectable: PostInitInjectable, Parametrizable {
-    typealias PostInitParameters
-    typealias Parameters = PostInitParameters
+    typealias Parameters
     
-    func postInject(parameters: PostInitParameters)
+    func postInject(parameters: Parameters)
 }
