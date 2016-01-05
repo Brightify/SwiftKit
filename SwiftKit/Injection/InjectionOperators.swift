@@ -74,6 +74,14 @@ public func <- <T: Parametrizable>(inout injectable: T?, injector: ParametrizedI
     injectable = injector.get(T.self)
 }
 
+public func <- <T: Parametrizable>(inout injectable: T?, injectorAndParameters: (Injector, T.Parameters)) {
+    injectable = injectorAndParameters.0.get(T.self, withParameters: injectorAndParameters.1)
+}
+
+public func <- <T: Parametrizable>(inout injectable: T!, injectorAndParameters: (Injector, T.Parameters)) {
+    injectable = injectorAndParameters.0.get(T.self, withParameters: injectorAndParameters.1)
+}
+
 public func <- <T: Parametrizable>(inout injectableFactory: ParametrizedFactory<T>!, injector: Injector) {
     injectableFactory = injector.factory(T.self)
 }
