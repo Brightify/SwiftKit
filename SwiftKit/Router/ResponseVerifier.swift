@@ -23,7 +23,7 @@ public class StatusCodeRangeVerifier: ResponseVerifier {
     }
     
     public func verify<T>(response: Response<T>) -> Bool {
-        return response.statusCode >= range.startIndex && response.statusCode <= range.endIndex
+        return response.statusCode.map { range.contains($0.rawValue) } ?? false
     }
     
 }

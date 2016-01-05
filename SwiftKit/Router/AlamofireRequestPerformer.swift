@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import HTTPStatusCodes
 
 public struct AlamofireRequestPerformer: RequestPerformer {
     
@@ -14,9 +15,8 @@ public struct AlamofireRequestPerformer: RequestPerformer {
         let alamofireRequest = Alamofire.Manager.sharedInstance
             .request(request.urlRequest)
             .responseData { (urlRequest, httpResponse, result) -> () in
-                let statusCode = httpResponse?.statusCode
-                
-                let response = Response<NSData?>(output: result.value, statusCode: statusCode, error: result.error, request: request, rawResponse: httpResponse, rawData: result.value)
+                let response = Response<NSData?>(output: result.value, statusCode: httpResponse?.statusCodeValue,
+                    error: result.error, request: request, rawResponse: httpResponse, rawData: result.value)
                 
                 completion(response)
         }

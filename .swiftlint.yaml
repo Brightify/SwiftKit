@@ -1,0 +1,7 @@
+disabled_rules:
+    - file_length
+    - line_length
+included:
+    - SwiftKit
+excluded:
+    - Pods

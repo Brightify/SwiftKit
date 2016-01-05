@@ -17,7 +17,7 @@ public class ObjectMapper {
     public init() {
     }
     
-    public func map<M: Deserializable>(json: JSON) -> M? {
+    public func deserialize<M: Deserializable>(json: JSON) -> M? {
         if json.type == .Null {
             return nil
         }
@@ -25,6 +25,20 @@ public class ObjectMapper {
         let map = BaseMap(objectMapper: self, mappingDirection: .FromJSON, json: json)
         let type = polymorph.concreteTypeFor(M.self, inMap: map)
         return type.init(map)
+    }
+    
+    @available(*, renamed="deserialize")
+    public func map<M: Deserializable>(json: JSON) -> M? {
+        return deserialize(json)
+    }
+    
+    public func map<M: Mappable>(json: JSON, inout to object: M) {
+        if json.type == .Null {
+            return
+        }
+        
+        let map = BaseMap(objectMapper: self, mappingDirection: .FromJSON, json: json)
+        object.mapping(map)
     }
     
     public func mapArray<M: Deserializable>(json: JSON) -> [M]? {

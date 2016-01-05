@@ -7,6 +7,7 @@
 //
 
 import SwiftKit
+import HTTPStatusCodes
 
 public typealias MockEndpoint = (method: String, url: String, response: String, statusCode: Int)
 
@@ -24,7 +25,7 @@ public class MockRequestPerformer: RequestPerformer {
             let responseData = endpoint.response.dataUsingEncoding(NSUTF8StringEncoding)
             response = Response(
                 output: responseData,
-                statusCode: endpoint.statusCode,
+                statusCode: HTTPStatusCode(rawValue: endpoint.statusCode),
                 error: nil,
                 request: request,
                 rawResponse: nil,
@@ -32,7 +33,7 @@ public class MockRequestPerformer: RequestPerformer {
         } else {
             response = Response(
                 output: nil,
-                statusCode: 404,
+                statusCode: HTTPStatusCode(rawValue: 404),
                 error: nil,
                 request: request,
                 rawResponse: nil,
