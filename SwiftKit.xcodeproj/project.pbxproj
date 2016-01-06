@@ -50,6 +50,8 @@
 		18977DC81BCD439900154305 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC71BCD439900154305 /* Key.swift */; };
 		18977DCA1BCD453800154305 /* OptionalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DC91BCD453800154305 /* OptionalInstance.swift */; };
 		18977DCC1BCD74B100154305 /* ThreadLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DCB1BCD74B100154305 /* ThreadLocal.swift */; };
+		18BE39EA1C3CAD50008999EC /* StyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE39E91C3CAD50008999EC /* StyleKit.swift */; };
+		18BE39ED1C3D273B008999EC /* StyleKitPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE39EC1C3D273B008999EC /* StyleKitPerformance.swift */; };
 		18E484501BA8BFB1004CB09A /* SwiftKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E4844F1BA8BFB1004CB09A /* SwiftKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18E484571BA8BFB1004CB09A /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */; };
 		18E4845E1BA8BFB1004CB09A /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */; };
@@ -196,6 +198,8 @@
 		18977DCB1BCD74B100154305 /* ThreadLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadLocal.swift; sourceTree = "<group>"; };
 		18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperPolymorphismTest.swift; sourceTree = "<group>"; };
 		18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequestPerformer.swift; sourceTree = "<group>"; };
+		18BE39E91C3CAD50008999EC /* StyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKit.swift; sourceTree = "<group>"; };
+		18BE39EC1C3D273B008999EC /* StyleKitPerformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKitPerformance.swift; sourceTree = "<group>"; };
 		18E23C421B8A387500B29FC9 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		18E480DF1BA8BF26004CB09A /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -410,9 +414,26 @@
 			path = ../Tests/ObjectMapper;
 			sourceTree = "<group>";
 		};
+		18BE39E81C3CAD46008999EC /* StyleKit */ = {
+			isa = PBXGroup;
+			children = (
+				18BE39E91C3CAD50008999EC /* StyleKit.swift */,
+			);
+			name = StyleKit;
+			sourceTree = "<group>";
+		};
+		18BE39EB1C3D272F008999EC /* StyleKit */ = {
+			isa = PBXGroup;
+			children = (
+				18BE39EC1C3D273B008999EC /* StyleKitPerformance.swift */,
+			);
+			name = StyleKit;
+			sourceTree = "<group>";
+		};
 		18E4844E1BA8BFB1004CB09A /* SwiftKit */ = {
 			isa = PBXGroup;
 			children = (
+				18BE39E81C3CAD46008999EC /* StyleKit */,
 				18E4846B1BA8C054004CB09A /* Events */,
 				18E484721BA8C054004CB09A /* Injection */,
 				18E4847A1BA8C054004CB09A /* Internal */,
@@ -429,6 +450,7 @@
 		18E4845C1BA8BFB1004CB09A /* SwiftKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				18BE39EB1C3D272F008999EC /* StyleKit */,
 				186D2E741B4ECD88005BC06D /* Router */,
 				DC9A44091B45CAB800D11BEC /* Injection */,
 				DC0A52EE1B3F150B00DEAE6C /* TestUtils */,
@@ -1056,6 +1078,7 @@
 				18977DC41BCD431900154305 /* ParametrizedInjectable.swift in Sources */,
 				184606021BCAED9400AFFA31 /* Instance.swift in Sources */,
 				18E484D51BA8C054004CB09A /* Map.swift in Sources */,
+				18BE39EA1C3CAD50008999EC /* StyleKit.swift in Sources */,
 				18E484DC1BA8C054004CB09A /* IntMappingOperators.swift in Sources */,
 				18E484DB1BA8C054004CB09A /* FloatMappingOperators.swift in Sources */,
 				18E484F31BA8C054004CB09A /* DoublePreference.swift in Sources */,
@@ -1129,6 +1152,7 @@
 				187BD1901BA8C58200E08759 /* EventTest.swift in Sources */,
 				187BD1921BA8C58200E08759 /* UIBarButtonItemEventTest.swift in Sources */,
 				187BD1931BA8C58600E08759 /* TestUtilsTest.swift in Sources */,
+				18BE39ED1C3D273B008999EC /* StyleKitPerformance.swift in Sources */,
 				187BD1881BA8C55800E08759 /* OptionalPreferenceDeinitTest.swift in Sources */,
 				187BD1871BA8C55800E08759 /* ArrayPreferenceDeinitTest.swift in Sources */,
 				187342F21C41496D0012A28A /* Assert.swift in Sources */,
