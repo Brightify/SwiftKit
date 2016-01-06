@@ -25,7 +25,7 @@ Pod::Spec.new do |spec|
     spec.platform     = :ios, '8.0'
     spec.requires_arc = true
 
-    spec.default_subspec = 'Events', 'Preferences', 'Injection', 'Router', 'ViewComposer'
+    spec.default_subspec = 'Events', 'Preferences', 'Injection', 'Router', 'ViewComposer', 'StyleKit'
 
     spec.subspec 'Internal' do |internal|
         internal.source_files = 'SwiftKit/Internal/**/*.swift'
