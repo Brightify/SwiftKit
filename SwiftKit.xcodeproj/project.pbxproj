@@ -302,13 +302,13 @@
 		ABB9C5DDABE419158DC7D88D /* Pods-SwiftKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftKitTests/Pods-SwiftKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		BACC98F5132F5D2FA8DDF557 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DC0A52EF1B3F150B00DEAE6C /* TestUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtilsTest.swift; sourceTree = "<group>"; };
-		DC57B6281B14FDB600D073C6 /* IntPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntPreferenceTest.swift; path = Preferences/IntPreferenceTest.swift; sourceTree = "<group>"; };
-		DC57B62A1B14FDDE00D073C6 /* StringPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringPreferenceTest.swift; path = Preferences/StringPreferenceTest.swift; sourceTree = "<group>"; };
-		DC57B62B1B14FDDE00D073C6 /* DoublePreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DoublePreferenceTest.swift; path = Preferences/DoublePreferenceTest.swift; sourceTree = "<group>"; };
-		DC57B62C1B14FDDE00D073C6 /* FloatPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FloatPreferenceTest.swift; path = Preferences/FloatPreferenceTest.swift; sourceTree = "<group>"; };
-		DC57B62D1B14FDDE00D073C6 /* BoolPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoolPreferenceTest.swift; path = Preferences/BoolPreferenceTest.swift; sourceTree = "<group>"; };
-		DC57B62E1B14FDDE00D073C6 /* ArrayPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayPreferenceTest.swift; path = Preferences/ArrayPreferenceTest.swift; sourceTree = "<group>"; };
-		DC57B62F1B14FDDE00D073C6 /* OptionalPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OptionalPreferenceTest.swift; path = Preferences/OptionalPreferenceTest.swift; sourceTree = "<group>"; };
+		DC57B6281B14FDB600D073C6 /* IntPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntPreferenceTest.swift; sourceTree = "<group>"; };
+		DC57B62A1B14FDDE00D073C6 /* StringPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringPreferenceTest.swift; sourceTree = "<group>"; };
+		DC57B62B1B14FDDE00D073C6 /* DoublePreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoublePreferenceTest.swift; sourceTree = "<group>"; };
+		DC57B62C1B14FDDE00D073C6 /* FloatPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatPreferenceTest.swift; sourceTree = "<group>"; };
+		DC57B62D1B14FDDE00D073C6 /* BoolPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolPreferenceTest.swift; sourceTree = "<group>"; };
+		DC57B62E1B14FDDE00D073C6 /* ArrayPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayPreferenceTest.swift; sourceTree = "<group>"; };
+		DC57B62F1B14FDDE00D073C6 /* OptionalPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalPreferenceTest.swift; sourceTree = "<group>"; };
 		DC9A43EB1B452E5300D11BEC /* EventTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTest.swift; sourceTree = "<group>"; };
 		DC9A43EE1B45A34600D11BEC /* EventDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDeinitTest.swift; sourceTree = "<group>"; };
 		DC9A43EF1B45A34600D11BEC /* UIBarButtonItemDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemDeinitTest.swift; sourceTree = "<group>"; };
@@ -374,8 +374,7 @@
 				186D2E751B4ECDAA005BC06D /* RouterTest.swift */,
 				18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */,
 			);
-			name = Router;
-			path = ../Tests/Router;
+			path = Router;
 			sourceTree = "<group>";
 		};
 		187342E91C41496D0012A28A /* Base */ = {
@@ -410,8 +409,7 @@
 				187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */,
 				18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */,
 			);
-			name = ObjectMapper;
-			path = ../Tests/ObjectMapper;
+			path = ObjectMapper;
 			sourceTree = "<group>";
 		};
 		18BE39E81C3CAD46008999EC /* StyleKit */ = {
@@ -419,7 +417,7 @@
 			children = (
 				18BE39E91C3CAD50008999EC /* StyleKit.swift */,
 			);
-			name = StyleKit;
+			path = StyleKit;
 			sourceTree = "<group>";
 		};
 		18BE39EB1C3D272F008999EC /* StyleKit */ = {
@@ -427,7 +425,7 @@
 			children = (
 				18BE39EC1C3D273B008999EC /* StyleKitPerformance.swift */,
 			);
-			name = StyleKit;
+			path = StyleKit;
 			sourceTree = "<group>";
 		};
 		18E4844E1BA8BFB1004CB09A /* SwiftKit */ = {
@@ -447,7 +445,7 @@
 			path = SwiftKit;
 			sourceTree = "<group>";
 		};
-		18E4845C1BA8BFB1004CB09A /* SwiftKitTests */ = {
+		18E4845C1BA8BFB1004CB09A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				18BE39EB1C3D272F008999EC /* StyleKit */,
@@ -456,13 +454,13 @@
 				DC0A52EE1B3F150B00DEAE6C /* TestUtils */,
 				DC88270A1B3EF58D00F36530 /* Events */,
 				187C609F1B3CB71A00B8457A /* ObjectMapper */,
-				184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */,
 				DC3B288C1B14F221007F14B1 /* Preferences */,
 				185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */,
+				184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */,
 				18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */,
 				18E4845F1BA8BFB1004CB09A /* Info.plist */,
 			);
-			path = SwiftKitTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		18E4846B1BA8C054004CB09A /* Events */ = {
@@ -623,7 +621,7 @@
 			children = (
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				18E4844E1BA8BFB1004CB09A /* SwiftKit */,
-				18E4845C1BA8BFB1004CB09A /* SwiftKitTests */,
+				18E4845C1BA8BFB1004CB09A /* Tests */,
 				6003F593195388D20070C39A /* Showcase */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
@@ -703,8 +701,7 @@
 				187342ED1C41496D0012A28A /* XCTest */,
 				DC0A52EF1B3F150B00DEAE6C /* TestUtilsTest.swift */,
 			);
-			name = TestUtils;
-			path = ../Tests/TestUtils;
+			path = TestUtils;
 			sourceTree = "<group>";
 		};
 		DC3B288C1B14F221007F14B1 /* Preferences */ = {
@@ -719,8 +716,7 @@
 				DC57B62F1B14FDDE00D073C6 /* OptionalPreferenceTest.swift */,
 				DC57B6281B14FDB600D073C6 /* IntPreferenceTest.swift */,
 			);
-			name = Preferences;
-			path = ../Tests;
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 		DC88270A1B3EF58D00F36530 /* Events */ = {
@@ -731,8 +727,7 @@
 				DC9A44031B45B4B600D11BEC /* UIButtonEventTest.swift */,
 				DC9A44051B45BBEF00D11BEC /* UIBarButtonItemEventTest.swift */,
 			);
-			name = Events;
-			path = ../Tests/Events;
+			path = Events;
 			sourceTree = "<group>";
 		};
 		DC9A43ED1B45A34600D11BEC /* Deinit */ = {
@@ -756,8 +751,7 @@
 				DC9A43FF1B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift */,
 				DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */,
 			);
-			name = Deinit;
-			path = Preferences/Deinit;
+			path = Deinit;
 			sourceTree = "<group>";
 		};
 		DC9A44091B45CAB800D11BEC /* Injection */ = {
@@ -765,8 +759,7 @@
 			children = (
 				DC9A440A1B45CAB800D11BEC /* InjectionTest.swift */,
 			);
-			name = Injection;
-			path = ../Tests/Injection;
+			path = Injection;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

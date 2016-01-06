@@ -14,11 +14,11 @@ Pod::Spec.new do |spec|
     spec.description      = <<-DESC
                        SwiftKit's main purpose is to jumpstart iOS app development. We strive to deliver multiple small libraries that will solve the most basic things so you will not have to do it yourself.
                        DESC
-    spec.homepage         = "https://github.com/brightify/SwiftKit"
+    spec.homepage         = "https://github.com/SwiftKit/SwiftKit"
     spec.license          = 'MIT'
     spec.author           = { "Tadeas Kriz" => "tadeas@brightify.org", "Filip Dolnik" => "filip@brightify.org" }
     spec.source           = {
-        :git => "https://github.com/brightify/SwiftKit.git",
+        :git => "https://github.com/SwiftKit/SwiftKit.git",
         :tag => spec.version.to_s
     }
     spec.social_media_url = 'https://twitter.com/BrightifyOrg'
@@ -64,6 +64,11 @@ Pod::Spec.new do |spec|
         objectMapper.source_files = 'SwiftKit/ObjectMapper/**/*.swift'
         objectMapper.dependency 'SwiftKit/Internal'
         objectMapper.dependency 'SwiftyJSON'
+    end
+
+    spec.subspec 'StyleKit' do |styleKit|
+        styleKit.source_files = 'SwiftKit/StyleKit/**/*.swift'
+        styleKit.dependency 'SwiftKit/Internal'
     end
 
     spec.subspec 'ViewComposer' do |composer|
