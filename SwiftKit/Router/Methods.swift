@@ -47,21 +47,31 @@ public class Target<ENDPOINT: Endpoint, PARAMS> {
     }
 }
 
-public class BaseEndpoint<IN, OUT>: Endpoint {
-    public typealias Input = IN
-    public typealias Output = OUT
+//public class AnyEndpoint<IN, OUT>: Endpoint {
+//    
+//    init(_ path: String, _ modifiers: [RequestModifier]) {
+//        
+//    }
+//    
+//}
+
+
+
+private class BaseEndpoint<IN, OUT>: Endpoint {
+    typealias Input = IN
+    typealias Output = OUT
     
-    public let method: Alamofire.Method
-    public let path: String
-    public let modifiers: [RequestModifier]
+    let method: Alamofire.Method
+    let path: String
+    let modifiers: [RequestModifier]
     
-    public init(path: String, method: Alamofire.Method, modifiers: [RequestModifier]) {
+    init(path: String, method: Alamofire.Method, modifiers: [RequestModifier]) {
         self.path = path
         self.method = method
         self.modifiers = modifiers
     }
     
-    public required init(_ path: String, _ modifiers: [RequestModifier] = []) {
+    required init(_ path: String, _ modifiers: [RequestModifier] = []) {
         fatalError("Initializer init(path:String) cannot be used in BaseEndpoint!")
     }
 }
@@ -72,7 +82,7 @@ public class BaseEndpoint<IN, OUT>: Endpoint {
     :param: IN The input type
     :param: OUT The output type
 */
-public class GET<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class GET<IN, OUT>: BaseEndpoint<IN, OUT> {
     
     /**
         Initializes an endpoint with path
@@ -82,6 +92,7 @@ public class GET<IN, OUT>: BaseEndpoint<IN, OUT> {
     public required init(_ path: String, _ modifiers: RequestModifier...) {
         super.init(path: path, method: .GET, modifiers: modifiers)
     }
+    
 }
 
 /**
@@ -90,7 +101,7 @@ public class GET<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public class POST<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class POST<IN, OUT>: BaseEndpoint<IN, OUT> {
     
     /**
         Initializes an endpoint with path
@@ -108,7 +119,7 @@ public class POST<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public class PUT<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class PUT<IN, OUT>: BaseEndpoint<IN, OUT> {
     
     /**
         Initializes an endpoint with path
@@ -126,7 +137,7 @@ public class PUT<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public class DELETE<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class DELETE<IN, OUT>: BaseEndpoint<IN, OUT> {
     
     /**
         Initializes an endpoint with path
@@ -144,7 +155,7 @@ public class DELETE<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT> {
     
     /**
         Initializes an endpoint with path
@@ -162,7 +173,7 @@ public class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public class HEAD<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class HEAD<IN, OUT>: BaseEndpoint<IN, OUT> {
     
     /**
         Initializes an endpoint with path
@@ -180,7 +191,7 @@ public class HEAD<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public class PATCH<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class PATCH<IN, OUT>: BaseEndpoint<IN, OUT> {
     
     /**
         Initializes an endpoint with path
@@ -198,7 +209,7 @@ public class PATCH<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public class TRACE<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class TRACE<IN, OUT>: BaseEndpoint<IN, OUT> {
     
     /**
         Initializes an endpoint with path
@@ -216,7 +227,7 @@ public class TRACE<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public class CONNECT<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class CONNECT<IN, OUT>: BaseEndpoint<IN, OUT> {
     
     /**
         Initializes an endpoint with path

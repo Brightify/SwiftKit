@@ -9,6 +9,7 @@
 * Added parameterized injections.
 * Added `Instance<T>` to allow immutable properties in `PostInitInjectable` classes.
 * Added thread-local object injections.
+* Added new library `StyleKit` for styling views.
 * Changed visibility of `BaseEndpoint` from `internal` to `public`.
 * Changed the statusCode to `HTTPStatusCode` from new `HTTPStatusCodes` dependency for easier usage.
 * Removed `@objc` annotation that was previously required for polymorphic object mapping.

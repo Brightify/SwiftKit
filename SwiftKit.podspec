@@ -70,6 +70,11 @@ Pod::Spec.new do |spec|
         objectMapper.dependency 'SwiftyJSON'
     end
 
+    spec.subspec 'StyleKit' do |styleKit|
+        styleKit.source_files = 'SwiftKit/StyleKit/**/*.swift'
+        styleKit.dependency 'SwiftKit/Internal'
+    end
+
     spec.subspec 'ViewComposer' do |composer|
         composer.source_files = 'SwiftKit/ViewComposer/**/*.swift'
         composer.frameworks = 'UIKit'
