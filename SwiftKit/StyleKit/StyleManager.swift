@@ -7,13 +7,25 @@
 //
 
 public class StyleManager {
+    private static var _instance: StyleManager?
+    public class var instance: StyleManager {
+        if let instance = _instance {
+            return instance
+        } else {
+            let instance: StyleManager = self.init()
+            _instance = instance
+            return instance
+        }
+    }
     
     private var canonicalTypes: [Styleable.Type] = []
     
     private var index: UInt = 1
     private var styles: [ObjectIdentifier: [Style]] = [:]
     
-    public init(@noescape _ run: CollapsibleStyleBuilder -> ()) {
+    public required init() { }
+    
+    public func declareStyles(@noescape run: CollapsibleStyleBuilder -> ()) {
         let stylingStarted = NSDate()
         let builder = BaseStyleBuilder(part: .Initial(manager: self))
         run(builder)
@@ -21,13 +33,16 @@ public class StyleManager {
     }
     
     public func apply(styleable: Styleable, includeChildren: Bool = true, animated: Bool = false) {
-        styleable.stylingHandler.scheduledStyleApplication?.cancel()
-        styleable.stylingHandler.scheduledStyleApplication = nil
+        let stylingDetails = styleable.skt_stylingDetails
+        stylingDetails.scheduledStyleApplication?.cancel()
+        stylingDetails.scheduledStyleApplication = nil
         
-        styleable.stylingHandler.manager = self
+        if stylingDetails.manager == nil {
+            stylingDetails.manager = self
+        }
         
         let stylesToApply: [Style]
-        if let cachedStyles = styleable.stylingHandler.cachedStyles {
+        if let cachedStyles = stylingDetails.cachedStyles {
             stylesToApply = cachedStyles
         } else {
             let item = styledItem(styleable)
@@ -40,24 +55,45 @@ public class StyleManager {
                 .sort { $0.precedence < $1.precedence }
                 .map { $0.style }
             
-            styleable.stylingHandler.cachedStyles = stylesToApply
+            stylingDetails.cachedStyles = stylesToApply
         }
-        styleable.stylingHandler.beforeStyled?()
+        stylingDetails.beforeStyled?()
         
         style(styleable, styles: stylesToApply, animated: animated)
         
-        styleable.stylingHandler.afterStyled?()
+        stylingDetails.afterStyled?()
         
         if includeChildren {
-            for child in styleable.children {
+            for child in styleable.skt_children {
                 apply(child, includeChildren: true, animated: animated)
             }
         }
     }
     
+    public func applyIfScheduled(styleable: Styleable) {
+        let stylingDetails = styleable.skt_stylingDetails
+        // If parent is scheduled, we don't want to trigger the child
+        if stylingDetails.parentItemStylingDetails?.stylingScheduled ?? false {
+            return
+        }
+        
+        if let scheduledStyling = styleable.skt_stylingDetails.scheduledStyleApplication {
+            apply(styleable, includeChildren: scheduledStyling.includeChildren, animated: scheduledStyling.animated)
+        }
+    }
+    
     public func scheduleStyleApplication(styleable: Styleable, includeChildren: Bool = true, animated: Bool) {
-        styleable.stylingHandler.scheduledStyleApplication = cancellableDispatchAsync {
+        let cancellable = cancellableDispatchAsync {
             self.apply(styleable, includeChildren: includeChildren, animated: animated)
+        }
+        
+        let scheduled = ScheduledStyling(includeChildren: includeChildren, animated: animated, cancellable: cancellable)
+        styleable.skt_stylingDetails.scheduledStyleApplication = scheduled
+    }
+    
+    public func scheduleStyleApplicationIfNeeded(styleable: Styleable, includeChildren: Bool = true, animated: Bool) {
+        if !styleable.skt_stylingDetails.stylingScheduled {
+            scheduleStyleApplication(styleable, includeChildren: includeChildren, animated: animated)
         }
     }
     
@@ -82,17 +118,19 @@ public class StyleManager {
     }
     
     func styledItem(item: Styleable) -> StyledItem {
-        guard let canonical = canonicalTypeOf(item.dynamicType) else {
-            fatalError("Unsupported styleable! Make sure it has a canonical superclass!")
-        }
+        let canonical = canonicalTypeOf(item.dynamicType)
         return StyledItem(canonicalType: canonical, styleable: item)
     }
     
-    private func canonicalTypeOf(type: Styleable.Type) -> Styleable.Type? {
+    class func destroyInstance() {
+        _instance = nil
+    }
+    
+    private func canonicalTypeOf(type: Styleable.Type) -> Styleable.Type {
         var currentType: AnyClass? = type
         while let unwrappedType = currentType where !canonicalTypes.contains({ $0 == unwrappedType }) {
             currentType = unwrappedType.superclass()
         }
-        return currentType as? Styleable.Type
+        return currentType as? Styleable.Type ?? type
     }
 }

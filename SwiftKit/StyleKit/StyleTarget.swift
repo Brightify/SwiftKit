@@ -8,14 +8,14 @@
 
 struct StyleTarget {
     let type: Styleable.Type
-    let names: [String]
+    let names: Set<String>
     
     func matches(item: StyledItem) -> Bool {
         guard type.isSupertypeOf(item.styleable.dynamicType) else {
             return false
         }
         // Cross match names, if any matches, the target matches as well.
-        guard names.isEmpty || names.reduce(false, combine: { $0 || item.styleable.names.contains($1) }) else {
+        if !names.isEmpty && names.intersect(item.styleable.skt_names).isEmpty {
             return false
         }
         
@@ -25,7 +25,12 @@ struct StyleTarget {
 
 extension StyleTarget: Hashable {
     var hashValue: Int {
-        return 31 + ObjectIdentifier(type).hashValue + names.reduce(31) { $0 + $1.hashValue }
+        var result = 17;
+
+        result = 31 &* result &+ ObjectIdentifier(type).hashValue
+        result = names.reduce(result) { 31 &* $0 &+ $1.hashValue }
+        
+        return result;
     }
 }
 

@@ -13,7 +13,7 @@
 		180BCBEF1C3EDA8400545AAD /* StyleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180BCBEE1C3EDA8400545AAD /* StyleBuilder.swift */; };
 		180BCBF11C3EDA9E00545AAD /* StyleTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180BCBF01C3EDA9E00545AAD /* StyleTarget.swift */; };
 		180BCBF31C3EDAB200545AAD /* StyledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180BCBF21C3EDAB200545AAD /* StyledItem.swift */; };
-		180BCBF51C3EDAC400545AAD /* OffspringChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180BCBF41C3EDAC400545AAD /* OffspringChain.swift */; };
+		180BCBF51C3EDAC400545AAD /* BaseStyleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180BCBF41C3EDAC400545AAD /* BaseStyleBuilder.swift */; };
 		180BCBF71C3EDAE400545AAD /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180BCBF61C3EDAE400545AAD /* Style.swift */; };
 		180BCBFA1C3EDBFA00545AAD /* StyleKitMatchingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180BCBF81C3EDBA200545AAD /* StyleKitMatchingTest.swift */; };
 		180BCBFD1C3F025C00545AAD /* StyleTargetEqualityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180BCBFB1C3F024000545AAD /* StyleTargetEqualityTest.swift */; };
@@ -51,7 +51,8 @@
 		187BD1941BA8C58C00E08759 /* InjectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A440A1B45CAB800D11BEC /* InjectionTest.swift */; };
 		187BD1951BA8C59000E08759 /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186D2E751B4ECDAA005BC06D /* RouterTest.swift */; };
 		187BD1961BA8C59000E08759 /* MockRequestPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */; };
-		188D45B81C3F273200A34897 /* StylingHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D45B71C3F273200A34897 /* StylingHandler.swift */; };
+		1881B3CA1C3FBAE8000B601B /* StyleManagerSingletonInstantiationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881B3C81C3FBA6C000B601B /* StyleManagerSingletonInstantiationTest.swift */; };
+		188D45B81C3F273200A34897 /* StylingDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D45B71C3F273200A34897 /* StylingDetails.swift */; };
 		188D45BA1C3F31E700A34897 /* UIKitStyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D45B91C3F31E700A34897 /* UIKitStyleManager.swift */; };
 		188D45BC1C3F345F00A34897 /* DispatchHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D45BB1C3F345F00A34897 /* DispatchHelpers.swift */; };
 		188D45BE1C3F475800A34897 /* AnyStyleable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D45BD1C3F475800A34897 /* AnyStyleable.swift */; };
@@ -196,7 +197,7 @@
 		180BCBEE1C3EDA8400545AAD /* StyleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleBuilder.swift; sourceTree = "<group>"; };
 		180BCBF01C3EDA9E00545AAD /* StyleTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleTarget.swift; sourceTree = "<group>"; };
 		180BCBF21C3EDAB200545AAD /* StyledItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledItem.swift; sourceTree = "<group>"; };
-		180BCBF41C3EDAC400545AAD /* OffspringChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffspringChain.swift; sourceTree = "<group>"; };
+		180BCBF41C3EDAC400545AAD /* BaseStyleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseStyleBuilder.swift; sourceTree = "<group>"; };
 		180BCBF61C3EDAE400545AAD /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		180BCBF81C3EDBA200545AAD /* StyleKitMatchingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKitMatchingTest.swift; sourceTree = "<group>"; };
 		180BCBFB1C3F024000545AAD /* StyleTargetEqualityTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleTargetEqualityTest.swift; sourceTree = "<group>"; };
@@ -211,7 +212,8 @@
 		187342EE1C41496D0012A28A /* Assert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assert.swift; sourceTree = "<group>"; };
 		187342EF1C41496D0012A28A /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest.swift; sourceTree = "<group>"; };
-		188D45B71C3F273200A34897 /* StylingHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StylingHandler.swift; sourceTree = "<group>"; };
+		1881B3C81C3FBA6C000B601B /* StyleManagerSingletonInstantiationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleManagerSingletonInstantiationTest.swift; sourceTree = "<group>"; };
+		188D45B71C3F273200A34897 /* StylingDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StylingDetails.swift; sourceTree = "<group>"; };
 		188D45B91C3F31E700A34897 /* UIKitStyleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitStyleManager.swift; sourceTree = "<group>"; };
 		188D45BB1C3F345F00A34897 /* DispatchHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchHelpers.swift; sourceTree = "<group>"; };
 		188D45BD1C3F475800A34897 /* AnyStyleable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyStyleable.swift; sourceTree = "<group>"; };
@@ -448,10 +450,10 @@
 				180BCBEE1C3EDA8400545AAD /* StyleBuilder.swift */,
 				180BCBF01C3EDA9E00545AAD /* StyleTarget.swift */,
 				180BCBF21C3EDAB200545AAD /* StyledItem.swift */,
-				180BCBF41C3EDAC400545AAD /* OffspringChain.swift */,
+				180BCBF41C3EDAC400545AAD /* BaseStyleBuilder.swift */,
 				180BCBF61C3EDAE400545AAD /* Style.swift */,
 				180BCBFE1C3F0E4B00545AAD /* DSLHelpers.swift */,
-				188D45B71C3F273200A34897 /* StylingHandler.swift */,
+				188D45B71C3F273200A34897 /* StylingDetails.swift */,
 				18BE39E91C3CAD50008999EC /* StyleManager.swift */,
 				188D45B91C3F31E700A34897 /* UIKitStyleManager.swift */,
 				188D45BD1C3F475800A34897 /* AnyStyleable.swift */,
@@ -465,6 +467,7 @@
 				18BE39EC1C3D273B008999EC /* StyleKitPerformance.swift */,
 				180BCBF81C3EDBA200545AAD /* StyleKitMatchingTest.swift */,
 				180BCBFB1C3F024000545AAD /* StyleTargetEqualityTest.swift */,
+				1881B3C81C3FBA6C000B601B /* StyleManagerSingletonInstantiationTest.swift */,
 			);
 			path = StyleKit;
 			sourceTree = "<group>";
@@ -1091,7 +1094,7 @@
 				18E484D31BA8C054004CB09A /* JsonTypeInfo.swift in Sources */,
 				18E485001BA8C054004CB09A /* RequestModifier.swift in Sources */,
 				18E484E61BA8C054004CB09A /* CustomDateFormatTransformation.swift in Sources */,
-				180BCBF51C3EDAC400545AAD /* OffspringChain.swift in Sources */,
+				180BCBF51C3EDAC400545AAD /* BaseStyleBuilder.swift in Sources */,
 				18E484C51BA8C054004CB09A /* UIBarButtonItem+Events.swift in Sources */,
 				18E484CE1BA8C054004CB09A /* PostInitInjectable.swift in Sources */,
 				18E484CC1BA8C054004CB09A /* KeyedInjector.swift in Sources */,
@@ -1099,7 +1102,7 @@
 				18E484F71BA8C054004CB09A /* Preference.swift in Sources */,
 				18E485051BA8C054004CB09A /* String+UrlSafe.swift in Sources */,
 				18E484DD1BA8C054004CB09A /* MappableOperators.swift in Sources */,
-				188D45B81C3F273200A34897 /* StylingHandler.swift in Sources */,
+				188D45B81C3F273200A34897 /* StylingDetails.swift in Sources */,
 				18E484C81BA8C054004CB09A /* Factory.swift in Sources */,
 				18E484EA1BA8C054004CB09A /* IntTransformation.swift in Sources */,
 				18E484FF1BA8C054004CB09A /* RequestEnhancer.swift in Sources */,
@@ -1185,6 +1188,7 @@
 				187BD1911BA8C58200E08759 /* UIButtonEventTest.swift in Sources */,
 				187BD1941BA8C58C00E08759 /* InjectionTest.swift in Sources */,
 				180BCBFA1C3EDBFA00545AAD /* StyleKitMatchingTest.swift in Sources */,
+				1881B3CA1C3FBAE8000B601B /* StyleManagerSingletonInstantiationTest.swift in Sources */,
 				187BD1851BA8C55800E08759 /* FloatPreferenceDeinitTest.swift in Sources */,
 				187BD17D1BA8C55200E08759 /* FloatPreferenceTest.swift in Sources */,
 				187342F01C41496D0012A28A /* BaseTestUtils.swift in Sources */,

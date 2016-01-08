@@ -10,26 +10,27 @@
 public class AnyStyleable: Styleable {
     private let wrapped: Styleable
     
-    public var stylingHandler: StylingHandler {
-        return wrapped.stylingHandler
+    public var skt_stylingDetails: StylingDetails {
+        return wrapped.skt_stylingDetails
     }
     
-    public var names: [String] {
+    public var skt_names: Set<String> {
         get {
-            return wrapped.names
+            return wrapped.skt_names
         }
         set {
-            wrapped.names = newValue
+            wrapped.skt_names = newValue
         }
     }
-    public var parent: Styleable? {
-        return wrapped.parent
+    public var skt_parent: Styleable? {
+        return wrapped.skt_parent
     }
-    public var children: [Styleable] {
-        return wrapped.children
+    public var skt_children: [Styleable] {
+        return wrapped.skt_children
     }
     
     public init(_ wrapped: Styleable) {
         self.wrapped = wrapped
     }
 }
+

@@ -17,7 +17,7 @@ struct Style {
     func precedence(manager: StyleManager, item: StyledItem) -> UInt {
         var precedence: UInt = 0
         if !target.names.isEmpty {
-            if target.names.reduce(false, combine: { $0 || item.styleable.names.contains($1) }) {
+            if !target.names.intersect(item.styleable.skt_names).isEmpty {
                 precedence += 100000
             } else {
                 return Style.nonMatchingPrecedence

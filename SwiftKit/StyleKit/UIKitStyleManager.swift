@@ -13,8 +13,8 @@ public class UIKitStyleManager: StyleManager {
     var initializedWindows: [UIWindow: Bool] = [:]
     var deviceRotating: Bool = false
     
-    public override init(@noescape _ run: CollapsibleStyleBuilder -> ()) {
-        super.init(run)
+    public required init() {
+        super.init()
         
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: "lowMemoryWarning:", name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
@@ -28,6 +28,19 @@ public class UIKitStyleManager: StyleManager {
         UIDevice.currentDevice().endGeneratingDeviceOrientationNotifications()
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
+    
+    public override func scheduleStyleApplication(styleable: Styleable, includeChildren: Bool = true, animated: Bool) {
+        // In case this is called by the `deviceOrientationDidChange` we need to reapply the styles right away
+        if let
+            currentQueue = NSOperationQueue.currentQueue()?.underlyingQueue,
+            mainQueue = dispatch_get_main_queue()
+            where currentQueue.isEqual(mainQueue) && deviceRotating
+        {
+            apply(styleable, includeChildren: includeChildren, animated: animated)
+        } else {
+            super.scheduleStyleApplication(styleable, includeChildren: includeChildren, animated: animated)
+        }
+    }
 
     override func style(styleable: Styleable, styles: [Style], animated: Bool) {
         if animated {
@@ -40,7 +53,7 @@ public class UIKitStyleManager: StyleManager {
     }
 }
 
-// MARK: Styling
+// MARK: - Styling
 extension UIKitStyleManager {
     
     func initializeViewHierarchyForView(view: UIView) {
@@ -60,7 +73,7 @@ extension UIKitStyleManager {
     }
 }
 
-// MARK: Notifications
+// MARK: - Notifications
 extension UIKitStyleManager {
     
     @objc func lowMemoryWarning(notification: NSNotification) {
