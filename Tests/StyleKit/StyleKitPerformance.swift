@@ -9,6 +9,10 @@
 import XCTest
 @testable import SwiftKit
 
+private class StyledView: UIView { }
+
+private class NoncanonicalView: UIView { }
+
 class StyleKitPerformance: XCTestCase {
     
     override func setUp() {
@@ -26,7 +30,7 @@ class StyleKitPerformance: XCTestCase {
         
         self.measureBlock {
             // Put the code you want to measure the time of here.
-            let styles = StyleKit { declare in
+            let styles = StyleManager { declare in
                 for _ in 1...1000 {
                     declare.style(UIView.self) {
                         $0.backgroundColor = UIColor.redColor()
@@ -85,18 +89,10 @@ class StyleKitPerformance: XCTestCase {
             let noncanonicalView = NoncanonicalView()
             
             for _ in 1...100 {
-                styles.apply(view)
-                styles.apply(button)
+                styles.apply(v1)
                 styles.apply(canonicalView)
                 styles.apply(noncanonicalView)
             }
-            
-            print(view.backgroundColor)
-            
-            print(canonicalView.backgroundColor)
-            print(canonicalView.clipsToBounds)
-            
-            print(button.backgroundColor)
             
             //print(NSDate().timeIntervalSinceDate(started))
             
