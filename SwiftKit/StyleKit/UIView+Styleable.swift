@@ -76,7 +76,7 @@ extension UIView {
     func skt_willMoveToSuperview(newSuperview: UIView?) {
         skt_willMoveToSuperview(newSuperview)
         
-        if newSuperview != superview {
+        if newSuperview != nil && newSuperview != superview {
             skt_stylingDetails.invalidateCachedStyles()
             UIKitStyleManager.instance.scheduleStyleApplicationIfNeeded(self, animated: false)
         }
@@ -93,7 +93,7 @@ extension UIView {
     func skt_willMoveToWindow(newWindow: UIWindow?) {
         skt_willMoveToWindow(newWindow)
         
-        if newWindow != window {
+        if newWindow != nil && newWindow != window {
             skt_stylingDetails.invalidateCachedStyles()
             UIKitStyleManager.instance.scheduleStyleApplicationIfNeeded(self, animated: false)
         }
