@@ -11,6 +11,6 @@ struct StyledItem {
     let styleable: Styleable
     
     func getParent(manager: StyleManager) -> StyledItem? {
-        return styleable.parent.map(manager.styledItem)
+        return styleable.skt_parent.map(manager.styledItem)
     }
 }

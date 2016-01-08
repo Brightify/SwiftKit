@@ -28,20 +28,16 @@ extension MockStyleable {
     var styledTimes: Int {
         return styleIndices.count
     }
-    
-    func styleChildren(manager: StyleManager) {
-        children.forEach { manager.apply($0) }
-    }
 }
 
 class BaseMockStyleable: MockStyleable {
-    lazy var stylingHandler: StylingHandler = StylingHandler(styledItem: self)
+    lazy var skt_stylingDetails: StylingDetails = StylingDetails(styledItem: self)
     
-    var parent: Styleable? {
+    var skt_parent: Styleable? {
         return parentMock
     }
     
-    var children: [Styleable] {
+    var skt_children: [Styleable] {
         return mockChildren.map { $0 }
     }
     
@@ -52,14 +48,14 @@ class BaseMockStyleable: MockStyleable {
     var styleIndices: [Int] = []
     
     func addChild(child: MockStyleable) {
-        precondition(child.parent == nil, "Child cannot have a parent")
+        precondition(child.skt_parent == nil, "Child cannot have a parent")
         
         child.parentMock = self
         mockChildren.append(child)
     }
     
     func removeFromParent() {
-        if let index = parentMock?.children.indexOf({ $0 === self }) {
+        if let index = parentMock?.skt_children.indexOf({ $0 === self }) {
             parentMock?.mockChildren.removeAtIndex(index)
         }
         parentMock = nil
@@ -81,19 +77,22 @@ class ChildBMockStyleable: BaseMockStyleable { }
 class StyleKitMatchingTest: QuickSpec {
     override func spec() {
         describe("StyleKit matching") {
+            beforeEach {
+                StyleManager.destroyInstance()
+            }
             
             it("matches single item with or without name") {
                 // given
-                let styles = StyleManager { declare in
+                StyleManager.instance.declareStyles { declare in
                     declare.style(BaseMockStyleable.self, styling: BaseMockStyleable.style())
                 }
                 let item = BaseMockStyleable()
                 let namedItem = BaseMockStyleable()
-                namedItem.names = ["hello"]
+                namedItem.skt_names = ["hello"]
   
                 // when
-                styles.apply(item)
-                styles.apply(namedItem)
+                StyleManager.instance.apply(item)
+                StyleManager.instance.apply(namedItem)
                 
                 // then
                 expect(item.styledTimes) == 1
@@ -102,16 +101,16 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches single named item and ignores unnamed") {
                 // given
-                let styles = StyleManager { declare in
+                StyleManager.instance.declareStyles { declare in
                     declare.style(BaseMockStyleable.self, named: "hello", styling: BaseMockStyleable.style())
                 }
                 let item = BaseMockStyleable()
                 let namedItem = BaseMockStyleable()
-                namedItem.names = ["hello"]
+                namedItem.skt_names = ["hello"]
                 
                 // when
-                styles.apply(item)
-                styles.apply(namedItem)
+                StyleManager.instance.apply(item)
+                StyleManager.instance.apply(namedItem)
                 
                 // then
                 expect(item.styledTimes) == 0
@@ -120,7 +119,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches item noncanonical subclasses") {
                 // given
-                let styles = StyleManager { declare in
+                StyleManager.instance.declareStyles { declare in
                     declare.style(BaseMockStyleable.self, styling: BaseMockStyleable.style())
                 }
                 let base = BaseMockStyleable()
@@ -128,9 +127,9 @@ class StyleKitMatchingTest: QuickSpec {
                 let childB = ChildBMockStyleable()
                 
                 // when
-                styles.apply(base)
-                styles.apply(childA)
-                styles.apply(childB)
+                StyleManager.instance.apply(base)
+                StyleManager.instance.apply(childA)
+                StyleManager.instance.apply(childB)
                 
                 // then
                 expect(base.styledTimes) == 1
@@ -140,7 +139,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches item noncanonical subclasses but not canonical") {
                 // given
-                let styles = StyleManager { declare in
+                StyleManager.instance.declareStyles { declare in
                     declare.style(BaseMockStyleable.self, styling: BaseMockStyleable.style(1))
                     declare.style(ChildAMockStyleable.self, styling: BaseMockStyleable.style(2))
                 }
@@ -149,9 +148,9 @@ class StyleKitMatchingTest: QuickSpec {
                 let childB = ChildBMockStyleable()
                 
                 // when
-                styles.apply(base)
-                styles.apply(childA)
-                styles.apply(childB)
+                StyleManager.instance.apply(base)
+                StyleManager.instance.apply(childA)
+                StyleManager.instance.apply(childB)
                 
                 // then
                 expect(base.styledTimes) == 1
@@ -165,7 +164,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches item inside parent") {
                 // given
-                let styles = StyleManager { declare in
+                StyleManager.instance.declareStyles { declare in
                     declare.inside(BaseMockStyleable).style(BaseMockStyleable.self, styling: BaseMockStyleable.style())
                 }
                 let parent = BaseMockStyleable()
@@ -174,9 +173,9 @@ class StyleKitMatchingTest: QuickSpec {
                 let independent = BaseMockStyleable()
                 
                 // when
-                styles.apply(parent, includeChildren: false)
-                styles.apply(child, includeChildren: false)
-                styles.apply(independent, includeChildren: false)
+                StyleManager.instance.apply(parent, includeChildren: false)
+                StyleManager.instance.apply(child, includeChildren: false)
+                StyleManager.instance.apply(independent, includeChildren: false)
                 
                 // then
                 expect(parent.styledTimes) == 0
@@ -186,7 +185,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches item inside parent subtype") {
                 // given
-                let styles = StyleManager { declare in
+                StyleManager.instance.declareStyles { declare in
                     declare.inside(BaseMockStyleable).style(BaseMockStyleable.self, styling: BaseMockStyleable.style(1))
                     declare.style(ChildAMockStyleable.self, styling: BaseMockStyleable.style(2))
                 }
@@ -196,9 +195,9 @@ class StyleKitMatchingTest: QuickSpec {
                 let independent = BaseMockStyleable()
                 
                 // when
-                styles.apply(parent, includeChildren: false)
-                styles.apply(child, includeChildren: false)
-                styles.apply(independent, includeChildren: false)
+                StyleManager.instance.apply(parent, includeChildren: false)
+                StyleManager.instance.apply(child, includeChildren: false)
+                StyleManager.instance.apply(independent, includeChildren: false)
                 
                 // then
                 expect(parent.styledTimes) == 1

@@ -17,6 +17,7 @@ class StyleKitPerformance: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -29,9 +30,14 @@ class StyleKitPerformance: XCTestCase {
         // This is an example of a performance test case.
         
         self.measureBlock {
+            StyleManager.destroyInstance()
             // Put the code you want to measure the time of here.
-            let styles = StyleManager { declare in
+            StyleManager.instance.declareStyles { declare in
                 for _ in 1...1000 {
+                    declare.style(UIWindow.self) {
+                        $0.tintColor = UIColor.brownColor()
+                    }
+                    
                     declare.style(UIView.self) {
                         $0.backgroundColor = UIColor.redColor()
                     }
@@ -76,8 +82,11 @@ class StyleKitPerformance: XCTestCase {
                 }
             }
             
+            let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+            window.makeKeyAndVisible()
             let v1 = StyledView()
-            v1.names = ["testing"]
+            window.addSubview(v1)
+            v1.skt_names = ["testing"]
             let view = UIView()
             let button = UIButton()
             
@@ -85,13 +94,13 @@ class StyleKitPerformance: XCTestCase {
             view.addSubview(button)
             
             let canonicalView = StyledView()
-            canonicalView.names = ["hello", "world"]
+            canonicalView.skt_names = ["hello", "world"]
             let noncanonicalView = NoncanonicalView()
             
             for _ in 1...100 {
-                styles.apply(v1)
-                styles.apply(canonicalView)
-                styles.apply(noncanonicalView)
+                StyleManager.instance.apply(window)
+                StyleManager.instance.apply(canonicalView)
+                StyleManager.instance.apply(noncanonicalView)
             }
             
             //print(NSDate().timeIntervalSinceDate(started))
