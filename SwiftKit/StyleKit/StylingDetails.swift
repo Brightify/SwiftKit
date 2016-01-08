@@ -60,16 +60,12 @@ public class StylingDetails {
         self.styledItem = styledItem
     }
     
-    func invalidateCachedStyles(reapply reapply: Bool = true, includeChildren: Bool = true) {
+    func invalidateCachedStyles(includeChildren includeChildren: Bool = true) {
         cachedStyles = nil
         
         if let styledItem = styledItem where includeChildren {
             // We have to pass in `reapply = false`, otherwise we would be doing a lot of unnecessary work
-            styledItem.skt_children.forEach { $0.skt_stylingDetails.invalidateCachedStyles(reapply: false, includeChildren: true) }
-        }
-        
-        if let styledItem = styledItem, manager = manager where reapply {
-            manager.apply(styledItem, includeChildren: includeChildren, animated: false)
+            styledItem.skt_children.forEach { $0.skt_stylingDetails.invalidateCachedStyles() }
         }
     }
 }
@@ -121,7 +117,7 @@ extension StylingDetails {
         
         guard let manager = manager, styledItem = styledItem else { return }
         // When we change the names, we have to invalidate the style caches of this styleable and its children
-        invalidateCachedStyles(reapply: false)
+        invalidateCachedStyles()
         manager.scheduleStyleApplication(styledItem, includeChildren: true, animated: animated)
     }
 }
