@@ -449,19 +449,19 @@
 		18BE39E81C3CAD46008999EC /* StyleKit */ = {
 			isa = PBXGroup;
 			children = (
-				180BCBEA1C3EDA4700545AAD /* Styleable.swift */,
-				180BCBEC1C3EDA6800545AAD /* UIView+Styleable.swift */,
-				180BCBEE1C3EDA8400545AAD /* StyleBuilder.swift */,
-				180BCBF01C3EDA9E00545AAD /* StyleTarget.swift */,
-				180BCBF21C3EDAB200545AAD /* StyledItem.swift */,
-				180BCBF41C3EDAC400545AAD /* BaseStyleBuilder.swift */,
-				180BCBF61C3EDAE400545AAD /* Style.swift */,
-				180BCBFE1C3F0E4B00545AAD /* DSLHelpers.swift */,
-				188D45B71C3F273200A34897 /* StylingDetails.swift */,
-				18BE39E91C3CAD50008999EC /* StyleManager.swift */,
-				188D45B91C3F31E700A34897 /* UIKitStyleManager.swift */,
 				188D45BD1C3F475800A34897 /* AnyStyleable.swift */,
+				180BCBF41C3EDAC400545AAD /* BaseStyleBuilder.swift */,
 				18DE889E1C40408900A21C41 /* ControllerRootView.swift */,
+				180BCBFE1C3F0E4B00545AAD /* DSLHelpers.swift */,
+				180BCBF61C3EDAE400545AAD /* Style.swift */,
+				180BCBEA1C3EDA4700545AAD /* Styleable.swift */,
+				180BCBEE1C3EDA8400545AAD /* StyleBuilder.swift */,
+				180BCBF21C3EDAB200545AAD /* StyledItem.swift */,
+				18BE39E91C3CAD50008999EC /* StyleManager.swift */,
+				180BCBF01C3EDA9E00545AAD /* StyleTarget.swift */,
+				188D45B71C3F273200A34897 /* StylingDetails.swift */,
+				188D45B91C3F31E700A34897 /* UIKitStyleManager.swift */,
+				180BCBEC1C3EDA6800545AAD /* UIView+Styleable.swift */,
 			);
 			path = StyleKit;
 			sourceTree = "<group>";
