@@ -65,12 +65,33 @@ extension UIView {
         dispatch_once(&Static.token) {
             skt_swizzleInstanceSelector("willMoveToWindow:", withNewSelector: "skt_willMoveToWindow:")
             skt_swizzleInstanceSelector("didMoveToWindow", withNewSelector: "skt_didMoveToWindow:")
+            skt_swizzleInstanceSelector("willMoveToSuperview:", withNewSelector: "skt_willMoveToSuperview:")
+            skt_swizzleInstanceSelector("didMoveToSuperview", withNewSelector: "skt_didMoveToSuperview")
         }
     }
     
-    // MARK: Method Swizzling
+    // MARK: Methods for swizzling
+    
+    func skt_willMoveToSuperview(newSuperview: UIView?) {
+        skt_willMoveToSuperview(newSuperview)
+        skt_stylingDetails.invalidateCachedStyles()
+        if newSuperview != nil {
+            UIKitStyleManager.instance.scheduleStyleApplicationIfNeeded(self, animated: false)
+        }
+    }
+    
+    func skt_didMoveToSuperview() {
+        skt_didMoveToSuperview()
+        skt_stylingDetails.invalidateCachedStyles()
+        
+        if superview != nil {
+            UIKitStyleManager.instance.applyIfScheduled(self)
+        }
+    }
+    
     func skt_willMoveToWindow(newWindow: UIWindow?) {
         skt_willMoveToWindow(newWindow)
+        skt_stylingDetails.invalidateCachedStyles()
         if newWindow != nil {
             UIKitStyleManager.instance.scheduleStyleApplicationIfNeeded(self, animated: false)
         }
@@ -78,6 +99,7 @@ extension UIView {
     
     func skt_didMoveToWindow() {
         skt_didMoveToWindow()
+        skt_stylingDetails.invalidateCachedStyles()
         if window != nil {
             UIKitStyleManager.instance.applyIfScheduled(self)
         }
