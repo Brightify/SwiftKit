@@ -18,7 +18,12 @@ public class StyleManager {
         }
     }
     
-    private var canonicalTypes: [Styleable.Type] = []
+    private var canonicalTypes: [Styleable.Type] = [] {
+        didSet {
+            canonicalTypes.removeAll(keepCapacity: true)
+        }
+    }
+    private var canonicalTypesCache: [ObjectIdentifier: Styleable.Type] = [:]
     
     private var index: UInt = 1
     private var styles: [ObjectIdentifier: [Style]] = [:]
@@ -97,6 +102,10 @@ public class StyleManager {
         }
     }
     
+    public func clearCaches() {
+        canonicalTypesCache = [:]
+    }
+    
     func style(styleable: Styleable, styles: [Style], animated: Bool) {
         // Default implementation does not support animations
         styles.forEach { $0.styling(styleable) }
@@ -127,6 +136,18 @@ public class StyleManager {
     }
     
     private func canonicalTypeOf(type: Styleable.Type) -> Styleable.Type {
+        let cacheKey = ObjectIdentifier(type)
+        if let cachedType = canonicalTypesCache[cacheKey] {
+            return cachedType
+        } else {
+            let determinedType = determineCanonicalTypeOf(type)
+            canonicalTypesCache[cacheKey] = determinedType
+            return determinedType
+        }
+        
+    }
+    
+    private func determineCanonicalTypeOf(type: Styleable.Type) -> Styleable.Type {
         var currentType: AnyClass? = type
         while let unwrappedType = currentType where !canonicalTypes.contains({ $0 == unwrappedType }) {
             currentType = unwrappedType.superclass()

@@ -65,8 +65,6 @@ extension UIView {
         dispatch_once(&Static.token) {
             skt_swizzleInstanceSelector("willMoveToWindow:", withNewSelector: "skt_willMoveToWindow:")
             skt_swizzleInstanceSelector("didMoveToWindow", withNewSelector: "skt_didMoveToWindow:")
-            skt_swizzleInstanceSelector("willMoveToSuperview:", withNewSelector: "skt_willMoveToSuperview:")
-            skt_swizzleInstanceSelector("didMoveToSuperview", withNewSelector: "skt_didMoveToSuperview")
         }
     }
     
@@ -99,6 +97,7 @@ extension UIView {
     
     func skt_didMoveToWindow() {
         skt_didMoveToWindow()
+        
         skt_stylingDetails.invalidateCachedStyles()
         if window != nil {
             UIKitStyleManager.instance.applyIfScheduled(self)

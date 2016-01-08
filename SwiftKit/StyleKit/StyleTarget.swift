@@ -11,7 +11,7 @@ struct StyleTarget {
     let names: Set<String>
     
     func matches(item: StyledItem) -> Bool {
-        guard type.isSupertypeOf(item.styleable.dynamicType) else {
+        guard type.isSupertypeOf(item.styleable.dynamicType) || type is AnyStyleable.Type else {
             return false
         }
         // Cross match names, if any matches, the target matches as well.
