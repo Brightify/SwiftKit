@@ -63,8 +63,8 @@ extension UIView {
         }
         
         dispatch_once(&Static.token) {
-            skt_swizzleInstanceSelector("willMoveToSubview:", withNewSelector: "skt_willMoveToSubview:")
-            skt_swizzleInstanceSelector("didMoveToSubview", withNewSelector: "skt_didMoveToSubview")
+            skt_swizzleInstanceSelector("willMoveToSuperview:", withNewSelector: "skt_willMoveToSuperview:")
+            skt_swizzleInstanceSelector("didMoveToSuperview", withNewSelector: "skt_didMoveToSuperview")
 
             skt_swizzleInstanceSelector("willMoveToWindow:", withNewSelector: "skt_willMoveToWindow:")
             skt_swizzleInstanceSelector("didMoveToWindow", withNewSelector: "skt_didMoveToWindow")
