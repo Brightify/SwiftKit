@@ -21,14 +21,12 @@ public class ControllerRootView: UIView {
         }
     }
     
-    
     public convenience init() {
         self.init(frame: CGRectZero)
     }
     
     public override init(frame: CGRect) {
         wrappedView = nil
-        
         super.init(frame: frame)
         
         loadView()
@@ -51,13 +49,10 @@ public class ControllerRootView: UIView {
     
     private func loadView() {
         autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    }
-    
-    public override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        
-        if superview != nil {
-            UIKitStyleManager.instance.scheduleStyleApplicationIfNeeded(self, animated: false)
+        if frame == CGRectZero {
+            frame = window?.bounds ?? UIScreen.mainScreen().bounds
         }
     }
 }
+
+// MARK: - Lifecycle
