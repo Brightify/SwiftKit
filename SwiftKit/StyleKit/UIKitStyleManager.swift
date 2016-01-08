@@ -11,14 +11,12 @@ import UIKit
 public class UIKitStyleManager: StyleManager {
     
     var initializedWindows: [UIWindow: Bool] = [:]
-    var deviceRotating: Bool = false
     
     public required init() {
         super.init()
         
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: "lowMemoryWarning:", name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
-        notificationCenter.addObserver(self, selector: "deviceOrientationChanged:", name: UIDeviceOrientationDidChangeNotification, object: nil)
         notificationCenter.addObserver(self, selector: "windowDidBecomeVisible:", name: UIWindowDidBecomeKeyNotification, object: nil)
         notificationCenter.addObserver(self, selector: "windowDidBecomeVisible:", name: UIWindowDidBecomeVisibleNotification, object: nil)
         UIDevice.currentDevice().beginGeneratingDeviceOrientationNotifications()
@@ -28,23 +26,10 @@ public class UIKitStyleManager: StyleManager {
         UIDevice.currentDevice().endGeneratingDeviceOrientationNotifications()
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-    
-    public override func scheduleStyleApplication(styleable: Styleable, includeChildren: Bool = true, animated: Bool) {
-        // In case this is called by the `deviceOrientationDidChange` we need to reapply the styles right away
-        if let
-            currentQueue = NSOperationQueue.currentQueue()?.underlyingQueue,
-            mainQueue = dispatch_get_main_queue()
-            where currentQueue.isEqual(mainQueue) && deviceRotating
-        {
-            apply(styleable, includeChildren: includeChildren, animated: animated)
-        } else {
-            super.scheduleStyleApplication(styleable, includeChildren: includeChildren, animated: animated)
-        }
-    }
 
     override func style(styleable: Styleable, styles: [Style], animated: Bool) {
         if animated {
-            UIView.animateWithDuration(0.5, delay: 0, options: [.BeginFromCurrentState, .LayoutSubviews], animations: {
+            UIView.animateWithDuration(0.33, delay: 0, options: [.BeginFromCurrentState, .LayoutSubviews], animations: {
                 super.style(styleable, styles: styles, animated: animated)
             }, completion: nil)
         } else {
@@ -77,25 +62,7 @@ extension UIKitStyleManager {
 extension UIKitStyleManager {
     
     @objc func lowMemoryWarning(notification: NSNotification) {
-        // TODO Cleanup caches
-    }
-    
-    @objc func deviceOrientationChanged(notification: NSNotification) {
-        let orientation = UIDevice.currentDevice().orientation
-        if UIDeviceOrientationIsValidInterfaceOrientation(orientation) {
-            struct Temp { static var cancellable: Cancellable? }
-            
-            Temp.cancellable?.cancel()
-            deviceRotating = true
-            
-            Temp.cancellable = cancellableDispatchAfter(0.1) {
-                self.deviceRotating = false
-            }
-            
-            for window in initializedWindows.keys {
-                scheduleStyleApplication(window, animated: true)
-            }
-        }
+        clearCaches()
     }
     
     @objc func windowDidBecomeVisible(notification: NSNotification) {

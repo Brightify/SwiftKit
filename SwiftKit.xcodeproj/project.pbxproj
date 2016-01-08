@@ -67,6 +67,8 @@
 		18977DCC1BCD74B100154305 /* ThreadLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DCB1BCD74B100154305 /* ThreadLocal.swift */; };
 		18BE39EA1C3CAD50008999EC /* StyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE39E91C3CAD50008999EC /* StyleManager.swift */; };
 		18BE39ED1C3D273B008999EC /* StyleKitPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE39EC1C3D273B008999EC /* StyleKitPerformance.swift */; };
+		18DE889D1C403BEF00A21C41 /* UIKitStyleManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DE889B1C403BDC00A21C41 /* UIKitStyleManagerTest.swift */; };
+		18DE889F1C40408900A21C41 /* ControllerRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DE889E1C40408900A21C41 /* ControllerRootView.swift */; };
 		18E484501BA8BFB1004CB09A /* SwiftKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E4844F1BA8BFB1004CB09A /* SwiftKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18E484571BA8BFB1004CB09A /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */; };
 		18E4845E1BA8BFB1004CB09A /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */; };
@@ -234,6 +236,8 @@
 		18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequestPerformer.swift; sourceTree = "<group>"; };
 		18BE39E91C3CAD50008999EC /* StyleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleManager.swift; sourceTree = "<group>"; };
 		18BE39EC1C3D273B008999EC /* StyleKitPerformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKitPerformance.swift; sourceTree = "<group>"; };
+		18DE889B1C403BDC00A21C41 /* UIKitStyleManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitStyleManagerTest.swift; sourceTree = "<group>"; };
+		18DE889E1C40408900A21C41 /* ControllerRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerRootView.swift; sourceTree = "<group>"; };
 		18E23C421B8A387500B29FC9 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		18E480DF1BA8BF26004CB09A /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -465,6 +469,7 @@
 				18BE39E91C3CAD50008999EC /* StyleManager.swift */,
 				188D45B91C3F31E700A34897 /* UIKitStyleManager.swift */,
 				188D45BD1C3F475800A34897 /* AnyStyleable.swift */,
+				18DE889E1C40408900A21C41 /* ControllerRootView.swift */,
 			);
 			path = StyleKit;
 			sourceTree = "<group>";
@@ -476,6 +481,7 @@
 				180BCBF81C3EDBA200545AAD /* StyleKitMatchingTest.swift */,
 				180BCBFB1C3F024000545AAD /* StyleTargetEqualityTest.swift */,
 				1881B3C81C3FBA6C000B601B /* StyleManagerSingletonInstantiationTest.swift */,
+				18DE889B1C403BDC00A21C41 /* UIKitStyleManagerTest.swift */,
 			);
 			path = StyleKit;
 			sourceTree = "<group>";
@@ -1141,6 +1147,7 @@
 				18E484F31BA8C054004CB09A /* DoublePreference.swift in Sources */,
 				18E484F81BA8C054004CB09A /* StringPreference.swift in Sources */,
 				18977DCA1BCD453800154305 /* OptionalInstance.swift in Sources */,
+				18DE889F1C40408900A21C41 /* ControllerRootView.swift in Sources */,
 				18E484F51BA8C054004CB09A /* IntPreference.swift in Sources */,
 				18E484EC1BA8C054004CB09A /* NSDateFormatterTransformation.swift in Sources */,
 				18E484EE1BA8C054004CB09A /* NSNumberTransformation.swift in Sources */,
@@ -1192,6 +1199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18DE889D1C403BEF00A21C41 /* UIKitStyleManagerTest.swift in Sources */,
 				187BD1861BA8C55800E08759 /* BoolPreferenceDeinitTest.swift in Sources */,
 				187BD18C1BA8C57A00E08759 /* ObjectMapperPolymorphismTest.swift in Sources */,
 				187BD17F1BA8C55200E08759 /* ArrayPreferenceTest.swift in Sources */,
