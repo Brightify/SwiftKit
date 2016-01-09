@@ -58,7 +58,7 @@ extension UIView {
         }
         
         // Do not run for subclasses
-        if self !== UIView.self {
+        guard self === UIView.self else {
             return
         }
         
@@ -76,7 +76,7 @@ extension UIView {
     func skt_willMoveToSuperview(newSuperview: UIView?) {
         skt_willMoveToSuperview(newSuperview)
         
-        if newSuperview != nil && newSuperview != superview {
+        if newSuperview != nil && skt_stylingDetails.hasDifferentParent {
             skt_stylingDetails.invalidateCachedStyles()
             UIKitStyleManager.instance.scheduleStyleApplicationIfNeeded(self, animated: false)
         }
@@ -94,7 +94,7 @@ extension UIView {
         skt_willMoveToWindow(newWindow)
         
         if newWindow != nil && newWindow != window {
-            skt_stylingDetails.invalidateCachedStyles()
+            skt_stylingDetails.invalidateCachedStyles(includeChildren: false)
             UIKitStyleManager.instance.scheduleStyleApplicationIfNeeded(self, animated: false)
         }
     }

@@ -69,6 +69,7 @@
 		18977DCC1BCD74B100154305 /* ThreadLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DCB1BCD74B100154305 /* ThreadLocal.swift */; };
 		18BE39EA1C3CAD50008999EC /* StyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE39E91C3CAD50008999EC /* StyleManager.swift */; };
 		18BE39ED1C3D273B008999EC /* StyleKitPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE39EC1C3D273B008999EC /* StyleKitPerformance.swift */; };
+		18D302661C409DD300AB80D5 /* StyleApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D302651C409DD300AB80D5 /* StyleApplication.swift */; };
 		18DE889D1C403BEF00A21C41 /* UIKitStyleManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DE889B1C403BDC00A21C41 /* UIKitStyleManagerTest.swift */; };
 		18DE889F1C40408900A21C41 /* ControllerRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DE889E1C40408900A21C41 /* ControllerRootView.swift */; };
 		18DE88A11C406E3600A21C41 /* TypedStyleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DE88A01C406E3600A21C41 /* TypedStyleBuilder.swift */; };
@@ -237,6 +238,7 @@
 		18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequestPerformer.swift; sourceTree = "<group>"; };
 		18BE39E91C3CAD50008999EC /* StyleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleManager.swift; sourceTree = "<group>"; };
 		18BE39EC1C3D273B008999EC /* StyleKitPerformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKitPerformance.swift; sourceTree = "<group>"; };
+		18D302651C409DD300AB80D5 /* StyleApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleApplication.swift; sourceTree = "<group>"; };
 		18DE889B1C403BDC00A21C41 /* UIKitStyleManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitStyleManagerTest.swift; sourceTree = "<group>"; };
 		18DE889E1C40408900A21C41 /* ControllerRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerRootView.swift; sourceTree = "<group>"; };
 		18DE88A01C406E3600A21C41 /* TypedStyleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedStyleBuilder.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 				18DE88A01C406E3600A21C41 /* TypedStyleBuilder.swift */,
 				1811FB0F1C406F8E007EC210 /* StyleDeclarationPart.swift */,
 				18333CB81C406FD700F7B279 /* StyleBlueprint.swift */,
+				18D302651C409DD300AB80D5 /* StyleApplication.swift */,
 			);
 			path = StyleKit;
 			sourceTree = "<group>";
@@ -1157,6 +1160,7 @@
 				18E485011BA8C054004CB09A /* RequestPerformer.swift in Sources */,
 				18333CB91C406FD700F7B279 /* StyleBlueprint.swift in Sources */,
 				18E484E21BA8C054004CB09A /* Polymorph.swift in Sources */,
+				18D302661C409DD300AB80D5 /* StyleApplication.swift in Sources */,
 				18E484FE1BA8C054004CB09A /* Request.swift in Sources */,
 				18E484D61BA8C054004CB09A /* Mappable.swift in Sources */,
 				18E484F01BA8C054004CB09A /* StringTransformation.swift in Sources */,
