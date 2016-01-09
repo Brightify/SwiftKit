@@ -12,7 +12,7 @@ import Nimble
 
 class UIKitStyleManagerTest: QuickSpec {
     override func spec() {
-        fdescribe("StyleTargetEquality") {
+        describe("StyleTargetEquality") {
             beforeEach {
                 UIKitStyleManager.destroyInstance()
             }

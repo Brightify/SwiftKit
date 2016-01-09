@@ -74,6 +74,8 @@ class ChildAMockStyleable: BaseMockStyleable { }
 
 class ChildBMockStyleable: BaseMockStyleable { }
 
+class ChuldCMockStyleable: BaseMockStyleable { }
+
 class StyleKitMatchingTest: QuickSpec {
     override func spec() {
         describe("StyleKit matching") {
@@ -207,6 +209,34 @@ class StyleKitMatchingTest: QuickSpec {
                 expect(parent.styleIndices) == [2]
                 expect(child.styleIndices) == [1]
                 expect(independent.styleIndices) == []
+            }
+            
+            it("matches base types") {
+                // given
+                StyleManager.instance.declareStyles { declare in
+                    declare.style(BaseMockStyleable.self, styling: BaseMockStyleable.style(1))
+                    
+                    declare.willStyle(BaseMockStyleable).style(ChildAMockStyleable.self).and
+                        .style(ChildBMockStyleable.self).using(BaseMockStyleable.style(2))
+                }
+                let base = BaseMockStyleable()
+                let childA = ChildAMockStyleable()
+                let childB = ChildBMockStyleable()
+                
+                // when
+                StyleManager.instance.apply(base)
+                StyleManager.instance.apply(childA)
+                StyleManager.instance.apply(childB)
+                
+                // then
+                expect(base.styledTimes) == 1
+                expect(childA.styledTimes) == 1
+                expect(childB.styledTimes) == 1
+                
+                expect(base.styleIndices) == [1]
+                expect(childA.styleIndices) == [2]
+                expect(childB.styleIndices) == [2]
+                
             }
         }
 

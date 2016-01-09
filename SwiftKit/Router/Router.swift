@@ -64,7 +64,7 @@ public class Router {
         }
         
         request.HTTPMethod = endpoint.method.rawValue
-        request.modifiers = endpoint.modifiers.arrayByAdding(extraModifiers)
+        request.modifiers = endpoint.modifiers.arrayByAppending(extraModifiers)
         request.enhancedBy = requestEnhancers.filter { $0.canEnhance(request) }.map {
             $0.enhanceRequest(&request)
             return $0
@@ -74,7 +74,7 @@ public class Router {
     }
     
     private func prepareRequest<E: Endpoint>(endpoint: E, input: NSData?, contentType: Headers.ContentType, extraModifiers: [RequestModifier] = []) -> Request {
-        var request = prepareRequest(endpoint, extraModifiers: extraModifiers.arrayByAdding(contentType))
+        var request = prepareRequest(endpoint, extraModifiers: extraModifiers.arrayByAppending(contentType))
         
         request.HTTPBody = input
         

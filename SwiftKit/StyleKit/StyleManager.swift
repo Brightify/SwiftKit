@@ -20,7 +20,7 @@ public class StyleManager {
     
     private var canonicalTypes: [Styleable.Type] = [] {
         didSet {
-            canonicalTypes.removeAll(keepCapacity: true)
+            canonicalTypesCache.removeAll(keepCapacity: true)
         }
     }
     private var canonicalTypesCache: [ObjectIdentifier: Styleable.Type] = [:]
