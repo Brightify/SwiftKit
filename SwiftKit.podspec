@@ -71,26 +71,4 @@ Pod::Spec.new do |spec|
         composer.dependency 'SwiftKit/Internal'
         composer.dependency 'SwiftKit/Events'
     end
-
-    spec.subspec 'TestUtils' do |testUtils|
-        testUtils.default_subspec = 'Base', 'XCTest'
-
-        testUtils.subspec 'Base' do |baseTestUtils|
-            baseTestUtils.source_files = 'SwiftKit/TestUtils/Base/**/*.swift'
-            baseTestUtils.dependency 'SwiftKit/Internal'
-            baseTestUtils.dependency 'SwiftKit/Events'
-        end
-
-        testUtils.subspec 'XCTest' do |xctestUtils|
-            xctestUtils.source_files = 'SwiftKit/TestUtils/XCTest/**/*.swift'
-            xctestUtils.frameworks = 'XCTest'
-            xctestUtils.dependency 'SwiftKit/TestUtils/Base'
-        end
-
-        testUtils.subspec 'Quick' do |quickTestUtils|
-            quickTestUtils.source_files = 'SwiftKit/TestUtils/Quick/**/*.swift'
-            quickTestUtils.dependency 'SwiftKit/TestUtils/Base'
-            quickTestUtils.dependency 'Nimble', '~> 2.0.0'
-        end
-    end
 end

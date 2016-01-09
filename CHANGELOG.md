@@ -11,6 +11,9 @@
 * Added thread-local object injections.
 * Changed visibility of `BaseEndpoint` from `internal` to `public`.
 * Removed `@objc` annotation that was previously required for polymorphic object mapping.
+* Removed injection operators
+* Removed injection type inference
+* Removed test utils
 
 ## 0.5.10
 

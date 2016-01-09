@@ -25,11 +25,6 @@ public class Injector {
         self.allowsUnboundFactories = module.allowUnboundFactories
     }
     
-    /// Returns an implementation binded to type `T` which is resolved from the callsite.
-    public func get<T>() -> T {
-        return get(T.self)
-    }
-    
     /**
     Returns an implementation binded to type specified by parameter `type`.
     
@@ -45,10 +40,6 @@ public class Injector {
         }
     }
     
-    public func get<T: Parametrizable>(parameters: T.Parameters) -> T {
-        return get(T.self, withParameters: parameters)
-    }
-    
     public func get<T: Parametrizable>(type: T.Type, withParameters parameters: T.Parameters) -> T {
         do {
             let closure: (T.Parameters -> T) = try getInitializationClosure(inferredType())(self)
@@ -60,16 +51,7 @@ public class Injector {
         }
     }
     
-    /** 
-    Returns an implementation binded to type `T` which is resolved from the callsite and the key name.
-
-    - parameter named: A name of the binding key.
-    */
-    public func get<T>(named name: String) -> T {
-        return get(Key<T>(named: name))
-    }
-    
-    /** 
+    /**
     Returns an implementation binded to the specified key.
         
     - parameter key: A key used to retrieve the binded type.
@@ -85,7 +67,7 @@ public class Injector {
     }
     
     public func inject<T>(instance: Instance<T>) {
-        instance.set(get())
+        instance.set(get(T))
     }
     
     public func inject<T>(instance: OptionalInstance<T>) {
@@ -103,7 +85,7 @@ public class Injector {
     }
     
     public func inject<T: Parametrizable>(instance: Instance<T>, withParameters parameters: T.Parameters) {
-        instance.set(get(parameters))
+        instance.set(get(T.self, withParameters: parameters))
     }
     
     public func inject<T: Parametrizable>(instance: OptionalInstance<T>, withParameters parameters: T.Parameters) {
@@ -111,16 +93,12 @@ public class Injector {
         instance.set(closure?(self))
     }
     
-    public func factory<T>() -> Factory<T> {
-        return factory(T.self)
-    }
-    
     public func factory<T>(type: T.Type) -> Factory<T> {
         let initializationClosure: Injector -> T
         do {
             initializationClosure = try getInitializationClosure(type)
         } catch is InjectionError<T> where allowsUnboundFactories {
-            initializationClosure = Injector.unboundFactory
+            initializationClosure = Injector.unboundFactory(type)
         } catch let error as InjectionError<T> {
             error.crash()
         } catch let error {
@@ -129,16 +107,12 @@ public class Injector {
         return Factory<T>(injector: self, closure: initializationClosure)
     }
     
-    public func factory<T: Parametrizable>() -> ParametrizedFactory<T> {
-        return factory(T.self)
-    }
-    
     public func factory<T: Parametrizable>(type: T.Type) -> ParametrizedFactory<T> {
         let initializationClosure: Injector -> T.Parameters -> T
         do {
             initializationClosure = try getInitializationClosure(inferredType())
         } catch is InjectionError<T> where allowsUnboundFactories {
-            initializationClosure = Injector.unboundFactory
+            initializationClosure = Injector.unboundParametrizedFactory(type)
         } catch let error as InjectionError<T> {
             error.crash()
         } catch let error {
@@ -147,16 +121,12 @@ public class Injector {
         return ParametrizedFactory<T>(injector: self, closure: initializationClosure)
     }
     
-    public func factory<T: Parametrizable>(parameters: T.Parameters) -> Factory<T> {
-        return factory(T.self, withParameters: parameters)
-    }
-    
     public func factory<T: Parametrizable>(type: T.Type, withParameters parameters: T.Parameters) -> Factory<T> {
         let initializationClosure: Injector -> T.Parameters -> T
         do {
             initializationClosure = try getInitializationClosure(inferredType())
         } catch is InjectionError<T> where allowsUnboundFactories {
-            initializationClosure = Injector.unboundFactory
+            initializationClosure = Injector.unboundParametrizedFactory(type)
         } catch let error as InjectionError<T> {
             error.crash()
         } catch let error {
@@ -176,7 +146,7 @@ public class Injector {
         do {
             initializationClosure = try getInitializationClosure(key)
         } catch is InjectionError<T> where allowsUnboundFactories {
-            initializationClosure = Injector.unboundFactory
+            initializationClosure = Injector.unboundFactory(T.self)
         } catch let error as InjectionError<T> {
             error.crash()
         } catch let error {
@@ -216,7 +186,11 @@ public class Injector {
         }
     }
     
-    private static func unboundFactory<T>(injector: Injector) -> T {
+    private static func unboundParametrizedFactory<T: Parametrizable>(type: T.Type)(injector: Injector)(parameters: T.Parameters) -> T {
+        fatalError("Unbound factory of parametrized type \(T.self) cannot be invoked with parameters: \(parameters)")
+    }
+    
+    private static func unboundFactory<T>(type: T.Type)(injector: Injector) -> T {
         fatalError("Unbound factory of type \(T.self) cannot be invoked!")
     }
 }

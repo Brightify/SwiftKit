@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		016B8B31A982017DD07172B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1C57433A6E87B4863BE0A9 /* Pods.framework */; };
 		184606021BCAED9400AFFA31 /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184606011BCAED9400AFFA31 /* Instance.swift */; };
-		186F7D671BA962FA004E190B /* BaseTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484BA1BA8C054004CB09A /* BaseTestUtils.swift */; };
-		186F7D681BA9632C004E190B /* QuickUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484BC1BA8C054004CB09A /* QuickUtils.swift */; };
+		187342F01C41496D0012A28A /* BaseTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187342EA1C41496D0012A28A /* BaseTestUtils.swift */; };
+		187342F11C41496D0012A28A /* QuickUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187342EC1C41496D0012A28A /* QuickUtils.swift */; };
+		187342F21C41496D0012A28A /* Assert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187342EE1C41496D0012A28A /* Assert.swift */; };
+		187342F31C41496D0012A28A /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187342EF1C41496D0012A28A /* TestUtils.swift */; };
 		187BD17B1BA8C55200E08759 /* StringPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62A1B14FDDE00D073C6 /* StringPreferenceTest.swift */; };
 		187BD17C1BA8C55200E08759 /* DoublePreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62B1B14FDDE00D073C6 /* DoublePreferenceTest.swift */; };
 		187BD17D1BA8C55200E08759 /* FloatPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC57B62C1B14FDDE00D073C6 /* FloatPreferenceTest.swift */; };
@@ -60,7 +62,6 @@
 		18E484C61BA8C054004CB09A /* UIButton+Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484701BA8C054004CB09A /* UIButton+Events.swift */; };
 		18E484C81BA8C054004CB09A /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484731BA8C054004CB09A /* Factory.swift */; };
 		18E484C91BA8C054004CB09A /* Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484741BA8C054004CB09A /* Injectable.swift */; };
-		18E484CA1BA8C054004CB09A /* InjectionOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484751BA8C054004CB09A /* InjectionOperators.swift */; };
 		18E484CB1BA8C054004CB09A /* Injector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484761BA8C054004CB09A /* Injector.swift */; };
 		18E484CC1BA8C054004CB09A /* KeyedInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484771BA8C054004CB09A /* KeyedInjector.swift */; };
 		18E484CD1BA8C054004CB09A /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484781BA8C054004CB09A /* ModuleBuilder.swift */; };
@@ -121,8 +122,6 @@
 		18E485041BA8C054004CB09A /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484B51BA8C054004CB09A /* Router.swift */; };
 		18E485051BA8C054004CB09A /* String+UrlSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484B61BA8C054004CB09A /* String+UrlSafe.swift */; };
 		18E4850B1BA8C054004CB09A /* ViewComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484C11BA8C054004CB09A /* ViewComposer.swift */; };
-		3E76AF5D0D82F50F0D7893FB /* Pods_SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		404205EC9C1FFDC1EBE9097B /* Pods_Showcase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E313D335DB88DEA06923A524 /* Pods_Showcase.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		58544A645E75FE5F06DDF908 /* Pods_SwiftKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C49AF8355E81CE6EEBADB2 /* Pods_SwiftKitTests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -135,7 +134,6 @@
 		6003F5A7195388D20070C39A /* BFYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* BFYViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		8C42AABF2396FA81794E4532 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1C57433A6E87B4863BE0A9 /* Pods.framework */; };
-		B69129E73AD1D2F2EA2C7C98 /* Pods_SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FED6BB905E08F2D9855C4D5A /* Pods_SwiftKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +180,10 @@
 		184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Tests-Bridging-Header.h"; path = "../Tests/Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		185ACDBA1B206DB700AAB902 /* ViewComposerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewComposerTest.swift; path = ../Tests/ViewComposerTest.swift; sourceTree = "<group>"; };
 		186D2E751B4ECDAA005BC06D /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
+		187342EA1C41496D0012A28A /* BaseTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTestUtils.swift; sourceTree = "<group>"; };
+		187342EC1C41496D0012A28A /* QuickUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickUtils.swift; sourceTree = "<group>"; };
+		187342EE1C41496D0012A28A /* Assert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assert.swift; sourceTree = "<group>"; };
+		187342EF1C41496D0012A28A /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest.swift; sourceTree = "<group>"; };
 		18977DBB1BCD3E1700154305 /* InjectionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectionError.swift; sourceTree = "<group>"; };
 		18977DBD1BCD3E3E00154305 /* ParametrizedInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParametrizedInjector.swift; sourceTree = "<group>"; };
@@ -209,7 +211,6 @@
 		18E484701BA8C054004CB09A /* UIButton+Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Events.swift"; sourceTree = "<group>"; };
 		18E484731BA8C054004CB09A /* Factory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		18E484741BA8C054004CB09A /* Injectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Injectable.swift; sourceTree = "<group>"; };
-		18E484751BA8C054004CB09A /* InjectionOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectionOperators.swift; sourceTree = "<group>"; };
 		18E484761BA8C054004CB09A /* Injector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Injector.swift; sourceTree = "<group>"; };
 		18E484771BA8C054004CB09A /* KeyedInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyedInjector.swift; sourceTree = "<group>"; };
 		18E484781BA8C054004CB09A /* ModuleBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
@@ -269,10 +270,6 @@
 		18E484B41BA8C054004CB09A /* ResponseVerifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseVerifier.swift; sourceTree = "<group>"; };
 		18E484B51BA8C054004CB09A /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		18E484B61BA8C054004CB09A /* String+UrlSafe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+UrlSafe.swift"; sourceTree = "<group>"; };
-		18E484BA1BA8C054004CB09A /* BaseTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTestUtils.swift; sourceTree = "<group>"; };
-		18E484BC1BA8C054004CB09A /* QuickUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickUtils.swift; sourceTree = "<group>"; };
-		18E484BE1BA8C054004CB09A /* Assert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assert.swift; sourceTree = "<group>"; };
-		18E484BF1BA8C054004CB09A /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		18E484C11BA8C054004CB09A /* ViewComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComposer.swift; sourceTree = "<group>"; };
 		28C49AF8355E81CE6EEBADB2 /* Pods_SwiftKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CD3994B78FA578EFB85811A /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -331,7 +328,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B69129E73AD1D2F2EA2C7C98 /* Pods_SwiftKit.framework in Frameworks */,
 				016B8B31A982017DD07172B5 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,8 +349,6 @@
 				18E484621BA8BFB1004CB09A /* SwiftKit.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				3E76AF5D0D82F50F0D7893FB /* Pods_SwiftKit.framework in Frameworks */,
-				404205EC9C1FFDC1EBE9097B /* Pods_Showcase.framework in Frameworks */,
 				8C42AABF2396FA81794E4532 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,6 +374,31 @@
 			path = ../Tests/Router;
 			sourceTree = "<group>";
 		};
+		187342E91C41496D0012A28A /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				187342EA1C41496D0012A28A /* BaseTestUtils.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		187342EB1C41496D0012A28A /* Quick */ = {
+			isa = PBXGroup;
+			children = (
+				187342EC1C41496D0012A28A /* QuickUtils.swift */,
+			);
+			path = Quick;
+			sourceTree = "<group>";
+		};
+		187342ED1C41496D0012A28A /* XCTest */ = {
+			isa = PBXGroup;
+			children = (
+				187342EE1C41496D0012A28A /* Assert.swift */,
+				187342EF1C41496D0012A28A /* TestUtils.swift */,
+			);
+			path = XCTest;
+			sourceTree = "<group>";
+		};
 		187C609F1B3CB71A00B8457A /* ObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
@@ -400,7 +419,6 @@
 				18E4847E1BA8C054004CB09A /* ObjectMapper */,
 				18E484A01BA8C054004CB09A /* Preferences */,
 				18E484A91BA8C054004CB09A /* Router */,
-				18E484B81BA8C054004CB09A /* TestUtils */,
 				18E484C01BA8C054004CB09A /* ViewComposer */,
 				18E4844F1BA8BFB1004CB09A /* SwiftKit.h */,
 				18E484511BA8BFB1004CB09A /* Info.plist */,
@@ -442,7 +460,6 @@
 			children = (
 				18E484731BA8C054004CB09A /* Factory.swift */,
 				18E484741BA8C054004CB09A /* Injectable.swift */,
-				18E484751BA8C054004CB09A /* InjectionOperators.swift */,
 				18E484761BA8C054004CB09A /* Injector.swift */,
 				18E484771BA8C054004CB09A /* KeyedInjector.swift */,
 				18E484781BA8C054004CB09A /* ModuleBuilder.swift */,
@@ -560,41 +577,6 @@
 			path = Router;
 			sourceTree = "<group>";
 		};
-		18E484B81BA8C054004CB09A /* TestUtils */ = {
-			isa = PBXGroup;
-			children = (
-				18E484B91BA8C054004CB09A /* Base */,
-				18E484BB1BA8C054004CB09A /* Quick */,
-				18E484BD1BA8C054004CB09A /* XCTest */,
-			);
-			path = TestUtils;
-			sourceTree = "<group>";
-		};
-		18E484B91BA8C054004CB09A /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				18E484BA1BA8C054004CB09A /* BaseTestUtils.swift */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
-		18E484BB1BA8C054004CB09A /* Quick */ = {
-			isa = PBXGroup;
-			children = (
-				18E484BC1BA8C054004CB09A /* QuickUtils.swift */,
-			);
-			path = Quick;
-			sourceTree = "<group>";
-		};
-		18E484BD1BA8C054004CB09A /* XCTest */ = {
-			isa = PBXGroup;
-			children = (
-				18E484BE1BA8C054004CB09A /* Assert.swift */,
-				18E484BF1BA8C054004CB09A /* TestUtils.swift */,
-			);
-			path = XCTest;
-			sourceTree = "<group>";
-		};
 		18E484C01BA8C054004CB09A /* ViewComposer */ = {
 			isa = PBXGroup;
 			children = (
@@ -694,6 +676,9 @@
 		DC0A52EE1B3F150B00DEAE6C /* TestUtils */ = {
 			isa = PBXGroup;
 			children = (
+				187342E91C41496D0012A28A /* Base */,
+				187342EB1C41496D0012A28A /* Quick */,
+				187342ED1C41496D0012A28A /* XCTest */,
 				DC0A52EF1B3F150B00DEAE6C /* TestUtilsTest.swift */,
 			);
 			name = TestUtils;
@@ -1055,7 +1040,6 @@
 				18E484F71BA8C054004CB09A /* Preference.swift in Sources */,
 				18E485051BA8C054004CB09A /* String+UrlSafe.swift in Sources */,
 				18E484DD1BA8C054004CB09A /* MappableOperators.swift in Sources */,
-				186F7D681BA9632C004E190B /* QuickUtils.swift in Sources */,
 				18E484C81BA8C054004CB09A /* Factory.swift in Sources */,
 				18E484EA1BA8C054004CB09A /* IntTransformation.swift in Sources */,
 				18E484FF1BA8C054004CB09A /* RequestEnhancer.swift in Sources */,
@@ -1100,12 +1084,10 @@
 				18E484CF1BA8C054004CB09A /* Array+MoreFunctionalMethods.swift in Sources */,
 				18E485031BA8C054004CB09A /* ResponseVerifier.swift in Sources */,
 				18E484FA1BA8C054004CB09A /* Endpoint.swift in Sources */,
-				18E484CA1BA8C054004CB09A /* InjectionOperators.swift in Sources */,
 				18E484F41BA8C054004CB09A /* FloatPreference.swift in Sources */,
 				18E484EB1BA8C054004CB09A /* ISO8601DateTransformation.swift in Sources */,
 				18E484C21BA8C054004CB09A /* Event.swift in Sources */,
 				18E484D41BA8C054004CB09A /* JsonTypeInfoAnnotation.swift in Sources */,
-				186F7D671BA962FA004E190B /* BaseTestUtils.swift in Sources */,
 				18E484F61BA8C054004CB09A /* OptionalPreference.swift in Sources */,
 				18E485021BA8C054004CB09A /* Response.swift in Sources */,
 				18E4850B1BA8C054004CB09A /* ViewComposer.swift in Sources */,
@@ -1129,11 +1111,14 @@
 				187BD1821BA8C55200E08759 /* ViewComposerTest.swift in Sources */,
 				187BD1831BA8C55800E08759 /* StringPreferenceDeinitTest.swift in Sources */,
 				18E4845E1BA8BFB1004CB09A /* SwiftKitTests.swift in Sources */,
+				187342F11C41496D0012A28A /* QuickUtils.swift in Sources */,
 				187BD1911BA8C58200E08759 /* UIButtonEventTest.swift in Sources */,
 				187BD1941BA8C58C00E08759 /* InjectionTest.swift in Sources */,
 				187BD1851BA8C55800E08759 /* FloatPreferenceDeinitTest.swift in Sources */,
 				187BD17D1BA8C55200E08759 /* FloatPreferenceTest.swift in Sources */,
+				187342F01C41496D0012A28A /* BaseTestUtils.swift in Sources */,
 				187BD18F1BA8C58200E08759 /* UIButtonDeinitTest.swift in Sources */,
+				187342F31C41496D0012A28A /* TestUtils.swift in Sources */,
 				187BD17C1BA8C55200E08759 /* DoublePreferenceTest.swift in Sources */,
 				187BD1961BA8C59000E08759 /* MockRequestPerformer.swift in Sources */,
 				187BD18E1BA8C58200E08759 /* UIBarButtonItemDeinitTest.swift in Sources */,
@@ -1146,6 +1131,7 @@
 				187BD1931BA8C58600E08759 /* TestUtilsTest.swift in Sources */,
 				187BD1881BA8C55800E08759 /* OptionalPreferenceDeinitTest.swift in Sources */,
 				187BD1871BA8C55800E08759 /* ArrayPreferenceDeinitTest.swift in Sources */,
+				187342F21C41496D0012A28A /* Assert.swift in Sources */,
 				187BD1801BA8C55200E08759 /* OptionalPreferenceTest.swift in Sources */,
 				187BD18D1BA8C58200E08759 /* EventDeinitTest.swift in Sources */,
 				187BD18A1BA8C57A00E08759 /* BoolMappingOperatorsTest.swift in Sources */,
@@ -1224,6 +1210,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = SwiftKit/Info.plist;
@@ -1251,6 +1238,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = SwiftKit/Info.plist;
