@@ -25,20 +25,8 @@ public extension StyleBuilder {
     }
     
     @warn_unused_result
-    public func inside(named name: String, _ otherNames: String..., _ run: (declare: Self) -> ()) {
-        let builder = inside(firstName: name, Set(otherNames))
-        run(declare: builder)
-    }
-    
-    @warn_unused_result
     public func inside(type: Styleable.Type, named names: String...) -> Self {
         return inside(type, names: Set(names))
-    }
-    
-    @warn_unused_result
-    public func inside(type: Styleable.Type, named names: String..., _ run: (declare: Self) -> ()) {
-        let builder = inside(type, names: Set(names))
-        run(declare: builder)
     }
     
     @warn_unused_result
@@ -58,8 +46,36 @@ public protocol CollapsibleStyleBuilder: StyleBuilder {
     func willStyle<T: Styleable>(baseType: T.Type) -> TypedStyleBuilder<T>
 }
 
+// This duplications is because of a bug in Swift where those `inside` methods could not used in if declared in StyleBuilder
+
 public extension CollapsibleStyleBuilder {
     public func style<T: Styleable>(type: T.Type, named names: String..., styling: T -> ()) {
         style(type, named: Set(names), styling: styling)
+    }
+    
+    @warn_unused_result
+    public func inside(type: Styleable.Type, named names: String..., _ run: (declare: CollapsibleStyleBuilder) -> ()) {
+        let builder = inside(type, names: Set(names))
+        run(declare: builder)
+    }
+    
+    @warn_unused_result
+    public func inside(named name: String, _ otherNames: String..., _ run: (declare: CollapsibleStyleBuilder) -> ()) {
+        let builder = inside(firstName: name, Set(otherNames))
+        run(declare: builder)
+    }
+}
+
+public extension TypedStyleBuilder {
+    @warn_unused_result
+    public func inside(type: Styleable.Type, named names: String..., _ run: (declare: TypedStyleBuilder) -> ()) {
+        let builder = inside(type, names: Set(names))
+        run(declare: builder)
+    }
+    
+    @warn_unused_result
+    public func inside(named name: String, _ otherNames: String..., _ run: (declare: TypedStyleBuilder) -> ()) {
+        let builder = inside(firstName: name, Set(otherNames))
+        run(declare: builder)
     }
 }

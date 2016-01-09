@@ -167,7 +167,9 @@ class StyleKitMatchingTest: QuickSpec {
             it("matches item inside parent") {
                 // given
                 StyleManager.instance.declareStyles { declare in
-                    declare.inside(BaseMockStyleable).style(BaseMockStyleable.self, styling: BaseMockStyleable.style())
+                    declare.inside(BaseMockStyleable.self) { declare in
+                        declare.style(BaseMockStyleable.self, styling: BaseMockStyleable.style())
+                    }
                 }
                 let parent = BaseMockStyleable()
                 let child = BaseMockStyleable()
