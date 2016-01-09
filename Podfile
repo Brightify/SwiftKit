@@ -5,8 +5,8 @@ link_with 'SwiftKit', 'Showcase'
 
 pod 'SwiftyJSON', '~> 2.3.0'
 pod 'Alamofire', '~> 2.0'
-pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git', :branch => 'xcode7.1'
 
 target 'SwiftKitTests' do
-    pod 'Quick', :git => 'https://github.com/Quick/Quick.git', :branch => 'xcode7.1'
+    pod 'Nimble', '~> 3.0.0'
+    pod 'Quick', '~> 0.8.0'
 end

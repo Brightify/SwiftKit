@@ -53,7 +53,7 @@ class InjectionTest: QuickSpec {
                 let injector = Injector.createInjector(module)
                 let instance: Instance<UserService> = .init()
                 
-                instance <- injector
+                injector.inject(instance)
                 
                 expect(instance.get().userGreeting) == "Hello, John Mock"
             }
@@ -66,7 +66,7 @@ class InjectionTest: QuickSpec {
                 let injector = Injector.createInjector(module)
                 let instance: OptionalInstance<UserService> = .init()
                 
-                instance <- injector
+                injector.inject(instance)
                 
                 expect(instance.get()?.userGreeting) == "Hello, John Mock"
             }
@@ -77,7 +77,7 @@ class InjectionTest: QuickSpec {
                 let injector = Injector.createInjector(module)
                 let instance: OptionalInstance<UserService> = .init()
                 
-                instance <- injector
+                injector.inject(instance)
                 
                 expect(instance.get()).to(beNil())
             }

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Tadeas Kriz. All rights reserved.
 //
 
+import SwiftKit
+
 public protocol Deinitializable {
     
     var onDeinit: Event<Deinitializable, Void> { get }
