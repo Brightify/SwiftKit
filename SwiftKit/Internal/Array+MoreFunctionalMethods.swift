@@ -1,13 +1,13 @@
 internal extension Array {
 
-    internal func arrayByAdding(elements: Element...) -> Array<Element> {
-        return arrayByAdding(elements)
+    internal func arrayByAppending(elements: Element...) -> Array<Element> {
+        return arrayByAppending(elements)
     }
     
-    internal func arrayByAdding(elements: [Element]) -> Array<Element> {
-        var mutableSelf = self
-        mutableSelf.appendContentsOf(elements)
-        return mutableSelf
+    internal func arrayByAppending(elements: [Element]) -> Array<Element> {
+        var mutableCopy = self
+        mutableCopy.appendContentsOf(elements)
+        return mutableCopy
     }
     
     internal func product<U>(other: [U]) -> Array<(Element, U)> {

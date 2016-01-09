@@ -8,63 +8,58 @@
 
 public protocol StyleBuilder {
 
-    func inside(type: Styleable.Type, names: Set<String>) -> CollapsibleStyleBuilder
-
+    @warn_unused_result
+    func inside(type: Styleable.Type, names: Set<String>) -> Self
 }
 
 public extension StyleBuilder {
-    public func inside(names: Set<String>) -> CollapsibleStyleBuilder {
+    
+    @warn_unused_result
+    public func inside(names: Set<String>) -> Self {
         return inside(AnyStyleable.self, names: names)
     }
     
-    public func inside(named name: String, _ otherNames: String...) -> CollapsibleStyleBuilder {
+    @warn_unused_result
+    public func inside(named name: String, _ otherNames: String...) -> Self {
         return inside(firstName: name, Set(otherNames))
     }
     
-    public func inside(named name: String, _ otherNames: String..., _ run: (declare: CollapsibleStyleBuilder) -> ()) {
+    @warn_unused_result
+    public func inside(named name: String, _ otherNames: String..., _ run: (declare: Self) -> ()) {
         let builder = inside(firstName: name, Set(otherNames))
         run(declare: builder)
     }
     
-    public func inside(type: Styleable.Type, named names: String...) -> CollapsibleStyleBuilder {
+    @warn_unused_result
+    public func inside(type: Styleable.Type, named names: String...) -> Self {
         return inside(type, names: Set(names))
     }
     
-    public func inside(type: Styleable.Type, named names: String..., _ run: (declare: CollapsibleStyleBuilder) -> ()) {
+    @warn_unused_result
+    public func inside(type: Styleable.Type, named names: String..., _ run: (declare: Self) -> ()) {
         let builder = inside(type, names: Set(names))
         run(declare: builder)
     }
     
-    private func inside(firstName name: String, _ otherNames: Set<String>) -> CollapsibleStyleBuilder {
+    @warn_unused_result
+    private func inside(firstName name: String, _ otherNames: Set<String>) -> Self {
         return inside(otherNames.union([name]))
     }
 }
 
 public protocol CollapsibleStyleBuilder: StyleBuilder {
+    func style<T: Styleable>(type: T.Type, named names: Set<String>, styling: T -> ())
     
-    func style<T: Styleable>(type: T.Type, named names: String..., styling: T -> ())
-    
-    // TODO I cannot find a way to do this in Swift currently. Maybe I am missing something
-    // func style<T: Styleable>(type: T.Type, named names: String...) -> DSLHelper_Also<TypedStyleBuilder<T>>
+    /** 
+    Unfortunately required when we want to do some chaining, because Swift 2.1 cannot declare one generic parameter 
+     to be a subclass of another
+    */
+    @warn_unused_result
+    func willStyle<T: Styleable>(baseType: T.Type) -> TypedStyleBuilder<T>
 }
 
 public extension CollapsibleStyleBuilder {
-    public func style(firstName name: String, named names: String..., styling: Styleable -> ()) {
-        
-    }
-    
     public func style<T: Styleable>(type: T.Type, named names: String..., styling: T -> ()) {
-        
+        style(type, named: Set(names), styling: styling)
     }
-    
-    
-}
-
-// Hopefully one day we will be able to return this from `style` in `CollapsibleStyleBuilder` and not the implementation.
-public protocol BoundCollapsibleStyleBuilder: StyleBuilder {
-    typealias TypeBinding: Styleable
-    
-    func style(type: TypeBinding.Type, named names: String..., styling: TypeBinding -> ())
-    
-    func style(type: TypeBinding.Type, named names: String...) -> DSLHelper_Also<Self>
 }
