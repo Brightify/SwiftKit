@@ -39,40 +39,16 @@ public class StyleManager {
     
     public func apply(styleable: Styleable, includeChildren: Bool = true, animated: Bool = false) {
         let stylingDetails = styleable.skt_stylingDetails
-        stylingDetails.scheduledStyleApplication?.cancel()
-        stylingDetails.scheduledStyleApplication = nil
-        
         if stylingDetails.manager == nil {
             stylingDetails.manager = self
         }
-        
-        let stylesToApply: [Style]
-        if let cachedStyles = stylingDetails.cachedStyles {
-            stylesToApply = cachedStyles
-        } else {
-            let item = styledItem(styleable)
-            let identifier = ObjectIdentifier(item.canonicalType)
-            
-            guard let typeStyles = styles[identifier] else { return }
-            
-            stylesToApply = typeStyles.map { (precedence: $0.precedence(self, item: item), style: $0) }
-                .filter { $0.precedence != Style.nonMatchingPrecedence }
-                .sort { $0.precedence < $1.precedence }
-                .map { $0.style }
-            
-            stylingDetails.cachedStyles = stylesToApply
+        if stylingDetails.lastParent !== styleable.skt_parent {
+            stylingDetails.lastParent = styleable.skt_parent
         }
-        stylingDetails.beforeStyled?()
         
-        style(styleable, styles: stylesToApply, animated: animated)
+        let applications = collectStyleApplications(styleable, includeChildren: includeChildren)
         
-        stylingDetails.afterStyled?()
-        
-        if includeChildren {
-            for child in styleable.skt_children {
-                apply(child, includeChildren: true, animated: animated)
-            }
-        }
+        style(applications, animated: animated)
     }
     
     public func applyIfScheduled(styleable: Styleable) {
@@ -106,9 +82,26 @@ public class StyleManager {
         canonicalTypesCache = [:]
     }
     
-    func style(styleable: Styleable, styles: [Style], animated: Bool) {
+    func style(applications: [StyleApplication], animated: Bool) {
         // Default implementation does not support animations
-        styles.forEach { $0.styling(styleable) }
+        applications.forEach { application in
+            guard let details = application.owner, styleable = details.styledItem else { return }
+            details.scheduledStyleApplication?.cancel()
+            details.scheduledStyleApplication = nil
+            if application.styles.isEmpty { return }
+            
+            details.beingStyled = true
+            
+            details.beforeStyled?()
+            
+            for style in application.styles {
+                style.styling(styleable)
+            }
+            
+            details.afterStyled?()
+            
+            details.beingStyled = false
+        }
     }
     
     func appendStyle(target: StyleTarget, inside: [StyleTarget], styling: Styleable -> ()) {
@@ -153,5 +146,37 @@ public class StyleManager {
             currentType = unwrappedType.superclass()
         }
         return currentType as? Styleable.Type ?? type
+    }
+    
+    private func collectStyleApplications(styleable: Styleable, includeChildren: Bool) -> [StyleApplication] {
+        let stylingDetails = styleable.skt_stylingDetails
+        let application: StyleApplication
+        if let cachedApplication = stylingDetails.cachedStyleApplication {
+            application = cachedApplication
+        } else {
+            let stylesToApply = matchingStyles(styleable)
+            application = StyleApplication(owner: stylingDetails, styles: stylesToApply)
+            stylingDetails.cachedStyleApplication = application
+        }
+        
+        if includeChildren {
+            return [application] + styleable.skt_children.flatMap {
+                self.collectStyleApplications($0, includeChildren: includeChildren)
+            }
+        } else {
+            return [application]
+        }
+    }
+    
+    private func matchingStyles(styleable: Styleable) -> [Style] {
+        let item = styledItem(styleable)
+        let identifier = ObjectIdentifier(item.canonicalType)
+        
+        guard let typeStyles = styles[identifier] else { return [] }
+        
+        return typeStyles.map { (precedence: $0.precedence(self, item: item), style: $0) }
+            .filter { $0.precedence != Style.nonMatchingPrecedence }
+            .sort { $0.precedence < $1.precedence }
+            .map { $0.style }
     }
 }

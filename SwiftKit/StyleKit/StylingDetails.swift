@@ -42,12 +42,17 @@ public class StylingDetails {
     
     weak var styledItem: Styleable?
     weak var manager: StyleManager?
+    var beingStyled: Bool = false
     
     var parentItemStylingDetails: StylingDetails? {
         return styledItem?.skt_parent?.skt_stylingDetails
     }
-    var cachedStyles: [Style]? = nil
+
+    // MARK: Caching storage
+    weak var lastParent: Styleable?
+    var cachedStyleApplication: StyleApplication?
     
+    // MARK: Scheduling storage
     var scheduledStyleApplication: ScheduledStyling?
     var stylingScheduled: Bool {
         if scheduledStyleApplication != nil {
@@ -56,12 +61,20 @@ public class StylingDetails {
         return parentItemStylingDetails?.stylingScheduled ?? false
     }
     
+    // MARK: Initializers
     public init(styledItem: Styleable?) {
         self.styledItem = styledItem
     }
+}
+
+// MARK: - Cache handling
+extension StylingDetails {
+    var hasDifferentParent: Bool {
+        return styledItem?.skt_parent !== lastParent
+    }
     
     func invalidateCachedStyles(includeChildren includeChildren: Bool = true) {
-        cachedStyles = nil
+        cachedStyleApplication = nil
         
         if let styledItem = styledItem where includeChildren {
             // We have to pass in `reapply = false`, otherwise we would be doing a lot of unnecessary work
@@ -70,7 +83,7 @@ public class StylingDetails {
     }
 }
 
-/// MARK: - Names handling
+// MARK: - Names handling
 extension StylingDetails {
     public var spaceSeparatedNames: String {
         get {

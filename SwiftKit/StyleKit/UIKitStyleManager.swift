@@ -27,13 +27,13 @@ public class UIKitStyleManager: StyleManager {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    override func style(styleable: Styleable, styles: [Style], animated: Bool) {
+    override func style(applications: [StyleApplication], animated: Bool) {
         if animated {
             UIView.animateWithDuration(0.33, delay: 0, options: [.BeginFromCurrentState, .LayoutSubviews], animations: {
-                super.style(styleable, styles: styles, animated: animated)
+                super.style(applications, animated: animated)
             }, completion: nil)
         } else {
-            super.style(styleable, styles: styles, animated: animated)
+            super.style(applications, animated: animated)
         }
     }
 }
