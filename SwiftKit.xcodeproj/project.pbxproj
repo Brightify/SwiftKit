@@ -134,6 +134,7 @@
 		6003F5A7195388D20070C39A /* BFYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* BFYViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		8C42AABF2396FA81794E4532 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1C57433A6E87B4863BE0A9 /* Pods.framework */; };
+		AEF251751C42D808005C6591 /* DictionaryPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF251741C42D808005C6591 /* DictionaryPreference.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,6 +297,7 @@
 		A5CEF31739BAA8BA0BCCC47D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		AA88029C83CBA22E4C0CF089 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		ABB9C5DDABE419158DC7D88D /* Pods-SwiftKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftKitTests/Pods-SwiftKitTests.release.xcconfig"; sourceTree = "<group>"; };
+		AEF251741C42D808005C6591 /* DictionaryPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryPreference.swift; sourceTree = "<group>"; };
 		BACC98F5132F5D2FA8DDF557 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DC0A52EF1B3F150B00DEAE6C /* TestUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtilsTest.swift; sourceTree = "<group>"; };
 		DC57B6281B14FDB600D073C6 /* IntPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntPreferenceTest.swift; path = Preferences/IntPreferenceTest.swift; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 				18E484A61BA8C054004CB09A /* OptionalPreference.swift */,
 				18E484A71BA8C054004CB09A /* Preference.swift */,
 				18E484A81BA8C054004CB09A /* StringPreference.swift */,
+				AEF251741C42D808005C6591 /* DictionaryPreference.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1049,6 +1052,7 @@
 				18E485041BA8C054004CB09A /* Router.swift in Sources */,
 				18E484EF1BA8C054004CB09A /* NSURLTransformation.swift in Sources */,
 				18E484E01BA8C054004CB09A /* TransformationOperators.swift in Sources */,
+				AEF251751C42D808005C6591 /* DictionaryPreference.swift in Sources */,
 				18977DC81BCD439900154305 /* Key.swift in Sources */,
 				18E484CB1BA8C054004CB09A /* Injector.swift in Sources */,
 				18E484FC1BA8C054004CB09A /* Methods.swift in Sources */,
