@@ -137,6 +137,7 @@
 		AEF251751C42D808005C6591 /* DictionaryPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF251741C42D808005C6591 /* DictionaryPreference.swift */; };
 		AEF251771C42F0A2005C6591 /* DictionaryPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF251761C42F0A2005C6591 /* DictionaryPreferenceDeinitTest.swift */; };
 		AEF251791C42F227005C6591 /* DictionaryPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF251781C42F227005C6591 /* DictionaryPreferenceTest.swift */; };
+		AEF2517B1C43019D005C6591 /* EnumPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF2517A1C43019D005C6591 /* EnumPreference.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -302,6 +303,7 @@
 		AEF251741C42D808005C6591 /* DictionaryPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryPreference.swift; sourceTree = "<group>"; };
 		AEF251761C42F0A2005C6591 /* DictionaryPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryPreferenceDeinitTest.swift; sourceTree = "<group>"; };
 		AEF251781C42F227005C6591 /* DictionaryPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryPreferenceTest.swift; sourceTree = "<group>"; };
+		AEF2517A1C43019D005C6591 /* EnumPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumPreference.swift; sourceTree = "<group>"; };
 		BACC98F5132F5D2FA8DDF557 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DC0A52EF1B3F150B00DEAE6C /* TestUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtilsTest.swift; sourceTree = "<group>"; };
 		DC57B6281B14FDB600D073C6 /* IntPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntPreferenceTest.swift; path = Preferences/IntPreferenceTest.swift; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 				18E484A71BA8C054004CB09A /* Preference.swift */,
 				18E484A81BA8C054004CB09A /* StringPreference.swift */,
 				AEF251741C42D808005C6591 /* DictionaryPreference.swift */,
+				AEF2517A1C43019D005C6591 /* EnumPreference.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1078,6 +1081,7 @@
 				18E484D11BA8C054004CB09A /* MoreFunctionalGlobals.swift in Sources */,
 				18977DC61BCD438300154305 /* GlobalFunctions.swift in Sources */,
 				18977DCC1BCD74B100154305 /* ThreadLocal.swift in Sources */,
+				AEF2517B1C43019D005C6591 /* EnumPreference.swift in Sources */,
 				18E484DA1BA8C054004CB09A /* EnumMappingOperators.swift in Sources */,
 				18E485011BA8C054004CB09A /* RequestPerformer.swift in Sources */,
 				18E484E21BA8C054004CB09A /* Polymorph.swift in Sources */,

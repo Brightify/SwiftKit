@@ -23,7 +23,7 @@ public protocol Preference {
         Initializer
     
         :param: key The key that will be used to access the Preference
-        :param: defaultValue value of unsetted Preference
+        :param: defaultValue value of unset Preference
     */
     init(key: String, defaultValue: T)
     
