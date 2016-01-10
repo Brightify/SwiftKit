@@ -19,11 +19,12 @@ public class UIKitStyleManager: StyleManager {
         notificationCenter.addObserver(self, selector: "lowMemoryWarning:", name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
         notificationCenter.addObserver(self, selector: "windowDidBecomeVisible:", name: UIWindowDidBecomeKeyNotification, object: nil)
         notificationCenter.addObserver(self, selector: "windowDidBecomeVisible:", name: UIWindowDidBecomeVisibleNotification, object: nil)
-        UIDevice.currentDevice().beginGeneratingDeviceOrientationNotifications()
+        
+        notificationCenter.addObserver(self, selector: "deviceOrientationWillChange:", name: UIApplicationWillChangeStatusBarOrientationNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "deviceOrientationDidChange:", name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
     }
     
     deinit {
-        UIDevice.currentDevice().endGeneratingDeviceOrientationNotifications()
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
@@ -63,6 +64,14 @@ extension UIKitStyleManager {
     
     @objc func lowMemoryWarning(notification: NSNotification) {
         clearCaches()
+    }
+    
+    @objc func deviceOrientationWillChange(notification: NSNotification) {
+        
+    }
+    
+    @objc func deviceOrientationDidChange(notification: NSNotification) {
+        
     }
     
     @objc func windowDidBecomeVisible(notification: NSNotification) {
