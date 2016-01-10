@@ -135,6 +135,8 @@
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		8C42AABF2396FA81794E4532 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1C57433A6E87B4863BE0A9 /* Pods.framework */; };
 		AEF251751C42D808005C6591 /* DictionaryPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF251741C42D808005C6591 /* DictionaryPreference.swift */; };
+		AEF251771C42F0A2005C6591 /* DictionaryPreferenceDeinitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF251761C42F0A2005C6591 /* DictionaryPreferenceDeinitTest.swift */; };
+		AEF251791C42F227005C6591 /* DictionaryPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF251781C42F227005C6591 /* DictionaryPreferenceTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -298,6 +300,8 @@
 		AA88029C83CBA22E4C0CF089 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		ABB9C5DDABE419158DC7D88D /* Pods-SwiftKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftKitTests/Pods-SwiftKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		AEF251741C42D808005C6591 /* DictionaryPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryPreference.swift; sourceTree = "<group>"; };
+		AEF251761C42F0A2005C6591 /* DictionaryPreferenceDeinitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryPreferenceDeinitTest.swift; sourceTree = "<group>"; };
+		AEF251781C42F227005C6591 /* DictionaryPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryPreferenceTest.swift; sourceTree = "<group>"; };
 		BACC98F5132F5D2FA8DDF557 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DC0A52EF1B3F150B00DEAE6C /* TestUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtilsTest.swift; sourceTree = "<group>"; };
 		DC57B6281B14FDB600D073C6 /* IntPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntPreferenceTest.swift; path = Preferences/IntPreferenceTest.swift; sourceTree = "<group>"; };
@@ -699,6 +703,7 @@
 				DC57B62E1B14FDDE00D073C6 /* ArrayPreferenceTest.swift */,
 				DC57B62F1B14FDDE00D073C6 /* OptionalPreferenceTest.swift */,
 				DC57B6281B14FDB600D073C6 /* IntPreferenceTest.swift */,
+				AEF251781C42F227005C6591 /* DictionaryPreferenceTest.swift */,
 			);
 			name = Preferences;
 			path = ../Tests;
@@ -736,6 +741,7 @@
 				DC9A43FD1B45B0E700D11BEC /* ArrayPreferenceDeinitTest.swift */,
 				DC9A43FF1B45B1CA00D11BEC /* OptionalPreferenceDeinitTest.swift */,
 				DC9A44011B45B2B200D11BEC /* IntPreferenceDeinitTest.swift */,
+				AEF251761C42F0A2005C6591 /* DictionaryPreferenceDeinitTest.swift */,
 			);
 			name = Deinit;
 			path = Preferences/Deinit;
@@ -1118,6 +1124,7 @@
 				187342F11C41496D0012A28A /* QuickUtils.swift in Sources */,
 				187BD1911BA8C58200E08759 /* UIButtonEventTest.swift in Sources */,
 				187BD1941BA8C58C00E08759 /* InjectionTest.swift in Sources */,
+				AEF251771C42F0A2005C6591 /* DictionaryPreferenceDeinitTest.swift in Sources */,
 				187BD1851BA8C55800E08759 /* FloatPreferenceDeinitTest.swift in Sources */,
 				187BD17D1BA8C55200E08759 /* FloatPreferenceTest.swift in Sources */,
 				187342F01C41496D0012A28A /* BaseTestUtils.swift in Sources */,
@@ -1141,6 +1148,7 @@
 				187BD18A1BA8C57A00E08759 /* BoolMappingOperatorsTest.swift in Sources */,
 				187BD17B1BA8C55200E08759 /* StringPreferenceTest.swift in Sources */,
 				187BD1891BA8C55800E08759 /* IntPreferenceDeinitTest.swift in Sources */,
+				AEF251791C42F227005C6591 /* DictionaryPreferenceTest.swift in Sources */,
 				187BD18B1BA8C57A00E08759 /* ObjectMapperTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
