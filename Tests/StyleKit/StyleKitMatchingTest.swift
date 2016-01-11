@@ -213,6 +213,30 @@ class StyleKitMatchingTest: QuickSpec {
                 expect(independent.styleIndices) == []
             }
             
+            it("matches inside multiple parents") {
+                // given
+                StyleManager.instance.declareStyles { declare in
+                    declare.inside(BaseMockStyleable).inside(ChildAMockStyleable).style(ChildBMockStyleable.self, styling: BaseMockStyleable.style())
+                }
+                
+                let parentOuter = BaseMockStyleable()
+                let parentInner = ChildAMockStyleable()
+                let child = ChildBMockStyleable()
+                
+                parentOuter.addChild(parentInner)
+                parentInner.addChild(child)
+                
+                // when
+                StyleManager.instance.apply(parentOuter, includeChildren: false)
+                StyleManager.instance.apply(parentInner, includeChildren: false)
+                StyleManager.instance.apply(child, includeChildren: false)
+                
+                // then
+                expect(parentOuter.styledTimes) == 0
+                expect(parentInner.styledTimes) == 0
+                expect(child.styledTimes) == 1
+            }
+            
             it("matches base types") {
                 // given
                 StyleManager.instance.declareStyles { declare in
