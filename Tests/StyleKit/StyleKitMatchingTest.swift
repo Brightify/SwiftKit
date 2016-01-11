@@ -74,7 +74,7 @@ class ChildAMockStyleable: BaseMockStyleable { }
 
 class ChildBMockStyleable: BaseMockStyleable { }
 
-class ChuldCMockStyleable: BaseMockStyleable { }
+class ChildCMockStyleable: BaseMockStyleable { }
 
 class StyleKitMatchingTest: QuickSpec {
     override func spec() {

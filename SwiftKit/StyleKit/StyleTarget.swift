@@ -23,6 +23,18 @@ struct StyleTarget {
     }
 }
 
+// MARK: - CustomStringConvertible
+extension StyleTarget: CustomStringConvertible {
+    var description: String {
+        var output = "\(type)"
+        if !names.isEmpty {
+            output += " named: " + names.sort().map{ "\"\($0)\"" }.joinWithSeparator(" or ")
+        }
+        return output
+    }
+}
+
+// MARK: - Hashable
 extension StyleTarget: Hashable {
     var hashValue: Int {
         var result = 17;
@@ -34,6 +46,7 @@ extension StyleTarget: Hashable {
     }
 }
 
+// MARK: - Equatable
 func == (lhs: StyleTarget, rhs: StyleTarget) -> Bool {
     return lhs.type == rhs.type &&
         lhs.names.count == rhs.names.count &&
