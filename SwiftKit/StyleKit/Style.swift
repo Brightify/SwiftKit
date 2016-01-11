@@ -27,7 +27,7 @@ struct Style {
         if !inside.isEmpty {
             var currentItem: StyledItem? = item.getParent(manager)
             // We need to go up the tree
-            for parent in inside.reverse() {
+            for parent in inside {
                 while let unwrappedItem = currentItem {
                     if parent.matches(unwrappedItem) {
                         break
