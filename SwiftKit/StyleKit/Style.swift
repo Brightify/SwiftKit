@@ -61,3 +61,13 @@ struct Style {
     }
 
 }
+
+// MARK: - CustomStringConvertible
+extension Style: CustomStringConvertible {
+    var description: String {
+        return ([target] + inside).reverse().reduce((output: "", separator: "")) {
+            let output = $0.output + ($0.output.isEmpty ? "" : "\n") + $0.separator + $1.description
+            return (output: output, separator: $0.separator == "" ? "  └> " : "    \($0.separator)")
+            }.output
+    }
+}

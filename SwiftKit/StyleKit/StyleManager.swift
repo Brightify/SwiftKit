@@ -23,10 +23,10 @@ public class StyleManager {
             canonicalTypesCache.removeAll(keepCapacity: true)
         }
     }
-    private var canonicalTypesCache: [ObjectIdentifier: Styleable.Type] = [:]
+    private var canonicalTypesCache: [ObjectIdentifier: (type: Styleable.Type, canonicalType: Styleable.Type)] = [:]
     
     private var index: UInt = 1
-    private var styles: [ObjectIdentifier: [Style]] = [:]
+    private var styles: [ObjectIdentifier: (canonicalType: Styleable.Type, styles: [Style])] = [:]
     
     public required init() { }
     
@@ -92,13 +92,13 @@ public class StyleManager {
             
             details.beingStyled = true
             
-            details.beforeStyled?()
+            details.beforeStyled?(styleable)
             
             for style in application.styles {
                 style.styling(styleable)
             }
             
-            details.afterStyled?()
+            details.afterStyled?(styleable)
             
             details.beingStyled = false
         }
@@ -112,9 +112,9 @@ public class StyleManager {
         let identifier = ObjectIdentifier(target.type)
         let style = Style(index: index, inside: inside, target: target, styling: styling)
         if !styles.keys.contains(identifier) {
-            styles[identifier] = []
+            styles[identifier] = (canonicalType: target.type, styles: [])
         }
-        styles[identifier]?.append(style)
+        styles[identifier]?.styles.append(style)
         
         index += 1
     }
@@ -131,10 +131,10 @@ public class StyleManager {
     private func canonicalTypeOf(type: Styleable.Type) -> Styleable.Type {
         let cacheKey = ObjectIdentifier(type)
         if let cachedType = canonicalTypesCache[cacheKey] {
-            return cachedType
+            return cachedType.canonicalType
         } else {
             let determinedType = determineCanonicalTypeOf(type)
-            canonicalTypesCache[cacheKey] = determinedType
+            canonicalTypesCache[cacheKey] = (type: type, canonicalType: determinedType)
             return determinedType
         }
         
@@ -174,9 +174,50 @@ public class StyleManager {
         
         guard let typeStyles = styles[identifier] else { return [] }
         
-        return typeStyles.map { (precedence: $0.precedence(self, item: item), style: $0) }
+        return typeStyles.styles.map { (precedence: $0.precedence(self, item: item), style: $0) }
             .filter { $0.precedence != Style.nonMatchingPrecedence }
             .sort { $0.precedence < $1.precedence }
             .map { $0.style }
     }
+}
+
+extension StyleManager {
+    
+}
+
+// MARK: - CustomStringConvertible
+extension StyleManager: CustomStringConvertible {
+    
+    public var description: String {
+        //styles: [ObjectIdentifier: [Style]] = [:]
+        
+        let styleDescrpitions = styles.values.flatMap { $0.styles.map { $0.description } }
+        
+        return "\(styleDescrpitions.count) declared styles: ---------------\n" + styleDescrpitions.joinWithSeparator("\n\n")
+    }
+    
+}
+
+// MARK: - CustomDebugStringConvertible
+extension StyleManager: CustomDebugStringConvertible {
+    
+    public var debugDescription: String {
+        var output = [description]
+        
+        let canonicalTypesDescription = (
+            ["\(canonicalTypes.count) canonical types: ---------------"] + canonicalTypes.map { "  \($0)" }.sort()
+        ).joinWithSeparator("\n")
+        
+        let canonicalTypesCacheDescription = (
+            ["\(canonicalTypesCache.count) cached canonical types (type = canonical type): ---------------"] +
+            canonicalTypesCache.values.map { "  \($0.type) = \($0.canonicalType)" }.sort()
+        ).joinWithSeparator("\n")
+        
+        output.append(canonicalTypesDescription)
+        
+        output.append(canonicalTypesCacheDescription)
+
+        return output.joinWithSeparator("\n\n")
+    }
+    
 }

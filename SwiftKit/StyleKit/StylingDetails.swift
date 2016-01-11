@@ -37,8 +37,8 @@ public class StylingDetails {
             setNamesInternal(newValue)
         }
     }
-    public var beforeStyled: (Void -> Void)?
-    public var afterStyled: (Void -> Void)?
+    public var beforeStyled: (Styleable -> Void)?
+    public var afterStyled: (Styleable -> Void)?
     
     weak var styledItem: Styleable?
     weak var manager: StyleManager?
@@ -132,5 +132,29 @@ extension StylingDetails {
         // When we change the names, we have to invalidate the style caches of this styleable and its children
         invalidateCachedStyles()
         manager.scheduleStyleApplication(styledItem, includeChildren: true, animated: animated)
+    }
+}
+
+// MARK: - CustomStringConvertible
+extension StylingDetails: CustomStringConvertible {
+    public var description: String {
+        var output = "\(self.dynamicType)"
+        
+        if !names.isEmpty {
+            output += " named: " + names.sort().joinWithSeparator(", ")
+        }
+        
+        if let cachedStyleApplication = cachedStyleApplication {
+            output += (
+                ["\n  \(cachedStyleApplication.styles.count) cached styles: ---------------"] +
+                cachedStyleApplication.styles.map {
+                    $0.description.componentsSeparatedByString("\n").joinWithSeparator("\n  ")
+                }
+            ).joinWithSeparator("\n")
+        } else {
+            output += "\n  Styles not cached."
+        }
+
+        return output
     }
 }

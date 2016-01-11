@@ -19,6 +19,7 @@
 		180BCBFD1C3F025C00545AAD /* StyleTargetEqualityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180BCBFB1C3F024000545AAD /* StyleTargetEqualityTest.swift */; };
 		180BCBFF1C3F0E4B00545AAD /* DSLHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180BCBFE1C3F0E4B00545AAD /* DSLHelpers.swift */; };
 		1811FB101C406F8E007EC210 /* StyleDeclarationPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1811FB0F1C406F8E007EC210 /* StyleDeclarationPart.swift */; };
+		1819B9611C43D43200D0D0D4 /* StyleKitDescriptionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1819B95F1C43D3C400D0D0D4 /* StyleKitDescriptionsTest.swift */; };
 		18333CB91C406FD700F7B279 /* StyleBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18333CB81C406FD700F7B279 /* StyleBlueprint.swift */; };
 		184606021BCAED9400AFFA31 /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184606011BCAED9400AFFA31 /* Instance.swift */; };
 		187342F01C41496D0012A28A /* BaseTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187342EA1C41496D0012A28A /* BaseTestUtils.swift */; };
@@ -213,6 +214,7 @@
 		180BCBFB1C3F024000545AAD /* StyleTargetEqualityTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleTargetEqualityTest.swift; sourceTree = "<group>"; };
 		180BCBFE1C3F0E4B00545AAD /* DSLHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSLHelpers.swift; sourceTree = "<group>"; };
 		1811FB0F1C406F8E007EC210 /* StyleDeclarationPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleDeclarationPart.swift; sourceTree = "<group>"; };
+		1819B95F1C43D3C400D0D0D4 /* StyleKitDescriptionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKitDescriptionsTest.swift; sourceTree = "<group>"; };
 		1831E0181B58A7B20029C328 /* BoolMappingOperatorsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolMappingOperatorsTest.swift; sourceTree = "<group>"; };
 		18333CB81C406FD700F7B279 /* StyleBlueprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleBlueprint.swift; sourceTree = "<group>"; };
 		184606011BCAED9400AFFA31 /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 				180BCBFB1C3F024000545AAD /* StyleTargetEqualityTest.swift */,
 				1881B3C81C3FBA6C000B601B /* StyleManagerSingletonInstantiationTest.swift */,
 				18DE889B1C403BDC00A21C41 /* UIKitStyleManagerTest.swift */,
+				1819B95F1C43D3C400D0D0D4 /* StyleKitDescriptionsTest.swift */,
 			);
 			path = StyleKit;
 			sourceTree = "<group>";
@@ -1250,6 +1253,7 @@
 				187BD1801BA8C55200E08759 /* OptionalPreferenceTest.swift in Sources */,
 				187BD18D1BA8C58200E08759 /* EventDeinitTest.swift in Sources */,
 				187BD18A1BA8C57A00E08759 /* BoolMappingOperatorsTest.swift in Sources */,
+				1819B9611C43D43200D0D0D4 /* StyleKitDescriptionsTest.swift in Sources */,
 				187BD17B1BA8C55200E08759 /* StringPreferenceTest.swift in Sources */,
 				187BD1891BA8C55800E08759 /* IntPreferenceDeinitTest.swift in Sources */,
 				AEF251791C42F227005C6591 /* DictionaryPreferenceTest.swift in Sources */,
