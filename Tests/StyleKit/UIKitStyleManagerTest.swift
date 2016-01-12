@@ -18,7 +18,7 @@ class UIKitStyleManagerTest: QuickSpec {
             }
             
             it("different names positions should be equal") {
-                UIKitStyleManager.instance.declareStyles { declare in
+                MockStylesheet.with(UIKitStyleManager.self) { declare in
                     
                 }
                 

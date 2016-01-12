@@ -10,6 +10,29 @@ import Quick
 import Nimble
 @testable import SwiftKit
 
+struct MockStylesheet: Stylesheet {
+    
+    let declaration: CollapsibleStyleBuilder -> Void
+    
+    init(declaration: CollapsibleStyleBuilder -> Void) {
+        self.declaration = declaration
+    }
+    
+    func declareStyles(declare: CollapsibleStyleBuilder) {
+        declaration(declare)
+    }
+    
+    static func with(managerType: StyleManager.Type = StyleManager.self, destroyManager: Bool = true, declaration: CollapsibleStyleBuilder -> Void) {
+        let stylesheet = MockStylesheet(declaration: declaration)
+        
+        if destroyManager {
+            managerType.destroyInstance()
+        }
+        managerType.instance.addStylesheet(stylesheet)
+    }
+    
+}
+
 protocol MockStyleable: Styleable {
     var parentMock: MockStyleable? { get set }
     
@@ -79,13 +102,9 @@ class ChildCMockStyleable: BaseMockStyleable { }
 class StyleKitMatchingTest: QuickSpec {
     override func spec() {
         describe("StyleKit matching") {
-            beforeEach {
-                StyleManager.destroyInstance()
-            }
-            
             it("matches single item with or without name") {
                 // given
-                StyleManager.instance.declareStyles { declare in
+                MockStylesheet.with { declare in
                     declare.style(BaseMockStyleable.self, styling: BaseMockStyleable.style())
                 }
                 let item = BaseMockStyleable()
@@ -103,7 +122,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches single named item and ignores unnamed") {
                 // given
-                StyleManager.instance.declareStyles { declare in
+                MockStylesheet.with { declare in
                     declare.style(BaseMockStyleable.self, named: "hello", styling: BaseMockStyleable.style())
                 }
                 let item = BaseMockStyleable()
@@ -121,7 +140,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches item noncanonical subclasses") {
                 // given
-                StyleManager.instance.declareStyles { declare in
+                MockStylesheet.with { declare in
                     declare.style(BaseMockStyleable.self, styling: BaseMockStyleable.style())
                 }
                 let base = BaseMockStyleable()
@@ -141,7 +160,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches item noncanonical subclasses but not canonical") {
                 // given
-                StyleManager.instance.declareStyles { declare in
+                MockStylesheet.with { declare in
                     declare.style(BaseMockStyleable.self, styling: BaseMockStyleable.style(1))
                     declare.style(ChildAMockStyleable.self, styling: BaseMockStyleable.style(2))
                 }
@@ -166,7 +185,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches item inside parent") {
                 // given
-                StyleManager.instance.declareStyles { declare in
+                MockStylesheet.with { declare in
                     declare.inside(BaseMockStyleable.self) { declare in
                         declare.style(BaseMockStyleable.self, styling: BaseMockStyleable.style())
                     }
@@ -189,7 +208,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches item inside parent subtype") {
                 // given
-                StyleManager.instance.declareStyles { declare in
+                MockStylesheet.with { declare in
                     declare.inside(BaseMockStyleable).style(BaseMockStyleable.self, styling: BaseMockStyleable.style(1))
                     declare.style(ChildAMockStyleable.self, styling: BaseMockStyleable.style(2))
                 }
@@ -215,7 +234,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches inside multiple parents") {
                 // given
-                StyleManager.instance.declareStyles { declare in
+                MockStylesheet.with { declare in
                     declare.inside(BaseMockStyleable).inside(ChildAMockStyleable).style(ChildBMockStyleable.self, styling: BaseMockStyleable.style())
                 }
                 
@@ -239,7 +258,7 @@ class StyleKitMatchingTest: QuickSpec {
             
             it("matches base types") {
                 // given
-                StyleManager.instance.declareStyles { declare in
+                MockStylesheet.with { declare in
                     declare.style(BaseMockStyleable.self, styling: BaseMockStyleable.style(1))
                     
                     declare.willStyle(BaseMockStyleable).style(ChildAMockStyleable.self).and

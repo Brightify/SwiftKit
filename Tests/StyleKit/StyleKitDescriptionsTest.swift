@@ -38,8 +38,7 @@ class StyleKitDescriptionsTest: QuickSpec {
             var child: ChildAMockStyleable!
 
             beforeEach {
-                StyleManager.destroyInstance()
-                StyleManager.instance.declareStyles { declare in
+                MockStylesheet.with { declare in
                     declare.inside(named: "hello").inside(BaseMockStyleable.self).style(ChildAMockStyleable.self) { _ in }
                 }
                 
