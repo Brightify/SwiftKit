@@ -15,24 +15,9 @@ private class NoncanonicalView: UIView { }
 
 class StyleKitPerformance: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func testPerformanceExample() {
-        // This is an example of a performance test case.
-        
         self.measureBlock {
-            StyleManager.destroyInstance()
-            // Put the code you want to measure the time of here.
-            StyleManager.instance.declareStyles { declare in
+            MockStylesheet.with { declare in
                 for _ in 1...1000 {
                     declare.style(UIWindow.self) {
                         $0.tintColor = UIColor.brownColor()
@@ -102,9 +87,6 @@ class StyleKitPerformance: XCTestCase {
                 StyleManager.instance.apply(canonicalView)
                 StyleManager.instance.apply(noncanonicalView)
             }
-            
-            //print(NSDate().timeIntervalSinceDate(started))
-            
             
         }
     }

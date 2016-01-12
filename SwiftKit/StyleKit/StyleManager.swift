@@ -7,19 +7,14 @@
 //
 
 public class StyleManager {
-    private static var _instance: StyleManager?
-    public class var instance: StyleManager {
-        if let instance = _instance {
-            return instance
-        } else {
-            let instance: StyleManager = self.init()
-            _instance = instance
-            return instance
-        }
-    }
+    /// Storage for the `instance` property.
+    private static var currentInstanceOrNil: StyleManager?
+    
+    private var stylesheets: [Stylesheet] = []
     
     private var canonicalTypes: [Styleable.Type] = [] {
         didSet {
+            // Each time a canonical type is added or removed, we need to clear the cache because it becomes invalid.
             canonicalTypesCache.removeAll(keepCapacity: true)
         }
     }
@@ -30,11 +25,19 @@ public class StyleManager {
     
     public required init() { }
     
-    public func declareStyles(@noescape run: CollapsibleStyleBuilder -> ()) {
+    public func addStylesheet(stylesheetInit: Void -> Stylesheet) {
+        addStylesheet(stylesheetInit())
+    }
+    
+    public func addStylesheet(stylesheet: Stylesheet) {
         let stylingStarted = NSDate()
         let builder = BaseStyleBuilder(part: .Initial(manager: self))
-        run(builder)
-        print("Styled in", NSDate().timeIntervalSinceDate(stylingStarted), "seconds")
+        
+        stylesheets.append(stylesheet)
+        
+        stylesheet.declareStyles(builder)
+        
+        print("Stylesheet loaded in", NSDate().timeIntervalSinceDate(stylingStarted), "seconds")
     }
     
     public func apply(styleable: Styleable, includeChildren: Bool = true, animated: Bool = false) {
@@ -78,8 +81,10 @@ public class StyleManager {
         }
     }
     
-    public func clearCaches() {
-        canonicalTypesCache = [:]
+    public func clearCaches(keepCapacity: Bool = false) {
+        canonicalTypesCache.removeAll(keepCapacity: keepCapacity)
+        
+        clearCaches(true)
     }
     
     func style(applications: [StyleApplication], animated: Bool) {
@@ -122,10 +127,6 @@ public class StyleManager {
     func styledItem(item: Styleable) -> StyledItem {
         let canonical = canonicalTypeOf(item.dynamicType)
         return StyledItem(canonicalType: canonical, styleable: item)
-    }
-    
-    class func destroyInstance() {
-        _instance = nil
     }
     
     private func canonicalTypeOf(type: Styleable.Type) -> Styleable.Type {
@@ -181,8 +182,35 @@ public class StyleManager {
     }
 }
 
+
+/// MARK: - Singleton instance management
 extension StyleManager {
+    /**
+     Gets or creates a new instance of StyleManager.
+     
+     The new instance will be created dynamically using the designated initializer. This is a way to have sort of
+     injected instance. When you call this on `UIKitStyleManager`, the instance will be of type `UIKitStyleManager`.
+     Alternatively you can also use `StyleManager.setInstance()`
+     
+     - SeeAlso: `StyleManager.setInstance(newInstance: StyleManager)`
+     */
+    public class var instance: StyleManager {
+        if let instance = currentInstanceOrNil {
+            return instance
+        } else {
+            let instance: StyleManager = self.init()
+            currentInstanceOrNil = instance
+            return instance
+        }
+    }
     
+    class func destroyInstance() {
+        currentInstanceOrNil = nil
+    }
+    
+    class func setInstance(newInstance: StyleManager) {
+        currentInstanceOrNil = newInstance
+    }
 }
 
 // MARK: - CustomStringConvertible

@@ -59,6 +59,7 @@
 		188D45BA1C3F31E700A34897 /* UIKitStyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D45B91C3F31E700A34897 /* UIKitStyleManager.swift */; };
 		188D45BC1C3F345F00A34897 /* DispatchHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D45BB1C3F345F00A34897 /* DispatchHelpers.swift */; };
 		188D45BE1C3F475800A34897 /* AnyStyleable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188D45BD1C3F475800A34897 /* AnyStyleable.swift */; };
+		1890F32C1C443639009940FA /* Stylesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1890F32B1C443639009940FA /* Stylesheet.swift */; };
 		18977DBC1BCD3E1700154305 /* InjectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBB1BCD3E1700154305 /* InjectionError.swift */; };
 		18977DBE1BCD3E3E00154305 /* ParametrizedInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBD1BCD3E3E00154305 /* ParametrizedInjector.swift */; };
 		18977DC01BCD42E000154305 /* ParametrizedFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18977DBF1BCD42E000154305 /* ParametrizedFactory.swift */; };
@@ -227,6 +228,7 @@
 		188D45B91C3F31E700A34897 /* UIKitStyleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitStyleManager.swift; sourceTree = "<group>"; };
 		188D45BB1C3F345F00A34897 /* DispatchHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchHelpers.swift; sourceTree = "<group>"; };
 		188D45BD1C3F475800A34897 /* AnyStyleable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyStyleable.swift; sourceTree = "<group>"; };
+		1890F32B1C443639009940FA /* Stylesheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylesheet.swift; sourceTree = "<group>"; };
 		18977DBB1BCD3E1700154305 /* InjectionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectionError.swift; sourceTree = "<group>"; };
 		18977DBD1BCD3E3E00154305 /* ParametrizedInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParametrizedInjector.swift; sourceTree = "<group>"; };
 		18977DBF1BCD42E000154305 /* ParametrizedFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParametrizedFactory.swift; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 				1811FB0F1C406F8E007EC210 /* StyleDeclarationPart.swift */,
 				18333CB81C406FD700F7B279 /* StyleBlueprint.swift */,
 				18D302651C409DD300AB80D5 /* StyleApplication.swift */,
+				1890F32B1C443639009940FA /* Stylesheet.swift */,
 			);
 			path = StyleKit;
 			sourceTree = "<group>";
@@ -1155,6 +1158,7 @@
 				18E484EE1BA8C054004CB09A /* NSNumberTransformation.swift in Sources */,
 				18E484E11BA8C054004CB09A /* PolymorhicType.swift in Sources */,
 				180BCBED1C3EDA6800545AAD /* UIView+Styleable.swift in Sources */,
+				1890F32C1C443639009940FA /* Stylesheet.swift in Sources */,
 				18E484D11BA8C054004CB09A /* MoreFunctionalGlobals.swift in Sources */,
 				18977DC61BCD438300154305 /* GlobalFunctions.swift in Sources */,
 				18977DCC1BCD74B100154305 /* ThreadLocal.swift in Sources */,
