@@ -83,8 +83,6 @@ public class StyleManager {
     
     public func clearCaches(keepCapacity: Bool = false) {
         canonicalTypesCache.removeAll(keepCapacity: keepCapacity)
-        
-        clearCaches(true)
     }
     
     func style(applications: [StyleApplication], animated: Bool) {
