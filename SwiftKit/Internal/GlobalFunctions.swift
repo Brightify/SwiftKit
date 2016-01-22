@@ -12,7 +12,7 @@ internal func inferredType<T>() -> T.Type {
     return T.self
 }
 
-internal func associatedObject<T: AnyObject>(base: AnyObject, key: UnsafePointer<UInt8>, initializer: () -> T) -> T {
+internal func associatedObject<T: AnyObject>(base: AnyObject, key: UnsafePointer<UInt8>, @noescape initializer: () -> T) -> T {
     if let associated = objc_getAssociatedObject(base, key) as? T {
         return associated
     }

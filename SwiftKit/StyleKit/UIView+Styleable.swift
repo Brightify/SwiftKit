@@ -13,7 +13,9 @@ extension UIView: Styleable {
     
     public var skt_stylingDetails: StylingDetails {
         get {
-            return associatedObject(self, key: &stylingHandlerKey) { [weak self] in StylingDetails(styledItem: self) }
+            return associatedObject(self, key: &stylingHandlerKey) {
+                StylingDetails(styledItem: self)
+            }
         }
     }
     
@@ -25,6 +27,23 @@ extension UIView: Styleable {
         return subviews.map { $0 }
     }
 }
+
+//extension UIViewController {
+//    
+//    public override class func initialize() {
+//
+//        skt_swizzleInstanceSelector("", withNewSelector: <#T##Selector#>)
+//    }
+//
+//
+//
+//    var view: UIView! {
+//        didSet {
+//            print(oldValue)
+//        }
+//    }
+//    
+//}
 
 extension NSObject {
     

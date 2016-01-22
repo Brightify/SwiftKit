@@ -40,6 +40,7 @@ public class StylingDetails {
     public var beforeStyled: (Styleable -> Void)?
     public var afterStyled: (Styleable -> Void)?
     
+    let styledItemType: Styleable.Type
     weak var styledItem: Styleable?
     weak var manager: StyleManager?
     var beingStyled: Bool = false
@@ -62,8 +63,9 @@ public class StylingDetails {
     }
     
     // MARK: Initializers
-    public init(styledItem: Styleable?) {
+    public init(styledItem: Styleable) {
         self.styledItem = styledItem
+        styledItemType = styledItem.dynamicType
     }
 }
 
@@ -138,7 +140,7 @@ extension StylingDetails {
 // MARK: - CustomStringConvertible
 extension StylingDetails: CustomStringConvertible {
     public var description: String {
-        var output = "\(self.dynamicType)"
+        var output = "\(styledItemType)"
         
         if !names.isEmpty {
             output += " named: " + names.sort().joinWithSeparator(", ")
