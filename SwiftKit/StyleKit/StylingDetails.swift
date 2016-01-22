@@ -130,9 +130,10 @@ extension StylingDetails {
     private func setNamesInternal(names: Set<String>, animated: Bool = false) {
         _names = names
         
-        guard let manager = manager, styledItem = styledItem else { return }
         // When we change the names, we have to invalidate the style caches of this styleable and its children
         invalidateCachedStyles()
+
+        guard let manager = manager, styledItem = styledItem else { return }
         manager.scheduleStyleApplication(styledItem, includeChildren: true, animated: animated)
     }
 }

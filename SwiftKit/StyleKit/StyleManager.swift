@@ -41,10 +41,7 @@ public class StyleManager {
     }
     
     public func apply(styleable: Styleable, includeChildren: Bool = true, animated: Bool = false) {
-        let stylingDetails = styleable.skt_stylingDetails
-        if stylingDetails.manager == nil {
-            stylingDetails.manager = self
-        }
+        let stylingDetails = configuredStylingDetails(styleable)
         if stylingDetails.lastParent !== styleable.skt_parent {
             stylingDetails.lastParent = styleable.skt_parent
         }
@@ -55,28 +52,30 @@ public class StyleManager {
     }
     
     public func applyIfScheduled(styleable: Styleable) {
-        let stylingDetails = styleable.skt_stylingDetails
+        let stylingDetails = configuredStylingDetails(styleable)
         // If parent is scheduled, we don't want to trigger the child
         if stylingDetails.parentItemStylingDetails?.stylingScheduled ?? false {
             return
         }
         
-        if let scheduledStyling = styleable.skt_stylingDetails.scheduledStyleApplication {
+        if let scheduledStyling = stylingDetails.scheduledStyleApplication {
             apply(styleable, includeChildren: scheduledStyling.includeChildren, animated: scheduledStyling.animated)
         }
     }
     
     public func scheduleStyleApplication(styleable: Styleable, includeChildren: Bool = true, animated: Bool) {
+        let stylingDetails = configuredStylingDetails(styleable)
         let cancellable = cancellableDispatchAsync {
             self.apply(styleable, includeChildren: includeChildren, animated: animated)
         }
         
         let scheduled = ScheduledStyling(includeChildren: includeChildren, animated: animated, cancellable: cancellable)
-        styleable.skt_stylingDetails.scheduledStyleApplication = scheduled
+        stylingDetails.scheduledStyleApplication = scheduled
     }
     
     public func scheduleStyleApplicationIfNeeded(styleable: Styleable, includeChildren: Bool = true, animated: Bool) {
-        if !styleable.skt_stylingDetails.stylingScheduled {
+        let stylingDetails = configuredStylingDetails(styleable)
+        if !stylingDetails.stylingScheduled {
             scheduleStyleApplication(styleable, includeChildren: includeChildren, animated: animated)
         }
     }
@@ -148,7 +147,7 @@ public class StyleManager {
     }
     
     private func collectStyleApplications(styleable: Styleable, includeChildren: Bool) -> [StyleApplication] {
-        let stylingDetails = styleable.skt_stylingDetails
+        let stylingDetails = configuredStylingDetails(styleable)
         let application: StyleApplication
         if let cachedApplication = stylingDetails.cachedStyleApplication {
             application = cachedApplication
@@ -177,6 +176,14 @@ public class StyleManager {
             .filter { $0.precedence != Style.nonMatchingPrecedence }
             .sort { $0.precedence < $1.precedence }
             .map { $0.style }
+    }
+    
+    private func configuredStylingDetails(styleable: Styleable) -> StylingDetails {
+        let stylingDetails = styleable.skt_stylingDetails
+        if stylingDetails.manager == nil {
+            stylingDetails.manager = self
+        }
+        return stylingDetails
     }
 }
 
