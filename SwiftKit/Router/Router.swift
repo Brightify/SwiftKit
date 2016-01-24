@@ -1,6 +1,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import SwiftKitStaging
 
 public typealias DefaultRequestPerformer = AlamofireRequestPerformer
 
@@ -448,19 +449,5 @@ extension Router {
         }
         
         callback(jsonResponse)
-    }
-}
-
-/// Protocol to define the opaque type returned from a request
-public protocol Cancellable {
-    func cancel()
-}
-
-/// Internal token that can be used to cancel requests
-struct CancellableToken: Cancellable {
-    let cancelAction: () -> ()
-    
-    func cancel() {
-        cancelAction()
     }
 }

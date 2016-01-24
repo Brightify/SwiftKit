@@ -6,6 +6,8 @@
 //
 //
 
+import SwiftKitStaging
+
 private func == (lhs: Module.KeyedBindingsMapKey, rhs: Module.KeyedBindingsMapKey) -> Bool {
     return lhs.name == rhs.name && lhs.typeIdentifier == rhs.typeIdentifier
 }

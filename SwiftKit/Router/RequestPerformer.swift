@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftKitStaging
 
 public protocol RequestPerformer {
     
