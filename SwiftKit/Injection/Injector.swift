@@ -6,6 +6,8 @@
 //
 //
 
+import SwiftKitStaging
+
 public class Injector {
     
     private let module: Module

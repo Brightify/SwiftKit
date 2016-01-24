@@ -29,11 +29,7 @@ Pod::Spec.new do |spec|
     spec.platform     = :ios, '8.0'
     spec.requires_arc = true
 
-    spec.default_subspec = 'Events', 'Preferences', 'Injection', 'Router', 'ViewComposer', 'StyleKit'
-
-    spec.subspec 'Internal' do |internal|
-        internal.source_files = 'SwiftKit/Internal/**/*.swift'
-    end
+    spec.default_subspec = 'Events', 'Preferences', 'Injection', 'Router', 'ViewComposer'
 
     spec.subspec 'Events' do |events|
         events.source_files = 'SwiftKit/Events/**/*.swift'
@@ -44,20 +40,20 @@ Pod::Spec.new do |spec|
     spec.subspec 'Preferences' do |preferences|
         preferences.source_files = 'SwiftKit/Preferences/**/*.swift'
         preferences.frameworks = 'Foundation'
-        preferences.dependency 'SwiftKit/Internal'
+        preferences.dependency 'SwiftKitStaging'
         preferences.dependency 'SwiftKit/Events'
     end
 
     spec.subspec 'Injection' do |injection|
         injection.source_files = 'SwiftKit/Injection/**/*.swift'
         injection.frameworks = 'Foundation'
-        injection.dependency 'SwiftKit/Internal'
+        injection.dependency 'SwiftKitStaging'
     end
 
     spec.subspec 'Router' do |router|
         router.source_files = 'SwiftKit/Router/**/*.swift'
         router.frameworks = 'Foundation'
-        router.dependency 'SwiftKit/Internal'
+        router.dependency 'SwiftKitStaging'
         router.dependency 'SwiftKit/ObjectMapper'
         router.dependency 'Alamofire', '~> 2.0'
         router.dependency 'HTTPStatusCodes'
@@ -66,19 +62,14 @@ Pod::Spec.new do |spec|
 
     spec.subspec 'ObjectMapper' do |objectMapper|
         objectMapper.source_files = 'SwiftKit/ObjectMapper/**/*.swift'
-        objectMapper.dependency 'SwiftKit/Internal'
+        objectMapper.dependency 'SwiftKitStaging'
         objectMapper.dependency 'SwiftyJSON'
-    end
-
-    spec.subspec 'StyleKit' do |styleKit|
-        styleKit.source_files = 'SwiftKit/StyleKit/**/*.swift'
-        styleKit.dependency 'SwiftKit/Internal'
     end
 
     spec.subspec 'ViewComposer' do |composer|
         composer.source_files = 'SwiftKit/ViewComposer/**/*.swift'
         composer.frameworks = 'UIKit'
-        composer.dependency 'SwiftKit/Internal'
+        composer.dependency 'SwiftKitStaging'
         composer.dependency 'SwiftKit/Events'
     end
 end

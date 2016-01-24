@@ -8,6 +8,7 @@
 
 import SwiftKit
 import HTTPStatusCodes
+import SwiftKitStaging
 
 public typealias MockEndpoint = (method: String, url: String, response: String, statusCode: Int)
 
