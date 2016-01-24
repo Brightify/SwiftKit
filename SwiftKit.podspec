@@ -34,7 +34,7 @@ Pod::Spec.new do |spec|
     spec.subspec 'Events' do |events|
         events.source_files = 'SwiftKit/Events/**/*.swift'
         events.frameworks = 'UIKit'
-        events.dependency 'SwiftKit/Internal'
+        events.dependency 'SwiftKitStaging'
     end
 
     spec.subspec 'Preferences' do |preferences|
