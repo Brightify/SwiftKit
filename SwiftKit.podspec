@@ -51,7 +51,7 @@ Pod::Spec.new do |spec|
         router.frameworks = 'Foundation'
         router.dependency 'SwiftKitStaging'
         router.dependency 'SwiftKit/ObjectMapper'
-        router.dependency 'Alamofire', '~> 2.0'
+        router.dependency 'Alamofire', '~> 3.0'
         router.dependency 'HTTPStatusCodes'
         router.dependency 'SwiftyJSON'
     end
