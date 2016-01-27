@@ -56,7 +56,7 @@ public class Router {
         }
     }
     
-    private func prepareRequest<E: Endpoint>(endpoint: E, extraModifiers: [RequestModifier] = []) -> Request {
+    private func prepareRequest<E: Endpoint>(endpoint: E, input: JSON? = nil, extraModifiers: [RequestModifier] = []) -> Request {
         var request: Request
         if let url = resolveEndpointUrl(endpoint) {
             request = Request(URL: url)
@@ -66,6 +66,11 @@ public class Router {
         
         request.HTTPMethod = endpoint.method.rawValue
         request.modifiers = endpoint.modifiers.arrayByAppending(extraModifiers)
+        
+        if let input = input {
+            endpoint.inputEncoder.encode(input, to: &request)
+        }
+        
         request.enhancedBy = requestEnhancers.filter { $0.canEnhance(request) }.map {
             $0.enhanceRequest(&request)
             return $0

@@ -15,8 +15,8 @@ import Alamofire
     :param: ENDPOINT The endpoint in the API
     :param: PARAMS The parameters to be filled in the endpoint URL
 */
-public class Target<ENDPOINT: Endpoint, PARAMS> {
-    private let pathAndModifiers: PARAMS -> (String, [RequestModifier])
+public class Target<ENDPOINT: TargetableEndpoint, PARAMS> {
+    private let pathAndModifiers: PARAMS -> (String, [RequestModifier], InputEncoder?)
     
     /**
         Initializes Target with closure that returns path costructed
@@ -24,16 +24,19 @@ public class Target<ENDPOINT: Endpoint, PARAMS> {
         
         :param: path The closure that accepts PARAMS and returns the constructed URL
     */
-    public init(_ path: PARAMS -> String) {
-        self.pathAndModifiers = { (path($0), []) }
+    public init(inputEncoder: InputEncoder? = nil, _ path: PARAMS -> String) {
+        self.pathAndModifiers = { (path($0), [], inputEncoder) }
     }
     
-    public init(_ modifiers: [RequestModifier], _ path: PARAMS -> String) {
-        self.pathAndModifiers = { (path($0), modifiers) }
+    public init(inputEncoder: InputEncoder? = nil, _ modifiers: [RequestModifier], _ path: PARAMS -> String) {
+        self.pathAndModifiers = { (path($0), modifiers, inputEncoder) }
     }
     
-    public init(_ pathAndModifiers: PARAMS -> (String, [RequestModifier])) {
-        self.pathAndModifiers = pathAndModifiers
+    public init(inputEncoder: InputEncoder? = nil, _ pathAndModifiers: PARAMS -> (String, [RequestModifier])) {
+        self.pathAndModifiers = {
+            let (path, modifiers) = pathAndModifiers($0)
+            return (path, modifiers, inputEncoder)
+        }
     }
     
     /**
@@ -42,8 +45,12 @@ public class Target<ENDPOINT: Endpoint, PARAMS> {
         :param: params The parameters used to construct the Endpoint URL
     */
     public func endpoint(params: PARAMS) -> ENDPOINT {
-        let (path, modifiers) = pathAndModifiers(params)
-        return ENDPOINT(path, modifiers)
+        let (path, modifiers, inputEncoder) = pathAndModifiers(params)
+        if let inputEncoder = inputEncoder {
+            return ENDPOINT(path, modifiers, inputEncoder: inputEncoder)
+        } else {
+            return ENDPOINT(path, modifiers)
+        }
     }
 }
 
@@ -53,36 +60,35 @@ public class BaseEndpoint<IN, OUT>: Endpoint {
     
     public let method: Alamofire.Method
     public let path: String
+    public let inputEncoder: InputEncoder
     public let modifiers: [RequestModifier]
     
-    public init(path: String, method: Alamofire.Method, modifiers: [RequestModifier]) {
-        self.path = path
+    public init(method: Alamofire.Method, path: String, modifiers: [RequestModifier], inputEncoder: InputEncoder) {
         self.method = method
+        self.path = path
+        self.inputEncoder = inputEncoder
         self.modifiers = modifiers
     }
     
-    public required init(_ path: String, _ modifiers: [RequestModifier] = []) {
-        fatalError("Initializer init(path:String) cannot be used in BaseEndpoint!")
+    public convenience init<E: Endpoint where E.Input == IN, E.Output == OUT>(endpoint: E) {
+        self.init(method: endpoint.method, path: endpoint.path, modifiers: endpoint.modifiers, inputEncoder: endpoint.inputEncoder)
     }
 }
 
 /**
-    Represents Endpoint with method GET and input and output parameters
-
-    :param: IN The input type
-    :param: OUT The output type
-*/
-public final class GET<IN, OUT>: BaseEndpoint<IN, OUT> {
-    
-    /**
-        Initializes an endpoint with path
-    
-        :param: path The path in the API
-    */
-    public required init(_ path: String, _ modifiers: RequestModifier...) {
-        super.init(path: path, method: .GET, modifiers: modifiers)
+ Represents Endpoint with method GET and input and output parameters
+ 
+ :param: IN The input type
+ :param: OUT The output type
+ */
+public final class GET<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
+    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
+        self.init(path, modifiers, inputEncoder: URLInputEncoder())
     }
     
+    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
+        super.init(method: .GET, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+    }
 }
 
 /**
@@ -91,15 +97,13 @@ public final class GET<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public final class POST<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class POST<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
+    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
+        self.init(path, modifiers, inputEncoder: JSONInputEncoder())
+    }
     
-    /**
-        Initializes an endpoint with path
-    
-        :param: path The path in the API
-    */
-    public required init(_ path: String, _ modifiers: RequestModifier...) {
-        super.init(path: path, method: .POST, modifiers: modifiers)
+    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
+        super.init(method: .POST, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -109,15 +113,13 @@ public final class POST<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public final class PUT<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class PUT<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
+    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
+        self.init(path, modifiers, inputEncoder: JSONInputEncoder())
+    }
     
-    /**
-        Initializes an endpoint with path
-    
-        :param: path The path in the API
-    */
-    public required init(_ path: String, _ modifiers: RequestModifier...) {
-        super.init(path: path, method: .PUT, modifiers: modifiers)
+    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
+        super.init(method: .PUT, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -128,14 +130,12 @@ public final class PUT<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: OUT The output type
 */
 public final class DELETE<IN, OUT>: BaseEndpoint<IN, OUT> {
+    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
+        self.init(path, modifiers, inputEncoder: URLInputEncoder())
+    }
     
-    /**
-        Initializes an endpoint with path
-    
-        :param: path The path in the API
-    */
-    public required init(_ path: String, _ modifiers: RequestModifier...) {
-        super.init(path: path, method: .DELETE, modifiers: modifiers)
+    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
+        super.init(method: .DELETE, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -146,14 +146,12 @@ public final class DELETE<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: OUT The output type
 */
 public final class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT> {
+    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
+        self.init(path, modifiers, inputEncoder: JSONInputEncoder())
+    }
     
-    /**
-        Initializes an endpoint with path
-    
-        :param: path The path in the API
-    */
-    public required init(_ path: String, _ modifiers: RequestModifier...) {
-        super.init(path: path, method: .OPTIONS, modifiers: modifiers)
+    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
+        super.init(method: .OPTIONS, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -164,14 +162,12 @@ public final class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: OUT The output type
 */
 public final class HEAD<IN, OUT>: BaseEndpoint<IN, OUT> {
+    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
+        self.init(path, modifiers, inputEncoder: URLInputEncoder())
+    }
     
-    /**
-        Initializes an endpoint with path
-        
-        :param: path The path in the API
-    */
-    public required init(_ path: String, _ modifiers: RequestModifier...) {
-        super.init(path: path, method: .HEAD, modifiers: modifiers)
+    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
+        super.init(method: .HEAD, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -182,14 +178,12 @@ public final class HEAD<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: OUT The output type
 */
 public final class PATCH<IN, OUT>: BaseEndpoint<IN, OUT> {
+    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
+        self.init(path, modifiers, inputEncoder: JSONInputEncoder())
+    }
     
-    /**
-        Initializes an endpoint with path
-        
-        :param: path The path in the API
-    */
-    public required init(_ path: String, _ modifiers: RequestModifier...) {
-        super.init(path: path, method: .PATCH, modifiers: modifiers)
+    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
+        super.init(method: .PATCH, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -200,14 +194,12 @@ public final class PATCH<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: OUT The output type
 */
 public final class TRACE<IN, OUT>: BaseEndpoint<IN, OUT> {
+    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
+        self.init(path, modifiers, inputEncoder: URLInputEncoder())
+    }
     
-    /**
-        Initializes an endpoint with path
-        
-        :param: path The path in the API
-    */
-    public required init(_ path: String, _ modifiers: RequestModifier...) {
-        super.init(path: path, method: .TRACE, modifiers: modifiers)
+    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
+        super.init(method: .TRACE, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -218,13 +210,11 @@ public final class TRACE<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: OUT The output type
 */
 public final class CONNECT<IN, OUT>: BaseEndpoint<IN, OUT> {
+    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
+        self.init(path, modifiers, inputEncoder: URLInputEncoder())
+    }
     
-    /**
-        Initializes an endpoint with path
-    
-        :param: path The path in the API
-    */
-    public required init(_ path: String, _ modifiers: RequestModifier...) {
-        super.init(path: path, method: .CONNECT, modifiers: modifiers)
+    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
+        super.init(method: .CONNECT, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
