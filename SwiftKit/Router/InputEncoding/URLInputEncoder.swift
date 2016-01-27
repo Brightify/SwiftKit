@@ -20,6 +20,8 @@ private func query(parameters: JSON) -> String {
 }
 
 public struct URLInputEncoder: InputEncoder {
+    public init() { }
+    
     public func encode(input: JSON, inout to request: Request) {
         guard let url = request.URL, components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false) else { return }
         
@@ -30,6 +32,8 @@ public struct URLInputEncoder: InputEncoder {
 }
 
 public struct FormInputEncoder: InputEncoder {
+    public init() { }
+    
     public func encode(input: JSON, inout to request: Request) {
         let oldContentType = request.modifiers.filter { $0 is Headers.ContentType }.first
         if oldContentType == nil {
