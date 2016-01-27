@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		016B8B31A982017DD07172B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1C57433A6E87B4863BE0A9 /* Pods.framework */; };
+		182A5A281C5927DD00BA76C7 /* InputEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A5A271C5927DD00BA76C7 /* InputEncoder.swift */; };
+		182A5A2A1C59280400BA76C7 /* JSONInputEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A5A291C59280400BA76C7 /* JSONInputEncoder.swift */; };
+		182A5A2C1C59282600BA76C7 /* URLInputEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A5A2B1C59282600BA76C7 /* URLInputEncoder.swift */; };
 		184606021BCAED9400AFFA31 /* Instance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184606011BCAED9400AFFA31 /* Instance.swift */; };
 		18640EBB1C58378C00A9AC22 /* RequestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18640EBA1C58378C00A9AC22 /* RequestLogger.swift */; };
 		187342F01C41496D0012A28A /* BaseTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187342EA1C41496D0012A28A /* BaseTestUtils.swift */; };
@@ -175,6 +178,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		182A5A271C5927DD00BA76C7 /* InputEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputEncoder.swift; sourceTree = "<group>"; };
+		182A5A291C59280400BA76C7 /* JSONInputEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONInputEncoder.swift; sourceTree = "<group>"; };
+		182A5A2B1C59282600BA76C7 /* URLInputEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLInputEncoder.swift; sourceTree = "<group>"; };
 		1831E0181B58A7B20029C328 /* BoolMappingOperatorsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolMappingOperatorsTest.swift; sourceTree = "<group>"; };
 		184606011BCAED9400AFFA31 /* Instance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instance.swift; sourceTree = "<group>"; };
 		184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Tests-Bridging-Header.h"; path = "../Tests/Tests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -356,6 +362,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		182A5A261C5927D500BA76C7 /* InputEncoding */ = {
+			isa = PBXGroup;
+			children = (
+				182A5A271C5927DD00BA76C7 /* InputEncoder.swift */,
+				182A5A291C59280400BA76C7 /* JSONInputEncoder.swift */,
+				182A5A2B1C59282600BA76C7 /* URLInputEncoder.swift */,
+			);
+			path = InputEncoding;
+			sourceTree = "<group>";
+		};
 		1831E0171B58A79F0029C328 /* Operators */ = {
 			isa = PBXGroup;
 			children = (
@@ -547,6 +563,7 @@
 		18E484A91BA8C054004CB09A /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				182A5A261C5927D500BA76C7 /* InputEncoding */,
 				18E484AA1BA8C054004CB09A /* AlamofireRequestPerformer.swift */,
 				18E484AB1BA8C054004CB09A /* Endpoint.swift */,
 				18E484AC1BA8C054004CB09A /* Headers.swift */,
@@ -1014,6 +1031,7 @@
 				18977DBC1BCD3E1700154305 /* InjectionError.swift in Sources */,
 				18E484ED1BA8C054004CB09A /* NSDateTransformation.swift in Sources */,
 				18E484FD1BA8C054004CB09A /* NSURL+AppendWithoutEscaping.swift in Sources */,
+				182A5A2A1C59280400BA76C7 /* JSONInputEncoder.swift in Sources */,
 				18E484E31BA8C054004CB09A /* PolymorphCache.swift in Sources */,
 				18E484D31BA8C054004CB09A /* JsonTypeInfo.swift in Sources */,
 				18E485001BA8C054004CB09A /* RequestModifier.swift in Sources */,
@@ -1032,6 +1050,7 @@
 				18E484DE1BA8C054004CB09A /* NSNumberMappingOperators.swift in Sources */,
 				18E484C41BA8C054004CB09A /* EventOperators.swift in Sources */,
 				18E485041BA8C054004CB09A /* Router.swift in Sources */,
+				182A5A2C1C59282600BA76C7 /* URLInputEncoder.swift in Sources */,
 				18E484EF1BA8C054004CB09A /* NSURLTransformation.swift in Sources */,
 				18E484E01BA8C054004CB09A /* TransformationOperators.swift in Sources */,
 				AEF251751C42D808005C6591 /* DictionaryPreference.swift in Sources */,
@@ -1080,6 +1099,7 @@
 				18E484E91BA8C054004CB09A /* FloatTransformation.swift in Sources */,
 				18E484D21BA8C054004CB09A /* Dictionary+Map.swift in Sources */,
 				18E484C91BA8C054004CB09A /* Injectable.swift in Sources */,
+				182A5A281C5927DD00BA76C7 /* InputEncoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

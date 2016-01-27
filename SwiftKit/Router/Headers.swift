@@ -60,6 +60,7 @@ public struct Headers {
     
     public enum ContentType: Header {
         case ApplicationJson
+        case ApplicationFormUrlencoded
         case TextPlain
         case Custom(value: String)
         
@@ -71,6 +72,8 @@ public struct Headers {
             switch self {
             case .ApplicationJson:
                 return "application/json"
+            case .ApplicationFormUrlencoded:
+                return "application/x-www-form-urlencoded"
             case .TextPlain:
                 return "text/plain"
             case .Custom(let value):

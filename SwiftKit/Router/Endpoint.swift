@@ -18,12 +18,7 @@ public protocol Endpoint {
     /// Specifies type of output data
     typealias Output
     
-    /**
-        Initializes Endpoint with path
-    
-        :param: path The path to the API
-    */
-    init(_ path: String, _ modifiers: [RequestModifier])
+    var inputEncoder: InputEncoder { get }
     
     /// Contains HTTP Method such as GET, POST, etc.
     var method: Alamofire.Method { get }
@@ -33,4 +28,26 @@ public protocol Endpoint {
     
     /// Flags that will be used by registered RequestEnhancers to modify the request and/or response.
     var modifiers: [RequestModifier] { get }
+}
+
+public protocol TargetableEndpoint: Endpoint {
+    
+    init(_ path: String, _ modifiers: [RequestModifier])
+    
+    /**
+        Initializes Endpoint with path
+    
+        :param: path The path to the API
+    */
+    init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder)
+}
+
+extension TargetableEndpoint {
+    public init(_ path: String, _ modifiers: RequestModifier...) {
+        self.init(path, modifiers)
+    }
+    
+    public init(_ path: String, _ modifiers: RequestModifier..., inputEncoder: InputEncoder) {
+        self.init(path, modifiers, inputEncoder: inputEncoder)
+    }
 }
