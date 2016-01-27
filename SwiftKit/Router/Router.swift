@@ -367,13 +367,13 @@ extension Router {
     private func prepareRequest<E: Endpoint, IN: Serializable where E.Input == IN>(endpoint: E, input: IN) -> Request {
         let json = objectMapper.toJSON(input)
         
-        return prepareRequest(endpoint, input: try? json.rawData(), contentType: .ApplicationJson)
+        return prepareRequest(endpoint, input: json)
     }
     
     private func prepareRequest<E: Endpoint, IN: Serializable where E.Input == [IN]>(endpoint: E, input: [IN]) -> Request {
         let json = objectMapper.toJSONArray(input)
         
-        return prepareRequest(endpoint, input: try? json.rawData(), contentType: .ApplicationJson)
+        return prepareRequest(endpoint, input: json)
     }
     
     private func relaySingleObjectResponse<OBJECT: Deserializable>(callback: Response<OBJECT?> -> ())(response: Response<NSData?>) {
@@ -439,7 +439,7 @@ extension Router {
     }
     
     private func prepareRequest<E: Endpoint>(endpoint: E, input: JSON) -> Request {
-        return prepareRequest(endpoint, input: try? input.rawData(), contentType: .ApplicationJson)
+        return prepareRequest(endpoint, input: input)
     }
     
     private func relayJSONResponse(callback: Response<JSON?> -> ())(response: Response<NSData?>) {
