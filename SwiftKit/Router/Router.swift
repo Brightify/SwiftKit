@@ -438,10 +438,6 @@ extension Router {
         return runRequest(request, completion: relayJSONResponse(callback))
     }
     
-    private func prepareRequest<E: Endpoint>(endpoint: E, input: JSON) -> Request {
-        return prepareRequest(endpoint, input: input)
-    }
-    
     private func relayJSONResponse(callback: Response<JSON?> -> ())(response: Response<NSData?>) {
         let jsonResponse: Response<JSON?> = response.map {
             var json: JSON? = nil
