@@ -63,8 +63,8 @@ class RouterTest: QuickSpec {
     
     private struct GitHubEndpoints {
         static let zen = GET<Void, String>("/zen")
-        static let userProfile = Target<GET<Void, UserProfile>, String> { "/users/\($0.urlSafe)" }
-        static let userRepositories = Target<GET<Void, String>, String> { "/users/\($0.urlSafe)/repos" }
+        static let userProfile = Target<GET<Void, UserProfile>, String> { "/users/\($0.urlPathSafe)" }
+        static let userRepositories = Target<GET<Void, String>, String> { "/users/\($0.urlPathSafe)/repos" }
         static let test = GET<Void, String>("/zen", TestEnhancer.TestModifier())
         static let nonGithubEndpoint = GET<Void, String>("ftp://test")
         static let multipleInputTarget = Target<GET<Void, String>, (string: String, int: Int)> { "/zen/\($0)/\($1)" }
@@ -72,7 +72,7 @@ class RouterTest: QuickSpec {
     
     private struct GitHubMockEndpoints {
         static let zen: MockEndpoint = (method: "GET", url: "https://api.github.com/zen", response: "Practicality beats purity.", statusCode: 200)
-        static let userProfile: String -> MockEndpoint = { (method: "GET", url: "https://api.github.com/users/\($0.urlSafe)", response: "{\"login\": \"\($0)\", \"id\": 100, \"type\": \"Organization\"}", statusCode: 200) }
+        static let userProfile: String -> MockEndpoint = { (method: "GET", url: "https://api.github.com/users/\($0.urlPathSafe)", response: "{\"login\": \"\($0)\", \"id\": 100, \"type\": \"Organization\"}", statusCode: 200) }
         static let nonGithubEndpoint: MockEndpoint = (method: "GET", url: "ftp://test", response: "Works like a charmer.", statusCode: 200)
     }
     
