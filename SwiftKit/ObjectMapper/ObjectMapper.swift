@@ -69,12 +69,12 @@ public class ObjectMapper {
         }
     }
 
-    public func toJSON<M: Serializable>(var object: M) -> JSON {
+    public func toJSON<M: Serializable>(object: M) -> JSON {
         let map = BaseMap(objectMapper: self, mappingDirection: .ToJSON)
         
         polymorph.writeTypeInfoToMap(map, ofType: M.self, forObject: object)
         
-        object.mapping(map)
+        object.serialize(to: map)
         return map.json.unbox
     }
     

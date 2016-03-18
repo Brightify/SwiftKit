@@ -65,6 +65,16 @@ public protocol Map: class {
     
     func value<T>() -> T?
     
+    func value<T: Transformation>(transformWith transformation: T) -> T.Object?
+    
+    func valueArray<T: Transformation>(transformWith transformation: T) -> [T.Object]
+    
+    func valueArray<T: Transformation>(transformWith transformation: T, defaultValue: [T.Object]) -> [T.Object]
+    
+    func valueDictionary<T: Transformation>(transformWith transformation: T) -> [String: T.Object]
+    
+    func valueDictionary<T: Transformation>(transformWith transformation: T, defaultValue: [String: T.Object]) -> [String: T.Object]
+    
     func object<T: Mappable>() -> T?
     
     func objectArray<T: Mappable>() -> [T]?
@@ -165,6 +175,26 @@ public class BaseMap: Map {
     
     public func value<T>() -> T? {
         return json.unbox.object as? T
+    }
+    
+    public func value<T: Transformation>(transformWith transformation: T) -> T.Object? {
+        return transformation.transformFromJSON(json.unbox)
+    }
+    
+    public func valueArray<T: Transformation>(transformWith transformation: T) -> [T.Object] {
+        return valueArray(transformWith: transformation, defaultValue: [])
+    }
+    
+    public func valueArray<T: Transformation>(transformWith transformation: T, defaultValue: [T.Object]) -> [T.Object] {
+        return transformArrayWith(transformation) ?? defaultValue
+    }
+    
+    public func valueDictionary<T: Transformation>(transformWith transformation: T) -> [String: T.Object] {
+        return valueDictionary(transformWith: transformation, defaultValue: [:])
+    }
+    
+    public func valueDictionary<T: Transformation>(transformWith transformation: T, defaultValue: [String: T.Object]) -> [String: T.Object] {
+        return transformDictionaryWith(transformation) ?? defaultValue
     }
     
     public func object<T: Mappable>() -> T? {
