@@ -129,7 +129,7 @@ public final class PUT<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     :param: IN The input type
     :param: OUT The output type
 */
-public final class DELETE<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class DELETE<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
         self.init(path, modifiers, inputEncoder: URLInputEncoder())
     }
@@ -145,7 +145,7 @@ public final class DELETE<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public final class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
         self.init(path, modifiers, inputEncoder: JSONInputEncoder())
     }
@@ -161,7 +161,7 @@ public final class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public final class HEAD<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class HEAD<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
         self.init(path, modifiers, inputEncoder: URLInputEncoder())
     }
@@ -177,7 +177,7 @@ public final class HEAD<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public final class PATCH<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class PATCH<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
         self.init(path, modifiers, inputEncoder: JSONInputEncoder())
     }
@@ -193,7 +193,7 @@ public final class PATCH<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public final class TRACE<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class TRACE<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
         self.init(path, modifiers, inputEncoder: URLInputEncoder())
     }
@@ -209,7 +209,7 @@ public final class TRACE<IN, OUT>: BaseEndpoint<IN, OUT> {
     :param: IN The input type
     :param: OUT The output type
 */
-public final class CONNECT<IN, OUT>: BaseEndpoint<IN, OUT> {
+public final class CONNECT<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
         self.init(path, modifiers, inputEncoder: URLInputEncoder())
     }
