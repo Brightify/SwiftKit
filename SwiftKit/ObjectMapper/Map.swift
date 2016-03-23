@@ -75,11 +75,11 @@ public protocol Map: class {
     
     func valueDictionary<T: Transformation>(transformWith transformation: T, defaultValue: [String: T.Object]) -> [String: T.Object]
     
-    func object<T: Mappable>() -> T?
+    func object<T: Deserializable>() -> T?
     
-    func objectArray<T: Mappable>() -> [T]?
+    func objectArray<T: Deserializable>() -> [T]?
 
-    func objectDictionary<T: Mappable>() -> [String: T]?
+    func objectDictionary<T: Deserializable>() -> [String: T]?
 
     func setValue<T: AnyObject>(value: T?)
     
@@ -92,11 +92,11 @@ public protocol Map: class {
     func setValueDictionary<T, Transform: Transformation where Transform.Object == T>
             (dictionary: [String: T]?, transformWith transformation: Transform)
     
-    func setObject<T: Mappable>(object: T?)
+    func setObject<T: Serializable>(object: T?)
     
-    func setObjectArray<T: Mappable>(objectArray: [T]?)
+    func setObjectArray<T: Serializable>(objectArray: [T]?)
     
-    func setObjectDictionary<T: Mappable>(objectDictionary: [String: T]?)
+    func setObjectDictionary<T: Serializable>(objectDictionary: [String: T]?)
     
     func assignValueTo<T>(inout field: T)
     
@@ -131,23 +131,23 @@ public protocol Map: class {
     func assignValueDictionaryTo<T, Transform: Transformation where Transform.Object == T>
             (inout field: [String:T]?, transformWith transformation: Transform)
 
-    func assignObjectTo<T: Mappable>(inout field: T)
+    func assignObjectTo<T: Deserializable>(inout field: T)
 
-    func assignObjectTo<T: Mappable>(inout field: T!)
+    func assignObjectTo<T: Deserializable>(inout field: T!)
     
-    func assignObjectTo<T: Mappable>(inout field: T?)
+    func assignObjectTo<T: Deserializable>(inout field: T?)
     
-    func assignObjectArrayTo<T: Mappable>(inout field: [T])
+    func assignObjectArrayTo<T: Deserializable>(inout field: [T])
 
-    func assignObjectArrayTo<T: Mappable>(inout field: [T]!)
+    func assignObjectArrayTo<T: Deserializable>(inout field: [T]!)
 
-    func assignObjectArrayTo<T: Mappable>(inout field: [T]?)
+    func assignObjectArrayTo<T: Deserializable>(inout field: [T]?)
 
-    func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T])
+    func assignObjectDictionaryTo<T: Deserializable>(inout field: [String: T])
 
-    func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T]!)
+    func assignObjectDictionaryTo<T: Deserializable>(inout field: [String: T]!)
 
-    func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T]?)
+    func assignObjectDictionaryTo<T: Deserializable>(inout field: [String: T]?)
 }
 
 public class BaseMap: Map {
@@ -197,15 +197,15 @@ public class BaseMap: Map {
         return transformDictionaryWith(transformation) ?? defaultValue
     }
     
-    public func object<T: Mappable>() -> T? {
+    public func object<T: Deserializable>() -> T? {
         return objectMapper.map(json.unbox)
     }
     
-    public func objectArray<T: Mappable>() -> [T]? {
+    public func objectArray<T: Deserializable>() -> [T]? {
         return objectMapper.mapArray(json.unbox)
     }
 
-    public func objectDictionary<T: Mappable>() -> [String: T]? {
+    public func objectDictionary<T: Deserializable>() -> [String: T]? {
         return objectMapper.mapDictionary(json.unbox)
     }
     
@@ -232,7 +232,7 @@ public class BaseMap: Map {
         } ?? NSNull()
     }
     
-    public func setObject<T: Mappable>(object: T?) {
+    public func setObject<T: Serializable>(object: T?) {
         if let unwrappedObject = object {
             json.unbox.object = objectMapper.toJSON(unwrappedObject).object
         } else {
@@ -240,7 +240,7 @@ public class BaseMap: Map {
         }
     }
     
-    public func setObjectArray<T: Mappable>(objectArray: [T]?) {
+    public func setObjectArray<T: Serializable>(objectArray: [T]?) {
         if let unwrappedObjectArray = objectArray {
             json.unbox.object = objectMapper.toJSONArray(unwrappedObjectArray).object
         } else {
@@ -248,7 +248,7 @@ public class BaseMap: Map {
         }
     }
     
-    public func setObjectDictionary<T : Mappable>(objectDictionary: [String : T]?) {
+    public func setObjectDictionary<T : Serializable>(objectDictionary: [String : T]?) {
         if let unwrappedObjectDictionary = objectDictionary {
             json.unbox.object = objectMapper.toJSONDictionary(unwrappedObjectDictionary).object
         } else {
@@ -337,55 +337,55 @@ public class BaseMap: Map {
         }
     }
 
-    public func assignObjectTo<T: Mappable>(inout field: T) {
+    public func assignObjectTo<T: Deserializable>(inout field: T) {
         if let object: T = object() {
             field = object
         }
     }
     
-    public func assignObjectTo<T: Mappable>(inout field: T!) {
+    public func assignObjectTo<T: Deserializable>(inout field: T!) {
         if let object: T = object() {
             field = object
         }
     }
     
-    public func assignObjectTo<T: Mappable>(inout field: T?) {
+    public func assignObjectTo<T: Deserializable>(inout field: T?) {
         if let object: T = object() {
             field = object
         }
     }
     
-    public func assignObjectArrayTo<T: Mappable>(inout field: [T]) {
+    public func assignObjectArrayTo<T: Deserializable>(inout field: [T]) {
         if let objectArray: [T] = objectArray() {
             field = objectArray
         }
     }
 
-    public func assignObjectArrayTo<T: Mappable>(inout field: [T]!) {
+    public func assignObjectArrayTo<T: Deserializable>(inout field: [T]!) {
         if let objectArray: [T] = objectArray() {
             field = objectArray
         }
     }
 
-    public func assignObjectArrayTo<T: Mappable>(inout field: [T]?) {
+    public func assignObjectArrayTo<T: Deserializable>(inout field: [T]?) {
         if let objectArray: [T] = objectArray() {
             field = objectArray
         }
     }
 
-    public func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T]) {
+    public func assignObjectDictionaryTo<T: Deserializable>(inout field: [String: T]) {
         if let objectDictionary: [String: T] = objectDictionary() {
             field = objectDictionary
         }
     }
 
-    public func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T]!) {
+    public func assignObjectDictionaryTo<T: Deserializable>(inout field: [String: T]!) {
         if let objectDictionary: [String: T] = objectDictionary() {
             field = objectDictionary
         }
     }
 
-    public func assignObjectDictionaryTo<T: Mappable>(inout field: [String: T]?) {
+    public func assignObjectDictionaryTo<T: Deserializable>(inout field: [String: T]?) {
         if let objectDictionary: [String: T] = objectDictionary() {
             field = objectDictionary
         }
