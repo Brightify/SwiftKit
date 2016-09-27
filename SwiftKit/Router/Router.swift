@@ -6,17 +6,17 @@ import SwiftKitStaging
 public typealias DefaultRequestPerformer = AlamofireRequestPerformer
 
 /// Router submodule helps to use REST APIs
-public class Router {
+open class Router {
     
     /// Block to be executed when a request has completed.
-    typealias Completion = Response<NSData?> -> ()
+    typealias Completion = (Response<Data?>) -> ()
     
-    public let baseURL: NSURL
-    public let objectMapper: ObjectMapper
-    public let requestPerformer: RequestPerformer
-    public let responseVerifier: ResponseVerifier
+    open let baseURL: URL
+    open let objectMapper: ObjectMapper
+    open let requestPerformer: RequestPerformer
+    open let responseVerifier: ResponseVerifier
     
-    public private(set) var requestEnhancers: [RequestEnhancer] = []
+    open fileprivate(set) var requestEnhancers: [RequestEnhancer] = []
     
     /**
         Initialize with URL of the API, an instance of ObjectMapper that will be used for the JSON mapping and a 
@@ -27,7 +27,7 @@ public class Router {
         :param: responseVerifier An instance of ResponseVerifier used to verify a response. By default a StatusCodeRangeVerifier is used with a range of 200...299.
     */
     public init(
-        baseURL: NSURL,
+        baseURL: URL,
         objectMapper: ObjectMapper,
         requestPerformer: RequestPerformer = DefaultRequestPerformer(),
         responseVerifier: ResponseVerifier = StatusCodeRangeVerifier(range: 200...299))
@@ -40,14 +40,14 @@ public class Router {
         registerRequestEnhancer(HeaderRequestEnhancer())
     }
     
-    public func registerRequestEnhancer(enhancer: RequestEnhancer) {
+    open func registerRequestEnhancer(_ enhancer: RequestEnhancer) {
         requestEnhancers.append(enhancer)
-        requestEnhancers.sortInPlace { $0.priority < $1.priority }
+        requestEnhancers.sort { $0.priority < $1.priority }
     }
     
-    public func resolveEndpointUrl<E: Endpoint>(endpoint: E) -> NSURL? {
+    open func resolveEndpointUrl<E: Endpoint>(_ endpoint: E) -> URL? {
         // Checking for scheme being non-nil allows endpoints with absolute urls without appending the baseURL.
-        if let endpointUrl = NSURL(string: endpoint.path) where endpointUrl.scheme != "" {
+        if let endpointUrl = URL(string: endpoint.path), let scheme = endpointUrl.scheme, scheme != "" {
             return endpointUrl
         } else if let url = baseURL.URLByAppendingPathComponentWithoutEscape(endpoint.path) {
             return url
@@ -56,7 +56,7 @@ public class Router {
         }
     }
     
-    private func prepareRequest<E: Endpoint>(endpoint: E, input: JSON? = nil, extraModifiers: [RequestModifier] = []) -> Request {
+    fileprivate func prepareRequest<E: Endpoint>(_ endpoint: E, input: JSON? = nil, extraModifiers: [RequestModifier] = []) -> Request {
         var request: Request
         if let url = resolveEndpointUrl(endpoint) {
             request = Request(URL: url)
@@ -71,15 +71,15 @@ public class Router {
             endpoint.inputEncoder.encode(input, to: &request)
         }
         
-        request.enhancedBy = requestEnhancers.filter { $0.canEnhance(request) }.map {
-            $0.enhanceRequest(&request)
+        request.enhancedBy = requestEnhancers.filter { $0.canEnhance(request: request) }.map {
+            $0.enhance(request: &request)
             return $0
         }
 
         return request
     }
     
-    private func prepareRequest<E: Endpoint>(endpoint: E, input: NSData?, contentType: Headers.ContentType, extraModifiers: [RequestModifier] = []) -> Request {
+    fileprivate func prepareRequest<E: Endpoint>(_ endpoint: E, input: Data?, contentType: Headers.ContentType, extraModifiers: [RequestModifier] = []) -> Request {
         var request = prepareRequest(endpoint, extraModifiers: extraModifiers.arrayByAppending(contentType))
         
         request.HTTPBody = input
@@ -87,17 +87,17 @@ public class Router {
         return request
     }
     
-    private func runRequest(request: Request, completion: Completion) -> Cancellable {
-        return requestPerformer.performRequest(request) { (var response) in
-            response = request.enhancedBy.reduce(response) { accumulator, enhancer in
-                enhancer.deenhanceResponse(accumulator)
+    fileprivate func run(request: Request, completion: @escaping Completion) -> Cancellable {
+        return requestPerformer.perform(request: request) { response in
+            let deenhancedResponse = request.enhancedBy.reduce(response) { accumulator, enhancer in
+                enhancer.deenhance(response: accumulator)
             }
             
-            completion(response)
+            completion(deenhancedResponse)
         }
     }
     
-    private func relayEmptyResponse(callback: EmptyResponse -> ())(response: Response<NSData?>) {
+    fileprivate func relay(emptyResponse response: Response<Data?>, to callback: (EmptyResponse) -> ()) {
         callback(response.emptyCopy())
     }
 
@@ -113,13 +113,13 @@ extension Router {
         :param: callback A callback that will be executed when the request is completed.
         :returns: Cancellable
     */
-    public func request<ENDPOINT: Endpoint
-        where ENDPOINT.Input == Void, ENDPOINT.Output == Void>
-        (endpoint: ENDPOINT, callback: EmptyResponse -> ()) -> Cancellable
+    public func request<ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, callback: @escaping (EmptyResponse) -> ()) -> Cancellable
+        where ENDPOINT.Input == Void, ENDPOINT.Output == Void
     {
         let request = prepareRequest(endpoint)
         
-        return runRequest(request, completion: relayEmptyResponse(callback))
+        return run(request: request) { self.relay(emptyResponse: $0, to: callback) }
     }
     
     /**
@@ -128,22 +128,22 @@ extension Router {
         :param: endpoint The target Endpoint of the API
         :param: callback A callback that will be executed when the requests is completed.
     */
-    public func request<ENDPOINT: Endpoint
-        where ENDPOINT.Input == Void, ENDPOINT.Output == String>
-        (endpoint: ENDPOINT, callback: Response<String?> -> ()) -> Cancellable
+    public func request<ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, callback: @escaping (Response<String?>) -> ()) -> Cancellable
+        where ENDPOINT.Input == Void, ENDPOINT.Output == String
     {
         let request = prepareRequest(endpoint)
 
-        return runRequest(request, completion: relayPlainTextResponse(callback))
+        return run(request: request) { self.relay(plainTextResponse: $0, to: callback) }
     }
     
-    public func request<ENDPOINT: Endpoint
-        where ENDPOINT.Input == Void, ENDPOINT.Output == [String]>
-        (endpoint: ENDPOINT, callback: Response<[String]> -> ()) -> Cancellable
+    public func request<ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, callback: @escaping (Response<[String]>) -> ()) -> Cancellable
+        where ENDPOINT.Input == Void, ENDPOINT.Output == [String]
     {
         let request = prepareRequest(endpoint)
         
-        return runRequest(request, completion: relayStringArrayResponse(callback))
+        return run(request: request) { self.relay(stringArrayResponse: $0, to: callback) }
     }
 
     /**
@@ -154,20 +154,20 @@ extension Router {
         :param: callback The callback that is executed when request succeeds or fails
         :returns: Cancellable
     */
-    public func request<ENDPOINT: Endpoint
-        where ENDPOINT.Input == [String], ENDPOINT.Output == Void>
-        (endpoint: ENDPOINT, input: [String], callback: EmptyResponse -> ()) -> Cancellable
+    public func request<ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: [String], callback: @escaping (EmptyResponse) -> ()) -> Cancellable
+        where ENDPOINT.Input == [String], ENDPOINT.Output == Void
     {
         return jsonRequest(endpoint, input: JSON(input)) {
             callback($0.emptyCopy())
         }
     }
     
-    private func relayPlainTextResponse(callback: Response<String?> -> ())(response: Response<NSData?>) {
+    fileprivate func relay(plainTextResponse response: Response<Data?>, to callback: (Response<String?>) -> ()) {
         let textResponse: Response<String?> = response.map {
             var text: String? = nil
-            if self.responseVerifier.verify(response), let data = $0 {
-                text = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
+            if self.responseVerifier.verify(response: response), let data = $0 {
+                text = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String
             }
             return text
         }
@@ -175,10 +175,10 @@ extension Router {
         callback(textResponse)
     }
     
-    private func relayStringArrayResponse(callback: Response<[String]> -> ())(response: Response<NSData?>) {
+    fileprivate func relay(stringArrayResponse response: Response<Data?>, to callback: (Response<[String]>) -> ()) {
         let stringArrayResponse: Response<[String]> = response.map {
             var array: [String] = []
-            if self.responseVerifier.verify(response), let data = $0 {
+            if self.responseVerifier.verify(response: response), let data = $0 {
                 let json = JSON(data: data)
                 for (_, value) in json {
                     if let string = value.string {
@@ -204,13 +204,13 @@ extension Router {
         :param: callback The callback that is executed when request succeeds or fails
         :returns: Cancellable
     */
-    public func request<IN: Serializable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == IN, ENDPOINT.Output == Void>
-        (endpoint: ENDPOINT, input: IN, callback: EmptyResponse -> ()) -> Cancellable
+    public func request<IN: Serializable, ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: IN, callback: @escaping (EmptyResponse) -> ()) -> Cancellable
+        where ENDPOINT.Input == IN, ENDPOINT.Output == Void
     {
         let request = prepareRequest(endpoint, input: input)
         
-        return runRequest(request, completion: relayEmptyResponse(callback))
+        return run(request: request) { self.relay(emptyResponse: $0, to: callback) }
     }
     
     /**
@@ -221,13 +221,13 @@ extension Router {
         :param: callback The callback that is executed when request succeeds or fails
         :returns: Cancellable
     */
-    public func request<IN: Serializable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == [IN], ENDPOINT.Output == Void>
-        (endpoint: ENDPOINT, input: [IN], callback: EmptyResponse -> ()) -> Cancellable
+    public func request<IN: Serializable, ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: [IN], callback: @escaping (EmptyResponse) -> ()) -> Cancellable
+        where ENDPOINT.Input == [IN], ENDPOINT.Output == Void
     {
         let request = prepareRequest(endpoint, input: input)
         
-        return runRequest(request, completion: relayEmptyResponse(callback))
+        return run(request: request) { self.relay(emptyResponse: $0, to: callback) }
     }
 
     /**
@@ -237,13 +237,13 @@ extension Router {
         :param: callback The callback with Deserializable parameter
         :returns: Cancellable
     */
-    public func request<OUT: Deserializable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == Void, ENDPOINT.Output == OUT>
-        (endpoint: ENDPOINT, callback: Response<OUT?> -> ()) -> Cancellable
+    public func request<OUT: Deserializable, ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, callback: @escaping (Response<OUT?>) -> ()) -> Cancellable
+        where ENDPOINT.Input == Void, ENDPOINT.Output == OUT
     {
         let request = prepareRequest(endpoint)
         
-        return runRequest(request, completion: relaySingleObjectResponse(callback))
+        return run(request: request) { self.relay(singleObjectResponse: $0, to: callback) }
     }
     
     /**
@@ -253,13 +253,13 @@ extension Router {
         :param: callback The callback with Deserializable array parameter
         :returns: Cancellable
     */
-    public func request<OUT: Deserializable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == Void, ENDPOINT.Output == [OUT]>
-        (endpoint: ENDPOINT, callback: Response<[OUT]> -> ()) -> Cancellable
+    public func request<OUT: Deserializable, ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, callback: @escaping (Response<[OUT]>) -> ()) -> Cancellable
+        where ENDPOINT.Input == Void, ENDPOINT.Output == [OUT]
     {
         let request = prepareRequest(endpoint)
         
-        return runRequest(request, completion: relayObjectArrayResponse(callback))
+        return run(request: request) { self.relay(objectArrayResponse: $0, to: callback) }
     }
     
     /**
@@ -270,13 +270,13 @@ extension Router {
         :param: callback The callback with Deserializable parameter
         :returns: Cancellable
     */
-    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == IN, ENDPOINT.Output == OUT>
-        (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<OUT?> -> ()) -> Cancellable
+    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: ENDPOINT.Input, callback: @escaping (Response<OUT?>) -> ()) -> Cancellable
+        where ENDPOINT.Input == IN, ENDPOINT.Output == OUT
     {
         let request = prepareRequest(endpoint, input: input)
         
-        return runRequest(request, completion: relaySingleObjectResponse(callback))
+        return run(request: request) { self.relay(singleObjectResponse: $0, to: callback) }
     }
     
     /**
@@ -287,13 +287,13 @@ extension Router {
         :param: callback The callback with Deserializable parameter
         :returns: Cancellable
     */
-    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == [IN], ENDPOINT.Output == OUT>
-        (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<OUT?> -> ()) -> Cancellable
+    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: ENDPOINT.Input, callback: @escaping (Response<OUT?>) -> ()) -> Cancellable
+        where ENDPOINT.Input == [IN], ENDPOINT.Output == OUT
     {
         let request = prepareRequest(endpoint, input: input)
         
-        return runRequest(request, completion: relaySingleObjectResponse(callback))
+        return run(request: request) { self.relay(singleObjectResponse: $0, to: callback) }
     }
     
     /**
@@ -304,13 +304,13 @@ extension Router {
         :param: callback The callback with Deserializable array parameter
         :returns: Cancellable
     */
-    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == IN, ENDPOINT.Output == [OUT]>
-        (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<[OUT]> -> ()) -> Cancellable
+    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: ENDPOINT.Input, callback: @escaping (Response<[OUT]>) -> ()) -> Cancellable
+        where ENDPOINT.Input == IN, ENDPOINT.Output == [OUT]
     {
         let request = prepareRequest(endpoint, input: input)
         
-        return runRequest(request, completion: relayObjectArrayResponse(callback))
+        return run(request: request) { self.relay(objectArrayResponse: $0, to: callback) }
     }
     
     /**
@@ -321,13 +321,13 @@ extension Router {
         :param: callback The callback with Deserializable arrayparameter
         :returns: Cancellable
     */
-    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == [IN], ENDPOINT.Output == [OUT]>
-        (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<[OUT]> -> ()) -> Cancellable
+    public func request<IN: Serializable, OUT: Deserializable, ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: ENDPOINT.Input, callback: @escaping (Response<[OUT]>) -> ()) -> Cancellable
+        where ENDPOINT.Input == [IN], ENDPOINT.Output == [OUT]
     {
         let request = prepareRequest(endpoint, input: input)
         
-        return runRequest(request, completion: relayObjectArrayResponse(callback))
+        return run(request: request) { self.relay(objectArrayResponse: $0, to: callback) }
     }
     
     /**
@@ -338,13 +338,13 @@ extension Router {
         :param: callback The Response with Deserializable parameter
         :returns: Cancellable
     */
-    public func request<OUT: Deserializable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == [String], ENDPOINT.Output == OUT>
-        (endpoint: ENDPOINT, input: [String], callback: Response<OUT?> -> ()) -> Cancellable
+    public func request<OUT: Deserializable, ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: [String], callback: @escaping (Response<OUT?>) -> ()) -> Cancellable
+        where ENDPOINT.Input == [String], ENDPOINT.Output == OUT
     {
         let request = prepareRequest(endpoint, input: JSON(input))
         
-        return runRequest(request, completion: relaySingleObjectResponse(callback))
+        return run(request: request) { self.relay(singleObjectResponse: $0, to: callback) }
     }
     
     /**
@@ -355,31 +355,31 @@ extension Router {
         :param: callback The Response with Deserializable array parameter
         :returns: Cancellable
     */
-    public func request<OUT: Deserializable, ENDPOINT: Endpoint
-        where ENDPOINT.Input == [String], ENDPOINT.Output == [OUT]>
-        (endpoint: ENDPOINT, input: ENDPOINT.Input, callback: Response<[OUT]> -> ()) -> Cancellable
+    public func request<OUT: Deserializable, ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: ENDPOINT.Input, callback: @escaping (Response<[OUT]>) -> ()) -> Cancellable
+        where ENDPOINT.Input == [String], ENDPOINT.Output == [OUT]
     {
         let request = prepareRequest(endpoint, input: JSON(input))
         
-        return runRequest(request, completion: relayObjectArrayResponse(callback))
+        return run(request: request) { self.relay(objectArrayResponse: $0, to: callback) }
     }
 
-    private func prepareRequest<E: Endpoint, IN: Serializable where E.Input == IN>(endpoint: E, input: IN) -> Request {
+    fileprivate func prepareRequest<E: Endpoint, IN: Serializable>(_ endpoint: E, input: IN) -> Request where E.Input == IN {
         let json = objectMapper.toJSON(input)
         
         return prepareRequest(endpoint, input: json)
     }
     
-    private func prepareRequest<E: Endpoint, IN: Serializable where E.Input == [IN]>(endpoint: E, input: [IN]) -> Request {
+    fileprivate func prepareRequest<E: Endpoint, IN: Serializable>(_ endpoint: E, input: [IN]) -> Request where E.Input == [IN] {
         let json = objectMapper.toJSONArray(input)
         
         return prepareRequest(endpoint, input: json)
     }
     
-    private func relaySingleObjectResponse<OBJECT: Deserializable>(callback: Response<OBJECT?> -> ())(response: Response<NSData?>) {
+    fileprivate func relay<OBJECT: Deserializable>(singleObjectResponse response: Response<Data?>, to callback: (Response<OBJECT?>) -> ()) {
         let modelResponse: Response<OBJECT?> = response.map {
             var model: OBJECT? = nil
-            if self.responseVerifier.verify(response), let data = $0 {
+            if self.responseVerifier.verify(response: response), let data = $0 {
                 let json = JSON(data: data)
                 model = self.objectMapper.map(json)
             }
@@ -389,11 +389,11 @@ extension Router {
         callback(modelResponse)
     }
     
-    private func relayObjectArrayResponse<OBJECT: Deserializable>(callback: Response<[OBJECT]> -> ())(response: Response<NSData?>) {
+    fileprivate func relay<OBJECT: Deserializable>(objectArrayResponse response: Response<Data?>, to callback: (Response<[OBJECT]>) -> ()) {
         let modelResponse: Response<[OBJECT]> = response.map {
             var models: [OBJECT]?
             
-            if self.responseVerifier.verify(response), let data = $0 {
+            if self.responseVerifier.verify(response: response), let data = $0 {
                 let json = JSON(data: data)
                 models = self.objectMapper.mapArray(json)
             }
@@ -415,34 +415,34 @@ extension Router {
         :param: callback The Response with parameter of JSON
         :returns: Cancellable
     */
-    public func request<ENDPOINT: Endpoint
-        where ENDPOINT.Input == JSON, ENDPOINT.Output == JSON>
-        (endpoint: ENDPOINT, input: JSON, callback: Response<JSON?> -> ()) -> Cancellable
+    public func request<ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: JSON, callback: @escaping (Response<JSON?>) -> ()) -> Cancellable
+        where ENDPOINT.Input == JSON, ENDPOINT.Output == JSON
     {
         return jsonRequest(endpoint, input: input, callback: callback)
     }
     
-    private func jsonRequest<ENDPOINT: Endpoint>
-        (endpoint: ENDPOINT, callback: Response<JSON?> -> ()) -> Cancellable
+    fileprivate func jsonRequest<ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, callback: @escaping (Response<JSON?>) -> ()) -> Cancellable
     {
         let request = prepareRequest(endpoint)
         
-        return runRequest(request, completion: relayJSONResponse(callback))
+        return run(request: request) { self.relay(JSONResponse: $0, to: callback) }
     }
     
-    private func jsonRequest<ENDPOINT: Endpoint>
-        (endpoint: ENDPOINT, input: JSON, callback: Response<JSON?> -> ()) -> Cancellable
+    fileprivate func jsonRequest<ENDPOINT: Endpoint>
+        (_ endpoint: ENDPOINT, input: JSON, callback: @escaping (Response<JSON?>) -> ()) -> Cancellable
     {
         let request = prepareRequest(endpoint, input: input)
         
-        return runRequest(request, completion: relayJSONResponse(callback))
+        return run(request: request) { self.relay(JSONResponse: $0, to: callback) }
     }
     
-    private func relayJSONResponse(callback: Response<JSON?> -> ())(response: Response<NSData?>) {
+    fileprivate func relay(JSONResponse response: Response<Data?>, to callback: (Response<JSON?>) -> ()) {
         let jsonResponse: Response<JSON?> = response.map {
             var json: JSON? = nil
             
-            if self.responseVerifier.verify(response), let data = $0 {
+            if self.responseVerifier.verify(response: response), let data = $0 {
                 json = JSON(data: data)
             }
             

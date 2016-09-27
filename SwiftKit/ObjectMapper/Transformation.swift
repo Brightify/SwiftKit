@@ -9,8 +9,8 @@
 import SwiftyJSON
 
 public protocol Transformation {
-    typealias Object
+    associatedtype Object
 
-    func transformFromJSON(json: JSON) -> Object?
-    func transformToJSON(object: Object?) -> JSON
+    func transformFromJSON(_ json: JSON) -> Object?
+    func transformToJSON(_ object: Object?) -> JSON
 }

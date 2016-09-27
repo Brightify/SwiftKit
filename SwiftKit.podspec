@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |spec|
     spec.name             = "SwiftKit"
-    spec.version          = "0.9.0"
+    spec.version          = "0.10.0"
     spec.summary          = "SwiftKit is a collection of simple libraries that make your life easier."
     spec.description      = <<-DESC
                        SwiftKit's main purpose is to jumpstart iOS app development. We strive to deliver multiple small libraries that will solve the most basic things so you will not have to do it yourself.
@@ -25,47 +25,27 @@ Pod::Spec.new do |spec|
     spec.platform     = :ios, '8.0'
     spec.requires_arc = true
 
-    spec.default_subspec = 'Events', 'Preferences', 'Injection', 'Router', 'ViewComposer'
-
-    spec.subspec 'Events' do |events|
-        events.source_files = 'SwiftKit/Events/**/*.swift'
-        events.frameworks = 'UIKit'
-        events.dependency 'SwiftKitStaging'
-    end
-
-    spec.subspec 'Preferences' do |preferences|
-        preferences.source_files = 'SwiftKit/Preferences/**/*.swift'
-        preferences.frameworks = 'Foundation'
-        preferences.dependency 'SwiftKitStaging'
-        preferences.dependency 'SwiftKit/Events'
-    end
+    spec.default_subspec = 'Injection', 'Router'
 
     spec.subspec 'Injection' do |injection|
         injection.source_files = 'SwiftKit/Injection/**/*.swift'
         injection.frameworks = 'Foundation'
-        injection.dependency 'SwiftKitStaging'
+        injection.dependency 'SwiftKitStaging', '~> 0.2'
     end
 
     spec.subspec 'Router' do |router|
         router.source_files = 'SwiftKit/Router/**/*.swift'
         router.frameworks = 'Foundation'
-        router.dependency 'SwiftKitStaging'
+        router.dependency 'SwiftKitStaging', '~> 0.2'
         router.dependency 'SwiftKit/ObjectMapper'
-        router.dependency 'Alamofire', '~> 3.0'
-        router.dependency 'HTTPStatusCodes'
-        router.dependency 'SwiftyJSON'
+        router.dependency 'Alamofire', '~> 4.0'
+        router.dependency 'HTTPStatusCodes', '~> 3.1'
+        router.dependency 'SwiftyJSON', '~> 3.0'
     end
 
     spec.subspec 'ObjectMapper' do |objectMapper|
         objectMapper.source_files = 'SwiftKit/ObjectMapper/**/*.swift'
-        objectMapper.dependency 'SwiftKitStaging'
-        objectMapper.dependency 'SwiftyJSON'
-    end
-
-    spec.subspec 'ViewComposer' do |composer|
-        composer.source_files = 'SwiftKit/ViewComposer/**/*.swift'
-        composer.frameworks = 'UIKit'
-        composer.dependency 'SwiftKitStaging'
-        composer.dependency 'SwiftKit/Events'
+        objectMapper.dependency 'SwiftKitStaging', '~> 0.2'
+        objectMapper.dependency 'SwiftyJSON', '~> 3.0'
     end
 end

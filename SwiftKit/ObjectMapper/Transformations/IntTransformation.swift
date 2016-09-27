@@ -8,12 +8,12 @@ public struct IntTransformation: Transformation {
     
     public init() { }
     
-    public func transformFromJSON(json: JSON) -> Int? {
+    public func transformFromJSON(_ json: JSON) -> Int? {
         return json.int
     }
 
-    public func transformToJSON(object: Int?) -> JSON {
-        return JSON(object ?? NSNull())
+    public func transformToJSON(_ object: Int?) -> JSON {
+        return JSON(object.map(NSNumber.init(value:)) ?? NSNull())
     }
 }
 

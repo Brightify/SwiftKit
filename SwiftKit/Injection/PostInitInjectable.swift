@@ -20,12 +20,12 @@ public protocol PostInitInjectable: class {
     
     - parameter injector: The Injector used to inject dependencies
     */
-    func inject(injector: Injector)
+    func inject(_ injector: Injector)
     
 }
 
 public protocol PostInitParametrizedInjectable: PostInitInjectable, Parametrizable {
-    typealias Parameters
+    associatedtype Parameters
     
-    func postInject(parameters: Parameters)
+    func postInject(_ parameters: Parameters)
 }

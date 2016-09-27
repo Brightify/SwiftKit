@@ -42,7 +42,7 @@ class InjectionTest: QuickSpec {
                 
                 let initialController = injector.get(Key<UIViewController>(named: "InitialController"))
                 let lastController = injector.get(Key<UIViewController>(named: "LastController"))
-                expect(initialController.dynamicType !== lastController.dynamicType) == true
+                expect(type(of: initialController) !== type(of: lastController)) == true
             }
             
             it("injects an instance object") {
@@ -220,7 +220,7 @@ private final class InitCalledCounter: Injectable {
     static var timesInitCalled = 0
     
     init(injector: Injector) {
-        InitCalledCounter.timesInitCalled++
+        InitCalledCounter.timesInitCalled += 1
     }
 }
 
@@ -243,10 +243,10 @@ private class PostInitParametrizedService: PostInitParametrizedInjectable {
 
     required init() { }
     
-    private func inject(injector: Injector) {
+    fileprivate func inject(_ injector: Injector) {
     }
     
-    private func postInject(parameters: (string: String, int: Int)) {
+    fileprivate func postInject(_ parameters: (string: String, int: Int)) {
         self.string = parameters.string
         self.int = parameters.int
     }

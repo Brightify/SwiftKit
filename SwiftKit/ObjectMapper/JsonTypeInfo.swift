@@ -12,7 +12,7 @@ public struct JsonTypeInfo {
     public let baseType: PolymorphicMappable.Type
     public let registeredTypes: [PolymorphicType]
     
-    private init(
+    fileprivate init(
         baseType: PolymorphicMappable.Type,
         registeredTypes: [PolymorphicType]) {
             self.baseType = baseType
@@ -20,34 +20,34 @@ public struct JsonTypeInfo {
     }
     
     public enum Id {
-        case Class(property: String, className: String)
-        case Name(property: String, value: String)
+        case `class`(property: String, className: String)
+        case name(property: String, value: String)
     }
     
 }
 
-public class JsonTypeInfoBuilder<T: PolymorphicMappable> {
-    private var registeredTypes: [PolymorphicType] = []
+open class JsonTypeInfoBuilder<T: PolymorphicMappable> {
+    fileprivate var registeredTypes: [PolymorphicType] = []
     
     public init() {
     }
     
-    public func registerSubtype(type: T.Type, named name: String, property: String = "@type") {
-        let id = JsonTypeInfo.Id.Name(property: property, value: name)
+    open func registerSubtype(_ type: T.Type, named name: String, property: String = "@type") {
+        let id = JsonTypeInfo.Id.name(property: property, value: name)
         let polymorphicType = PolymorphicType(type: type, use: id)
         
         registeredTypes.append(polymorphicType)
     }
     
-    public func registerSubtype(type: T.Type, property: String = "@class") {
+    open func registerSubtype(_ type: T.Type, property: String = "@class") {
         let className = Mirror(reflecting: type).description
-        let id = JsonTypeInfo.Id.Class(property: property, className: className)
+        let id = JsonTypeInfo.Id.class(property: property, className: className)
         let polymorphicType = PolymorphicType(type: type, use: id)
         
         registeredTypes.append(polymorphicType)
     }
     
-    public func build() -> JsonTypeInfo {
+    open func build() -> JsonTypeInfo {
         return JsonTypeInfo(
             baseType: T.self,
             registeredTypes: registeredTypes)

@@ -10,22 +10,22 @@ import Foundation
 
 public struct Request {
     
-    private var backingURLRequest: NSMutableURLRequest
+    fileprivate var backingURLRequest: NSMutableURLRequest
     
-    public var urlRequest: NSURLRequest {
-        return backingURLRequest
+    public var urlRequest: URLRequest {
+        return backingURLRequest as URLRequest
     }
     
-    public var URL: NSURL? {
+    public var URL: Foundation.URL? {
         get {
-            return backingURLRequest.URL
+            return backingURLRequest.url
         }
         set {
-            backingURLRequest.URL = newValue
+            backingURLRequest.url = newValue
         }
     }
     
-    public var cachePolicy: NSURLRequestCachePolicy {
+    public var cachePolicy: NSURLRequest.CachePolicy {
         get {
             return backingURLRequest.cachePolicy
         }
@@ -34,7 +34,7 @@ public struct Request {
         }
     }
     
-    public var timeoutInterval: NSTimeInterval {
+    public var timeoutInterval: TimeInterval {
         get {
             return backingURLRequest.timeoutInterval
         }
@@ -43,7 +43,7 @@ public struct Request {
         }
     }
     
-    public var networkServiceType: NSURLRequestNetworkServiceType {
+    public var networkServiceType: NSURLRequest.NetworkServiceType {
         get {
             return backingURLRequest.networkServiceType
         }
@@ -63,10 +63,10 @@ public struct Request {
     
     public var HTTPMethod: String {
         get {
-            return backingURLRequest.HTTPMethod
+            return backingURLRequest.httpMethod
         }
         set {
-            backingURLRequest.HTTPMethod = newValue
+            backingURLRequest.httpMethod = newValue
         }
     }
     
@@ -79,58 +79,58 @@ public struct Request {
         }
     }
     
-    public var HTTPBody: NSData? {
+    public var HTTPBody: Data? {
         get {
-            return backingURLRequest.HTTPBody
+            return backingURLRequest.httpBody
         }
         set {
-            backingURLRequest.HTTPBody = newValue
+            backingURLRequest.httpBody = newValue
         }
     }
     
-    public var HTTPBodyStrem: NSInputStream? {
+    public var HTTPBodyStrem: InputStream? {
         get {
-            return backingURLRequest.HTTPBodyStream
+            return backingURLRequest.httpBodyStream
         }
         set {
-            backingURLRequest.HTTPBodyStream = newValue
+            backingURLRequest.httpBodyStream = newValue
         }
     }
     
     public var HTTPShouldHandleCookies: Bool {
         get {
-            return backingURLRequest.HTTPShouldHandleCookies
+            return backingURLRequest.httpShouldHandleCookies
         }
         set {
-            backingURLRequest.HTTPShouldHandleCookies = newValue
+            backingURLRequest.httpShouldHandleCookies = newValue
         }
     }
     
     public var HTTPShouldUsePipelining: Bool {
         get {
-            return backingURLRequest.HTTPShouldUsePipelining
+            return backingURLRequest.httpShouldUsePipelining
         }
         set {
-            backingURLRequest.HTTPShouldUsePipelining = newValue
+            backingURLRequest.httpShouldUsePipelining = newValue
         }
     }
     
     public var modifiers: [RequestModifier] = []
     public var enhancedBy: [RequestEnhancer] = []
     
-    public init(URL: NSURL) {
-        backingURLRequest = NSMutableURLRequest(URL: URL)
+    public init(URL: Foundation.URL) {
+        backingURLRequest = NSMutableURLRequest(url: URL)
     }
     
-    public init(URL: NSURL, cachePolicy: NSURLRequestCachePolicy, timeoutInterval: NSTimeInterval) {
-        backingURLRequest = NSMutableURLRequest(URL: URL, cachePolicy: cachePolicy, timeoutInterval: timeoutInterval)
+    public init(URL: Foundation.URL, cachePolicy: NSURLRequest.CachePolicy, timeoutInterval: TimeInterval) {
+        backingURLRequest = NSMutableURLRequest(url: URL, cachePolicy: cachePolicy, timeoutInterval: timeoutInterval)
     }
     
-    public mutating func addHeader(header: Header) {
+    public mutating func addHeader(_ header: Header) {
         backingURLRequest.addHeader(header)
     }
     
-    public mutating func setHeader(header: Header) {
+    public mutating func setHeader(_ header: Header) {
         backingURLRequest.setHeader(header)
     }
     

@@ -6,7 +6,7 @@
 //  Copyright © 2016 Tadeas Kriz. All rights reserved.
 //
 
-public struct RequestLoggingOptions: OptionSetType {
+public struct RequestLoggingOptions: OptionSet {
     
     public static let RequestUrl = RequestLoggingOptions(rawValue: 1)
     public static let RequestHeaders = RequestLoggingOptions(rawValue: 2)
@@ -36,11 +36,11 @@ public struct RequestLogging: RequestModifier {
     }
 }
 
-public class RequestLogger: RequestEnhancer {
-    public let priority: Int = 0
-    public let defaultOptions: RequestLoggingOptions
+open class RequestLogger: RequestEnhancer {
+    open let priority: Int = 0
+    open let defaultOptions: RequestLoggingOptions
     
-    private var pendingRequests: [(request: Request, time: NSDate)] = []
+    fileprivate var pendingRequests: [(request: Request, time: Date)] = []
     
     public convenience init() {
         self.init(defaultOptions: [.RequestUrl, .ResponseCode])
@@ -50,59 +50,58 @@ public class RequestLogger: RequestEnhancer {
         self.defaultOptions = defaultOptions
     }
     
-    public func canEnhance(request: Request) -> Bool {
+    open func canEnhance(request: Request) -> Bool {
         let options = extractLoggingOptions(request)
         return options == nil || options?.isEmpty == false
     }
     
-    public func enhanceRequest(inout request: Request) {
-        pendingRequests.append((request, NSDate()))
+    open func enhance(request: inout Request) {
+        pendingRequests.append((request, Date()))
     }
     
-    public func deenhanceResponse(response: Response<NSData?>) -> Response<NSData?> {
-        let matchedRequest = pendingRequests.indexOf { $0.request.urlRequest === response.request.urlRequest }
-            .map { pendingRequests.removeAtIndex($0) }
-        if let matchedRequest = matchedRequest {
-            let request = matchedRequest.request
-            let options = extractLoggingOptions(request) ?? defaultOptions
-            let elapsedTime = String(format: "%.2fs", arguments: [-matchedRequest.time.timeIntervalSinceNow])
-            let url = request.URL?.absoluteString ?? "<< unknown URL >>"
-            if !options.isEmpty {
-                print("----- Begin of request log -----")
-            }
-            if options.contains(.RequestUrl) {
-                print("\n\(request.HTTPMethod) \(url) took \(elapsedTime)")
-            }
-            if let statusCode = response.statusCode where options.contains(.ResponseCode) {
-                print("\nResponse status code: \(statusCode)")
-            }
-            if options.contains(.RequestHeaders) {
-                print("\nRequest headers:")
-                request.allHTTPHeaderFields?.forEach { name, value in
-                    print("\t\(name): \(value)")
-                }
-            }
-            if let requestBody = request.HTTPBody.flatMap({ NSString(data: $0, encoding: NSUTF8StringEncoding) }) where options.contains(.RequestBody) {
-                print("\n>>> Request body: \(requestBody)")
-            }
-            if let httpResponse = response.rawResponse as? NSHTTPURLResponse where options.contains(.ResponseHeaders) {
-                print("\nResponse headers:")
-                httpResponse.allHeaderFields.forEach { name, value in
-                    print("\t\(name): \(value)")
-                }
-            }
-            if let responseBody = response.rawData.flatMap({ NSString(data: $0, encoding: NSUTF8StringEncoding) }) where options.contains(.ResponseBody) {
-                print("\n<<< Response body: \(responseBody)")
-            }
-            if !options.isEmpty {
-                print("----- End of request log -----")
+    open func deenhance(response: Response<Data?>) -> Response<Data?> {
+        let possibleMatchedRequest = pendingRequests.index { $0.request.urlRequest == response.request.urlRequest }
+            .map { pendingRequests.remove(at: $0) }
+        guard let matchedRequest = possibleMatchedRequest else { return response }
+        let request = matchedRequest.request
+        let options = extractLoggingOptions(request) ?? defaultOptions
+        let elapsedTime = String(format: "%.2fs", arguments: [-matchedRequest.time.timeIntervalSinceNow])
+        let url = request.URL?.absoluteString ?? "<< unknown URL >>"
+        if !options.isEmpty {
+            print("----- Begin of request log -----")
+        }
+        if options.contains(.RequestUrl) {
+            print("\n\(request.HTTPMethod) \(url) took \(elapsedTime)")
+        }
+        if let statusCode = response.statusCode , options.contains(.ResponseCode) {
+            print("\nResponse status code: \(statusCode)")
+        }
+        if options.contains(.RequestHeaders) {
+            print("\nRequest headers:")
+            request.allHTTPHeaderFields?.forEach { name, value in
+                print("\t\(name): \(value)")
             }
         }
-        
+        if let requestBody = request.HTTPBody.flatMap({ NSString(data: $0 as Data, encoding: String.Encoding.utf8.rawValue) }) , options.contains(.RequestBody) {
+            print("\n>>> Request body: \(requestBody)")
+        }
+        if let httpResponse = response.rawResponse as? HTTPURLResponse , options.contains(.ResponseHeaders) {
+            print("\nResponse headers:")
+            httpResponse.allHeaderFields.forEach { name, value in
+                print("\t\(name): \(value)")
+            }
+        }
+        if let responseBody = response.rawData.flatMap({ NSString(data: $0 as Data, encoding: String.Encoding.utf8.rawValue) }) , options.contains(.ResponseBody) {
+            print("\n<<< Response body: \(responseBody)")
+        }
+        if !options.isEmpty {
+            print("----- End of request log -----")
+        }
+
         return response
     }
-    
-    func extractLoggingOptions(request: Request) -> RequestLoggingOptions? {
+
+    func extractLoggingOptions(_ request: Request) -> RequestLoggingOptions? {
         let modifiers = request.modifiers.map { $0 as? RequestLogging }.filter { $0 != nil }.map { $0! }
         return modifiers.count > 0 ? modifiers.reduce([] as RequestLoggingOptions) { $0.union($1.options) } : nil
     }

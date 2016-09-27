@@ -15,11 +15,11 @@ public protocol Header: RequestModifier {
 
 public extension NSMutableURLRequest {
     
-    public func addHeader(header: Header) {
+    public func addHeader(_ header: Header) {
         addValue(header.value, forHTTPHeaderField: header.name)
     }
     
-    public func setHeader(header: Header) {
+    public func setHeader(_ header: Header) {
         setValue(header.value, forHTTPHeaderField: header.name)
     }
     
@@ -38,9 +38,9 @@ public struct Headers {
     }
     
     public enum Accept: Header {
-        case ApplicationJson
-        case TextPlain
-        case Custom(value: String)
+        case applicationJson
+        case textPlain
+        case custom(value: String)
         
         public var name: String {
             return "Accept"
@@ -48,21 +48,21 @@ public struct Headers {
         
         public var value: String {
             switch self {
-            case .ApplicationJson:
+            case .applicationJson:
                 return "application/json"
-            case .TextPlain:
+            case .textPlain:
                 return "text/plain"
-            case .Custom(let value):
+            case .custom(let value):
                 return value
             }
         }
     }
     
     public enum ContentType: Header {
-        case ApplicationJson
-        case ApplicationFormUrlencoded
-        case TextPlain
-        case Custom(value: String)
+        case applicationJson
+        case applicationFormUrlencoded
+        case textPlain
+        case custom(value: String)
         
         public var name: String {
             return "Content-Type"
@@ -70,32 +70,32 @@ public struct Headers {
         
         public var value: String {
             switch self {
-            case .ApplicationJson:
+            case .applicationJson:
                 return "application/json"
-            case .ApplicationFormUrlencoded:
+            case .applicationFormUrlencoded:
                 return "application/x-www-form-urlencoded"
-            case .TextPlain:
+            case .textPlain:
                 return "text/plain"
-            case .Custom(let value):
+            case .custom(let value):
                 return value
             }
         }
     }
 }
 
-public class HeaderRequestEnhancer: RequestEnhancer {
+open class HeaderRequestEnhancer: RequestEnhancer {
     
-    public let priority: Int = DEFAULT_ENHANCER_PRIORITY
+    open let priority: Int = DEFAULT_ENHANCER_PRIORITY
     
-    public func canEnhance(request: Request) -> Bool {
+    open func canEnhance(request: Request) -> Bool {
         return request.modifiers.filter { $0 is Header }.count > 0
     }
     
-    public func enhanceRequest(inout request: Request) {
+    open func enhance(request: inout Request) {
         request.modifiers.map { $0 as? Header }.filter { $0 != nil }.forEach { request.addHeader($0!) }
     }
     
-    public func deenhanceResponse(response: Response<NSData?>) -> Response<NSData?> {
+    open func deenhance(response: Response<Data?>) -> Response<Data?> {
         return response
     }
     

@@ -10,7 +10,7 @@ import Quick
 import Nimble
 @testable import SwiftKit
 
-private struct UserProfile: Mappable {
+fileprivate struct UserProfile: Mappable {
     
     var login: String?
     var id: Int?
@@ -20,10 +20,10 @@ private struct UserProfile: Mappable {
         mapping(map)
     }
     
-    private mutating func mapping(map: Map) {
-        login <- map["login"]
-        id <- map["id"]
-        type <- map["type"]
+    fileprivate mutating func mapping(_ map: Map) {
+        map["login"].mapValueTo(field: &login, transformWith: StringTransformation())
+        map["id"].mapValueTo(field: &id, transformWith: IntTransformation())
+        map["type"].mapValueTo(field: &type, transformWith: EnumTransformation<ProfileType>())
     }
     
     enum ProfileType: String {
@@ -32,28 +32,28 @@ private struct UserProfile: Mappable {
     }
 }
 
-private struct TestEnhancer: RequestEnhancer {
-    private struct TestModifier: RequestModifier { }
+fileprivate struct TestEnhancer: RequestEnhancer {
+    fileprivate struct TestModifier: RequestModifier { }
     
     private let onRequest: () -> ()
     private let onResponse: () -> ()
     
-    private var priority = 0
+    fileprivate var priority = 0
     
-    private init(onRequest: () -> (), onResponse: () -> ()) {
+    fileprivate init(onRequest: @escaping () -> Void, onResponse: @escaping () -> Void) {
         self.onRequest = onRequest
         self.onResponse = onResponse
     }
     
-    private func canEnhance(request: Request) -> Bool {
+    fileprivate func canEnhance(request: Request) -> Bool {
         return request.modifiers.filter { $0 is TestModifier }.count > 0
     }
     
-    private func enhanceRequest(inout request: Request) {
+    fileprivate func enhance(request: inout Request) {
         onRequest()
     }
     
-    private func deenhanceResponse(response: Response<NSData?>) -> Response<NSData?> {
+    fileprivate func deenhance(response: Response<Data?>) -> Response<Data?> {
         onResponse()
         return response
     }
@@ -72,7 +72,7 @@ class RouterTest: QuickSpec {
     
     private struct GitHubMockEndpoints {
         static let zen: MockEndpoint = (method: "GET", url: "https://api.github.com/zen", response: "Practicality beats purity.", statusCode: 200)
-        static let userProfile: String -> MockEndpoint = { (method: "GET", url: "https://api.github.com/users/\($0.urlPathSafe)", response: "{\"login\": \"\($0)\", \"id\": 100, \"type\": \"Organization\"}", statusCode: 200) }
+        static let userProfile: (String) -> MockEndpoint = { (method: "GET", url: "https://api.github.com/users/\($0.urlPathSafe)", response: "{\"login\": \"\($0)\", \"id\": 100, \"type\": \"Organization\"}", statusCode: 200) }
         static let nonGithubEndpoint: MockEndpoint = (method: "GET", url: "ftp://test", response: "Works like a charmer.", statusCode: 200)
     }
     
@@ -82,12 +82,12 @@ class RouterTest: QuickSpec {
             var router: Router!
             beforeEach {
                 performer = MockRequestPerformer()
-                router = Router(baseURL: NSURL(string: "https://api.github.com")!, objectMapper: ObjectMapper(), requestPerformer: performer)
+                router = Router(baseURL: URL(string: "https://api.github.com")!, objectMapper: ObjectMapper(), requestPerformer: performer)
             }
             it("supports Void to String request") {
                 performer.endpoints.append(GitHubMockEndpoints.zen)
                 var zensponse: String?
-                router.request(GitHubEndpoints.zen) { response in
+                _ = router.request(GitHubEndpoints.zen) { response in
                     zensponse = response.output
                 }
                 
@@ -97,7 +97,7 @@ class RouterTest: QuickSpec {
             it("supports Void to Object request") {
                 performer.endpoints.append(GitHubMockEndpoints.userProfile("brightify"))
                 var profile: UserProfile?
-                router.request(GitHubEndpoints.userProfile.endpoint("brightify")) { response in
+                _ = router.request(GitHubEndpoints.userProfile.endpoint("brightify")) { response in
                     profile = response.output
                 }
                 
@@ -110,7 +110,7 @@ class RouterTest: QuickSpec {
             it("supports absolute url in endpoint") {
                 performer.endpoints.append(GitHubMockEndpoints.nonGithubEndpoint)
                 var stringData: String?
-                router.request(GitHubEndpoints.nonGithubEndpoint) { response in
+                _ = router.request(GitHubEndpoints.nonGithubEndpoint) { response in
                     stringData = response.output
                 }
                 
@@ -132,13 +132,13 @@ class RouterTest: QuickSpec {
                         expect(firstEnhancerCalledTimes.response) == 0
                         expect(secondEnhancerCalledTimes.request) == 0
                         expect(secondEnhancerCalledTimes.response) == 0
-                        firstEnhancerCalledTimes.request++
+                        firstEnhancerCalledTimes.request += 1
                     }, onResponse: {
                         expect(firstEnhancerCalledTimes.request) == 1
                         expect(firstEnhancerCalledTimes.response) == 0
                         expect(secondEnhancerCalledTimes.request) == 1
                         expect(secondEnhancerCalledTimes.response) == 0
-                        firstEnhancerCalledTimes.response++
+                        firstEnhancerCalledTimes.response += 1
                     })
                 var secondEnhancer = TestEnhancer(onRequest:
                     {
@@ -146,20 +146,20 @@ class RouterTest: QuickSpec {
                         expect(firstEnhancerCalledTimes.response) == 0
                         expect(secondEnhancerCalledTimes.request) == 0
                         expect(secondEnhancerCalledTimes.response) == 0
-                        secondEnhancerCalledTimes.request++
+                        secondEnhancerCalledTimes.request += 1
                     }, onResponse: {
                         expect(firstEnhancerCalledTimes.request) == 1
                         expect(firstEnhancerCalledTimes.response) == 1
                         expect(secondEnhancerCalledTimes.request) == 1
                         expect(secondEnhancerCalledTimes.response) == 0
-                        secondEnhancerCalledTimes.response++
+                        secondEnhancerCalledTimes.response += 1
                     })
                 secondEnhancer.priority = 100
                 
                 router.registerRequestEnhancer(firstEnhancer)
                 router.registerRequestEnhancer(secondEnhancer)
                 
-                router.request(GitHubEndpoints.test) { _ in }
+                _ = router.request(GitHubEndpoints.test) { _ in }
                 
                 expect(firstEnhancerCalledTimes.request) == 1
                 expect(secondEnhancerCalledTimes.request) == 1

@@ -9,5 +9,5 @@
 import SwiftyJSON
 
 public protocol InputEncoder {
-    func encode(input: JSON, inout to request: Request)
+    func encode(_ input: JSON, to request: inout Request)
 }

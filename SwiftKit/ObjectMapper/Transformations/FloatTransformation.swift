@@ -8,11 +8,11 @@ public struct FloatTransformation: Transformation {
     
     public init() { }
     
-    public func transformFromJSON(json: JSON) -> Float? {
+    public func transformFromJSON(_ json: JSON) -> Float? {
         return json.float
     }
 
-    public func transformToJSON(object: Float?) -> JSON {
-        return JSON(object ?? NSNull())
+    public func transformToJSON(_ object: Float?) -> JSON {
+        return JSON(object.map(NSNumber.init(value:)) ?? NSNull())
     }
 }

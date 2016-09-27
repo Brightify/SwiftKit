@@ -8,11 +8,11 @@
 
 import SwiftyJSON
 
-public class ISO8601DateTransformation: NSDateFormatterTransformation {
+open class ISO8601DateTransformation: NSDateFormatterTransformation {
 
     public init() {
-        let formatter = NSDateFormatter()
-        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         
         super.init(dateFormatter: formatter)

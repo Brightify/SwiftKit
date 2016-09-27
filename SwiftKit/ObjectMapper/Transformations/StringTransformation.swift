@@ -8,11 +8,11 @@ public struct StringTransformation: Transformation {
     
     public init() { }
     
-    public func transformFromJSON(json: JSON) -> String? {
+    public func transformFromJSON(_ json: JSON) -> String? {
         return json.string
     }
 
-    public func transformToJSON(object: String?) -> JSON {
-        return JSON(object ?? NSNull())
+    public func transformToJSON(_ object: String?) -> JSON {
+        return JSON(object.map { $0 as NSString } ?? NSNull())
     }
 }

@@ -8,11 +8,11 @@ public struct DoubleTransformation: Transformation {
 
     public init() { }
     
-    public func transformFromJSON(json: JSON) -> Double? {
+    public func transformFromJSON(_ json: JSON) -> Double? {
         return json.double
     }
 
-    public func transformToJSON(object: Double?) -> JSON {
-        return JSON(object ?? NSNull())
+    public func transformToJSON(_ object: Double?) -> JSON {
+        return JSON(object.map(NSNumber.init(value:)) ?? NSNull())
     }
 }

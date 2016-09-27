@@ -13,9 +13,9 @@ private func == (lhs: Module.KeyedBindingsMapKey, rhs: Module.KeyedBindingsMapKe
 }
 
 /// Module is used to create all bindings in the project
-public class Module {
+open class Module {
     
-    private struct KeyedBindingsMapKey: Hashable {
+    fileprivate struct KeyedBindingsMapKey: Hashable {
         let name: String
         let typeIdentifier: ObjectIdentifier
         
@@ -30,67 +30,67 @@ public class Module {
     }
     
     /// All bindings with keys
-    private var plainBindings: [ObjectIdentifier: AnyObject] = [:]
+    fileprivate var plainBindings: [ObjectIdentifier: AnyObject] = [:]
     // We need to use Int as the key because of the missing generic covariance in Swift. The key's value has to be the Key<T>'s hashValue.
-    private var keyedBindings: [KeyedBindingsMapKey: AnyObject] = [:] // [Key<Any>: AnyObject] = [:]
+    fileprivate var keyedBindings: [KeyedBindingsMapKey: AnyObject] = [:] // [Key<Any>: AnyObject] = [:]
     
-    public var allowUnboundFactories: Bool = false
+    open var allowUnboundFactories: Bool = false
     
     public init() {
         
     }
     
-    public func configure() {
+    open func configure() {
     }
     
-    public func bind<T>(type: T.Type) -> ClosureBindingBuilder<T> {
+    open func bind<T>(_ type: T.Type) -> ClosureBindingBuilder<T> {
         return ClosureBindingBuilder(binding: createTypeBinding(type))
     }
     
-    public func bind<T: protocol<AnyObject, Injectable>>(type: T.Type) -> BindingBuilder<T> {
+    open func bind<T: AnyObject & Injectable>(_ type: T.Type) -> BindingBuilder<T> {
         return BindingBuilder(binding: createTypeBinding(type))
     }
     
-    public func bind<T: protocol<AnyObject, PostInitInjectable>>(type: T.Type) -> PostInitInjectableBindingBuilder<T> {
+    open func bind<T: AnyObject & PostInitInjectable>(_ type: T.Type) -> PostInitInjectableBindingBuilder<T> {
         return PostInitInjectableBindingBuilder(binding: createTypeBinding(type))
     }
     
-    public func bind<T: protocol<AnyObject, ParametrizedInjectable>>(type: T.Type) -> ParametrizedInjectableBindingBuilder<T> {
+    open func bind<T: AnyObject & ParametrizedInjectable>(_ type: T.Type) -> ParametrizedInjectableBindingBuilder<T> {
         return ParametrizedInjectableBindingBuilder(binding: createTypeBinding(inferredType()))
     }
     
-    public func bind<T: protocol<AnyObject, PostInitParametrizedInjectable>>(type: T.Type) -> PostInitParametrizedInjectableBindingBuilder<T> {
+    open func bind<T: AnyObject & PostInitParametrizedInjectable>(_ type: T.Type) -> PostInitParametrizedInjectableBindingBuilder<T> {
         return PostInitParametrizedInjectableBindingBuilder(binding: createTypeBinding(inferredType()))
     }
     
-    public func bindKey<T>(key: Key<T>) -> ClosureBindingBuilder<T> {
+    open func bindKey<T>(_ key: Key<T>) -> ClosureBindingBuilder<T> {
         return ClosureBindingBuilder(binding: createKeyBinding(key))
     }
     
-    public func bindKey<T: protocol<AnyObject, Injectable>>(key: Key<T>) -> BindingBuilder<T> {
+    open func bindKey<T: AnyObject & Injectable>(_ key: Key<T>) -> BindingBuilder<T> {
         return BindingBuilder(binding: createKeyBinding(key))
     }
     
-    public func bindKey<T: protocol<AnyObject, PostInitInjectable>>(key: Key<T>) -> PostInitInjectableBindingBuilder<T> {
+    open func bindKey<T: AnyObject & PostInitInjectable>(_ key: Key<T>) -> PostInitInjectableBindingBuilder<T> {
         return PostInitInjectableBindingBuilder(binding: createKeyBinding(key))
     }
     
-    func bindingForType<T>(type: T.Type) -> Binding<T>? {
+    func bindingForType<T>(_ type: T.Type) -> Binding<T>? {
         return plainBindings[ObjectIdentifier(type)] as? Binding<T>
     }
     
-    func bindingForKey<T>(key: Key<T>) -> Binding<T>? {
+    func bindingForKey<T>(_ key: Key<T>) -> Binding<T>? {
         let bindingKey = KeyedBindingsMapKey(key: key)
         return keyedBindings[bindingKey] as? Binding<T>
     }
     
-    private func createTypeBinding<T>(type: T.Type) -> Binding<T> {
+    fileprivate func createTypeBinding<T>(_ type: T.Type) -> Binding<T> {
         let binding: Binding = Binding<T>(type: type)
         plainBindings[ObjectIdentifier(type)] = binding
         return binding
     }
     
-    private func createKeyBinding<T>(key: Key<T>) -> Binding<T> {
+    fileprivate func createKeyBinding<T>(_ key: Key<T>) -> Binding<T> {
         let bindingKey = KeyedBindingsMapKey(key: key)
         let binding = Binding<T>(type: T.self)
         keyedBindings[bindingKey] = binding
@@ -99,18 +99,19 @@ public class Module {
 
 }
 
-public class BindingBuilder<T: protocol<AnyObject, Injectable>> {
+open class BindingBuilder<T: AnyObject & Injectable> {
     
-    private var binding: Binding<T>
+    fileprivate var binding: Binding<T>
 
-    private init(binding: Binding<T>) {
+    fileprivate init(binding: Binding<T>) {
         self.binding = binding
         
         // We use the same type as a default implementation.
-        to(T)
+        to(T.self)
     }
 
-    public func to(implementation: T.Type) -> AdvancedUseBinder<T> {
+    @discardableResult
+    open func to(_ implementation: T.Type) -> AdvancedUseBinder<T> {
         binding.implementation = { injector in
             implementation.init(injector: injector)
         }
@@ -118,26 +119,26 @@ public class BindingBuilder<T: protocol<AnyObject, Injectable>> {
         return AdvancedUseBinder<T>(binding: binding)
     }
     
-    public func asSingleton() {
+    open func asSingleton() {
         AdvancedUseBinder(binding: binding).asSingleton()
     }
     
-    public func asThreadLocal() {
+    open func asThreadLocal() {
         AdvancedUseBinder(binding: binding).asThreadLocal()
     }
 }
 
-public class PostInitInjectableBindingBuilder<T: protocol<AnyObject, PostInitInjectable>> {
-    private var binding: Binding<T>
-    
-    private init(binding: Binding<T>) {
+open class PostInitInjectableBindingBuilder<T: AnyObject & PostInitInjectable> {
+    fileprivate var binding: Binding<T>
+
+    fileprivate init(binding: Binding<T>) {
         self.binding = binding
         
         // We use the same type as a default implementation.
-        to(T)
+        to(T.self)
     }
     
-    public func to(implementation: T.Type) -> AdvancedUseBinder<T> {
+    open func to(_ implementation: T.Type) -> AdvancedUseBinder<T> {
         binding.implementation = { injector in
             let injectable = implementation.init()
             injectable.inject(injector)
@@ -147,25 +148,25 @@ public class PostInitInjectableBindingBuilder<T: protocol<AnyObject, PostInitInj
         return AdvancedUseBinder(binding: binding)
     }
     
-    public func asSingleton() {
+    open func asSingleton() {
         AdvancedUseBinder(binding: binding).asSingleton()
     }
     
-    public func asThreadLocal() {
+    open func asThreadLocal() {
         AdvancedUseBinder(binding: binding).asThreadLocal()
     }
 }
 
-public class ParametrizedInjectableBindingBuilder<T: ParametrizedInjectable> {
-    private var binding: Binding<T.Parameters -> T>
+open class ParametrizedInjectableBindingBuilder<T: ParametrizedInjectable> {
+    fileprivate var binding: Binding<(T.Parameters) -> T>
     
-    private init(binding: Binding<T.Parameters -> T>) {
+    fileprivate init(binding: Binding<(T.Parameters) -> T>) {
         self.binding = binding
         
-        to(T)
+        to(T.self)
     }
     
-    public func to(implementation: T.Type) {
+    open func to(_ implementation: T.Type) {
         binding.implementation = { injector in
             { parameters in
                 implementation.init(injector: injector, parameters)
@@ -174,16 +175,16 @@ public class ParametrizedInjectableBindingBuilder<T: ParametrizedInjectable> {
     }
 }
 
-public class PostInitParametrizedInjectableBindingBuilder<T: PostInitParametrizedInjectable> {
-    private var binding: Binding<T.Parameters -> T>
+open class PostInitParametrizedInjectableBindingBuilder<T: PostInitParametrizedInjectable> {
+    fileprivate var binding: Binding<(T.Parameters) -> T>
     
-    private init(binding: Binding<T.Parameters -> T>) {
+    fileprivate init(binding: Binding<(T.Parameters) -> T>) {
         self.binding = binding
         
-        to(T)
+        to(T.self)
     }
     
-    public func to(implementation: T.Type) {
+    open func to(_ implementation: T.Type) {
         binding.implementation = { injector in
             { parameters in
                 let injectable = implementation.init()
@@ -195,11 +196,11 @@ public class PostInitParametrizedInjectableBindingBuilder<T: PostInitParametrize
     }
 }
 
-public class ClosureBindingBuilder<T> {
+open class ClosureBindingBuilder<T> {
     
-    private var binding: Binding<T>
+    fileprivate var binding: Binding<T>
     
-    private init(binding: Binding<T>) {
+    fileprivate init(binding: Binding<T>) {
         self.binding = binding
         
         binding.implementation = { _ in
@@ -209,26 +210,28 @@ public class ClosureBindingBuilder<T> {
             return nil as T!
         }
     }
-    
-    public func to(closure: (injector: Injector) -> T) -> AdvancedUseBinder<T> {
+
+    @discardableResult
+    open func to(_ closure: @escaping (_ injector: Injector) -> T) -> AdvancedUseBinder<T> {
         binding.implementation = { injector in
-            closure(injector: injector)
+            closure(injector)
         }
         
         return AdvancedUseBinder(binding: binding)
     }
-    
-    public func toNew(@autoclosure(escaping) closure: () -> T) -> AdvancedUseBinder<T> {
+
+    @discardableResult
+    open func toNew( _ closure: @autoclosure @escaping () -> T) -> AdvancedUseBinder<T> {
         return to { _ in
             closure()
         }
     }
 }
 
-public class AdvancedUseBinder<T> {
-    private var binding: Binding<T>
+open class AdvancedUseBinder<T> {
+    fileprivate var binding: Binding<T>
     
-    private init(binding: Binding<T>) {
+    fileprivate init(binding: Binding<T>) {
         self.binding = binding
     }
 }
@@ -268,18 +271,18 @@ extension AdvancedUseBinder /*where T: AnyObject*/ {
 }
 
 private class Box<T> {
-    private let value: T
-    private init(_ value: T) {
+    fileprivate let value: T
+    fileprivate init(_ value: T) {
         self.value = value
     }
 }
 
 internal class Binding<T> {
 
-    internal private(set) var type: T.Type
-    internal private(set) var implementation: (Injector -> T)?
+    internal fileprivate(set) var type: T.Type
+    internal fileprivate(set) var implementation: ((Injector) -> T)?
     
-    private init(type: T.Type) {
+    fileprivate init(type: T.Type) {
         self.type = type
     }
 

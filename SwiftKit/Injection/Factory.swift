@@ -6,21 +6,21 @@
 //
 //
 
-public class Factory<T> {
+open class Factory<T> {
     
     let factoryClosure: () -> T
     
-    init(closure: () -> T) {
+    init(closure: @escaping () -> T) {
         factoryClosure = closure
     }
     
-    init(injector: Injector, closure: Injector -> T) {
+    init(injector: Injector, closure: @escaping (Injector) -> T) {
         factoryClosure = {
             closure(injector)
         }
     }
     
-    public func create() -> T {
+    open func create() -> T {
         return factoryClosure()
     }
     

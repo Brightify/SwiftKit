@@ -6,17 +6,17 @@
 //  Copyright © 2015 Tadeas Kriz. All rights reserved.
 //
 
-public class ParametrizedFactory<T: Parametrizable>: Factory<T.Parameters -> T> {
+open class ParametrizedFactory<T: Parametrizable>: Factory<(T.Parameters) -> T> {
     
-    override init(closure: () -> T.Parameters -> T) {
+    override init(closure: @escaping () -> (T.Parameters) -> T) {
         super.init(closure: closure)
     }
     
-    override init(injector: Injector, closure: Injector -> T.Parameters -> T) {
+    override init(injector: Injector, closure: @escaping (Injector) -> (T.Parameters) -> T) {
         super.init(injector: injector, closure: closure)
     }
     
-    public func create(parameters: T.Parameters) -> T {
+    open func create(_ parameters: T.Parameters) -> T {
         return create()(parameters)
     }
     

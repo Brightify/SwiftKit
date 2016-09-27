@@ -13,7 +13,7 @@ class PolymorphCache {
     
     var serializationMap: [ObjectIdentifier: (name: String, value: String)] = [:]
     
-    func register(propertyName: String, propertyValue: String, type: PolymorphicMappable.Type) {
+    func register(_ propertyName: String, propertyValue: String, type: PolymorphicMappable.Type) {
         var deserializationProperties = deserializationMap[propertyName] ?? [:]
         deserializationProperties[propertyValue] = type
         deserializationMap[propertyName] = deserializationProperties

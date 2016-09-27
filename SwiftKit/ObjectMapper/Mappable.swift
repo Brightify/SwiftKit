@@ -17,7 +17,7 @@ public protocol Deserializable {
 }
 
 public protocol Mappable: Serializable, Deserializable {
-    mutating func mapping(map: Map)
+    mutating func mapping(_ map: Map)
 }
 
 extension Mappable {

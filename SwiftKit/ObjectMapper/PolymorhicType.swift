@@ -6,7 +6,7 @@
 //
 //
 
-public typealias PolymorphicMappable = protocol<Mappable, JsonTypeInfoAnnotation>
+public typealias PolymorphicMappable = Mappable & JsonTypeInfoAnnotation
 
 public struct PolymorphicType {
     public let type: PolymorphicMappable.Type

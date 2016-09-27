@@ -14,15 +14,15 @@ public protocol ResponseVerifier {
     
 }
 
-public class StatusCodeRangeVerifier: ResponseVerifier {
+open class StatusCodeRangeVerifier: ResponseVerifier {
     
-    private let range: Range<Int>
+    fileprivate let range: ClosedRange<Int>
     
-    public init(range: Range<Int>) {
+    public init(range: ClosedRange<Int>) {
         self.range = range
     }
     
-    public func verify<T>(response: Response<T>) -> Bool {
+    open func verify<T>(response: Response<T>) -> Bool {
         return response.statusCode.map { range.contains($0.rawValue) } ?? false
     }
     
