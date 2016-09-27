@@ -6,7 +6,7 @@
 //  Copyright © 2015 Tadeas Kriz. All rights reserved.
 //
 
-public class ParametrizedInjector<PARAMETERS> {
+open class ParametrizedInjector<PARAMETERS> {
     
     let parameters: PARAMETERS
     let injector: Injector
@@ -16,19 +16,19 @@ public class ParametrizedInjector<PARAMETERS> {
         self.injector = injector
     }
     
-    public func get<T: Parametrizable where T.Parameters == PARAMETERS>(type: T.Type) -> T {
+    open func get<T: Parametrizable>(_ type: T.Type) -> T where T.Parameters == PARAMETERS {
         return injector.get(type, withParameters: parameters)
     }
     
-    public func inject<T: Parametrizable where T.Parameters == PARAMETERS>(instance: Instance<T>) {
+    open func inject<T: Parametrizable>(_ instance: Instance<T>) where T.Parameters == PARAMETERS {
         return injector.inject(instance, withParameters: parameters)
     }
     
-    public func inject<T: Parametrizable where T.Parameters == PARAMETERS>(instance: OptionalInstance<T>) {
+    open func inject<T: Parametrizable>(_ instance: OptionalInstance<T>) where T.Parameters == PARAMETERS {
         return injector.inject(instance, withParameters: parameters)
     }
     
-    public func factory<T: Parametrizable where T.Parameters == PARAMETERS>(type: T.Type) -> Factory<T> {
+    open func factory<T: Parametrizable>(_ type: T.Type) -> Factory<T> where T.Parameters == PARAMETERS {
         return injector.factory(type, withParameters: parameters)
     }
     

@@ -8,24 +8,24 @@
 
 import SwiftyJSON
 
-public class NSDateFormatterTransformation: Transformation {
+open class NSDateFormatterTransformation: Transformation {
     
-    private let dateFormatter: NSDateFormatter
+    fileprivate let dateFormatter: DateFormatter
     
-    public init(dateFormatter: NSDateFormatter) {
+    public init(dateFormatter: DateFormatter) {
         self.dateFormatter = dateFormatter
     }
     
-    public func transformFromJSON(json: JSON) -> NSDate? {
+    open func transformFromJSON(_ json: JSON) -> Date? {
         if let dateString = json.string {
-            return dateFormatter.dateFromString(dateString)
+            return dateFormatter.date(from: dateString)
         }
         return nil
     }
     
-    public func transformToJSON(object: NSDate?) -> JSON {
+    open func transformToJSON(_ object: Date?) -> JSON {
         if let date = object {
-            return JSON(dateFormatter.stringFromDate(date))
+            return JSON(dateFormatter.string(from: date))
         }
         return JSON(NSNull())
     }

@@ -12,12 +12,12 @@ import SwiftKitStaging
 
 public struct AlamofireRequestPerformer: RequestPerformer {
     
-    public func performRequest(request: Request, completion: Response<NSData?> -> ()) -> Cancellable {
-        let alamofireRequest = Alamofire.Manager.sharedInstance
+    public func perform(request: Request, completion: @escaping (Response<Data?>) -> ()) -> Cancellable {
+        let alamofireRequest = Alamofire
             .request(request.urlRequest)
             .responseData {
-                
-                let response = Response<NSData?>(
+
+                let response = Response<Data?>(
                     output: $0.result.value,
                     statusCode: $0.response?.statusCodeValue,
                     error: $0.result.error,

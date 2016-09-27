@@ -7,5 +7,5 @@
 //
 
 public protocol Parametrizable {
-    typealias Parameters
+    associatedtype Parameters
 }

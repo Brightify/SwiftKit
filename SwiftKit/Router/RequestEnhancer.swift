@@ -16,8 +16,8 @@ public protocol RequestEnhancer {
     
     func canEnhance(request: Request) -> Bool
     
-    func enhanceRequest(inout request: Request)
+    func enhance(request: inout Request)
     
-    func deenhanceResponse(response: Response<NSData?>) -> Response<NSData?>
+    func deenhance(response: Response<Data?>) -> Response<Data?>
     
 }

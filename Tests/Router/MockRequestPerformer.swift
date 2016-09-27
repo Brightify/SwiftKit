@@ -17,13 +17,13 @@ public class MockRequestPerformer: RequestPerformer {
     public var endpoints: [MockEndpoint] = []
     public var delay: Double = 0.1
     
-    public func performRequest(request: Request, completion: Response<NSData?> -> ()) -> Cancellable {
+    public func perform(request: Request, completion: @escaping (Response<Data?>) -> ()) -> Cancellable {
         let endpoint = endpoints
             .filter { $0.method == request.HTTPMethod && $0.url == request.URL?.absoluteString }.first
         
-        let response: Response<NSData?>
+        let response: Response<Data?>
         if let endpoint = endpoint {
-            let responseData = endpoint.response.dataUsingEncoding(NSUTF8StringEncoding)
+            let responseData = endpoint.response.data(using: String.Encoding.utf8)
             response = Response(
                 output: responseData,
                 statusCode: HTTPStatusCode(rawValue: endpoint.statusCode),
@@ -42,8 +42,8 @@ public class MockRequestPerformer: RequestPerformer {
         }
      
         let cancellable = MockCancellable()
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             if (!cancellable.cancelled) {
                 completion(response)
             }

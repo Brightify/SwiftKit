@@ -6,17 +6,17 @@
 //  Copyright © 2015 Tadeas Kriz. All rights reserved.
 //
 
-public class Instance<T> {
+open class Instance<T> {
     var instance: T?
     
     public init() { }
     
-    public func get() -> T {
+    open func get() -> T {
         guard let instance = instance else { fatalError("Instance of type \(T.self) is not set.") }
         return instance
     }
     
-    internal func set(instance: T) {
+    internal func set(_ instance: T) {
         self.instance = instance
     }
 }

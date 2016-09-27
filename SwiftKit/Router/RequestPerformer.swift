@@ -11,6 +11,6 @@ import SwiftKitStaging
 
 public protocol RequestPerformer {
     
-    func performRequest(request: Request, completion: Response<NSData?> -> ()) -> Cancellable
+    func perform(request: Request, completion: @escaping (Response<Data?>) -> ()) -> Cancellable
     
 }

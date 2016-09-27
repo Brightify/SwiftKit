@@ -8,12 +8,12 @@ public struct BoolTransformation: Transformation {
 
     public init() { }
     
-    public func transformFromJSON(json: JSON) -> Bool? {
+    public func transformFromJSON(_ json: JSON) -> Bool? {
         return json.bool
     }
 
-    public func transformToJSON(object: Bool?) -> JSON {
-        return JSON(object ?? NSNull())
+    public func transformToJSON(_ object: Bool?) -> JSON {
+        return JSON(object.map(NSNumber.init(value:)) ?? NSNull())
     }
 
 }

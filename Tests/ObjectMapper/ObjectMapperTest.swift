@@ -110,32 +110,32 @@ func randomString(length: Int = 64) -> String {
     let randomCharacters = (0..<length)
         .map { _ in arc4random_uniform(lettersCount) }
         .map(Int.init)
-        .map { letters[letters.startIndex.advancedBy($0)] }
+        .map { letters[letters.index(letters.startIndex, offsetBy: $0)] }
     
     return String(randomCharacters)
 }
 
 private func createTestStruct() -> StructMappable {
     var testObject = StructMappable()
-    testObject.nsnumber = NSNumber(int: rand())
-    testObject.optionalNsnumber = NSNumber(int: rand())
-    testObject.unwrappedNsnumber = NSNumber(int: rand())
+    testObject.nsnumber = NSNumber(value: arc4random())
+    testObject.optionalNsnumber = NSNumber(value: arc4random())
+    testObject.unwrappedNsnumber = NSNumber(value: arc4random())
     
     testObject.bool = true
     testObject.optionalBool = true
     testObject.unwrappedBool = true
     
-    testObject.int = Int(rand())
-    testObject.optionalInt = Int(rand())
-    testObject.unwrappedInt = Int(rand())
+    testObject.int = Int(arc4random())
+    testObject.optionalInt = Int(arc4random())
+    testObject.unwrappedInt = Int(arc4random())
     
-    testObject.double = Double(rand())
-    testObject.optionalDouble = Double(rand())
-    testObject.unwrappedDouble = Double(rand())
+    testObject.double = Double(arc4random())
+    testObject.optionalDouble = Double(arc4random())
+    testObject.unwrappedDouble = Double(arc4random())
     
-    testObject.float = Float(rand())
-    testObject.optionalFloat = Float(rand())
-    testObject.unwrappedFloat = Float(rand())
+    testObject.float = Float(arc4random())
+    testObject.optionalFloat = Float(arc4random())
+    testObject.unwrappedFloat = Float(arc4random())
     
     testObject.string = randomString()
     testObject.optionalString = randomString()
@@ -145,25 +145,25 @@ private func createTestStruct() -> StructMappable {
 
 private func createTestClass() -> ClassMappable {
     let serializedObject = ClassMappable()
-    serializedObject.nsnumber = NSNumber(int: rand())
-    serializedObject.optionalNsnumber = NSNumber(int: rand())
-    serializedObject.unwrappedNsnumber = NSNumber(int: rand())
+    serializedObject.nsnumber = NSNumber(value: arc4random())
+    serializedObject.optionalNsnumber = NSNumber(value: arc4random())
+    serializedObject.unwrappedNsnumber = NSNumber(value: arc4random())
     
     serializedObject.bool = true
     serializedObject.optionalBool = true
     serializedObject.unwrappedBool = true
     
-    serializedObject.int = Int(rand())
-    serializedObject.optionalInt = Int(rand())
-    serializedObject.unwrappedInt = Int(rand())
+    serializedObject.int = Int(arc4random())
+    serializedObject.optionalInt = Int(arc4random())
+    serializedObject.unwrappedInt = Int(arc4random())
     
-    serializedObject.double = Double(rand())
-    serializedObject.optionalDouble = Double(rand())
-    serializedObject.unwrappedDouble = Double(rand())
+    serializedObject.double = Double(arc4random())
+    serializedObject.optionalDouble = Double(arc4random())
+    serializedObject.unwrappedDouble = Double(arc4random())
     
-    serializedObject.float = Float(rand())
-    serializedObject.optionalFloat = Float(rand())
-    serializedObject.unwrappedFloat = Float(rand())
+    serializedObject.float = Float(arc4random())
+    serializedObject.optionalFloat = Float(arc4random())
+    serializedObject.unwrappedFloat = Float(arc4random())
     
     serializedObject.string = randomString()
     serializedObject.optionalString = randomString()
@@ -256,30 +256,30 @@ struct StructMappable: Mappable, Equatable {
     
     init() { }
     
-    mutating func mapping(map: Map) {
-        nsnumber <- map["nsnumber"]
-        optionalNsnumber <- map["optionalNsnumber"]
-        unwrappedNsnumber <- map["unwrappedNsnumber"]
+    mutating func mapping(_ map: Map) {
+        map["nsnumber"].mapValueTo(field: &nsnumber, transformWith: NSNumberTransformation())
+        map["optionalNsnumber"].mapValueTo(field: &optionalNsnumber, transformWith: NSNumberTransformation())
+        map["unwrappedNsnumber"].mapValueTo(field: &unwrappedNsnumber, transformWith: NSNumberTransformation())
         
-        bool <- map["bool"]
-        optionalBool <- map["optionalBool"]
-        unwrappedBool <- map["unwrappedBool"]
+        map["bool"].mapValueTo(field: &bool, transformWith: BoolTransformation())
+        map["optionalBool"].mapValueTo(field: &optionalBool, transformWith: BoolTransformation())
+        map["unwrappedBool"].mapValueTo(field: &unwrappedBool, transformWith: BoolTransformation())
         
-        int <- map["int"]
-        optionalInt <- map["optionalInt"]
-        unwrappedInt <- map["unwrappedInt"]
+        map["int"].mapValueTo(field: &int, transformWith: IntTransformation())
+        map["optionalInt"].mapValueTo(field: &optionalInt, transformWith: IntTransformation())
+        map["unwrappedInt"].mapValueTo(field: &unwrappedInt, transformWith: IntTransformation())
         
-        double <- map["double"]
-        optionalDouble <- map["optionalDouble"]
-        unwrappedDouble <- map["unwrappedDouble"]
+        map["double"].mapValueTo(field: &double, transformWith: DoubleTransformation())
+        map["optionalDouble"].mapValueTo(field: &optionalDouble, transformWith: DoubleTransformation())
+        map["unwrappedDouble"].mapValueTo(field: &unwrappedDouble, transformWith: DoubleTransformation())
         
-        float <- map["float"]
-        optionalFloat <- map["optionalFloat"]
-        unwrappedFloat <- map["unwrappedFloat"]
+        map["float"].mapValueTo(field: &float, transformWith: FloatTransformation())
+        map["optionalFloat"].mapValueTo(field: &optionalFloat, transformWith: FloatTransformation())
+        map["unwrappedFloat"].mapValueTo(field: &unwrappedFloat, transformWith: FloatTransformation())
         
-        string <- map["string"]
-        optionalString <- map["optionalString"]
-        unwrappedString <- map["unwrappedString"]
+        map["string"].mapValueTo(field: &string, transformWith: StringTransformation())
+        map["optionalString"].mapValueTo(field: &optionalString, transformWith: StringTransformation())
+        map["unwrappedString"].mapValueTo(field: &unwrappedString, transformWith: StringTransformation())
     }
 }
 
@@ -314,30 +314,30 @@ class ClassMappable: Mappable, Equatable {
     
     init() { }
     
-    func mapping(map: Map) {
-        nsnumber <- map["nsnumber"]
-        optionalNsnumber <- map["optionalNsnumber"]
-        unwrappedNsnumber <- map["unwrappedNsnumber"]
+    func mapping(_ map: Map) {
+        map["nsnumber"].mapValueTo(field: &nsnumber, transformWith: NSNumberTransformation())
+        map["optionalNsnumber"].mapValueTo(field: &optionalNsnumber, transformWith: NSNumberTransformation())
+        map["unwrappedNsnumber"].mapValueTo(field: &unwrappedNsnumber, transformWith: NSNumberTransformation())
         
-        bool <- map["bool"]
-        optionalBool <- map["optionalBool"]
-        unwrappedBool <- map["unwrappedBool"]
+        map["bool"].mapValueTo(field: &bool, transformWith: BoolTransformation())
+        map["optionalBool"].mapValueTo(field: &optionalBool, transformWith: BoolTransformation())
+        map["unwrappedBool"].mapValueTo(field: &unwrappedBool, transformWith: BoolTransformation())
         
-        int <- map["int"]
-        optionalInt <- map["optionalInt"]
-        unwrappedInt <- map["unwrappedInt"]
+        map["int"].mapValueTo(field: &int, transformWith: IntTransformation())
+        map["optionalInt"].mapValueTo(field: &optionalInt, transformWith: IntTransformation())
+        map["unwrappedInt"].mapValueTo(field: &unwrappedInt, transformWith: IntTransformation())
         
-        double <- map["double"]
-        optionalDouble <- map["optionalDouble"]
-        unwrappedDouble <- map["unwrappedDouble"]
+        map["double"].mapValueTo(field: &double, transformWith: DoubleTransformation())
+        map["optionalDouble"].mapValueTo(field: &optionalDouble, transformWith: DoubleTransformation())
+        map["unwrappedDouble"].mapValueTo(field: &unwrappedDouble, transformWith: DoubleTransformation())
         
-        float <- map["float"]
-        optionalFloat <- map["optionalFloat"]
-        unwrappedFloat <- map["unwrappedFloat"]
+        map["float"].mapValueTo(field: &float, transformWith: FloatTransformation())
+        map["optionalFloat"].mapValueTo(field: &optionalFloat, transformWith: FloatTransformation())
+        map["unwrappedFloat"].mapValueTo(field: &unwrappedFloat, transformWith: FloatTransformation())
         
-        string <- map["string"]
-        optionalString <- map["optionalString"]
-        unwrappedString <- map["unwrappedString"]
+        map["string"].mapValueTo(field: &string, transformWith: StringTransformation())
+        map["optionalString"].mapValueTo(field: &optionalString, transformWith: StringTransformation())
+        map["unwrappedString"].mapValueTo(field: &unwrappedString, transformWith: StringTransformation())
     }
     
     func copy() -> ClassMappable {

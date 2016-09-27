@@ -8,19 +8,19 @@
 
 import SwiftyJSON
 
-public struct NSDateTransformation: Transformation {
+public struct DateTransformation: Transformation {
     
     public init() { }
     
-    public func transformFromJSON(json: JSON) -> NSDate? {
+    public func transformFromJSON(_ json: JSON) -> Date? {
         if let timeInt = json.double {
-            return NSDate(timeIntervalSince1970: NSTimeInterval(timeInt))
+            return Date(timeIntervalSince1970: TimeInterval(timeInt))
         }
         return nil
     }
     
-    public func transformToJSON(object: NSDate?) -> JSON {
-        return JSON(object?.timeIntervalSince1970 ?? NSNull())
+    public func transformToJSON(_ object: Date?) -> JSON {
+        return JSON(object.map { NSNumber(value: $0.timeIntervalSince1970) } ?? NSNull())
     }
     
 }

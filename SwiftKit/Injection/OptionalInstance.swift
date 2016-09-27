@@ -6,7 +6,7 @@
 //  Copyright © 2015 Tadeas Kriz. All rights reserved.
 //
 
-public class OptionalInstance<T>: Instance<T?> {
+open class OptionalInstance<T>: Instance<T?> {
     
     public override init() {
         super.init()

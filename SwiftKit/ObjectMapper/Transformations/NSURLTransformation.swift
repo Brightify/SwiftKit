@@ -12,12 +12,12 @@ public struct NSURLTransformation: Transformation {
     
     public init() { }
     
-    public func transformFromJSON(json: JSON) -> NSURL? {
+    public func transformFromJSON(_ json: JSON) -> NSURL? {
         return json.URL
     }
     
-    public func transformToJSON(object: NSURL?) -> JSON {
-        return JSON(object?.absoluteString ?? NSNull())
+    public func transformToJSON(_ object: NSURL?) -> JSON {
+        return JSON(object ?? NSNull())
     }
     
 }

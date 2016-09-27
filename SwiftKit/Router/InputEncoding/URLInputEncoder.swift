@@ -9,37 +9,38 @@
 import SwiftyJSON
 import Alamofire
 
-private func query(parameters: JSON) -> String {
+private func query(_ parameters: JSON) -> String {
     return parameters
-        .sort { $0.0 < $1.0 }
+        .sorted { $0.0 < $1.0 }
         .map { ($0, $1.rawValue) }
-        .map(ParameterEncoding.URL.queryComponents)
+        .map(URLEncoding.queryString.queryComponents)
         .reduce([]) { $0 + $1 }
         .map { "\($0)=\($1)" }
-        .joinWithSeparator("&")
+        .joined(separator: "&")
 }
 
 public struct URLInputEncoder: InputEncoder {
     public init() { }
     
-    public func encode(input: JSON, inout to request: Request) {
-        guard let url = request.URL, components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false) else { return }
+    public func encode(_ input: JSON, to request: inout Request) {
+        guard let url = request.URL,
+            var components = URLComponents(url: url as URL, resolvingAgainstBaseURL: false) else { return }
         
         let percentEncodedQuery = (components.percentEncodedQuery.map { $0 + "&" } ?? "") + query(input)
         components.percentEncodedQuery = percentEncodedQuery
-        request.URL = components.URL
+        request.URL = components.url
     }
 }
 
 public struct FormInputEncoder: InputEncoder {
     public init() { }
     
-    public func encode(input: JSON, inout to request: Request) {
+    public func encode(_ input: JSON, to request: inout Request) {
         let oldContentType = request.modifiers.filter { $0 is Headers.ContentType }.first
         if oldContentType == nil {
-            request.modifiers.append(Headers.ContentType.ApplicationFormUrlencoded)
+            request.modifiers.append(Headers.ContentType.applicationFormUrlencoded)
         }
 
-        request.HTTPBody = query(input).dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        request.HTTPBody = query(input).data(using: String.Encoding.utf8, allowLossyConversion: false)
     }
 }

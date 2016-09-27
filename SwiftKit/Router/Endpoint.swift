@@ -13,15 +13,15 @@ import Alamofire
 public protocol Endpoint {
     
     /// Specifies type of input data
-    typealias Input
+    associatedtype Input
     
     /// Specifies type of output data
-    typealias Output
+    associatedtype Output
     
     var inputEncoder: InputEncoder { get }
     
     /// Contains HTTP Method such as GET, POST, etc.
-    var method: Alamofire.Method { get }
+    var method: Alamofire.HTTPMethod { get }
     
     /// Contains path to the API
     var path: String { get }

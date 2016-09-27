@@ -15,8 +15,8 @@ import Alamofire
     :param: ENDPOINT The endpoint in the API
     :param: PARAMS The parameters to be filled in the endpoint URL
 */
-public class Target<ENDPOINT: TargetableEndpoint, PARAMS> {
-    private let pathAndModifiers: PARAMS -> (String, [RequestModifier], InputEncoder?)
+open class Target<ENDPOINT: TargetableEndpoint, PARAMS> {
+    fileprivate let pathAndModifiers: (PARAMS) -> (String, [RequestModifier], InputEncoder?)
     
     /**
         Initializes Target with closure that returns path costructed
@@ -24,15 +24,15 @@ public class Target<ENDPOINT: TargetableEndpoint, PARAMS> {
         
         :param: path The closure that accepts PARAMS and returns the constructed URL
     */
-    public init(inputEncoder: InputEncoder? = nil, _ path: PARAMS -> String) {
+    public init(inputEncoder: InputEncoder? = nil, _ path: @escaping (PARAMS) -> String) {
         self.pathAndModifiers = { (path($0), [], inputEncoder) }
     }
     
-    public init(inputEncoder: InputEncoder? = nil, _ modifiers: [RequestModifier], _ path: PARAMS -> String) {
+    public init(inputEncoder: InputEncoder? = nil, _ modifiers: [RequestModifier], _ path: @escaping (PARAMS) -> String) {
         self.pathAndModifiers = { (path($0), modifiers, inputEncoder) }
     }
     
-    public init(inputEncoder: InputEncoder? = nil, _ pathAndModifiers: PARAMS -> (String, [RequestModifier])) {
+    public init(inputEncoder: InputEncoder? = nil, _ pathAndModifiers: @escaping (PARAMS) -> (String, [RequestModifier])) {
         self.pathAndModifiers = {
             let (path, modifiers) = pathAndModifiers($0)
             return (path, modifiers, inputEncoder)
@@ -44,7 +44,7 @@ public class Target<ENDPOINT: TargetableEndpoint, PARAMS> {
     
         :param: params The parameters used to construct the Endpoint URL
     */
-    public func endpoint(params: PARAMS) -> ENDPOINT {
+    open func endpoint(_ params: PARAMS) -> ENDPOINT {
         let (path, modifiers, inputEncoder) = pathAndModifiers(params)
         if let inputEncoder = inputEncoder {
             return ENDPOINT(path, modifiers, inputEncoder: inputEncoder)
@@ -54,23 +54,23 @@ public class Target<ENDPOINT: TargetableEndpoint, PARAMS> {
     }
 }
 
-public class BaseEndpoint<IN, OUT>: Endpoint {
+open class BaseEndpoint<IN, OUT>: Endpoint {
     public typealias Input = IN
     public typealias Output = OUT
     
-    public let method: Alamofire.Method
-    public let path: String
-    public let inputEncoder: InputEncoder
-    public let modifiers: [RequestModifier]
+    open let method: Alamofire.HTTPMethod
+    open let path: String
+    open let inputEncoder: InputEncoder
+    open let modifiers: [RequestModifier]
     
-    public init(method: Alamofire.Method, path: String, modifiers: [RequestModifier], inputEncoder: InputEncoder) {
+    public init(method: Alamofire.HTTPMethod, path: String, modifiers: [RequestModifier], inputEncoder: InputEncoder) {
         self.method = method
         self.path = path
         self.inputEncoder = inputEncoder
         self.modifiers = modifiers
     }
     
-    public convenience init<E: Endpoint where E.Input == IN, E.Output == OUT>(endpoint: E) {
+    public convenience init<E: Endpoint>(endpoint: E) where E.Input == IN, E.Output == OUT {
         self.init(method: endpoint.method, path: endpoint.path, modifiers: endpoint.modifiers, inputEncoder: endpoint.inputEncoder)
     }
 }
@@ -87,7 +87,7 @@ public final class GET<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     }
     
     public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .GET, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+        super.init(method: .get, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -103,7 +103,7 @@ public final class POST<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     }
     
     public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .POST, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+        super.init(method: .post, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -119,7 +119,7 @@ public final class PUT<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     }
     
     public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .PUT, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+        super.init(method: .put, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -135,7 +135,7 @@ public final class DELETE<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     }
     
     public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .DELETE, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+        super.init(method: .delete, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -151,7 +151,7 @@ public final class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     }
     
     public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .OPTIONS, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+        super.init(method: .options, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -167,7 +167,7 @@ public final class HEAD<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     }
     
     public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .HEAD, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+        super.init(method: .head, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -183,7 +183,7 @@ public final class PATCH<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     }
     
     public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .PATCH, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+        super.init(method: .patch, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -199,7 +199,7 @@ public final class TRACE<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     }
     
     public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .TRACE, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+        super.init(method: .trace, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }
 
@@ -215,6 +215,6 @@ public final class CONNECT<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
     }
     
     public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .CONNECT, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+        super.init(method: .connect, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
     }
 }

@@ -6,7 +6,7 @@
 //
 //
 
-public class KeyedInjector {
+open class KeyedInjector {
     
     let name: String
     let injector: Injector
@@ -16,15 +16,15 @@ public class KeyedInjector {
         self.injector = injector
     }
     
-    public func get<T>(type: T.Type) -> T {
+    open func get<T>(_ type: T.Type) -> T {
         return injector.get(Key<T>(named: name))
     }
     
-    public func inject<T>(instance: Instance<T>) {
+    open func inject<T>(_ instance: Instance<T>) {
         injector.inject(instance, usingKey: Key<T>(named: name))
     }
     
-    public func factory<T>(type: T.Type) -> Factory<T> {
+    open func factory<T>(_ type: T.Type) -> Factory<T> {
         return injector.factory(Key<T>(named: name))
     }
     

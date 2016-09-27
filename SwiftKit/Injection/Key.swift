@@ -11,10 +11,10 @@ Key is used in Key based injection
 
 - parameter T: The parameter is the class type this Key is assigned to
 */
-public class Key<T> {
+open class Key<T> {
     
     /// Name of the key
-    public let name: String
+    open let name: String
     
     /**
     Initializes key with name

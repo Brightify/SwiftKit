@@ -6,15 +6,15 @@
 //  Copyright © 2015 Tadeas Kriz. All rights reserved.
 //
 
-class InjectionError<T>: ErrorType {
+class InjectionError<T>: Error {
     let binding: Binding<T>?
     
     init(_ binding: Binding<T>?) {
         self.binding = binding
     }
     
-    @noreturn
-    func crash() {
+    
+    func crash() -> Never  {
         fatalError("Binding for type \(T.self) was \(binding)!")
     }
 }

@@ -8,11 +8,11 @@ public struct NSNumberTransformation: Transformation {
     
     public init() { }
     
-    public func transformFromJSON(json: JSON) -> NSNumber? {
+    public func transformFromJSON(_ json: JSON) -> NSNumber? {
         return json.number
     }
 
-    public func transformToJSON(object: NSNumber?) -> JSON {
+    public func transformToJSON(_ object: NSNumber?) -> JSON {
         return JSON(object ?? NSNull())
     }
 }

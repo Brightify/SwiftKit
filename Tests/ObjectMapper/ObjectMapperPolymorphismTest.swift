@@ -59,8 +59,8 @@ struct SubMappable: Mappable {
     
     init() {}
     
-    mutating func mapping(map: Map) {
-        test <- map["testData"]
+    mutating func mapping(_ map: Map) {
+        map["testData"].mapValueTo(field: &test, transformWith: StringTransformation())
     }
     
 }
@@ -75,8 +75,8 @@ class ParentDTO: PolymorphicMappable {
     
     init() { }
     
-    func mapping(map: Map) {
-        subData <- map["submappable"]
+    func mapping(_ map: Map) {
+        map["submappable"].mapObjectTo(field: &subData)
     }
     
     class func jsonTypeInfo() -> JsonTypeInfo {

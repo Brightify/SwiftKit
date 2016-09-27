@@ -8,23 +8,23 @@
 
 import Foundation
 
-internal extension NSURL {
+internal extension URL {
     
-    internal func URLByAppendingPathComponentWithoutEscape(pathComponent: String) -> NSURL? {
+    internal func URLByAppendingPathComponentWithoutEscape(_ pathComponent: String) -> URL? {
         guard pathComponent.characters.count != 0 else { return self }
         let baseUrl = absoluteString
-        let baseUrlLastCharacter = baseUrl[baseUrl.endIndex.predecessor()]
+        let baseUrlLastCharacter = baseUrl[baseUrl.characters.index(before: baseUrl.endIndex)]
         let pathComponentFirstCharacter = pathComponent[pathComponent.startIndex]
         
         let urlString: String
         if (baseUrlLastCharacter != "/" && pathComponentFirstCharacter != "/") {
             urlString = baseUrl + "/" + pathComponent
         } else if (baseUrlLastCharacter == "/" && pathComponentFirstCharacter == "/") {
-            urlString = baseUrl + pathComponent.substringFromIndex(pathComponent.startIndex.successor())
+            urlString = baseUrl + pathComponent.substring(from: pathComponent.characters.index(after: pathComponent.startIndex))
         } else {
             urlString = baseUrl + pathComponent
         }
         
-        return NSURL(string: urlString)
+        return URL(string: urlString)
     }
 }
