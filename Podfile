@@ -3,7 +3,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 def shared
-    pod 'SwiftyJSON', '~> 3.0'
+    pod 'SwiftyJSON', '~> 3.1'
     pod 'Alamofire', '~> 4.0'
     pod 'HTTPStatusCodes', '~> 3.1'
     pod 'SwiftKitStaging'

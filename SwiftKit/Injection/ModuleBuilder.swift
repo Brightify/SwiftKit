@@ -135,7 +135,7 @@ open class PostInitInjectableBindingBuilder<T: AnyObject & PostInitInjectable> {
         self.binding = binding
         
         // We use the same type as a default implementation.
-        to(T.self)
+        _ = to(T.self)
     }
     
     open func to(_ implementation: T.Type) -> AdvancedUseBinder<T> {
