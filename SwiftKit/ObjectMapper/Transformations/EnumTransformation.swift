@@ -21,7 +21,7 @@ public struct EnumTransformation<T: RawRepresentable>: Transformation {
     }
     
     public func transformToJSON(_ object: T?) -> JSON {
-        let value: AnyObject = object?.rawValue as? AnyObject ?? NSNull()
+        let value: AnyObject = object?.rawValue as AnyObject? ?? NSNull()
         return JSON(value)
     }
 }

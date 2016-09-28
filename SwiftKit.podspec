@@ -44,12 +44,12 @@ Pod::Spec.new do |spec|
         router.dependency 'SwiftKit/ObjectMapper'
         router.dependency 'Alamofire', '~> 4.0'
         router.dependency 'HTTPStatusCodes', '~> 3.1'
-        router.dependency 'SwiftyJSON', '~> 3.0'
+        router.dependency 'SwiftyJSON', '~> 3.1'
     end
 
     spec.subspec 'ObjectMapper' do |objectMapper|
         objectMapper.source_files = 'SwiftKit/ObjectMapper/**/*.swift'
         objectMapper.dependency 'SwiftKitStaging', '~> 0.2'
-        objectMapper.dependency 'SwiftyJSON', '~> 3.0'
+        objectMapper.dependency 'SwiftyJSON', '~> 3.1'
     end
 end
