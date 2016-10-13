@@ -16,7 +16,11 @@ Pod::Spec.new do |spec|
                        DESC
     spec.homepage         = "https://github.com/SwiftKit/SwiftKit"
     spec.license          = 'MIT'
-    spec.author           = { "Tadeas Kriz" => "tadeas@brightify.org", "Filip Dolnik" => "filip@brightify.org" }
+    spec.author           = {
+        "Tadeas Kriz" => "tadeas@brightify.org",
+        "Filip Dolnik" => "filip@brightify.org",
+        "Maros Seleng" => "maros@brightify.org"
+    }
     spec.source           = {
         :git => "https://github.com/SwiftKit/SwiftKit.git",
         :tag => spec.version.to_s
