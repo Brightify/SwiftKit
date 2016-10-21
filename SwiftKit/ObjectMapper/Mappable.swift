@@ -17,6 +17,7 @@ public protocol Deserializable {
 }
 
 public protocol Mappable: Serializable, Deserializable {
+    // TODO ?
     mutating func mapping(_ map: Map)
 }
 
