@@ -29,13 +29,7 @@ Pod::Spec.new do |spec|
     spec.platform     = :ios, '9.0'
     spec.requires_arc = true
 
-    spec.default_subspec = 'Injection', 'Router'
-
-    spec.subspec 'Injection' do |injection|
-        injection.source_files = 'SwiftKit/Injection/**/*.swift'
-        injection.frameworks = 'Foundation'
-        injection.dependency 'SwiftKitStaging', '~> 0.2'
-    end
+    spec.default_subspec = 'Router'
 
     spec.subspec 'Router' do |router|
         router.source_files = 'SwiftKit/Router/**/*.swift'
