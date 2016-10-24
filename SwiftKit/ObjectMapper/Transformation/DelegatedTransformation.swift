@@ -3,21 +3,21 @@
 //  SwiftKit
 //
 //  Created by Filip Dolnik on 21.10.16.
-//  Copyright © 2016 Tadeas Kriz. All rights reserved.
+//  Copyright © 2016 Brightify. All rights reserved.
 //
 
-public protocol DelegatedTransformation: Transformation {
+public protocol DelegatedTransformation: Transformation, DelegatedSerializableTransformation, DelegatedDeserializableTransformation {
     
-    var delegate: AnyTransformation<Object> { get }
+    var transformationDelegate: AnyTransformation<Object> { get }
 }
 
 extension DelegatedTransformation {
     
-    public func transform(from value: SupportedType) -> Object? {
-        return delegate.transform(from: value)
+    public var serializableTransformationDelegate: AnySerializableTransformation<Object> {
+        return transformationDelegate.typeErased()
     }
     
-    public func transform(object: Object?) -> SupportedType {
-        return delegate.transform(object: object)
+    public var deserializableTransformationDelegate: AnyDeserializableTransformation<Object> {
+        return transformationDelegate.typeErased()
     }
 }

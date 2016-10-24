@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		187BD18A1BA8C57A00E08759 /* BoolMappingOperatorsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831E0181B58A7B20029C328 /* BoolMappingOperatorsTest.swift */; };
-		187BD18B1BA8C57A00E08759 /* ObjectMapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */; };
-		187BD18C1BA8C57A00E08759 /* ObjectMapperPolymorphismTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */; };
-		187BD1951BA8C59000E08759 /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186D2E751B4ECDAA005BC06D /* RouterTest.swift */; };
-		187BD1961BA8C59000E08759 /* MockRequestPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */; };
 		18E484501BA8BFB1004CB09A /* SwiftKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E4844F1BA8BFB1004CB09A /* SwiftKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18E484571BA8BFB1004CB09A /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */; };
 		18E4845E1BA8BFB1004CB09A /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */; };
@@ -41,6 +36,21 @@
 		DC5B84281DBAC651007751F6 /* Double+SupportedTypeConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B84271DBAC651007751F6 /* Double+SupportedTypeConvertible.swift */; };
 		DC5B842A1DBAC660007751F6 /* Bool+SupportedTypeConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B84291DBAC660007751F6 /* Bool+SupportedTypeConvertible.swift */; };
 		DC5B842C1DBAC66E007751F6 /* URL+SupportedTypeConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B842B1DBAC66E007751F6 /* URL+SupportedTypeConvertible.swift */; };
+		DC5B84381DBBF360007751F6 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484831BA8C054004CB09A /* Mappable.swift */; };
+		DC5B84401DBC9FCA007751F6 /* DeserializableTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B843F1DBC9FCA007751F6 /* DeserializableTransformation.swift */; };
+		DC5B84421DBC9FD8007751F6 /* SerializableTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B84411DBC9FD8007751F6 /* SerializableTransformation.swift */; };
+		DC5B84441DBC9FF4007751F6 /* AnyDeserializableTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B84431DBC9FF4007751F6 /* AnyDeserializableTransformation.swift */; };
+		DC5B84461DBCA005007751F6 /* AnySerializableTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B84451DBCA005007751F6 /* AnySerializableTransformation.swift */; };
+		DC5B844A1DBCA069007751F6 /* CompositeDeserializableTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B84471DBCA069007751F6 /* CompositeDeserializableTransformation.swift */; };
+		DC5B844B1DBCA069007751F6 /* DelegatedDeserializableTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B84481DBCA069007751F6 /* DelegatedDeserializableTransformation.swift */; };
+		DC5B844C1DBCA069007751F6 /* DeserializableSupportedTypeConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B84491DBCA069007751F6 /* DeserializableSupportedTypeConvertible.swift */; };
+		DC5B84501DBCA074007751F6 /* CompositeSerializableTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B844D1DBCA074007751F6 /* CompositeSerializableTransformation.swift */; };
+		DC5B84511DBCA074007751F6 /* DelegatedSerializableTransformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B844E1DBCA074007751F6 /* DelegatedSerializableTransformation.swift */; };
+		DC5B84521DBCA074007751F6 /* SerializableSupportedTypeConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B844F1DBCA074007751F6 /* SerializableSupportedTypeConvertible.swift */; };
+		DC5B84541DBD17FE007751F6 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B84531DBD17FE007751F6 /* Serializable.swift */; };
+		DC5B84561DBD180E007751F6 /* Deserializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B84551DBD180E007751F6 /* Deserializable.swift */; };
+		DC5B845D1DBD1C36007751F6 /* DeserializableMappableDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B845B1DBD1C36007751F6 /* DeserializableMappableDataWrapper.swift */; };
+		DC5B845E1DBD1C36007751F6 /* SerializableMappableDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B845C1DBD1C36007751F6 /* SerializableMappableDataWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +86,6 @@
 		18E4847F1BA8C054004CB09A /* Dictionary+Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Map.swift"; sourceTree = "<group>"; };
 		18E484801BA8C054004CB09A /* JsonTypeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonTypeInfo.swift; sourceTree = "<group>"; };
 		18E484811BA8C054004CB09A /* JsonTypeInfoAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonTypeInfoAnnotation.swift; sourceTree = "<group>"; };
-		18E484821BA8C054004CB09A /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		18E484831BA8C054004CB09A /* Mappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
 		18E484841BA8C054004CB09A /* ObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapper.swift; sourceTree = "<group>"; };
 		18E4848F1BA8C054004CB09A /* PolymorhicType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolymorhicType.swift; sourceTree = "<group>"; };
@@ -135,6 +144,20 @@
 		DC5B84271DBAC651007751F6 /* Double+SupportedTypeConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Double+SupportedTypeConvertible.swift"; path = "Transformation/Convertibles/Double+SupportedTypeConvertible.swift"; sourceTree = "<group>"; };
 		DC5B84291DBAC660007751F6 /* Bool+SupportedTypeConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Bool+SupportedTypeConvertible.swift"; path = "Transformation/Convertibles/Bool+SupportedTypeConvertible.swift"; sourceTree = "<group>"; };
 		DC5B842B1DBAC66E007751F6 /* URL+SupportedTypeConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "URL+SupportedTypeConvertible.swift"; path = "Transformation/Convertibles/URL+SupportedTypeConvertible.swift"; sourceTree = "<group>"; };
+		DC5B843F1DBC9FCA007751F6 /* DeserializableTransformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeserializableTransformation.swift; path = Transformation/Deserializable/DeserializableTransformation.swift; sourceTree = "<group>"; };
+		DC5B84411DBC9FD8007751F6 /* SerializableTransformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SerializableTransformation.swift; path = Transformation/Serializable/SerializableTransformation.swift; sourceTree = "<group>"; };
+		DC5B84431DBC9FF4007751F6 /* AnyDeserializableTransformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnyDeserializableTransformation.swift; path = Transformation/Deserializable/AnyDeserializableTransformation.swift; sourceTree = "<group>"; };
+		DC5B84451DBCA005007751F6 /* AnySerializableTransformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnySerializableTransformation.swift; path = Transformation/Serializable/AnySerializableTransformation.swift; sourceTree = "<group>"; };
+		DC5B84471DBCA069007751F6 /* CompositeDeserializableTransformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompositeDeserializableTransformation.swift; path = Transformation/Deserializable/CompositeDeserializableTransformation.swift; sourceTree = "<group>"; };
+		DC5B84481DBCA069007751F6 /* DelegatedDeserializableTransformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DelegatedDeserializableTransformation.swift; path = Transformation/Deserializable/DelegatedDeserializableTransformation.swift; sourceTree = "<group>"; };
+		DC5B84491DBCA069007751F6 /* DeserializableSupportedTypeConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeserializableSupportedTypeConvertible.swift; path = Transformation/Deserializable/DeserializableSupportedTypeConvertible.swift; sourceTree = "<group>"; };
+		DC5B844D1DBCA074007751F6 /* CompositeSerializableTransformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompositeSerializableTransformation.swift; path = Transformation/Serializable/CompositeSerializableTransformation.swift; sourceTree = "<group>"; };
+		DC5B844E1DBCA074007751F6 /* DelegatedSerializableTransformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DelegatedSerializableTransformation.swift; path = Transformation/Serializable/DelegatedSerializableTransformation.swift; sourceTree = "<group>"; };
+		DC5B844F1DBCA074007751F6 /* SerializableSupportedTypeConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SerializableSupportedTypeConvertible.swift; path = Transformation/Serializable/SerializableSupportedTypeConvertible.swift; sourceTree = "<group>"; };
+		DC5B84531DBD17FE007751F6 /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
+		DC5B84551DBD180E007751F6 /* Deserializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deserializable.swift; sourceTree = "<group>"; };
+		DC5B845B1DBD1C36007751F6 /* DeserializableMappableDataWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeserializableMappableDataWrapper.swift; path = Map/DeserializableMappableDataWrapper.swift; sourceTree = "<group>"; };
+		DC5B845C1DBD1C36007751F6 /* SerializableMappableDataWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SerializableMappableDataWrapper.swift; path = Map/SerializableMappableDataWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,15 +244,16 @@
 		18E4847E1BA8C054004CB09A /* ObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
+				DC5B84551DBD180E007751F6 /* Deserializable.swift */,
 				18E4847F1BA8C054004CB09A /* Dictionary+Map.swift */,
 				18E484801BA8C054004CB09A /* JsonTypeInfo.swift */,
 				18E484811BA8C054004CB09A /* JsonTypeInfoAnnotation.swift */,
-				18E484821BA8C054004CB09A /* Map.swift */,
 				18E484831BA8C054004CB09A /* Mappable.swift */,
 				18E484841BA8C054004CB09A /* ObjectMapper.swift */,
 				18E4848F1BA8C054004CB09A /* PolymorhicType.swift */,
 				18E484901BA8C054004CB09A /* Polymorph.swift */,
 				18E484911BA8C054004CB09A /* PolymorphCache.swift */,
+				DC5B84531DBD17FE007751F6 /* Serializable.swift */,
 				DC5B83CF1DBA964E007751F6 /* SupportedType.swift */,
 				DC5B83911DBA9223007751F6 /* Map */,
 				DC5B83D11DBA9CF0007751F6 /* Transformation */,
@@ -323,9 +347,11 @@
 		DC5B83911DBA9223007751F6 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				DC5B83921DBA9294007751F6 /* SerializableData.swift */,
 				DC5B83941DBA92A4007751F6 /* DeserializableData.swift */,
+				DC5B845B1DBD1C36007751F6 /* DeserializableMappableDataWrapper.swift */,
 				DC5B83961DBA92B4007751F6 /* MappableData.swift */,
+				DC5B83921DBA9294007751F6 /* SerializableData.swift */,
+				DC5B845C1DBD1C36007751F6 /* SerializableMappableDataWrapper.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -333,12 +359,14 @@
 		DC5B83D11DBA9CF0007751F6 /* Transformation */ = {
 			isa = PBXGroup;
 			children = (
-				DC5B84201DBAC5B2007751F6 /* Convertibles */,
 				DC5B83D41DBA9D42007751F6 /* AnyTransformation.swift */,
 				DC5B83F11DBAA46E007751F6 /* CompositeTransformation.swift */,
 				DC5B83F51DBAB5A4007751F6 /* DelegatedTransformation.swift */,
 				DC5B83F31DBAAC1A007751F6 /* SupportedTypeConvertible.swift */,
 				DC5B83D51DBA9D42007751F6 /* Transformation.swift */,
+				DC5B84201DBAC5B2007751F6 /* Convertibles */,
+				DC5B843E1DBC9F73007751F6 /* Deserializable */,
+				DC5B843D1DBC9F6B007751F6 /* Serializable */,
 				DC5B83D81DBA9EDD007751F6 /* Transformations */,
 			);
 			name = Transformation;
@@ -389,6 +417,30 @@
 				DC5B842B1DBAC66E007751F6 /* URL+SupportedTypeConvertible.swift */,
 			);
 			name = Convertibles;
+			sourceTree = "<group>";
+		};
+		DC5B843D1DBC9F6B007751F6 /* Serializable */ = {
+			isa = PBXGroup;
+			children = (
+				DC5B84451DBCA005007751F6 /* AnySerializableTransformation.swift */,
+				DC5B844D1DBCA074007751F6 /* CompositeSerializableTransformation.swift */,
+				DC5B844E1DBCA074007751F6 /* DelegatedSerializableTransformation.swift */,
+				DC5B844F1DBCA074007751F6 /* SerializableSupportedTypeConvertible.swift */,
+				DC5B84411DBC9FD8007751F6 /* SerializableTransformation.swift */,
+			);
+			name = Serializable;
+			sourceTree = "<group>";
+		};
+		DC5B843E1DBC9F73007751F6 /* Deserializable */ = {
+			isa = PBXGroup;
+			children = (
+				DC5B84431DBC9FF4007751F6 /* AnyDeserializableTransformation.swift */,
+				DC5B84471DBCA069007751F6 /* CompositeDeserializableTransformation.swift */,
+				DC5B84481DBCA069007751F6 /* DelegatedDeserializableTransformation.swift */,
+				DC5B84491DBCA069007751F6 /* DeserializableSupportedTypeConvertible.swift */,
+				DC5B843F1DBC9FCA007751F6 /* DeserializableTransformation.swift */,
+			);
+			name = Deserializable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,7 +507,7 @@
 				CLASSPREFIX = BFY;
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0800;
-				ORGANIZATIONNAME = "Tadeas Kriz";
+				ORGANIZATIONNAME = Brightify;
 				TargetAttributes = {
 					18E4844C1BA8BFB1004CB09A = {
 						CreatedOnToolsVersion = 7.0;
@@ -585,30 +637,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC5B844B1DBCA069007751F6 /* DelegatedDeserializableTransformation.swift in Sources */,
 				DC5B84161DBAC5A4007751F6 /* CustomDateFormatTransformation.swift in Sources */,
 				DC5B83F61DBAB5A4007751F6 /* DelegatedTransformation.swift in Sources */,
+				DC5B845D1DBD1C36007751F6 /* DeserializableMappableDataWrapper.swift in Sources */,
 				DC5B841F1DBAC5A4007751F6 /* StringTransformation.swift in Sources */,
 				DC5B83F21DBAA46E007751F6 /* CompositeTransformation.swift in Sources */,
 				DC5B841D1DBAC5A4007751F6 /* DoubleTransformation.swift in Sources */,
 				DC5B841B1DBAC5A4007751F6 /* URLTransformation.swift in Sources */,
 				DC5B83951DBA92A4007751F6 /* DeserializableData.swift in Sources */,
+				DC5B84521DBCA074007751F6 /* SerializableSupportedTypeConvertible.swift in Sources */,
 				DC5B841E1DBAC5A4007751F6 /* IntTransformation.swift in Sources */,
 				DC5B84181DBAC5A4007751F6 /* DateTransformation.swift in Sources */,
 				DC5B841C1DBAC5A4007751F6 /* BoolTransformation.swift in Sources */,
+				DC5B84541DBD17FE007751F6 /* Serializable.swift in Sources */,
 				DC5B841A1DBAC5A4007751F6 /* EnumTransformation.swift in Sources */,
 				DC5B84171DBAC5A4007751F6 /* DateFormatterTransformation.swift in Sources */,
 				DC5B84221DBAC606007751F6 /* Int+SupportedTypeConvertible.swift in Sources */,
 				DC5B83931DBA9294007751F6 /* SerializableData.swift in Sources */,
 				DC5B84191DBAC5A4007751F6 /* ISO8601DateTransformation.swift in Sources */,
 				DC5B84281DBAC651007751F6 /* Double+SupportedTypeConvertible.swift in Sources */,
+				DC5B84381DBBF360007751F6 /* Mappable.swift in Sources */,
+				DC5B84511DBCA074007751F6 /* DelegatedSerializableTransformation.swift in Sources */,
+				DC5B84561DBD180E007751F6 /* Deserializable.swift in Sources */,
+				DC5B845E1DBD1C36007751F6 /* SerializableMappableDataWrapper.swift in Sources */,
 				DC5B842C1DBAC66E007751F6 /* URL+SupportedTypeConvertible.swift in Sources */,
+				DC5B84501DBCA074007751F6 /* CompositeSerializableTransformation.swift in Sources */,
 				DC5B83D61DBA9D42007751F6 /* AnyTransformation.swift in Sources */,
 				DC5B83F41DBAAC1A007751F6 /* SupportedTypeConvertible.swift in Sources */,
+				DC5B84421DBC9FD8007751F6 /* SerializableTransformation.swift in Sources */,
 				DC5B83971DBA92B4007751F6 /* MappableData.swift in Sources */,
+				DC5B84461DBCA005007751F6 /* AnySerializableTransformation.swift in Sources */,
 				DC5B842A1DBAC660007751F6 /* Bool+SupportedTypeConvertible.swift in Sources */,
 				DC5B83F71DBAC189007751F6 /* SupportedType.swift in Sources */,
 				DC5B83D71DBA9D42007751F6 /* Transformation.swift in Sources */,
+				DC5B84401DBC9FCA007751F6 /* DeserializableTransformation.swift in Sources */,
 				DC5B84241DBAC612007751F6 /* String+SupportedTypeConvertible.swift in Sources */,
+				DC5B844A1DBCA069007751F6 /* CompositeDeserializableTransformation.swift in Sources */,
+				DC5B844C1DBCA069007751F6 /* DeserializableSupportedTypeConvertible.swift in Sources */,
+				DC5B84441DBC9FF4007751F6 /* AnyDeserializableTransformation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,12 +683,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				187BD18C1BA8C57A00E08759 /* ObjectMapperPolymorphismTest.swift in Sources */,
 				18E4845E1BA8BFB1004CB09A /* SwiftKitTests.swift in Sources */,
-				187BD1961BA8C59000E08759 /* MockRequestPerformer.swift in Sources */,
-				187BD1951BA8C59000E08759 /* RouterTest.swift in Sources */,
-				187BD18A1BA8C57A00E08759 /* BoolMappingOperatorsTest.swift in Sources */,
-				187BD18B1BA8C57A00E08759 /* ObjectMapperTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +721,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.brightify.SwiftKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

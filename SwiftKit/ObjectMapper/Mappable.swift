@@ -1,29 +1,31 @@
 //
 //  Mappable.swift
-//  Pods
+//  SwiftKit
 //
-//  Created by Tadeáš Kříž on 6/26/15.
+//  Created by Filip Dolnik on 21.10.16.
+//  Copyright © 2016 Brightify. All rights reserved.
 //
-//
-
-import Foundation
-
-public protocol Serializable {
-    func serialize(to map: Map)
-}
-
-public protocol Deserializable {
-    init?(_ map: Map)
-}
 
 public protocol Mappable: Serializable, Deserializable {
-    // TODO ?
-    mutating func mapping(_ map: Map)
+    
+    mutating func mapping(_ data: MappableData)
 }
 
 extension Mappable {
-    public func serialize(to map: Map) {
+    
+    public func serialize(to data: SerializableData) {
+        mapping(data)
+    }
+}
+
+extension Mappable {
+    
+    public mutating func mapping(_ data: DeserializableData) {
+        mapping(DeserializableMappableDataWrapper(delegate: data))
+    }
+    
+    public func mapping(_ data: SerializableData) {
         var mutableSelf = self
-        mutableSelf.mapping(map)
+        mutableSelf.mapping(SerializableMappableDataWrapper(delegate: data))
     }
 }

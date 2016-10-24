@@ -3,7 +3,7 @@
 //  SwiftKit
 //
 //  Created by Tadeas Kriz on 16/07/15.
-//  Copyright © 2016 Tadeas Kriz. All rights reserved.
+//  Copyright © 2016 Brightify. All rights reserved.
 //
 
 public struct DoubleTransformation: Transformation {
