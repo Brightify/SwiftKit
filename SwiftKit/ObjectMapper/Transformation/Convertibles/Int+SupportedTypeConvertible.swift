@@ -3,7 +3,7 @@
 //  SwiftKit
 //
 //  Created by Filip Dolnik on 21.10.16.
-//  Copyright © 2016 Tadeas Kriz. All rights reserved.
+//  Copyright © 2016 Brightify. All rights reserved.
 //
 
 extension Int: SupportedTypeConvertible {

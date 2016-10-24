@@ -3,10 +3,8 @@
 //  SwiftKit
 //
 //  Created by Filip Dolnik on 20.10.16.
-//  Copyright © 2016 Tadeas Kriz. All rights reserved.
+//  Copyright © 2016 Brightify. All rights reserved.
 //
-
-import Foundation
 
 public enum SupportedType {
     
