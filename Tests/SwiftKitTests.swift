@@ -12,14 +12,14 @@ import XCTest
 class SwiftKitTests: XCTestCase {
     
     func testA() {
-        var data = SerializableData()
-        data["a"]["b"]["c"]["d"]["e"].set(10)
-        data["a", "b", "c", "d", "f"].set(20)
-        //data["x", "y"].set(1)
-        //data["x", "z"].set(2)
+        var data = SerializableMappableDataWrapper()
+        var x = 10
+        var y = 20
+        data["a"]["b"]["c"]["d"]["e"].map(&x, or: 0)
+        data["a", "b", "c", "d", "f"].map(&y, or: 0)
         
-        print(data.data.dictionary?["a"]?.dictionary?["b"]?.dictionary?["c"]?.dictionary?["d"]?.dictionary?["e"]?.int ?? 0)
-        print(data.data.dictionary?["a"]?.dictionary?["b"]?.dictionary?["c"]?.dictionary?["d"]?.dictionary?["f"]?.int ?? 0)
+        print(data.delegate.data.dictionary?["a"]?.dictionary?["b"]?.dictionary?["c"]?.dictionary?["d"]?.dictionary?["e"]?.int ?? 0)
+        print(data.delegate.data.dictionary?["a"]?.dictionary?["b"]?.dictionary?["c"]?.dictionary?["d"]?.dictionary?["f"]?.int ?? 0)
     }
     
     func testSerializable() {

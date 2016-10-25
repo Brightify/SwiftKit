@@ -12,7 +12,7 @@ public struct DeserializableData {
     
     private let data: SupportedType
     
-    init(data: SupportedType) {
+    internal init(data: SupportedType) {
         self.data = data
     }
     
@@ -43,8 +43,7 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> T? {
-        var s = self
-        return T(&s)
+        return T(self)
     }
     
     public func get<T: Deserializable>(or: T) -> T {
@@ -52,10 +51,7 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> [T]? {
-        return data.array?.flatMap {
-            var deserializableData = DeserializableData(data: $0)
-            return T(&deserializableData)
-        }
+        return data.array?.flatMap { T(DeserializableData(data: $0)) }
     }
     
     public func get<T: Deserializable>(or: [T] = []) -> [T] {

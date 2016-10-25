@@ -20,22 +20,25 @@ extension Mappable {
 
 extension Mappable {
     
-    public mutating func mapping(_ data: inout DeserializableData) {
+    public mutating func mapping(_ data: DeserializableData) {
         var wrapper: MappableData = DeserializableMappableDataWrapper(delegate: data)
         mapping(&wrapper)
     }
     
     public func mapping(_ data: inout SerializableData) {
         var wrapper: MappableData = SerializableMappableDataWrapper(delegate: data)
-        var mutableSelf = self
-        mutableSelf.mapping(&wrapper)
+        var s = self
+        s.mapping(&wrapper)
+        if let wrapper = wrapper as? SerializableMappableDataWrapper {
+            data = wrapper.delegate
+        }
     }
 }
 
 // TODO Comment
 extension Mappable where Self: AnyObject {
     
-    public func mapping(_ data: inout DeserializableData) {
+    public func mapping(_ data: DeserializableData) {
         var wrapper: MappableData = DeserializableMappableDataWrapper(delegate: data)
         var s = self
         s.mapping(&wrapper)

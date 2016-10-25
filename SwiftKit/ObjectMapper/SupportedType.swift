@@ -19,7 +19,7 @@ public enum SupportedType {
 
 extension SupportedType {
     
-    var isNull: Bool {
+    public var isNull: Bool {
         if case .null = self {
             return true
         } else {
@@ -27,7 +27,7 @@ extension SupportedType {
         }
     }
     
-    var string: String? {
+    public var string: String? {
         if case .string(let value) = self {
             return value
         } else {
@@ -35,7 +35,7 @@ extension SupportedType {
         }
     }
     
-    var int: Int? {
+    public var int: Int? {
         if case .int(let value) = self {
             return value
         } else {
@@ -43,7 +43,7 @@ extension SupportedType {
         }
     }
     
-    var double: Double? {
+    public var double: Double? {
         if case .double(let value) = self {
             return value
         } else {
@@ -51,7 +51,7 @@ extension SupportedType {
         }
     }
     
-    var bool: Bool? {
+    public var bool: Bool? {
         if case .bool(let value) = self {
             return value
         } else {
@@ -59,7 +59,7 @@ extension SupportedType {
         }
     }
     
-    var array: [SupportedType]? {
+    public var array: [SupportedType]? {
         if case .array(let value) = self {
             return value
         } else {
@@ -67,7 +67,7 @@ extension SupportedType {
         }
     }
     
-    var dictionary: [String: SupportedType]? {
+    public var dictionary: [String: SupportedType]? {
         if case .dictionary(let value) = self {
             return value
         } else {

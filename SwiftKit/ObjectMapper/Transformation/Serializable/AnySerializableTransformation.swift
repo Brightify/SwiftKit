@@ -10,7 +10,7 @@ public struct AnySerializableTransformation<T>: SerializableTransformation {
     
     private let transformObject: (T?) -> SupportedType
     
-    init(transformObject: @escaping (T?) -> SupportedType) {
+    internal init(transformObject: @escaping (T?) -> SupportedType) {
         self.transformObject = transformObject
     }
     
