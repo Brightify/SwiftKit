@@ -10,7 +10,7 @@ public struct DeserializableMappableDataWrapper: MappableData {
     
     private let delegate: DeserializableData
     
-    init(delegate: DeserializableData) {
+    internal init(delegate: DeserializableData) {
         self.delegate = delegate
     }
     

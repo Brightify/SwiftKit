@@ -8,9 +8,9 @@
 
 public struct SerializableMappableDataWrapper: MappableData {
     
-    private var delegate: SerializableData
+    internal private(set) var delegate: SerializableData
     
-    init(delegate: SerializableData) {
+    internal init(delegate: SerializableData = SerializableData()) {
         self.delegate = delegate
     }
     
@@ -19,7 +19,9 @@ public struct SerializableMappableDataWrapper: MappableData {
             return SerializableMappableDataWrapper(delegate: delegate[path])
         }
         set {
-            //delegate[path] = newValue
+            if let serializable = newValue as? SerializableMappableDataWrapper {
+                delegate[path] = serializable.delegate
+            }
         }
     }
     
