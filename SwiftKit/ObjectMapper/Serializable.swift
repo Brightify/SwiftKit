@@ -8,14 +8,5 @@
 
 public protocol Serializable {
     
-    func serialize(to data: SerializableData)
-}
-
-extension Serializable {
-    
-    internal func serialized() -> SupportedType {
-        var result = SupportedType.dictionary([:])
-        serialize(to: SerializableData(data: &result))
-        return result
-    }
+    func serialize(to data: inout SerializableData)
 }

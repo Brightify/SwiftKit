@@ -8,77 +8,87 @@
 
 public struct SerializableMappableDataWrapper: MappableData {
     
-    private let delegate: SerializableData
+    private var delegate: SerializableData
     
     init(delegate: SerializableData) {
         self.delegate = delegate
     }
     
     public subscript(path: [String]) -> MappableData {
-        return SerializableMappableDataWrapper(delegate: delegate[path])
+        get {
+            return SerializableMappableDataWrapper(delegate: delegate[path])
+        }
+        set {
+            //delegate[path] = newValue
+        }
     }
     
     public subscript(path: String...) -> MappableData {
-        return self[path]
+        get {
+            return self[path]
+        }
+        set {
+            self[path] = newValue
+        }
     }
     
-    public func map<T: SupportedTypeConvertible>(_ value: inout T?) {
+    public mutating func map<T: SupportedTypeConvertible>(_ value: inout T?) {
         delegate.set(value)
     }
     
-    public func map<T: SupportedTypeConvertible>(_ value: inout T, or: T) {
+    public mutating func map<T: SupportedTypeConvertible>(_ value: inout T, or: T) {
         delegate.set(value)
     }
     
-    public func map<T: SupportedTypeConvertible>(_ array: inout [T]?) {
+    public mutating func map<T: SupportedTypeConvertible>(_ array: inout [T]?) {
         delegate.set(array)
     }
     
-    public func map<T: SupportedTypeConvertible>(_ array: inout [T]) {
+    public mutating func map<T: SupportedTypeConvertible>(_ array: inout [T]) {
         delegate.set(array)
     }
     
-    public func map<T: SupportedTypeConvertible>(_ array: inout [T], or: [T]) {
+    public mutating func map<T: SupportedTypeConvertible>(_ array: inout [T], or: [T]) {
         delegate.set(array)
     }
     
-    public func map<T: Mappable>(_ value: inout T?) {
+    public mutating func map<T: Mappable>(_ value: inout T?) {
         delegate.set(value)
     }
     
-    public func map<T: Mappable>(_ value: inout T, or: T) {
+    public mutating func map<T: Mappable>(_ value: inout T, or: T) {
         delegate.set(value)
     }
     
-    public func map<T: Mappable>(_ array: inout [T]?) {
+    public mutating func map<T: Mappable>(_ array: inout [T]?) {
         delegate.set(array)
     }
     
-    public func map<T: Mappable>(_ array: inout [T]) {
+    public mutating func map<T: Mappable>(_ array: inout [T]) {
         delegate.set(array)
     }
     
-    public func map<T: Mappable>(_ array: inout [T], or: [T]) {
+    public mutating func map<T: Mappable>(_ array: inout [T], or: [T]) {
         delegate.set(array)
     }
     
-    public func map<T, R: Transformation>(_ value: inout T?, using transformation: R) where R.Object == T {
+    public mutating func map<T, R: Transformation>(_ value: inout T?, using transformation: R) where R.Object == T {
         delegate.set(value, using: transformation)
     }
     
-    public func map<T, R: Transformation>(_ value: inout T, using transformation: R, or: T) where R.Object == T {
+    public mutating func map<T, R: Transformation>(_ value: inout T, using transformation: R, or: T) where R.Object == T {
         delegate.set(value, using: transformation)
     }
     
-    public func map<T, R: Transformation>(_ array: inout [T]?, using transformation: R) where R.Object == T {
+    public mutating func map<T, R: Transformation>(_ array: inout [T]?, using transformation: R) where R.Object == T {
         delegate.set(array, using: transformation)
     }
     
-    public func map<T, R: Transformation>(_ array: inout [T], using transformation: R) where R.Object == T {
+    public mutating func map<T, R: Transformation>(_ array: inout [T], using transformation: R) where R.Object == T {
         delegate.set(array, using: transformation)
     }
     
-    public func map<T, R: Transformation>(_ array: inout [T], using transformation: R, or: [T]) where R.Object == T {
+    public mutating func map<T, R: Transformation>(_ array: inout [T], using transformation: R, or: [T]) where R.Object == T {
         delegate.set(array, using: transformation)
     }
 }

@@ -8,24 +8,36 @@
 
 public protocol Mappable: Serializable, Deserializable {
     
-    mutating func mapping(_ data: MappableData)
+    mutating func mapping(_ data: inout MappableData)
 }
 
 extension Mappable {
     
-    public func serialize(to data: SerializableData) {
-        mapping(data)
+    public func serialize(to data: inout SerializableData) {
+        mapping(&data)
     }
 }
 
 extension Mappable {
     
-    public mutating func mapping(_ data: DeserializableData) {
-        mapping(DeserializableMappableDataWrapper(delegate: data))
+    public mutating func mapping(_ data: inout DeserializableData) {
+        var wrapper: MappableData = DeserializableMappableDataWrapper(delegate: data)
+        mapping(&wrapper)
     }
     
-    public func mapping(_ data: SerializableData) {
+    public func mapping(_ data: inout SerializableData) {
+        var wrapper: MappableData = SerializableMappableDataWrapper(delegate: data)
         var mutableSelf = self
-        mutableSelf.mapping(SerializableMappableDataWrapper(delegate: data))
+        mutableSelf.mapping(&wrapper)
+    }
+}
+
+// TODO Comment
+extension Mappable where Self: AnyObject {
+    
+    public func mapping(_ data: inout DeserializableData) {
+        var wrapper: MappableData = DeserializableMappableDataWrapper(delegate: data)
+        var s = self
+        s.mapping(&wrapper)
     }
 }

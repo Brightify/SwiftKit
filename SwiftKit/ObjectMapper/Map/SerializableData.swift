@@ -6,82 +6,88 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-public class SerializableData {
+public struct SerializableData {
     
-    private let dataPointer: UnsafeMutablePointer<SupportedType>
-    private let onDataUpdate: (SupportedType) -> Void
-    private let pointerToDeallocate: UnsafeMutablePointer<SupportedType>?
+    internal private(set) var data: SupportedType = .null
     
-    private var data: SupportedType {
-        get {
-            return dataPointer.pointee
-        }
-        set {
-            dataPointer.pointee = newValue
-            onDataUpdate(newValue)
-        }
+    internal init() {
     }
     
-    init(data: UnsafeMutablePointer<SupportedType>) {
-        dataPointer = data
-        onDataUpdate = { _ in }
-        pointerToDeallocate = nil
-    }
-    
-    private init(data: SupportedType?, onDataUpdate: @escaping (SupportedType) -> Void) {
-        dataPointer = UnsafeMutablePointer<SupportedType>.allocate(capacity: 1)
-        dataPointer.initialize(to: data ?? .dictionary([:]))
-        self.onDataUpdate = onDataUpdate
-        pointerToDeallocate = dataPointer
-    }
-    
-    deinit {
-        pointerToDeallocate?.deallocate(capacity: 1)
+    private init(data: SupportedType) {
+        self.data = data
     }
     
     public subscript(path: [String]) -> SerializableData {
-        return path.reduce(self) { serializableData, path in
-            return SerializableData(data: serializableData.data.dictionary?[path]) { updatedType in
-                var dictionary = serializableData.data.dictionary ?? [:]
-                dictionary[path] = updatedType
-                serializableData.data = .dictionary(dictionary)
+        get {
+            return path.reduce(self) { serializableData, path in
+                return SerializableData(data: serializableData.data.dictionary?[path] ?? .null)
+            }
+        }
+        set {
+            if let last = path.last {
+                self[Array(path.dropLast())][last] = newValue
+            } else {
+                self = newValue
             }
         }
     }
     
-    public subscript(path: String...) -> SerializableData {
-        return self[path]
+    private subscript(path: String) -> SerializableData {
+        get {
+            return SerializableData(data: data.dictionary?[path] ?? .null)
+        }
+        set {
+            var mutableDictionary = data.dictionary ?? [:]
+            mutableDictionary[path] = newValue.data
+            data = SupportedType.dictionary(mutableDictionary)
+        }
     }
     
-    public func set<T: SerializableSupportedTypeConvertible>(_ value: T?) {
+    public subscript(path: String...) -> SerializableData {
+        get {
+            return self[path]
+        }
+        set {
+            self[path] = newValue
+        }
+    }
+    
+    public mutating func set<T: SerializableSupportedTypeConvertible>(_ value: T?) {
         set(value, using: T.defaultSerializableTransformation)
     }
     
-    public func set<T: SerializableSupportedTypeConvertible>(_ array: [T]?) {
+    public mutating func set<T: SerializableSupportedTypeConvertible>(_ array: [T]?) {
         set(array, using: T.defaultSerializableTransformation)
     }
     
-    public func set<T: Serializable>(_ value: T?) {
+    public mutating func set<T: Serializable>(_ value: T?) {
         if let value = value {
-            data = value.serialized()
+            var serializableData = SerializableData()
+            value.serialize(to: &serializableData)
+            data = serializableData.data
         } else {
             data = .null
         }
     }
     
-    public func set<T: Serializable>(_ array: [T]?) {
-        if let array = array?.map({ $0.serialized() }) {
-            data = .array(array)
+    public mutating func set<T: Serializable>(_ array: [T]?) {
+        if let array = array {
+            let arrayData: [SupportedType] = array.map { value in
+                var serializableData = SerializableData()
+                value.serialize(to: &serializableData)
+                return serializableData.data
+            }
+            data = .array(arrayData)
         } else {
             data = .null
         }
     }
     
-    public func set<T, R: SerializableTransformation>(_ value: T?, using transformation: R) where R.Object == T {
+    public mutating func set<T, R: SerializableTransformation>(_ value: T?, using transformation: R) where R.Object == T {
         data = transformation.transform(object: value)
     }
     
-    public func set<T, R: SerializableTransformation>(_ array: [T]?, using transformation: R) where R.Object == T {
+    public mutating func set<T, R: SerializableTransformation>(_ array: [T]?, using transformation: R) where R.Object == T {
         if let array = array?.map({ transformation.transform(object: $0) }) {
             data = .array(array)
         } else {
