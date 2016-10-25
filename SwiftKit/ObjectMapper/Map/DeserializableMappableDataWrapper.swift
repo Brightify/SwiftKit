@@ -15,11 +15,20 @@ public struct DeserializableMappableDataWrapper: MappableData {
     }
     
     public subscript(path: [String]) -> MappableData {
-        return DeserializableMappableDataWrapper(delegate: delegate[path])
+        get {
+            return DeserializableMappableDataWrapper(delegate: delegate[path])
+        }
+        set {
+        }
     }
     
     public subscript(path: String...) -> MappableData {
-        return self[path]
+        get {
+            return self[path]
+        }
+        set {
+            self[path] = newValue
+        }
     }
     
     public func map<T: SupportedTypeConvertible>(_ value: inout T?) {

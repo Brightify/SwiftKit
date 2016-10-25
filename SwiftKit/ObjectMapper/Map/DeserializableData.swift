@@ -43,7 +43,8 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> T? {
-        return T(self)
+        var s = self
+        return T(&s)
     }
     
     public func get<T: Deserializable>(or: T) -> T {
@@ -51,7 +52,10 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> [T]? {
-        return data.array?.flatMap { T(DeserializableData(data: $0)) }
+        return data.array?.flatMap {
+            var deserializableData = DeserializableData(data: $0)
+            return T(&deserializableData)
+        }
     }
     
     public func get<T: Deserializable>(or: [T] = []) -> [T] {
