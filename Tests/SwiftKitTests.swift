@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import SwiftKit
-
+/*
 protocol A {
     var data: [Int] { get set }
 }
@@ -22,9 +22,9 @@ class C: A {
     
     var data: [Int] = Array(0..<SwiftKitTests.count)
 }
-
+*/
 class SwiftKitTests: XCTestCase {
-    
+    /*
     static var count = 1
     
     override func setUp() {
@@ -46,7 +46,7 @@ class SwiftKitTests: XCTestCase {
         var b = a
         b.data[0] = 1
         return a.data[0]
-    }
+    }*/
     
     /*
      func testX() {
@@ -58,9 +58,9 @@ class SwiftKitTests: XCTestCase {
      }
      print(x)
      }*/
-    /*
+    
     func testA() {
-        var data = SerializableMappableDataWrapper()
+        var data = SerializableMappableDataWrapper(delegate: SerializableData(polymorph: nil))
         var x = 10
         var y = 20
         data["a"]["b"]["c"]["d"]["e"].map(&x, or: 0)
@@ -69,7 +69,7 @@ class SwiftKitTests: XCTestCase {
         print(data.delegate.data.dictionary?["a"]?.dictionary?["b"]?.dictionary?["c"]?.dictionary?["d"]?.dictionary?["e"]?.int ?? 0)
         print(data.delegate.data.dictionary?["a"]?.dictionary?["b"]?.dictionary?["c"]?.dictionary?["d"]?.dictionary?["f"]?.int ?? 0)
     }
-    
+    /*
     func testSerializable() {
         var x = 0
         measure {
