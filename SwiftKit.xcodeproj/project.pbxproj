@@ -22,6 +22,7 @@
 		DC4D918A1DC344F80095A348 /* ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91891DC344F80095A348 /* ObjectMapper.swift */; };
 		DC4D918C1DC345090095A348 /* SupportedTypeMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D918B1DC345090095A348 /* SupportedTypeMapper.swift */; };
 		DC4D918E1DC345140095A348 /* RawDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D918D1DC345140095A348 /* RawDataMapper.swift */; };
+		DC4D91931DC34BE40095A348 /* DictionaryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91921DC34BE40095A348 /* DictionaryUtils.swift */; };
 		DC5B83931DBA9294007751F6 /* SerializableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B83921DBA9294007751F6 /* SerializableData.swift */; };
 		DC5B83951DBA92A4007751F6 /* DeserializableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B83941DBA92A4007751F6 /* DeserializableData.swift */; };
 		DC5B83971DBA92B4007751F6 /* MappableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B83961DBA92B4007751F6 /* MappableData.swift */; };
@@ -137,6 +138,7 @@
 		DC4D91891DC344F80095A348 /* ObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapper.swift; sourceTree = "<group>"; };
 		DC4D918B1DC345090095A348 /* SupportedTypeMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportedTypeMapper.swift; sourceTree = "<group>"; };
 		DC4D918D1DC345140095A348 /* RawDataMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawDataMapper.swift; sourceTree = "<group>"; };
+		DC4D91921DC34BE40095A348 /* DictionaryUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionaryUtils.swift; path = Utils/DictionaryUtils.swift; sourceTree = "<group>"; };
 		DC5B83921DBA9294007751F6 /* SerializableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SerializableData.swift; path = Map/SerializableData.swift; sourceTree = "<group>"; };
 		DC5B83941DBA92A4007751F6 /* DeserializableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeserializableData.swift; path = Map/DeserializableData.swift; sourceTree = "<group>"; };
 		DC5B83961DBA92B4007751F6 /* MappableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MappableData.swift; path = Map/MappableData.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				DC5F6E741DBFEAFA005DDC61 /* Mappable */,
 				DC4D91731DC3424B0095A348 /* StaticPolymorph */,
 				DC5B83D11DBA9CF0007751F6 /* Transformation */,
+				DC4D91911DC34BD80095A348 /* Utils */,
 			);
 			path = ObjectMapper;
 			sourceTree = "<group>";
@@ -381,6 +384,14 @@
 				DC4D91851DC3428C0095A348 /* PolymorphicSerializable.swift */,
 			);
 			name = PolymorphicMappable;
+			sourceTree = "<group>";
+		};
+		DC4D91911DC34BD80095A348 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DC4D91921DC34BE40095A348 /* DictionaryUtils.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		DC5B83911DBA9223007751F6 /* Map */ = {
@@ -730,6 +741,7 @@
 				DC5B84401DBC9FCA007751F6 /* DeserializableTransformation.swift in Sources */,
 				DC5F6E781DBFEB2F005DDC61 /* Deserializable.swift in Sources */,
 				DC4D91861DC3428C0095A348 /* PolymorphicDeserializable.swift in Sources */,
+				DC4D91931DC34BE40095A348 /* DictionaryUtils.swift in Sources */,
 				DC5B84241DBAC612007751F6 /* String+SupportedTypeConvertible.swift in Sources */,
 				DC4D917C1DC3425C0095A348 /* PolymorphDataProvider.swift in Sources */,
 				DC5F6E7A1DBFEB2F005DDC61 /* Serializable.swift in Sources */,
