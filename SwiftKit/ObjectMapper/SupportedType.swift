@@ -75,3 +75,12 @@ extension SupportedType {
         }
     }
 }
+
+extension SupportedType {
+    
+    public mutating func addToDictionary(key: String, value: SupportedType) {
+        var mutableDictionary = dictionary ?? [:]
+        mutableDictionary[key] = value
+        self = .dictionary(mutableDictionary)
+    }
+}

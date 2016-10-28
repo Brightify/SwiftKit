@@ -9,12 +9,56 @@
 import XCTest
 @testable import SwiftKit
 
+protocol A {
+    var data: [Int] { get set }
+}
+
+struct B: A {
+    
+    var data: [Int] = Array(0..<SwiftKitTests.count)
+}
+
+class C: A {
+    
+    var data: [Int] = Array(0..<SwiftKitTests.count)
+}
+
 class SwiftKitTests: XCTestCase {
     
-    func testX() {
-        print(String(describing: SwiftKitTests.self))
+    static var count = 1
+    
+    override func setUp() {
+        SwiftKitTests.count = 10000
     }
     
+    func testX() {
+        var x = 0
+        measure {
+            for _ in 0..<1000000 {
+                let data: A = SwiftKitTests.count > 0 ? B() : C()
+                x += self.a(a: data)
+            }
+        }
+        print(x)
+    }
+    
+    func a(a: A) -> Int {
+        var b = a
+        b.data[0] = 1
+        return a.data[0]
+    }
+    
+    /*
+     func testX() {
+     var x = 0
+     measure {
+     for _ in 0..<100000 {
+     x += A().data[0]
+     }
+     }
+     print(x)
+     }*/
+    /*
     func testA() {
         var data = SerializableMappableDataWrapper()
         var x = 10
@@ -60,5 +104,5 @@ class SwiftKitTests: XCTestCase {
             }
         }
         print(x)
-    }
+    }*/
 }

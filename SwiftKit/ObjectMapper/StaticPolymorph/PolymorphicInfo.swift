@@ -8,9 +8,9 @@
 
 public protocol PolymorphicInfo {
     
-    var type: PolymorphicInfoProvider.Type { get }
+    var type: Polymorphic.Type { get }
     
     var name: String { get }
     
-    var registeredSubtypes: [PolymorphicInfoProvider.Type] { get }
+    var registeredSubtypes: [Polymorphic.Type] { get }
 }

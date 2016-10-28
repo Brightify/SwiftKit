@@ -8,7 +8,7 @@
 
 public protocol Polymorph {
     
-    func polymorphType<T: Deserializable>(for type: T.Type, in supportedType: SupportedType) -> T.Type
+    func polymorphType<T>(for type: T.Type, in supportedType: SupportedType) -> T.Type
     
-    func writeTypeInfo<T: Serializable>(to supportedType: inout SupportedType, of type: T.Type)
+    func writeTypeInfo<T>(to supportedType: inout SupportedType, of type: T.Type)
 }
