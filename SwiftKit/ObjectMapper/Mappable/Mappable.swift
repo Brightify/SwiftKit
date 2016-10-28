@@ -35,7 +35,7 @@ extension Mappable {
     }
 }
 
-// TODO Comment
+// Mutating function from extension cannot be called on Class instance.
 extension Mappable where Self: AnyObject {
     
     public func mapping(_ data: DeserializableData) {

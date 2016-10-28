@@ -1,19 +1,19 @@
 //
-//  PolymorphicInfoProvider.swift
+//  Polymorphic.swift
 //  SwiftKit
 //
 //  Created by Filip Dolnik on 25.10.16.
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-public protocol PolymorphicInfoProvider {
+public protocol Polymorphic {
     
     static var polymorphicKey: String { get }
     
     static var polymorphicInfo: PolymorphicInfo { get }
 }
 
-extension PolymorphicInfoProvider {
+extension Polymorphic {
     
     internal static var defaultName: String {
         return String(describing: self)

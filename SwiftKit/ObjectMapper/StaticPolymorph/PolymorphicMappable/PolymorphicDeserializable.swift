@@ -6,4 +6,4 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-public typealias PolymorphicDeserializable = Deserializable & PolymorphicInfoProvider
+public typealias PolymorphicDeserializable = Deserializable & Polymorphic

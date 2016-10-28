@@ -6,11 +6,11 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-public struct GenericPolymorphicInfo<T: PolymorphicInfoProvider>: PolymorphicInfo {
+public struct GenericPolymorphicInfo<T: Polymorphic>: PolymorphicInfo {
     
-    public let type: PolymorphicInfoProvider.Type = T.self
+    public let type: Polymorphic.Type = T.self
     public let name: String
-    public private(set) var registeredSubtypes: [PolymorphicInfoProvider.Type] = []
+    public private(set) var registeredSubtypes: [Polymorphic.Type] = []
     
     internal init(name: String) {
         self.name = name

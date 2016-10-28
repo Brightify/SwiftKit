@@ -53,6 +53,7 @@ public struct SerializableData {
         set(dictionary, using: T.defaultSerializableTransformation)
     }
     
+    // TODO Extract
     public mutating func set<T: Serializable>(_ value: T?) {
         if let value = value {
             var serializableData = SerializableData()
@@ -114,9 +115,7 @@ public struct SerializableData {
             return SerializableData(data: data.dictionary?[path] ?? .null)
         }
         set {
-            var mutableDictionary = data.dictionary ?? [:]
-            mutableDictionary[path] = newValue.data
-            data = SupportedType.dictionary(mutableDictionary)
+            data.addToDictionary(key: path, value: newValue.data)
         }
     }
 }

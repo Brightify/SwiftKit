@@ -6,36 +6,39 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-internal class PolymorphDataProvider {
+public class PolymorphDataProvider {
     
     private var nameAndKeyOfTypeCache: [ObjectIdentifier: (name: String, key: String)] = [:]
     private var keysOfTypeCache: [ObjectIdentifier: Set<String>] = [:]
-    private var castableFromTypeByNameByKeyCache: [ObjectIdentifier: [String: [String: PolymorphicInfoProvider.Type]]] = [:]
+    private var castableFromTypeByNameByKeyCache: [ObjectIdentifier: [String: [String: Polymorphic.Type]]] = [:]
     
-    internal func nameAndKey(of type: PolymorphicInfoProvider.Type) -> (name: String, key: String) {
+    public init() {
+    }
+    
+    public func nameAndKey(of type: Polymorphic.Type) -> (name: String, key: String) {
         cache(type: type)
         // Value always exists.
         return nameAndKeyOfTypeCache[ObjectIdentifier(type)]!
     }
     
-    internal func keys(of type: PolymorphicInfoProvider.Type) -> Set<String> {
+    public func keys(of type: Polymorphic.Type) -> Set<String> {
         cache(type: type)
         // Value always exists.
         return keysOfTypeCache[ObjectIdentifier(type)]!
     }
     
-    internal func polymorphType<T: PolymorphicInfoProvider>(of type: T.Type, named name: String, forKey key: String) -> T.Type? {
+    public func polymorphType(of type: Polymorphic.Type, named name: String, forKey key: String) -> Polymorphic.Type? {
         cache(type: type)
-        return castableFromTypeByNameByKeyCache[ObjectIdentifier(type)]?[name]?[key] as? T.Type
+        return castableFromTypeByNameByKeyCache[ObjectIdentifier(type)]?[name]?[key]
     }
     
-    private func cache(type: PolymorphicInfoProvider.Type) {
+    private func cache(type: Polymorphic.Type) {
         if nameAndKeyOfTypeCache[ObjectIdentifier(type)] == nil {
             addToCache(type: type)
         }
     }
     
-    private func addToCache(type: PolymorphicInfoProvider.Type) {
+    private func addToCache(type: Polymorphic.Type) {
         let identifier = ObjectIdentifier(type)
         let polymorphicInfo = type.polymorphicInfo
         let isPolymorphicInfoOverriden = polymorphicInfo.type == type
@@ -50,7 +53,7 @@ internal class PolymorphDataProvider {
         }
     }
     
-    private func addSubtypeToCache(for typeIdentifier: ObjectIdentifier, subtype: PolymorphicInfoProvider.Type) {
+    private func addSubtypeToCache(for typeIdentifier: ObjectIdentifier, subtype: Polymorphic.Type) {
         cache(type: subtype)
         
         let subtypeIdentifier = ObjectIdentifier(subtype)
