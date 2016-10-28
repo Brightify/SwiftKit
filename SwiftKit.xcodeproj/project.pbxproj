@@ -23,6 +23,7 @@
 		DC4D918E1DC345140095A348 /* Serializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D918D1DC345140095A348 /* Serializer.swift */; };
 		DC4D91931DC34BE40095A348 /* DictionaryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91921DC34BE40095A348 /* DictionaryUtils.swift */; };
 		DC4D91951DC34D300095A348 /* StaticPolymorph.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91941DC34D300095A348 /* StaticPolymorph.swift */; };
+		DC4D91981DC3E6E00095A348 /* JsonSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91971DC3E6E00095A348 /* JsonSerializer.swift */; };
 		DC5B83931DBA9294007751F6 /* SerializableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B83921DBA9294007751F6 /* SerializableData.swift */; };
 		DC5B83951DBA92A4007751F6 /* DeserializableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B83941DBA92A4007751F6 /* DeserializableData.swift */; };
 		DC5B83971DBA92B4007751F6 /* MappableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B83961DBA92B4007751F6 /* MappableData.swift */; };
@@ -136,6 +137,7 @@
 		DC4D918D1DC345140095A348 /* Serializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializer.swift; sourceTree = "<group>"; };
 		DC4D91921DC34BE40095A348 /* DictionaryUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionaryUtils.swift; path = Utils/DictionaryUtils.swift; sourceTree = "<group>"; };
 		DC4D91941DC34D300095A348 /* StaticPolymorph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StaticPolymorph.swift; path = StaticPolymorph/StaticPolymorph.swift; sourceTree = "<group>"; };
+		DC4D91971DC3E6E00095A348 /* JsonSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JsonSerializer.swift; path = JsonSerializer/JsonSerializer.swift; sourceTree = "<group>"; };
 		DC5B83921DBA9294007751F6 /* SerializableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SerializableData.swift; path = Map/SerializableData.swift; sourceTree = "<group>"; };
 		DC5B83941DBA92A4007751F6 /* DeserializableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeserializableData.swift; path = Map/DeserializableData.swift; sourceTree = "<group>"; };
 		DC5B83961DBA92B4007751F6 /* MappableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MappableData.swift; path = Map/MappableData.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 		18E4844E1BA8BFB1004CB09A /* SwiftKit */ = {
 			isa = PBXGroup;
 			children = (
+				DC4D91961DC3E6CC0095A348 /* JsonSerializer */,
 				18E4847E1BA8C054004CB09A /* ObjectMapper */,
 				18E484A91BA8C054004CB09A /* Router */,
 				18E4844F1BA8BFB1004CB09A /* SwiftKit.h */,
@@ -386,6 +389,14 @@
 				DC4D91921DC34BE40095A348 /* DictionaryUtils.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		DC4D91961DC3E6CC0095A348 /* JsonSerializer */ = {
+			isa = PBXGroup;
+			children = (
+				DC4D91971DC3E6E00095A348 /* JsonSerializer.swift */,
+			);
+			name = JsonSerializer;
 			sourceTree = "<group>";
 		};
 		DC5B83911DBA9223007751F6 /* Map */ = {
@@ -702,6 +713,7 @@
 				DC5B83F21DBAA46E007751F6 /* CompositeTransformation.swift in Sources */,
 				DC5B841D1DBAC5A4007751F6 /* DoubleTransformation.swift in Sources */,
 				DC5F6E791DBFEB2F005DDC61 /* Mappable.swift in Sources */,
+				DC4D91981DC3E6E00095A348 /* JsonSerializer.swift in Sources */,
 				DC5B841B1DBAC5A4007751F6 /* URLTransformation.swift in Sources */,
 				DC5B83951DBA92A4007751F6 /* DeserializableData.swift in Sources */,
 				DC5B84521DBCA074007751F6 /* SerializableSupportedTypeConvertible.swift in Sources */,
