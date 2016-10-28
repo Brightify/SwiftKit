@@ -32,17 +32,6 @@ public struct SerializableData {
         }
     }
     
-    private subscript(path: String) -> SerializableData {
-        get {
-            return SerializableData(data: data.dictionary?[path] ?? .null)
-        }
-        set {
-            var mutableDictionary = data.dictionary ?? [:]
-            mutableDictionary[path] = newValue.data
-            data = SupportedType.dictionary(mutableDictionary)
-        }
-    }
-    
     public subscript(path: String...) -> SerializableData {
         get {
             return self[path]
@@ -92,6 +81,17 @@ public struct SerializableData {
             data = .array(array)
         } else {
             data = .null
+        }
+    }
+    
+    private subscript(path: String) -> SerializableData {
+        get {
+            return SerializableData(data: data.dictionary?[path] ?? .null)
+        }
+        set {
+            var mutableDictionary = data.dictionary ?? [:]
+            mutableDictionary[path] = newValue.data
+            data = SupportedType.dictionary(mutableDictionary)
         }
     }
 }

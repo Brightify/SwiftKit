@@ -11,6 +11,10 @@ import XCTest
 
 class SwiftKitTests: XCTestCase {
     
+    func testX() {
+        print(String(describing: SwiftKitTests.self))
+    }
+    
     func testA() {
         var data = SerializableMappableDataWrapper()
         var x = 10
