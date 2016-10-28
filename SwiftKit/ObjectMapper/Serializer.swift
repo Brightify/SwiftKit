@@ -8,7 +8,7 @@
 
 public protocol Serializer {
     
-    func serialize(_ supportedType: SupportedType) -> NSData
+    func serialize(_ supportedType: SupportedType) -> Data
     
-    func deserialize(_ data: NSData) -> SupportedType
+    func deserialize(_ data: Data) -> SupportedType
 }
