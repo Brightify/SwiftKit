@@ -49,6 +49,10 @@ public struct SerializableData {
         set(array, using: T.defaultSerializableTransformation)
     }
     
+    public mutating func set<T: SerializableSupportedTypeConvertible>(_ dictionary: [String: T]?) {
+        set(dictionary, using: T.defaultSerializableTransformation)
+    }
+    
     public mutating func set<T: Serializable>(_ value: T?) {
         if let value = value {
             var serializableData = SerializableData()
@@ -72,6 +76,19 @@ public struct SerializableData {
         }
     }
     
+    public mutating func set<T: Serializable>(_ dictionary: [String: T]?) {
+        if let dictionary = dictionary {
+            let dictionaryData: [String: SupportedType] = dictionary.mapValue { value in
+                var serializableData = SerializableData()
+                value.serialize(to: &serializableData)
+                return serializableData.data
+            }
+            data = .dictionary(dictionaryData)
+        } else {
+            data = .null
+        }
+    }
+    
     public mutating func set<T, R: SerializableTransformation>(_ value: T?, using transformation: R) where R.Object == T {
         data = transformation.transform(object: value)
     }
@@ -79,6 +96,14 @@ public struct SerializableData {
     public mutating func set<T, R: SerializableTransformation>(_ array: [T]?, using transformation: R) where R.Object == T {
         if let array = array?.map({ transformation.transform(object: $0) }) {
             data = .array(array)
+        } else {
+            data = .null
+        }
+    }
+    
+    public mutating func set<T, R: SerializableTransformation>(_ dictionary: [String: T]?, using transformation: R) where R.Object == T {
+        if let dictionary = dictionary?.mapValue({ transformation.transform(object: $0) }) {
+            data = .dictionary(dictionary)
         } else {
             data = .null
         }

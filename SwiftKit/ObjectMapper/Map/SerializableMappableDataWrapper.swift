@@ -54,6 +54,18 @@ public struct SerializableMappableDataWrapper: MappableData {
         delegate.set(array)
     }
     
+    public mutating func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T]?) {
+        delegate.set(dictionary)
+    }
+    
+    public mutating func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T]) {
+        delegate.set(dictionary)
+    }
+    
+    public mutating func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T], or: [String: T]) {
+        delegate.set(dictionary)
+    }
+    
     public mutating func map<T: Mappable>(_ value: inout T?) {
         delegate.set(value)
     }
@@ -74,6 +86,18 @@ public struct SerializableMappableDataWrapper: MappableData {
         delegate.set(array)
     }
     
+    public mutating func map<T: Mappable>(_ dictionary: inout [String: T]?) {
+        delegate.set(dictionary)
+    }
+    
+    public mutating func map<T: Mappable>(_ dictionary: inout [String: T]) {
+        delegate.set(dictionary)
+    }
+    
+    public mutating func map<T: Mappable>(_ dictionary: inout [String: T], or: [String: T]) {
+        delegate.set(dictionary)
+    }
+    
     public mutating func map<T, R: Transformation>(_ value: inout T?, using transformation: R) where R.Object == T {
         delegate.set(value, using: transformation)
     }
@@ -92,5 +116,17 @@ public struct SerializableMappableDataWrapper: MappableData {
     
     public mutating func map<T, R: Transformation>(_ array: inout [T], using transformation: R, or: [T]) where R.Object == T {
         delegate.set(array, using: transformation)
+    }
+    
+    public mutating func map<T, R: Transformation>(_ dictionary: inout [String: T]?, using transformation: R) where R.Object == T {
+        delegate.set(dictionary, using: transformation)
+    }
+    
+    public mutating func map<T, R: Transformation>(_ dictionary: inout [String: T], using transformation: R) where R.Object == T {
+        delegate.set(dictionary, using: transformation)
+    }
+    
+    public mutating func map<T, R: Transformation>(_ dictionary: inout [String: T], using transformation: R, or: [String: T]) where R.Object == T {
+        delegate.set(dictionary, using: transformation)
     }
 }

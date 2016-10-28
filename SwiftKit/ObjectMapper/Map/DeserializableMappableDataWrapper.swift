@@ -51,6 +51,18 @@ public struct DeserializableMappableDataWrapper: MappableData {
         array = delegate.get(or: or)
     }
     
+    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T]?) {
+        dictionary = delegate.get()
+    }
+    
+    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T]) {
+        dictionary = delegate.get()
+    }
+    
+    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T], or: [String: T]) {
+        dictionary = delegate.get(or: or)
+    }
+    
     public func map<T: Mappable>(_ value: inout T?) {
         value = delegate.get()
     }
@@ -71,6 +83,18 @@ public struct DeserializableMappableDataWrapper: MappableData {
         array = delegate.get(or: or)
     }
     
+    public func map<T: Mappable>(_ dictionary: inout [String: T]?) {
+        dictionary = delegate.get()
+    }
+    
+    public func map<T: Mappable>(_ dictionary: inout [String: T]) {
+        dictionary = delegate.get()
+    }
+    
+    public func map<T: Mappable>(_ dictionary: inout [String: T], or: [String: T]) {
+        dictionary = delegate.get(or: or)
+    }
+    
     public func map<T, R: Transformation>(_ value: inout T?, using transformation: R) where R.Object == T {
         value = delegate.get(using: transformation)
     }
@@ -89,5 +113,17 @@ public struct DeserializableMappableDataWrapper: MappableData {
     
     public func map<T, R: Transformation>(_ array: inout [T], using transformation: R, or: [T]) where R.Object == T {
         array = delegate.get(using: transformation, or: or)
+    }
+    
+    public func map<T, R: Transformation>(_ dictionary: inout [String: T]?, using transformation: R) where R.Object == T {
+        dictionary = delegate.get(using: transformation)
+    }
+    
+    public func map<T, R: Transformation>(_ dictionary: inout [String: T], using transformation: R) where R.Object == T {
+        dictionary = delegate.get(using: transformation)
+    }
+    
+    public func map<T, R: Transformation>(_ dictionary: inout [String: T], using transformation: R, or: [String: T]) where R.Object == T {
+        dictionary = delegate.get(using: transformation, or: or)
     }
 }
