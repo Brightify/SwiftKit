@@ -15,14 +15,4 @@ extension Dictionary {
         }
         return output
     }
-    
-    internal func flatMapValue<V>(_ transform: (Value) -> V?) -> [Key: V] {
-        var output: [Key: V] = [:]
-        for (key, value) in self {
-            if let newValue = transform(value) {
-                output[key] = newValue
-            }
-        }
-        return output
-    }
 }

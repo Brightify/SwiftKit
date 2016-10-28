@@ -6,21 +6,23 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
+// TODO Public?
+
 public struct SerializableData {
     
-    internal private(set) var data: SupportedType = .null
+    public let polymorph: Polymorph?
     
-    internal init() {
-    }
+    public var data: SupportedType
     
-    private init(data: SupportedType) {
+    public init(data: SupportedType = .null, polymorph: Polymorph?) {
+        self.polymorph = polymorph
         self.data = data
     }
     
     public subscript(path: [String]) -> SerializableData {
         get {
             return path.reduce(self) { serializableData, path in
-                return SerializableData(data: serializableData.data.dictionary?[path] ?? .null)
+                return serializableData[path]
             }
         }
         set {
@@ -45,46 +47,29 @@ public struct SerializableData {
         set(value, using: T.defaultSerializableTransformation)
     }
     
-    public mutating func set<T: SerializableSupportedTypeConvertible>(_ array: [T]?) {
+    public mutating func set<T: SerializableSupportedTypeConvertible>(_ array: [T?]?) {
         set(array, using: T.defaultSerializableTransformation)
     }
     
-    public mutating func set<T: SerializableSupportedTypeConvertible>(_ dictionary: [String: T]?) {
+    public mutating func set<T: SerializableSupportedTypeConvertible>(_ dictionary: [String: T?]?) {
         set(dictionary, using: T.defaultSerializableTransformation)
     }
     
-    // TODO Extract
     public mutating func set<T: Serializable>(_ value: T?) {
-        if let value = value {
-            var serializableData = SerializableData()
-            value.serialize(to: &serializableData)
-            data = serializableData.data
-        } else {
-            data = .null
-        }
+        data = serialize(value)
     }
     
-    public mutating func set<T: Serializable>(_ array: [T]?) {
+    public mutating func set<T: Serializable>(_ array: [T?]?) {
         if let array = array {
-            let arrayData: [SupportedType] = array.map { value in
-                var serializableData = SerializableData()
-                value.serialize(to: &serializableData)
-                return serializableData.data
-            }
-            data = .array(arrayData)
+            data = .array(array.map { serialize($0) })
         } else {
             data = .null
         }
     }
     
-    public mutating func set<T: Serializable>(_ dictionary: [String: T]?) {
+    public mutating func set<T: Serializable>(_ dictionary: [String: T?]?) {
         if let dictionary = dictionary {
-            let dictionaryData: [String: SupportedType] = dictionary.mapValue { value in
-                var serializableData = SerializableData()
-                value.serialize(to: &serializableData)
-                return serializableData.data
-            }
-            data = .dictionary(dictionaryData)
+            data = .dictionary(dictionary.mapValue { serialize($0) })
         } else {
             data = .null
         }
@@ -94,7 +79,7 @@ public struct SerializableData {
         data = transformation.transform(object: value)
     }
     
-    public mutating func set<T, R: SerializableTransformation>(_ array: [T]?, using transformation: R) where R.Object == T {
+    public mutating func set<T, R: SerializableTransformation>(_ array: [T?]?, using transformation: R) where R.Object == T {
         if let array = array?.map({ transformation.transform(object: $0) }) {
             data = .array(array)
         } else {
@@ -102,7 +87,7 @@ public struct SerializableData {
         }
     }
     
-    public mutating func set<T, R: SerializableTransformation>(_ dictionary: [String: T]?, using transformation: R) where R.Object == T {
+    public mutating func set<T, R: SerializableTransformation>(_ dictionary: [String: T?]?, using transformation: R) where R.Object == T {
         if let dictionary = dictionary?.mapValue({ transformation.transform(object: $0) }) {
             data = .dictionary(dictionary)
         } else {
@@ -110,9 +95,17 @@ public struct SerializableData {
         }
     }
     
+    public func serialize<T: Serializable>(_ value: T?) -> SupportedType {
+        var serializableData = SerializableData(polymorph: polymorph)
+        value?.serialize(to: &serializableData)
+        var data = serializableData.data
+        polymorph?.writeTypeInfo(to: &data, of: type(of: value))
+        return data
+    }
+    
     private subscript(path: String) -> SerializableData {
         get {
-            return SerializableData(data: data.dictionary?[path] ?? .null)
+            return SerializableData(data: data.dictionary?[path] ?? .null, polymorph: polymorph)
         }
         set {
             data.addToDictionary(key: path, value: newValue.data)

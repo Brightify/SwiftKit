@@ -95,7 +95,6 @@
 		18E484561BA8BFB1004CB09A /* SwiftKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftKitTests.swift; sourceTree = "<group>"; };
 		18E4845F1BA8BFB1004CB09A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		18E484841BA8C054004CB09A /* ObjectMapper_old.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapper_old.swift; sourceTree = "<group>"; };
 		18E484AA1BA8C054004CB09A /* AlamofireRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireRequestPerformer.swift; sourceTree = "<group>"; };
 		18E484AB1BA8C054004CB09A /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		18E484AC1BA8C054004CB09A /* Headers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Headers.swift; sourceTree = "<group>"; };
@@ -262,11 +261,10 @@
 		18E4847E1BA8C054004CB09A /* ObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
-				18E484841BA8C054004CB09A /* ObjectMapper_old.swift */,
+				DC4D918B1DC345090095A348 /* ObjectMapper.swift */,
 				DC4D91711DC341B30095A348 /* Polymorph.swift */,
 				DC4D918D1DC345140095A348 /* Serializer.swift */,
 				DC5B83CF1DBA964E007751F6 /* SupportedType.swift */,
-				DC4D918B1DC345090095A348 /* ObjectMapper.swift */,
 				DC5B83911DBA9223007751F6 /* Map */,
 				DC5F6E741DBFEAFA005DDC61 /* Mappable */,
 				DC4D91731DC3424B0095A348 /* StaticPolymorph */,
@@ -901,7 +899,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
