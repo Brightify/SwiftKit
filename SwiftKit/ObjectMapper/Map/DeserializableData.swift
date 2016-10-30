@@ -34,36 +34,56 @@ public struct DeserializableData {
         return get() ?? or
     }
     
+    public func get<T: DeserializableSupportedTypeConvertible>() throws -> T {
+        return try valueOrThrow(get())
+    }
+    
     public func get<T: DeserializableSupportedTypeConvertible>() -> [T]? {
         return get(using: T.defaultDeserializableTransformation)
     }
     
-    public func get<T: DeserializableSupportedTypeConvertible>(or: [T] = []) -> [T] {
+    public func get<T: DeserializableSupportedTypeConvertible>(or: [T]) -> [T] {
         return get() ?? or
+    }
+    
+    public func get<T: DeserializableSupportedTypeConvertible>() throws -> [T] {
+        return try valueOrThrow(get())
     }
     
     public func get<T: DeserializableSupportedTypeConvertible>() -> [T?]? {
         return get(using: T.defaultDeserializableTransformation)
     }
     
-    public func get<T: DeserializableSupportedTypeConvertible>(or: [T?] = []) -> [T?] {
+    public func get<T: DeserializableSupportedTypeConvertible>(or: [T?]) -> [T?] {
         return get() ?? or
+    }
+    
+    public func get<T: DeserializableSupportedTypeConvertible>() throws -> [T?] {
+        return try valueOrThrow(get())
     }
     
     public func get<T: DeserializableSupportedTypeConvertible>() -> [String: T]? {
         return get(using: T.defaultDeserializableTransformation)
     }
     
-    public func get<T: DeserializableSupportedTypeConvertible>(or: [String: T] = [:]) -> [String: T] {
+    public func get<T: DeserializableSupportedTypeConvertible>(or: [String: T]) -> [String: T] {
         return get() ?? or
+    }
+    
+    public func get<T: DeserializableSupportedTypeConvertible>() throws -> [String: T] {
+        return try valueOrThrow(get())
     }
     
     public func get<T: DeserializableSupportedTypeConvertible>() -> [String: T?]? {
         return get(using: T.defaultDeserializableTransformation)
     }
     
-    public func get<T: DeserializableSupportedTypeConvertible>(or: [String: T?] = [:]) -> [String: T?] {
+    public func get<T: DeserializableSupportedTypeConvertible>(or: [String: T?]) -> [String: T?] {
         return get() ?? or
+    }
+    
+    public func get<T: DeserializableSupportedTypeConvertible>() throws -> [String: T?] {
+        return try valueOrThrow(get())
     }
     
     public func get<T: Deserializable>() -> T? {
@@ -72,6 +92,10 @@ public struct DeserializableData {
     
     public func get<T: Deserializable>(or: T) -> T {
         return get() ?? or
+    }
+    
+    public func get<T: Deserializable>() throws -> T {
+        return try valueOrThrow(get())
     }
     
     public func get<T: Deserializable>() -> [T]? {
@@ -90,16 +114,24 @@ public struct DeserializableData {
         return result
     }
     
-    public func get<T: Deserializable>(or: [T] = []) -> [T] {
+    public func get<T: Deserializable>(or: [T]) -> [T] {
         return get() ?? or
+    }
+    
+    public func get<T: Deserializable>() throws -> [T] {
+        return try valueOrThrow(get())
     }
     
     public func get<T: Deserializable>() -> [T?]? {
         return data.array?.map { deserialize($0) }
     }
     
-    public func get<T: Deserializable>(or: [T?] = []) -> [T?] {
+    public func get<T: Deserializable>(or: [T?]) -> [T?] {
         return get() ?? or
+    }
+    
+    public func get<T: Deserializable>() throws -> [T?] {
+        return try valueOrThrow(get())
     }
     
     public func get<T: Deserializable>() -> [String: T]? {
@@ -118,16 +150,24 @@ public struct DeserializableData {
         return result
     }
     
-    public func get<T: Deserializable>(or: [String: T] = [:]) -> [String: T] {
+    public func get<T: Deserializable>(or: [String: T]) -> [String: T] {
         return get() ?? or
+    }
+    
+    public func get<T: Deserializable>() throws -> [String: T] {
+        return try valueOrThrow(get())
     }
     
     public func get<T: Deserializable>() -> [String: T?]? {
         return data.dictionary?.mapValue { deserialize($0) }
     }
     
-    public func get<T: Deserializable>(or: [String: T?] = [:]) -> [String: T?] {
+    public func get<T: Deserializable>(or: [String: T?]) -> [String: T?] {
         return get() ?? or
+    }
+    
+    public func get<T: Deserializable>() throws -> [String: T?] {
+        return try valueOrThrow(get())
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) -> T? where R.Object == T {
@@ -136,6 +176,10 @@ public struct DeserializableData {
     
     public func get<T, R: DeserializableTransformation>(using transformation: R, or: T) -> T where R.Object == T {
         return get(using: transformation) ?? or
+    }
+    
+    public func get<T, R: DeserializableTransformation>(using transformation: R) throws -> T where R.Object == T {
+        return try valueOrThrow(get(using: transformation))
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) -> [T]? where R.Object == T {
@@ -154,16 +198,24 @@ public struct DeserializableData {
         return result
     }
     
-    public func get<T, R: DeserializableTransformation>(using transformation: R, or: [T] = []) -> [T] where R.Object == T {
+    public func get<T, R: DeserializableTransformation>(using transformation: R, or: [T]) -> [T] where R.Object == T {
         return get(using: transformation) ?? or
+    }
+    
+    public func get<T, R: DeserializableTransformation>(using transformation: R) throws -> [T] where R.Object == T {
+        return try valueOrThrow(get(using: transformation))
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) -> [T?]? where R.Object == T {
         return data.array?.map { transformation.transform(from: $0) }
     }
     
-    public func get<T, R: DeserializableTransformation>(using transformation: R, or: [T?] = []) -> [T?] where R.Object == T {
+    public func get<T, R: DeserializableTransformation>(using transformation: R, or: [T?]) -> [T?] where R.Object == T {
         return get(using: transformation) ?? or
+    }
+    
+    public func get<T, R: DeserializableTransformation>(using transformation: R) throws -> [T?] where R.Object == T {
+        return try valueOrThrow(get(using: transformation))
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) -> [String: T]? where R.Object == T {
@@ -182,21 +234,37 @@ public struct DeserializableData {
         return result
     }
     
-    public func get<T, R: DeserializableTransformation>(using transformation: R, or: [String: T] = [:]) -> [String: T] where R.Object == T {
+    public func get<T, R: DeserializableTransformation>(using transformation: R, or: [String: T]) -> [String: T] where R.Object == T {
         return get(using: transformation) ?? or
+    }
+    
+    public func get<T, R: DeserializableTransformation>(using transformation: R) throws -> [String: T] where R.Object == T {
+        return try valueOrThrow(get(using: transformation))
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) -> [String: T?]? where R.Object == T {
         return data.dictionary?.mapValue { transformation.transform(from: $0) }
     }
     
-    public func get<T, R: DeserializableTransformation>(using transformation: R, or: [String: T?] = [:]) -> [String: T?] where R.Object == T {
+    public func get<T, R: DeserializableTransformation>(using transformation: R, or: [String: T?]) -> [String: T?] where R.Object == T {
         return get(using: transformation) ?? or
+    }
+    
+    public func get<T, R: DeserializableTransformation>(using transformation: R) throws -> [String: T?] where R.Object == T {
+        return try valueOrThrow(get(using: transformation))
     }
     
     public func deserialize<T: Deserializable>(_ type: SupportedType) -> T? {
         let data = DeserializableData(data: type, polymorph: polymorph)
         let type = polymorph?.polymorphType(for: T.self, in: type) ?? T.self
-        return type.init(data)
+        return try? type.init(data)
+    }
+    
+    public func valueOrThrow<T>(_ optionalValue: T?) throws -> T {
+        if let value = optionalValue {
+            return value
+        } else {
+            throw DeserializationError.wrongType(type: data)
+        }
     }
 }

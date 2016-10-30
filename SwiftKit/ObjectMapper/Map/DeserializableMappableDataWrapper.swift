@@ -39,11 +39,11 @@ public struct DeserializableMappableDataWrapper: MappableData {
         value = delegate.get(or: or)
     }
     
-    public func map<T: SupportedTypeConvertible>(_ array: inout [T]?) {
-        array = delegate.get()
+    public func map<T: SupportedTypeConvertible>(_ value: inout T) throws {
+        value = try delegate.get()
     }
     
-    public func map<T: SupportedTypeConvertible>(_ array: inout [T]) {
+    public func map<T: SupportedTypeConvertible>(_ array: inout [T]?) {
         array = delegate.get()
     }
     
@@ -51,11 +51,11 @@ public struct DeserializableMappableDataWrapper: MappableData {
         array = delegate.get(or: or)
     }
     
-    public func map<T: SupportedTypeConvertible>(_ array: inout [T?]?) {
-        array = delegate.get()
+    public func map<T: SupportedTypeConvertible>(_ array: inout [T]) throws {
+        array = try delegate.get()
     }
     
-    public func map<T: SupportedTypeConvertible>(_ array: inout [T?]) {
+    public func map<T: SupportedTypeConvertible>(_ array: inout [T?]?) {
         array = delegate.get()
     }
     
@@ -63,11 +63,11 @@ public struct DeserializableMappableDataWrapper: MappableData {
         array = delegate.get(or: or)
     }
     
-    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T]?) {
-        dictionary = delegate.get()
+    public func map<T: SupportedTypeConvertible>(_ array: inout [T?]) throws {
+        array = try delegate.get()
     }
     
-    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T]) {
+    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T]?) {
         dictionary = delegate.get()
     }
     
@@ -75,16 +75,20 @@ public struct DeserializableMappableDataWrapper: MappableData {
         dictionary = delegate.get(or: or)
     }
     
-    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T?]?) {
-        dictionary = delegate.get()
+    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T]) throws {
+        dictionary = try delegate.get()
     }
     
-    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T?]) {
+    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T?]?) {
         dictionary = delegate.get()
     }
     
     public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T?], or: [String: T?]) {
         dictionary = delegate.get(or: or)
+    }
+    
+    public func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T?]) throws {
+        dictionary = try delegate.get()
     }
     
     public func map<T: Mappable>(_ value: inout T?) {
@@ -95,11 +99,11 @@ public struct DeserializableMappableDataWrapper: MappableData {
         value = delegate.get(or: or)
     }
     
-    public func map<T: Mappable>(_ array: inout [T]?) {
-        array = delegate.get()
+    public func map<T: Mappable>(_ value: inout T) throws {
+        value = try delegate.get()
     }
     
-    public func map<T: Mappable>(_ array: inout [T]) {
+    public func map<T: Mappable>(_ array: inout [T]?) {
         array = delegate.get()
     }
     
@@ -107,11 +111,11 @@ public struct DeserializableMappableDataWrapper: MappableData {
         array = delegate.get(or: or)
     }
     
-    public func map<T: Mappable>(_ array: inout [T?]?) {
-        array = delegate.get()
+    public func map<T: Mappable>(_ array: inout [T]) throws {
+        array = try delegate.get()
     }
     
-    public func map<T: Mappable>(_ array: inout [T?]) {
+    public func map<T: Mappable>(_ array: inout [T?]?) {
         array = delegate.get()
     }
     
@@ -119,11 +123,11 @@ public struct DeserializableMappableDataWrapper: MappableData {
         array = delegate.get(or: or)
     }
     
-    public func map<T: Mappable>(_ dictionary: inout [String: T]?) {
-        dictionary = delegate.get()
+    public func map<T: Mappable>(_ array: inout [T?]) throws {
+        array = try delegate.get()
     }
     
-    public func map<T: Mappable>(_ dictionary: inout [String: T]) {
+    public func map<T: Mappable>(_ dictionary: inout [String: T]?) {
         dictionary = delegate.get()
     }
     
@@ -131,16 +135,20 @@ public struct DeserializableMappableDataWrapper: MappableData {
         dictionary = delegate.get(or: or)
     }
     
-    public func map<T: Mappable>(_ dictionary: inout [String: T?]?) {
-        dictionary = delegate.get()
+    public func map<T: Mappable>(_ dictionary: inout [String: T]) throws {
+        dictionary = try delegate.get()
     }
     
-    public func map<T: Mappable>(_ dictionary: inout [String: T?]) {
+    public func map<T: Mappable>(_ dictionary: inout [String: T?]?) {
         dictionary = delegate.get()
     }
     
     public func map<T: Mappable>(_ dictionary: inout [String: T?], or: [String: T?]) {
         dictionary = delegate.get(or: or)
+    }
+    
+    public func map<T: Mappable>(_ dictionary: inout [String: T?]) throws {
+        dictionary = try delegate.get()
     }
     
     public func map<T, R: Transformation>(_ value: inout T?, using transformation: R) where R.Object == T {
@@ -151,11 +159,11 @@ public struct DeserializableMappableDataWrapper: MappableData {
         value = delegate.get(using: transformation, or: or)
     }
     
-    public func map<T, R: Transformation>(_ array: inout [T]?, using transformation: R) where R.Object == T {
-        array = delegate.get(using: transformation)
+    public func map<T, R: Transformation>(_ value: inout T, using transformation: R) throws where R.Object == T {
+        value = try delegate.get(using: transformation)
     }
     
-    public func map<T, R: Transformation>(_ array: inout [T], using transformation: R) where R.Object == T {
+    public func map<T, R: Transformation>(_ array: inout [T]?, using transformation: R) where R.Object == T {
         array = delegate.get(using: transformation)
     }
     
@@ -163,11 +171,11 @@ public struct DeserializableMappableDataWrapper: MappableData {
         array = delegate.get(using: transformation, or: or)
     }
     
-    public func map<T, R: Transformation>(_ array: inout [T?]?, using transformation: R) where R.Object == T {
-        array = delegate.get(using: transformation)
+    public func map<T, R: Transformation>(_ array: inout [T], using transformation: R) throws where R.Object == T {
+        array = try delegate.get(using: transformation)
     }
     
-    public func map<T, R: Transformation>(_ array: inout [T?], using transformation: R) where R.Object == T {
+    public func map<T, R: Transformation>(_ array: inout [T?]?, using transformation: R) where R.Object == T {
         array = delegate.get(using: transformation)
     }
     
@@ -175,11 +183,11 @@ public struct DeserializableMappableDataWrapper: MappableData {
         array = delegate.get(using: transformation, or: or)
     }
     
-    public func map<T, R: Transformation>(_ dictionary: inout [String: T]?, using transformation: R) where R.Object == T {
-        dictionary = delegate.get(using: transformation)
+    public func map<T, R: Transformation>(_ array: inout [T?], using transformation: R) throws where R.Object == T {
+        array = try delegate.get(using: transformation)
     }
     
-    public func map<T, R: Transformation>(_ dictionary: inout [String: T], using transformation: R) where R.Object == T {
+    public func map<T, R: Transformation>(_ dictionary: inout [String: T]?, using transformation: R) where R.Object == T {
         dictionary = delegate.get(using: transformation)
     }
     
@@ -187,15 +195,19 @@ public struct DeserializableMappableDataWrapper: MappableData {
         dictionary = delegate.get(using: transformation, or: or)
     }
     
-    public func map<T, R: Transformation>(_ dictionary: inout [String: T?]?, using transformation: R) where R.Object == T {
-        dictionary = delegate.get(using: transformation)
+    public func map<T, R: Transformation>(_ dictionary: inout [String: T], using transformation: R) throws where R.Object == T {
+        dictionary = try delegate.get(using: transformation)
     }
     
-    public func map<T, R: Transformation>(_ dictionary: inout [String: T?], using transformation: R) where R.Object == T {
+    public func map<T, R: Transformation>(_ dictionary: inout [String: T?]?, using transformation: R) where R.Object == T {
         dictionary = delegate.get(using: transformation)
     }
     
     public func map<T, R: Transformation>(_ dictionary: inout [String: T?], using transformation: R, or: [String: T?]) where R.Object == T {
         dictionary = delegate.get(using: transformation, or: or)
+    }
+    
+    public func map<T, R: Transformation>(_ dictionary: inout [String: T?], using transformation: R) throws where R.Object == T {
+        dictionary = try delegate.get(using: transformation)
     }
 }
