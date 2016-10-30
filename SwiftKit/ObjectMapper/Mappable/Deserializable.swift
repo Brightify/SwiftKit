@@ -8,5 +8,5 @@
 
 public protocol Deserializable {
     
-    init?(_ data: DeserializableData)
+    init(_ data: DeserializableData) throws
 }

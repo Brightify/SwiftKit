@@ -11,6 +11,7 @@
 		18E484571BA8BFB1004CB09A /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */; };
 		2126DC84F6D1907D1175EE81 /* Pods_SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAE7934CA54D6546A09DB278 /* Pods_SwiftKit.framework */; };
 		55C54F0104A40999A1698333 /* Pods_SwiftKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DE9C9C07DC93B4E6269F81 /* Pods_SwiftKitTests.framework */; };
+		DC07855E1DC6634A0063AB96 /* DeserializationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07855D1DC6634A0063AB96 /* DeserializationError.swift */; };
 		DC4D91721DC341B30095A348 /* Polymorph.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91711DC341B30095A348 /* Polymorph.swift */; };
 		DC4D917B1DC3425C0095A348 /* GenericPolymorphicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91741DC3425C0095A348 /* GenericPolymorphicInfo.swift */; };
 		DC4D917C1DC3425C0095A348 /* PolymorphDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91751DC3425C0095A348 /* PolymorphDataProvider.swift */; };
@@ -125,6 +126,7 @@
 		BACC98F5132F5D2FA8DDF557 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BAE7934CA54D6546A09DB278 /* Pods_SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D377A479DD457196E4FC76E9 /* Pods-Showcase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Showcase.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Showcase/Pods-Showcase.debug.xcconfig"; sourceTree = "<group>"; };
+		DC07855D1DC6634A0063AB96 /* DeserializationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeserializationError.swift; sourceTree = "<group>"; };
 		DC4D91711DC341B30095A348 /* Polymorph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Polymorph.swift; sourceTree = "<group>"; };
 		DC4D91741DC3425C0095A348 /* GenericPolymorphicInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericPolymorphicInfo.swift; path = StaticPolymorph/GenericPolymorphicInfo.swift; sourceTree = "<group>"; };
 		DC4D91751DC3425C0095A348 /* PolymorphDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PolymorphDataProvider.swift; path = StaticPolymorph/PolymorphDataProvider.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 		18E4847E1BA8C054004CB09A /* ObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
+				DC07855D1DC6634A0063AB96 /* DeserializationError.swift */,
 				DC4D918B1DC345090095A348 /* ObjectMapper.swift */,
 				DC4D91711DC341B30095A348 /* Polymorph.swift */,
 				DC4D918D1DC345140095A348 /* Serializer.swift */,
@@ -706,6 +709,7 @@
 				DC4D918E1DC345140095A348 /* Serializer.swift in Sources */,
 				DC5B84161DBAC5A4007751F6 /* CustomDateFormatTransformation.swift in Sources */,
 				DC5B83F61DBAB5A4007751F6 /* DelegatedTransformation.swift in Sources */,
+				DC07855E1DC6634A0063AB96 /* DeserializationError.swift in Sources */,
 				DC5B845D1DBD1C36007751F6 /* DeserializableMappableDataWrapper.swift in Sources */,
 				DC5B841F1DBAC5A4007751F6 /* StringTransformation.swift in Sources */,
 				DC4D91951DC34D300095A348 /* StaticPolymorph.swift in Sources */,
