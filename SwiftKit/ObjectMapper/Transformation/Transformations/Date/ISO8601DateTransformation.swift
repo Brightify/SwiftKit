@@ -6,6 +6,8 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
+import Foundation
+
 public struct ISO8601DateTransformation: DelegatedTransformation {
 
     public typealias Object = Date

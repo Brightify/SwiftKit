@@ -6,6 +6,8 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
+import Foundation
+
 public protocol Serializer {
     
     func serialize(_ supportedType: SupportedType) -> Data

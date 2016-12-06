@@ -9,7 +9,9 @@
 import SwiftyJSON
 
 public struct JSONInputEncoder: InputEncoder {
-    public init() { }
+    
+    public init() {
+    }
     
     public func encode(_ input: JSON, to request: inout Request) {
         request.HTTPBody = try? input.rawData()

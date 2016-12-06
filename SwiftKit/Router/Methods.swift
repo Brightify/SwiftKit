@@ -1,77 +1,34 @@
 //
 //  Methods.swift
-//  Pods
+//  SwiftKit
 //
-//  Created by Tadeáš Kříž on 6/6/15.
+//  Created by Filip Dolnik on 05.12.16.
+//  Copyright © 2016 Brightify. All rights reserved.
 //
-//
-
-import Foundation
-import Alamofire
 
 /**
-    Target specifies an URL in the API with parameters
+ Represents Endpoint with method CONNECT and input and output parameters
+ 
+ :param: IN The input type
+ :param: OUT The output type
+ */
 
-    :param: ENDPOINT The endpoint in the API
-    :param: PARAMS The parameters to be filled in the endpoint URL
-*/
-open class Target<ENDPOINT: TargetableEndpoint, PARAMS> {
-    fileprivate let pathAndModifiers: (PARAMS) -> (String, [RequestModifier], InputEncoder?)
+open class CONNECT<IN, OUT>: Endpoint<IN, OUT> {
     
-    /**
-        Initializes Target with closure that returns path costructed
-        from base URL and PARAMS
-        
-        :param: path The closure that accepts PARAMS and returns the constructed URL
-    */
-    public init(inputEncoder: InputEncoder? = nil, _ path: @escaping (PARAMS) -> String) {
-        self.pathAndModifiers = { (path($0), [], inputEncoder) }
-    }
-    
-    public init(inputEncoder: InputEncoder? = nil, _ modifiers: [RequestModifier], _ path: @escaping (PARAMS) -> String) {
-        self.pathAndModifiers = { (path($0), modifiers, inputEncoder) }
-    }
-    
-    public init(inputEncoder: InputEncoder? = nil, _ pathAndModifiers: @escaping (PARAMS) -> (String, [RequestModifier])) {
-        self.pathAndModifiers = {
-            let (path, modifiers) = pathAndModifiers($0)
-            return (path, modifiers, inputEncoder)
-        }
-    }
-    
-    /**
-        Returns an Endpoint with the path constructed from supplied PARAMS
-    
-        :param: params The parameters used to construct the Endpoint URL
-    */
-    open func endpoint(_ params: PARAMS) -> ENDPOINT {
-        let (path, modifiers, inputEncoder) = pathAndModifiers(params)
-        if let inputEncoder = inputEncoder {
-            return ENDPOINT(path, modifiers, inputEncoder: inputEncoder)
-        } else {
-            return ENDPOINT(path, modifiers)
-        }
+    open override static var method: HTTPMethod {
+        return .connect
     }
 }
-
-open class BaseEndpoint<IN, OUT>: Endpoint {
-    public typealias Input = IN
-    public typealias Output = OUT
+/**
+ Represents Endpoint with method DELETE and input and output parameters
+ 
+ :param: IN The input type
+ :param: OUT The output type
+ */
+open class DELETE<IN, OUT>: Endpoint<IN, OUT> {
     
-    open let method: Alamofire.HTTPMethod
-    open let path: String
-    open let inputEncoder: InputEncoder
-    open let modifiers: [RequestModifier]
-    
-    public init(method: Alamofire.HTTPMethod, path: String, modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        self.method = method
-        self.path = path
-        self.inputEncoder = inputEncoder
-        self.modifiers = modifiers
-    }
-    
-    public convenience init<E: Endpoint>(endpoint: E) where E.Input == IN, E.Output == OUT {
-        self.init(method: endpoint.method, path: endpoint.path, modifiers: endpoint.modifiers, inputEncoder: endpoint.inputEncoder)
+    open override static var method: HTTPMethod {
+        return .delete
     }
 }
 
@@ -81,140 +38,87 @@ open class BaseEndpoint<IN, OUT>: Endpoint {
  :param: IN The input type
  :param: OUT The output type
  */
-public final class GET<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
-    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
-        self.init(path, modifiers, inputEncoder: URLInputEncoder())
-    }
+open class GET<IN, OUT>: Endpoint<IN, OUT> {
     
-    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .get, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+    open override static var method: HTTPMethod {
+        return .get
     }
 }
 
 /**
-    Represents Endpoint with method POST and input and output parameters
-
-    :param: IN The input type
-    :param: OUT The output type
-*/
-public final class POST<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
-    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
-        self.init(path, modifiers, inputEncoder: JSONInputEncoder())
-    }
+ Represents Endpoint with method HEAD and input and output parameters
+ 
+ :param: IN The input type
+ :param: OUT The output type
+ */
+open class HEAD<IN, OUT>: Endpoint<IN, OUT> {
     
-    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .post, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+    open override static var method: HTTPMethod {
+        return .head
     }
 }
 
 /**
-    Represents Endpoint with method PUT and input and output parameters
-
-    :param: IN The input type
-    :param: OUT The output type
-*/
-public final class PUT<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
-    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
-        self.init(path, modifiers, inputEncoder: JSONInputEncoder())
-    }
+ Represents Endpoint with method OPTIONS and input and output parameters
+ 
+ :param: IN The input type
+ :param: OUT The output type
+ */
+open class OPTIONS<IN, OUT>: Endpoint<IN, OUT> {
     
-    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .put, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+    open override static var method: HTTPMethod {
+        return .options
     }
 }
 
 /**
-    Represents Endpoint with method DELETE and input and output parameters
+ Represents Endpoint with method PATCH and input and output parameters
+ 
+ :param: IN The input type
+ :param: OUT The output type
+ */
+open class PATCH<IN, OUT>: Endpoint<IN, OUT> {
     
-    :param: IN The input type
-    :param: OUT The output type
-*/
-public final class DELETE<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
-    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
-        self.init(path, modifiers, inputEncoder: URLInputEncoder())
-    }
-    
-    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .delete, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+    open override static var method: HTTPMethod {
+        return .patch
     }
 }
 
 /**
-    Represents Endpoint with method OPTIONS and input and output parameters
-
-    :param: IN The input type
-    :param: OUT The output type
-*/
-public final class OPTIONS<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
-    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
-        self.init(path, modifiers, inputEncoder: JSONInputEncoder())
-    }
+ Represents Endpoint with method POST and input and output parameters
+ 
+ :param: IN The input type
+ :param: OUT The output type
+ */
+open class POST<IN, OUT>: Endpoint<IN, OUT> {
     
-    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .options, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+    open override static var method: HTTPMethod {
+        return .post
     }
 }
 
 /**
-    Represents Endpoint with method HEAD and input and output parameters
-
-    :param: IN The input type
-    :param: OUT The output type
-*/
-public final class HEAD<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
-    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
-        self.init(path, modifiers, inputEncoder: URLInputEncoder())
-    }
+ Represents Endpoint with method PUT and input and output parameters
+ 
+ :param: IN The input type
+ :param: OUT The output type
+ */
+open class PUT<IN, OUT>: Endpoint<IN, OUT> {
     
-    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .head, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+    open override static var method: HTTPMethod {
+        return .put
     }
 }
 
 /**
-    Represents Endpoint with method PATCH and input and output parameters
-
-    :param: IN The input type
-    :param: OUT The output type
-*/
-public final class PATCH<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
-    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
-        self.init(path, modifiers, inputEncoder: JSONInputEncoder())
-    }
+ Represents Endpoint with method TRACE and input and output parameters
+ 
+ :param: IN The input type
+ :param: OUT The output type
+ */
+open class TRACE<IN, OUT>: Endpoint<IN, OUT> {
     
-    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .patch, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
-    }
-}
-
-/**
-    Represents Endpoint with method TRACE and input and output parameters
-
-    :param: IN The input type
-    :param: OUT The output type
-*/
-public final class TRACE<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
-    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
-        self.init(path, modifiers, inputEncoder: URLInputEncoder())
-    }
-    
-    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .trace, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
-    }
-}
-
-/**
-    Represents Endpoint with method CONNECT and input and output parameters
-
-    :param: IN The input type
-    :param: OUT The output type
-*/
-public final class CONNECT<IN, OUT>: BaseEndpoint<IN, OUT>, TargetableEndpoint {
-    public convenience init(_ path: String, _ modifiers: [RequestModifier]) {
-        self.init(path, modifiers, inputEncoder: URLInputEncoder())
-    }
-    
-    public init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder) {
-        super.init(method: .connect, path: path, modifiers: modifiers, inputEncoder: inputEncoder)
+    open override static var method: HTTPMethod {
+        return .trace
     }
 }

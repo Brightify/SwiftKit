@@ -1,53 +1,45 @@
 //
 //  Endpoint.swift
-//  Pods
+//  SwiftKit
 //
-//  Created by Tadeáš Kříž on 6/6/15.
+//  Created by Filip Dolnik on 05.12.16.
+//  Copyright © 2016 Brightify. All rights reserved.
 //
-//
 
-import Foundation
-import Alamofire
-
-/// Endpoint specifies an endpoint in the target API
-public protocol Endpoint {
+open class Endpoint<IN, OUT> {
     
-    /// Specifies type of input data
-    associatedtype Input
-    
-    /// Specifies type of output data
-    associatedtype Output
-    
-    var inputEncoder: InputEncoder { get }
-    
-    /// Contains HTTP Method such as GET, POST, etc.
-    var method: Alamofire.HTTPMethod { get }
-    
-    /// Contains path to the API
-    var path: String { get }
-    
-    /// Flags that will be used by registered RequestEnhancers to modify the request and/or response.
-    var modifiers: [RequestModifier] { get }
-}
-
-public protocol TargetableEndpoint: Endpoint {
-    
-    init(_ path: String, _ modifiers: [RequestModifier])
-    
-    /**
-        Initializes Endpoint with path
-    
-        :param: path The path to the API
-    */
-    init(_ path: String, _ modifiers: [RequestModifier], inputEncoder: InputEncoder)
-}
-
-extension TargetableEndpoint {
-    public init(_ path: String, _ modifiers: RequestModifier...) {
-        self.init(path, modifiers)
+    open class var method: HTTPMethod {
+        return .get
     }
     
-    public init(_ path: String, _ modifiers: RequestModifier..., inputEncoder: InputEncoder) {
-        self.init(path, modifiers, inputEncoder: inputEncoder)
+    public let path: String
+    public let inputEncoding: InputEncoding
+    public let modifiers: [RequestModifier]
+    
+    public final var method: HTTPMethod {
+        return type(of: self).method
+    }
+    
+    public required init(_ path: String, modifiers: [RequestModifier]) {
+        self.path = path
+        self.inputEncoding = type(of: self).method.defaultInputEncoding
+        self.modifiers = modifiers
+    }
+    
+    public required init(_ path: String, inputEncoding: InputEncoding, modifiers: [RequestModifier]) {
+        self.path = path
+        self.inputEncoding = inputEncoding
+        self.modifiers = modifiers
+    }
+}
+
+extension Endpoint {
+    
+    public convenience init(_ path: String, modifiers: RequestModifier...) {
+        self.init(path, modifiers: modifiers)
+    }
+    
+    public convenience init(_ path: String, inputEncoding: InputEncoding, modifiers: RequestModifier...) {
+        self.init(path, inputEncoding: inputEncoding, modifiers: modifiers)
     }
 }

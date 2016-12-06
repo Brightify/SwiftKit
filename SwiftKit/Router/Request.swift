@@ -1,141 +1,128 @@
 //
 //  Request.swift
-//  Pods
+//  SwiftKit
 //
 //  Created by Tadeas Kriz on 27/07/15.
-//
+//  Copyright © 2015 Brightify. All rights reserved.
 //
 
 import Foundation
 
+// TODO Delegate rest?
 public struct Request {
     
-    fileprivate var backingURLRequest: NSMutableURLRequest
+    public var modifiers: [RequestModifier] = []
     
-    public var urlRequest: URLRequest {
-        return backingURLRequest as URLRequest
-    }
+    public private(set) var urlRequest: URLRequest
     
-    public var URL: Foundation.URL? {
+    public var url: URL? {
         get {
-            return backingURLRequest.url
+            return urlRequest.url
         }
         set {
-            backingURLRequest.url = newValue
+            urlRequest.url = newValue
         }
     }
     
-    public var cachePolicy: NSURLRequest.CachePolicy {
+    public var cachePolicy: URLRequest.CachePolicy {
         get {
-            return backingURLRequest.cachePolicy
+            return urlRequest.cachePolicy
         }
         set {
-            backingURLRequest.cachePolicy = newValue
+            urlRequest.cachePolicy = newValue
         }
     }
     
     public var timeoutInterval: TimeInterval {
         get {
-            return backingURLRequest.timeoutInterval
+            return urlRequest.timeoutInterval
         }
         set {
-            backingURLRequest.timeoutInterval = newValue
+            urlRequest.timeoutInterval = newValue
         }
     }
     
-    public var networkServiceType: NSURLRequest.NetworkServiceType {
+    public var networkServiceType: URLRequest.NetworkServiceType {
         get {
-            return backingURLRequest.networkServiceType
+            return urlRequest.networkServiceType
         }
         set {
-            backingURLRequest.networkServiceType = newValue
+            urlRequest.networkServiceType = newValue
         }
     }
     
     public var allowsCellularAccess: Bool {
         get {
-            return backingURLRequest.allowsCellularAccess
+            return urlRequest.allowsCellularAccess
         }
         set {
-            backingURLRequest.allowsCellularAccess = newValue
+            urlRequest.allowsCellularAccess = newValue
         }
     }
     
-    public var HTTPMethod: String {
+    public var httpMethod: HTTPMethod {
         get {
-            return backingURLRequest.httpMethod
+            return SwiftKit.HTTPMethod(rawValue: urlRequest.httpMethod ?? "") ?? .unknown
         }
         set {
-            backingURLRequest.httpMethod = newValue
+            urlRequest.httpMethod = newValue.rawValue
         }
     }
     
     public var allHTTPHeaderFields: [String: String]? {
         get {
-            return backingURLRequest.allHTTPHeaderFields
+            return urlRequest.allHTTPHeaderFields
         }
         set {
-            backingURLRequest.allHTTPHeaderFields = newValue
+            urlRequest.allHTTPHeaderFields = newValue
         }
     }
     
-    public var HTTPBody: Data? {
+    public var httpBody: Data? {
         get {
-            return backingURLRequest.httpBody
+            return urlRequest.httpBody
         }
         set {
-            backingURLRequest.httpBody = newValue
+            urlRequest.httpBody = newValue
         }
     }
     
-    public var HTTPBodyStrem: InputStream? {
+    public var httpBodyStrem: InputStream? {
         get {
-            return backingURLRequest.httpBodyStream
+            return urlRequest.httpBodyStream
         }
         set {
-            backingURLRequest.httpBodyStream = newValue
+            urlRequest.httpBodyStream = newValue
         }
     }
     
-    public var HTTPShouldHandleCookies: Bool {
+    public var httpShouldHandleCookies: Bool {
         get {
-            return backingURLRequest.httpShouldHandleCookies
+            return urlRequest.httpShouldHandleCookies
         }
         set {
-            backingURLRequest.httpShouldHandleCookies = newValue
+            urlRequest.httpShouldHandleCookies = newValue
         }
     }
     
-    public var HTTPShouldUsePipelining: Bool {
+    public var httpShouldUsePipelining: Bool {
         get {
-            return backingURLRequest.httpShouldUsePipelining
+            return urlRequest.httpShouldUsePipelining
         }
         set {
-            backingURLRequest.httpShouldUsePipelining = newValue
+            urlRequest.httpShouldUsePipelining = newValue
         }
     }
     
-    public var modifiers: [RequestModifier] = []
-    public var enhancedBy: [RequestEnhancer] = []
-    
-    public init(URL: Foundation.URL) {
-        backingURLRequest = NSMutableURLRequest(url: URL)
-    }
-    
-    public init(URL: Foundation.URL, cachePolicy: NSURLRequest.CachePolicy, timeoutInterval: TimeInterval) {
-        backingURLRequest = NSMutableURLRequest(url: URL, cachePolicy: cachePolicy, timeoutInterval: timeoutInterval)
+    public init(url: URL) {
+        urlRequest = URLRequest(url: url)
     }
     
     public mutating func addHeader(_ header: Header) {
-        backingURLRequest.addHeader(header)
+        urlRequest.addValue(header.value, forHTTPHeaderField: header.name)
     }
     
     public mutating func setHeader(_ header: Header) {
-        backingURLRequest.setHeader(header)
+        urlRequest.setValue(header.value, forHTTPHeaderField: header.name)
     }
-    
-    public mutating func getMutableURLRequest() -> NSMutableURLRequest {
-        return backingURLRequest
-    }
-    
 }
