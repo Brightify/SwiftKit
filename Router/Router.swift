@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO Retry
 public final class Router {
     
     public let requestPerformer: RequestPerformer
@@ -33,7 +34,7 @@ public final class Router {
     }
     
     // TODO Different thread.
-    fileprivate func run<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> ()) -> Cancellable {
+    internal func run<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> ()) -> Cancellable {
         var request = prepareRequest(endpoint: endpoint, input: input)
         requestEnhancers.forEach { $0.enhance(request: &request) }
         
@@ -69,35 +70,3 @@ public final class Router {
         return request
     }
 }
-
-extension Router {
-    
-    @discardableResult
-    public func request(_ endpoint: Endpoint<SupportedType, SupportedType>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> ()) -> Cancellable {
-        return run(endpoint: endpoint, input: input, callback: callback)
-    }
-    
-    @discardableResult
-    public func request(_ endpoint: Endpoint<Void, Void>, callback: @escaping (Response<Void>) -> ()) -> Cancellable {
-        return run(endpoint: endpoint, input: .null) { callback($0.map { _ in Void() }) }
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
