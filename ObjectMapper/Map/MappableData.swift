@@ -12,36 +12,6 @@ public protocol MappableData {
     
     subscript(path: String...) -> MappableData { get set }
     
-    mutating func map<T: SupportedTypeConvertible>(_ value: inout T?)
-    
-    mutating func map<T: SupportedTypeConvertible>(_ value: inout T, or: T)
-    
-    mutating func map<T: SupportedTypeConvertible>(_ value: inout T) throws
-    
-    mutating func map<T: SupportedTypeConvertible>(_ array: inout [T]?)
-    
-    mutating func map<T: SupportedTypeConvertible>(_ array: inout [T], or: [T])
-    
-    mutating func map<T: SupportedTypeConvertible>(_ array: inout [T]) throws
-    
-    mutating func map<T: SupportedTypeConvertible>(_ array: inout [T?]?)
-    
-    mutating func map<T: SupportedTypeConvertible>(_ array: inout [T?], or: [T?])
-    
-    mutating func map<T: SupportedTypeConvertible>(_ array: inout [T?]) throws
-    
-    mutating func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T]?)
-    
-    mutating func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T], or: [String: T])
-    
-    mutating func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T]) throws
-    
-    mutating func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T?]?)
-    
-    mutating func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T?], or: [String: T?])
-    
-    mutating func map<T: SupportedTypeConvertible>(_ dictionary: inout [String: T?]) throws
-    
     mutating func map<T: Mappable>(_ value: inout T?)
     
     mutating func map<T: Mappable>(_ value: inout T, or: T)

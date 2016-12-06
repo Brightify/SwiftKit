@@ -6,8 +6,6 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-// TODO Public?
-
 public struct SerializableData {
     
     public let polymorph: Polymorph?
@@ -42,19 +40,7 @@ public struct SerializableData {
             self[path] = newValue
         }
     }
-    
-    public mutating func set<T: SerializableSupportedTypeConvertible>(_ value: T?) {
-        set(value, using: T.defaultSerializableTransformation)
-    }
-    
-    public mutating func set<T: SerializableSupportedTypeConvertible>(_ array: [T?]?) {
-        set(array, using: T.defaultSerializableTransformation)
-    }
-    
-    public mutating func set<T: SerializableSupportedTypeConvertible>(_ dictionary: [String: T?]?) {
-        set(dictionary, using: T.defaultSerializableTransformation)
-    }
-    
+
     public mutating func set<T: Serializable>(_ value: T?) {
         data = serialize(value)
     }
