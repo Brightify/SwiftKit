@@ -7,11 +7,13 @@
 //
 
 // TODO ObjectMapper?
+
+// TODO Make SupportedTypeConvertible as Mappable
 public struct ObjectMapper {
     
     private let polymorph: Polymorph?
     
-    public init(polymorph: Polymorph?) {
+    public init(polymorph: Polymorph? = nil) {
         self.polymorph = polymorph
     }
     

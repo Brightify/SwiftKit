@@ -1,15 +1,10 @@
 //
 //  RequestModifier.swift
-//  Pods
+//  SwiftKit
 //
 //  Created by Tadeas Kriz on 27/07/15.
+//  Copyright © 2015 Brightify. All rights reserved.
 //
-//
-
-import Foundation
-
-public typealias Enhancement = (RequestEnhancer, RequestModifier)
 
 public protocol RequestModifier {
-    
 }

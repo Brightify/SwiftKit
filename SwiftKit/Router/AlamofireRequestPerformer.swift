@@ -1,14 +1,13 @@
 //
 //  AlamofireRequestPerformer.swift
-//  Pods
+//  SwiftKit
 //
 //  Created by Tadeas Kriz on 28/07/15.
-//
+//  Copyright © 2015 Brightify. All rights reserved.
 //
 
 import Alamofire
 import HTTPStatusCodes
-import SwiftKitStaging
 
 public struct AlamofireRequestPerformer: RequestPerformer {
     
@@ -16,7 +15,6 @@ public struct AlamofireRequestPerformer: RequestPerformer {
         let alamofireRequest = Alamofire
             .request(request.urlRequest)
             .responseData {
-
                 let response = Response<Data?>(
                     output: $0.result.value,
                     statusCode: $0.response?.statusCodeValue,
@@ -28,9 +26,8 @@ public struct AlamofireRequestPerformer: RequestPerformer {
                 completion(response)
         }
         
-        return CancellableToken {
+        return Cancellable {
             alamofireRequest.cancel()
         }
     }
-    
 }

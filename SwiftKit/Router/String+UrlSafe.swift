@@ -1,10 +1,12 @@
 //
 //  String+UrlSafe.swift
-//  Pods
+//  SwiftKit
 //
 //  Created by Tadeáš Kříž on 6/6/15.
+//  Copyright © 2015 Brightify. All rights reserved.
 //
-//
+
+import Foundation
 
 extension String {
  
@@ -37,5 +39,4 @@ extension String {
     public var urlUserSafe: String {
         return addingPercentEncoding(withAllowedCharacters: CharacterSet.urlUserAllowed) ?? self
     }
-    
 }

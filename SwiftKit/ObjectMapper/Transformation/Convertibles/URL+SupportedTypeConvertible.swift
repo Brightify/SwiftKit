@@ -6,6 +6,8 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
+import Foundation
+
 extension URL: SupportedTypeConvertible {
     
     public static var defaultTransformation = URLTransformation().typeErased()

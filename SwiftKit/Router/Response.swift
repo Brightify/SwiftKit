@@ -1,41 +1,39 @@
 //
 //  Response.swift
-//  Pods
+//  SwiftKit
 //
 //  Created by Tadeáš Kříž on 6/6/15.
-//
+//  Copyright © 2015 Brightify. All rights reserved.
 //
 
 import Foundation
 import HTTPStatusCodes
-
-/// Response with no output data
-public typealias EmptyResponse = Response<Void>
 
 /**
     Response with generic type of output
 
     :param: T output type
 */
-open class Response<T> {
+// TODO Struct?
+public final class Response<T> {
     
     /// Output of the Reponse
-    open let output: T
+    public let output: T
     
     /// Status code of the API request
-    open let statusCode: HTTPStatusCode?
+    public let statusCode: HTTPStatusCode?
     
     /// Error of the API request
-    open let error: Error?
+    public let error: Error?
     
     /// Request that was used to obtain this response
-    open let request: Request
+    public let request: Request
     
     /// Raw API response
-    open let rawResponse: URLResponse?
+    public let rawResponse: URLResponse?
     
     /// Raw data of the response
-    open let rawData: Data?
+    public let rawData: Data?
     
     /**
         Initializes Response
@@ -56,16 +54,7 @@ open class Response<T> {
         self.rawData = rawData
     }
     
-    /**
-        Constructs a copy of Response with response type of Void
-    
-        :returns: Copy of Response with response type of Void
-    */
-    open func emptyCopy() -> EmptyResponse {
-        return map { _ in Void() }
-    }
-    
-    open func map<U>(_ transform: (T) -> U) -> Response<U> {
+    public func map<U>(_ transform: (T) -> U) -> Response<U> {
         return Response<U>(output: transform(output), statusCode: statusCode, error: error, request: request, rawResponse: rawResponse, rawData: rawData)
     }
 }

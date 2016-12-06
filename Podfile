@@ -6,7 +6,6 @@ target 'SwiftKit' do
     pod 'SwiftyJSON', '~> 3.1'
     pod 'Alamofire', '~> 4.0'
     pod 'HTTPStatusCodes', '~> 3.1'
-    pod 'SwiftKitStaging'
 end
 
 target 'SwiftKitTests' do
