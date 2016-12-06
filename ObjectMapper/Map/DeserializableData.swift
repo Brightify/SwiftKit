@@ -25,67 +25,7 @@ public struct DeserializableData {
     public subscript(path: String...) -> DeserializableData {
         return self[path]
     }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>() -> T? {
-        return get(using: T.defaultDeserializableTransformation)
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>(or: T) -> T {
-        return get() ?? or
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>() throws -> T {
-        return try valueOrThrow(get())
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>() -> [T]? {
-        return get(using: T.defaultDeserializableTransformation)
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>(or: [T]) -> [T] {
-        return get() ?? or
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>() throws -> [T] {
-        return try valueOrThrow(get())
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>() -> [T?]? {
-        return get(using: T.defaultDeserializableTransformation)
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>(or: [T?]) -> [T?] {
-        return get() ?? or
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>() throws -> [T?] {
-        return try valueOrThrow(get())
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>() -> [String: T]? {
-        return get(using: T.defaultDeserializableTransformation)
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>(or: [String: T]) -> [String: T] {
-        return get() ?? or
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>() throws -> [String: T] {
-        return try valueOrThrow(get())
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>() -> [String: T?]? {
-        return get(using: T.defaultDeserializableTransformation)
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>(or: [String: T?]) -> [String: T?] {
-        return get() ?? or
-    }
-    
-    public func get<T: DeserializableSupportedTypeConvertible>() throws -> [String: T?] {
-        return try valueOrThrow(get())
-    }
-    
+
     public func get<T: Deserializable>() -> T? {
         return deserialize(self.data)
     }
