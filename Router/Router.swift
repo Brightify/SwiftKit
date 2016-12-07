@@ -14,11 +14,17 @@ public final class Router {
     public let requestPerformer: RequestPerformer
     public let objectMapper: ObjectMapper
     
+    public let callQueue: DispatchQueue
+    public let callbackQueue: DispatchQueue
+    
     public private(set) var requestEnhancers: [RequestEnhancer] = []
     
-    public init(requestPerformer: RequestPerformer, objectMapperPolymorph: Polymorph? = nil) {
+    public init(requestPerformer: RequestPerformer, objectMapperPolymorph: Polymorph? = nil,
+                callQueue: DispatchQueue = DispatchQueue.global(qos: .background), callbackQueue: DispatchQueue = DispatchQueue.main) {
         self.requestPerformer = requestPerformer
         objectMapper = ObjectMapper(polymorph: objectMapperPolymorph)
+        self.callQueue = callQueue
+        self.callbackQueue = callbackQueue
         
         register(requestEnhancers: HeaderRequestEnhancer())
         register(requestEnhancers: requestPerformer.implicitEnchancers)
@@ -33,15 +39,22 @@ public final class Router {
         register(requestEnhancers: requestEnhancers)
     }
     
-    // TODO Different thread.
     internal func run<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> ()) -> Cancellable {
-        var request = prepareRequest(endpoint: endpoint, input: input)
-        requestEnhancers.forEach { $0.enhance(request: &request) }
+        let cancallable = Cancellable()
         
-        return requestPerformer.perform(request: request) { response in
-            self.requestEnhancers.forEach { $0.deenhance(response: response) }
-            callback(response)
+        callQueue.async {
+            var request = self.prepareRequest(endpoint: endpoint, input: input)
+            self.requestEnhancers.forEach { $0.enhance(request: &request) }
+            
+            let requestCancellable = self.requestPerformer.perform(request: request) { response in
+                self.requestEnhancers.forEach { $0.deenhance(response: response) }
+                
+                self.callbackQueue.async { callback(response) }
+            }
+            cancallable.rewrite(with: requestCancellable)
         }
+        
+        return cancallable
     }
     
     private func prepareRequest<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType) -> Request {
