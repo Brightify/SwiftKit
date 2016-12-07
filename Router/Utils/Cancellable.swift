@@ -6,16 +6,34 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
+import Foundation
+
 /// Can be used to cancel requests.
-public struct Cancellable {
+public final class Cancellable {
     
-    private let cancelAction: () -> Void
+    private static let syncQueue = DispatchQueue(label: "Cancellable_syncQueue")
     
-    public init(cancelAction: @escaping () -> Void) {
+    private var cancelAction: () -> Void
+    private var shouldCancel = false
+    
+    public init(cancelAction: @escaping () -> Void = {}) {
         self.cancelAction = cancelAction
     }
     
     public func cancel() {
-        cancelAction()
+        Cancellable.syncQueue.sync {
+            shouldCancel = true
+            cancelAction()
+        }
+    }
+    
+    internal func rewrite(with cancellable: Cancellable) {
+        Cancellable.syncQueue.sync {
+            shouldCancel = shouldCancel || cancellable.shouldCancel
+            cancelAction = cancellable.cancelAction
+            if (shouldCancel) {
+                cancelAction()
+            }
+        }
     }
 }
