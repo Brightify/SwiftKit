@@ -57,4 +57,8 @@ public final class Response<T> {
     public func map<U>(_ transform: (T) -> U) -> Response<U> {
         return Response<U>(output: transform(output), statusCode: statusCode, error: error, request: request, rawResponse: rawResponse, rawData: rawData)
     }
+    
+    public func retry(max: Int = Int.max, delay: DispatchTime = DispatchTime.now(), failCallback: () -> () = {}) {
+        request.retry(max: max, delay: delay, failCallback: failCallback)
+    }
 }

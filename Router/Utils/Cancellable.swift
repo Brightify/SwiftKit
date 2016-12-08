@@ -14,6 +14,7 @@ public final class Cancellable {
     private static let syncQueue = DispatchQueue(label: "Cancellable_syncQueue")
     
     private var cancelAction: () -> Void
+    private var cancellables: [Cancellable] = []
     private var shouldCancel = false
     
     public init(cancelAction: @escaping () -> Void = {}) {
@@ -24,15 +25,15 @@ public final class Cancellable {
         Cancellable.syncQueue.sync {
             shouldCancel = true
             cancelAction()
+            cancellables.forEach { $0.cancel() }
         }
     }
     
-    public func rewrite(with cancellable: Cancellable) {
+    public func add(cancellable: Cancellable) {
         Cancellable.syncQueue.sync {
-            shouldCancel = shouldCancel || cancellable.shouldCancel
-            cancelAction = cancellable.cancelAction
+            cancellables.append(cancellable)
             if (shouldCancel) {
-                cancelAction()
+                cancel()
             }
         }
     }
