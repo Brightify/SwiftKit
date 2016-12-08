@@ -95,7 +95,7 @@ for output in outputTypes {
     print("    private func run<IN\(outputGenericSigniture)>(endpoint: Endpoint<IN, \(output)>, inputProvider: @escaping () -> (SupportedType), callback: @escaping (Response<\(responseType)>) -> ()) -> Cancellable {")
     print("        let cancellable = Cancellable()")
     print("        callQueue.async {")
-    print("            cancellable.rewrite(with: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in")
+    print("            cancellable.add(cancellable: self.run(endpoint: endpoint, input: inputProvider()) { (response: Response<SupportedType>) in")
     print("                let mappedResponse: Response<\(responseType)> = response.map { \(responseMapping) }")
     print("                self.callbackQueue.async { callback(mappedResponse) }")
     print("            })")

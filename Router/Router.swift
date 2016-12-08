@@ -40,22 +40,28 @@ public final class Router {
     }
     
     public func run<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> ()) -> Cancellable {
-        var request = prepareRequest(endpoint: endpoint, input: input)
+        var request = prepareRequest(endpoint: endpoint, input: input, callback: callback)
         self.requestEnhancers.forEach { $0.enhance(request: &request) }
-            
-        return self.requestPerformer.perform(request: request) { response in
-            self.requestEnhancers.forEach { $0.deenhance(response: response) }
-                
-            callback(response)
-        }
+        
+        perform(request: request)
+        
+        return request.cancellable
     }
     
-    private func prepareRequest<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType) -> Request {
+    private func perform(request: Request) {
+        request.cancellable.add(cancellable: self.requestPerformer.perform(request: request) { response in
+            self.requestEnhancers.forEach { $0.deenhance(response: response) }
+            
+            request.callback(response)
+        })
+    }
+    
+    private func prepareRequest<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> ()) -> Request {
         guard let url = URL(string: endpoint.path) else {
             preconditionFailure("Path\(endpoint.path) from endpoint doesn`t resolve to valid url.")
         }
         
-        var request = Request(url: url)
+        var request = Request(url: url, retry: retry, callback: callback, cancellable: Cancellable())
         request.httpMethod = endpoint.method
         request.modifiers = [endpoint.modifiers, requestPerformer.implicitModifiers].flatMap { $0 }
         
@@ -74,5 +80,17 @@ public final class Router {
         }
 
         return request
+    }
+    
+    private func retry(request: Request, max: Int, delay: DispatchTime, failCallback: () -> ()) {
+        guard request.retried < max else {
+            return failCallback()
+        }
+        
+        callQueue.asyncAfter(deadline: delay) {
+            var requestCopy = request
+            requestCopy.retried += 1
+            self.perform(request: requestCopy)
+        }
     }
 }

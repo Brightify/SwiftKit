@@ -15,6 +15,14 @@ public struct Request {
     
     public private(set) var urlRequest: URLRequest
     
+    public var retried = 0
+    
+    public let callback: (Response<SupportedType>) -> ()
+    
+    public let cancellable: Cancellable
+    
+    private let retryClosure: (Request, Int, DispatchTime, () -> ()) -> ()
+    
     public var url: URL? {
         get {
             return urlRequest.url
@@ -114,8 +122,11 @@ public struct Request {
         }
     }
     
-    public init(url: URL) {
+    public init(url: URL, retry: @escaping (Request, Int, DispatchTime, () -> ()) -> (), callback: @escaping (Response<SupportedType>) -> (), cancellable: Cancellable) {
         urlRequest = URLRequest(url: url)
+        retryClosure = retry
+        self.callback = callback
+        self.cancellable = cancellable
     }
     
     public mutating func addHeader(_ header: Header) {
@@ -124,5 +135,9 @@ public struct Request {
     
     public mutating func setHeader(_ header: Header) {
         urlRequest.setValue(header.value, forHTTPHeaderField: header.name)
+    }
+    
+    public func retry(max: Int = Int.max, delay: DispatchTime = DispatchTime.now(), failCallback: () -> () = {}) {
+        retryClosure(self, max, delay, failCallback)
     }
 }
