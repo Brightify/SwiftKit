@@ -27,7 +27,7 @@ public final class Cancellable {
         }
     }
     
-    internal func rewrite(with cancellable: Cancellable) {
+    public func rewrite(with cancellable: Cancellable) {
         Cancellable.syncQueue.sync {
             shouldCancel = shouldCancel || cancellable.shouldCancel
             cancelAction = cancellable.cancelAction
