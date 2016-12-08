@@ -39,22 +39,15 @@ public final class Router {
         register(requestEnhancers: requestEnhancers)
     }
     
-    internal func run<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> ()) -> Cancellable {
-        let cancallable = Cancellable()
-        
-        callQueue.async {
-            var request = self.prepareRequest(endpoint: endpoint, input: input)
-            self.requestEnhancers.forEach { $0.enhance(request: &request) }
+    public func run<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> ()) -> Cancellable {
+        var request = prepareRequest(endpoint: endpoint, input: input)
+        self.requestEnhancers.forEach { $0.enhance(request: &request) }
             
-            let requestCancellable = self.requestPerformer.perform(request: request) { response in
-                self.requestEnhancers.forEach { $0.deenhance(response: response) }
+        return self.requestPerformer.perform(request: request) { response in
+            self.requestEnhancers.forEach { $0.deenhance(response: response) }
                 
-                self.callbackQueue.async { callback(response) }
-            }
-            cancallable.rewrite(with: requestCancellable)
+            callback(response)
         }
-        
-        return cancallable
     }
     
     private func prepareRequest<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType) -> Request {
