@@ -6,30 +6,40 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
+import Foundation
+
 public class PolymorphDataProvider {
     
     private var nameAndKeyOfTypeCache: [ObjectIdentifier: (name: String, key: String)] = [:]
     private var keysOfTypeCache: [ObjectIdentifier: Set<String>] = [:]
     private var castableFromTypeByNameByKeyCache: [ObjectIdentifier: [String: [String: Polymorphic.Type]]] = [:]
     
+    private let syncQueue = DispatchQueue(label: "PolymorphDataProvider_syncQueue")
+    
     public init() {
     }
     
     public func nameAndKey(of type: Polymorphic.Type) -> (name: String, key: String) {
-        cache(type: type)
-        // Value always exists.
-        return nameAndKeyOfTypeCache[ObjectIdentifier(type)]!
+        return syncQueue.sync {
+            cache(type: type)
+            // Value always exists.
+            return nameAndKeyOfTypeCache[ObjectIdentifier(type)]!
+        }
     }
     
     public func keys(of type: Polymorphic.Type) -> Set<String> {
-        cache(type: type)
-        // Value always exists.
-        return keysOfTypeCache[ObjectIdentifier(type)]!
+        return syncQueue.sync {
+            cache(type: type)
+            // Value always exists.
+            return keysOfTypeCache[ObjectIdentifier(type)]!
+        }
     }
     
     public func polymorphType(of type: Polymorphic.Type, named name: String, forKey key: String) -> Polymorphic.Type? {
-        cache(type: type)
-        return castableFromTypeByNameByKeyCache[ObjectIdentifier(type)]?[name]?[key]
+        return syncQueue.sync {
+            cache(type: type)
+            return castableFromTypeByNameByKeyCache[ObjectIdentifier(type)]?[name]?[key]
+        }
     }
     
     private func cache(type: Polymorphic.Type) {
