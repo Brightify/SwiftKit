@@ -14,7 +14,7 @@ public final class StatusCodeRangeVerifier: ResponseVerifier {
         self.range = range
     }
     
-    public func verify<T>(response: Response<T>) -> Bool {
+    public func verify(response: Response<SupportedType>) -> Bool {
         return response.statusCode.map { range.contains($0.rawValue) } ?? false
     }
 }

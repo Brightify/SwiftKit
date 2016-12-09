@@ -8,21 +8,23 @@
 
 import Foundation
 
-// TODO Retry
 public final class Router {
     
     public let requestPerformer: RequestPerformer
     public let objectMapper: ObjectMapper
+    public let errorHandler: ErrorHandler
     
     public let callQueue: DispatchQueue
     public let callbackQueue: DispatchQueue
     
     public private(set) var requestEnhancers: [RequestEnhancer] = []
     
-    public init(requestPerformer: RequestPerformer, objectMapperPolymorph: Polymorph? = nil,
+    public init(requestPerformer: RequestPerformer, objectMapperPolymorph: Polymorph? = nil, errorHandler: ErrorHandler = ErrorHandler(),
                 callQueue: DispatchQueue = DispatchQueue.global(qos: .background), callbackQueue: DispatchQueue = DispatchQueue.main) {
         self.requestPerformer = requestPerformer
         objectMapper = ObjectMapper(polymorph: objectMapperPolymorph)
+        self.errorHandler = errorHandler
+        
         self.callQueue = callQueue
         self.callbackQueue = callbackQueue
         
@@ -52,7 +54,9 @@ public final class Router {
         request.cancellable.add(cancellable: self.requestPerformer.perform(request: request) { response in
             self.requestEnhancers.forEach { $0.deenhance(response: response) }
             
-            request.callback(response)
+            if errorHandler.shouldCallCallback(response) {
+                request.callback(response)
+            }
         })
     }
     
