@@ -96,6 +96,7 @@
 		DC99DCFF1DF5E89D00DD866C /* InputEncodingWithEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DCFE1DF5E89D00DD866C /* InputEncodingWithEncoder.swift */; };
 		DC99DD011DF6BC9000DD866C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD001DF6BC9000DD866C /* Router.swift */; };
 		DC99DD821DF95A5B00DD866C /* Router+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD811DF95A5B00DD866C /* Router+Request.swift */; };
+		DC99DD841DF9CFCB00DD866C /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DD831DF9CFCB00DD866C /* ErrorHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -229,6 +230,7 @@
 		DC99DD061DF6F6D000DD866C /* SwiftKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftKit.podspec; sourceTree = SOURCE_ROOT; };
 		DC99DD281DF94BFF00DD866C /* RouterRequestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RouterRequestGenerator.swift; path = RouterRequestGenerator/RouterRequestGenerator.swift; sourceTree = "<group>"; };
 		DC99DD811DF95A5B00DD866C /* Router+Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Router+Request.swift"; sourceTree = "<group>"; };
+		DC99DD831DF9CFCB00DD866C /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -311,6 +313,7 @@
 		18E484A91BA8C054004CB09A /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				DC99DD831DF9CFCB00DD866C /* ErrorHandler.swift */,
 				18E484AF1BA8C054004CB09A /* Request.swift */,
 				18E484B21BA8C054004CB09A /* RequestPerformer.swift */,
 				18E484B31BA8C054004CB09A /* Response.swift */,
@@ -918,6 +921,7 @@
 				DC5B83F41DBAAC1A007751F6 /* SupportedTypeConvertible.swift in Sources */,
 				DC99DCFB1DF57D3A00DD866C /* Endpoint.swift in Sources */,
 				DC5B84421DBC9FD8007751F6 /* SerializableTransformation.swift in Sources */,
+				DC99DD841DF9CFCB00DD866C /* ErrorHandler.swift in Sources */,
 				DC4D91721DC341B30095A348 /* Polymorph.swift in Sources */,
 				DC2B5DB81DF4187A00F9C9D7 /* RequestEnhancer.swift in Sources */,
 				DC5B83971DBA92B4007751F6 /* MappableData.swift in Sources */,

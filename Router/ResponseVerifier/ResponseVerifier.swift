@@ -6,8 +6,7 @@
 //  Copyright © 2015 Brightify. All rights reserved.
 //
 
-// TODO ?
 public protocol ResponseVerifier {
 
-    func verify<T>(response: Response<T>) -> Bool
+    func verify(response: Response<SupportedType>) -> Bool
 }
