@@ -138,14 +138,14 @@
 		18E4845F1BA8BFB1004CB09A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18E484AA1BA8C054004CB09A /* AlamofireRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireRequestPerformer.swift; sourceTree = "<group>"; };
 		18E484AC1BA8C054004CB09A /* Headers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Headers.swift; sourceTree = "<group>"; };
-		18E484AE1BA8C054004CB09A /* URL+appendingPathComponentWithoutSlash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "URL+appendingPathComponentWithoutSlash.swift"; path = "Utils/URL+appendingPathComponentWithoutSlash.swift"; sourceTree = "<group>"; };
+		18E484AE1BA8C054004CB09A /* URL+appendingPathComponentWithoutSlash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+appendingPathComponentWithoutSlash.swift"; sourceTree = "<group>"; };
 		18E484AF1BA8C054004CB09A /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		18E484B01BA8C054004CB09A /* RequestEnhancer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestEnhancer.swift; sourceTree = "<group>"; };
 		18E484B11BA8C054004CB09A /* RequestModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestModifier.swift; sourceTree = "<group>"; };
 		18E484B21BA8C054004CB09A /* RequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPerformer.swift; sourceTree = "<group>"; };
 		18E484B31BA8C054004CB09A /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		18E484B41BA8C054004CB09A /* ResponseVerifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseVerifier.swift; sourceTree = "<group>"; };
-		18E484B61BA8C054004CB09A /* String+UrlSafe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+UrlSafe.swift"; path = "Utils/String+UrlSafe.swift"; sourceTree = "<group>"; };
+		18E484B61BA8C054004CB09A /* String+UrlSafe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+UrlSafe.swift"; sourceTree = "<group>"; };
 		1D62DDC16E1C85A5E017C537 /* Pods-Showcase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Showcase.release.xcconfig"; path = "Pods/Target Support Files/Pods-Showcase/Pods-Showcase.release.xcconfig"; sourceTree = "<group>"; };
 		2EDD550C9736BD9AF8C2C55A /* Pods_Showcase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Showcase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D12B164744D9929A95F5B9D /* Pods-SwiftKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftKit/Pods-SwiftKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -232,23 +232,18 @@
 		DC99DCFC1DF5E67100DD866C /* InputEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputEncoder.swift; sourceTree = "<group>"; };
 		DC99DCFE1DF5E89D00DD866C /* InputEncodingWithEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputEncodingWithEncoder.swift; sourceTree = "<group>"; };
 		DC99DD001DF6BC9000DD866C /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
-		DC99DD021DF6F6D000DD866C /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = SOURCE_ROOT; };
-		DC99DD031DF6F6D000DD866C /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
-		DC99DD041DF6F6D000DD866C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
-		DC99DD051DF6F6D000DD866C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		DC99DD061DF6F6D000DD866C /* SwiftKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftKit.podspec; sourceTree = SOURCE_ROOT; };
 		DC99DD811DF95A5B00DD866C /* Router+Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Router+Request.swift"; sourceTree = "<group>"; };
 		DC99DD831DF9CFCB00DD866C /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
-		DC99DD881DFA9CEB00DD866C /* RouterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RouterError.swift; path = ../RxRouter/RouterError.swift; sourceTree = "<group>"; };
-		DC99DD8A1DFA9D2600DD866C /* RxRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxRouter.swift; path = RxRouter/RxRouter.swift; sourceTree = "<group>"; };
-		DC99DD8C1DFA9D8E00DD866C /* Router+RxRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Router+RxRouter.swift"; path = "RxRouter/Router+RxRouter.swift"; sourceTree = "<group>"; };
-		DCE2DDA81DFC1229006E462C /* BaseScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseScript.swift; path = RequestGenerator/BaseScript.swift; sourceTree = "<group>"; };
-		DCE2DDA91DFC1229006E462C /* RequestGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestGenerator.swift; path = RequestGenerator/RequestGenerator.swift; sourceTree = "<group>"; };
-		DCE2DDAA1DFC1229006E462C /* run */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = run; path = RequestGenerator/run; sourceTree = "<group>"; };
-		DCE2DDAB1DFC1229006E462C /* RxRequestGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxRequestGenerator.swift; path = RequestGenerator/RxRequestGenerator.swift; sourceTree = "<group>"; };
-		DCE2DDB21DFC12AE006E462C /* RxRouter+Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "RxRouter+Request.swift"; path = "RxRouter/RxRouter+Request.swift"; sourceTree = "<group>"; };
-		DCE2DDB61DFC18BD006E462C /* ResponseProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResponseProtocol.swift; path = Router/ResponseProtocol.swift; sourceTree = "<group>"; };
-		DCE2DDB81DFC2AFF006E462C /* ObservableConvertibleType+Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ObservableConvertibleType+Response.swift"; path = "RxRouter/ObservableConvertibleType+Response.swift"; sourceTree = "<group>"; };
+		DC99DD881DFA9CEB00DD866C /* RouterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterError.swift; sourceTree = "<group>"; };
+		DC99DD8A1DFA9D2600DD866C /* RxRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxRouter.swift; sourceTree = "<group>"; };
+		DC99DD8C1DFA9D8E00DD866C /* Router+RxRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Router+RxRouter.swift"; sourceTree = "<group>"; };
+		DCE2DDA81DFC1229006E462C /* BaseScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseScript.swift; sourceTree = "<group>"; };
+		DCE2DDA91DFC1229006E462C /* RequestGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestGenerator.swift; sourceTree = "<group>"; };
+		DCE2DDAA1DFC1229006E462C /* run */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = run; sourceTree = "<group>"; };
+		DCE2DDAB1DFC1229006E462C /* RxRequestGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxRequestGenerator.swift; sourceTree = "<group>"; };
+		DCE2DDB21DFC12AE006E462C /* RxRouter+Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RxRouter+Request.swift"; sourceTree = "<group>"; };
+		DCE2DDB61DFC18BD006E462C /* ResponseProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseProtocol.swift; sourceTree = "<group>"; };
+		DCE2DDB81DFC2AFF006E462C /* ObservableConvertibleType+Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableConvertibleType+Response.swift"; sourceTree = "<group>"; };
 		DCE2DDD71DFC7CB8006E462C /* NoErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoErrorHandler.swift; sourceTree = "<group>"; };
 		DCE2DDD91DFC818E006E462C /* BaseStatusCodeErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseStatusCodeErrorHandler.swift; sourceTree = "<group>"; };
 		DCE2DDDB1DFC8250006E462C /* CompositeErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeErrorHandler.swift; sourceTree = "<group>"; };
@@ -378,7 +373,6 @@
 				18E484A91BA8C054004CB09A /* Router */,
 				DC99DD271DF94B9C00DD866C /* RequestGenerator */,
 				40530704BB654DF2297D1CF7 /* Pods */,
-				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F58B195388D20070C39A /* Products */,
 				18E4845C1BA8BFB1004CB09A /* Tests */,
 			);
@@ -406,18 +400,6 @@
 				B2DE9C9C07DC93B4E6269F81 /* Pods_SwiftKitTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		60FF7A9C1954A5C5007DD14C /* Podspec Metadata */ = {
-			isa = PBXGroup;
-			children = (
-				DC99DD021DF6F6D000DD866C /* .travis.yml */,
-				DC99DD031DF6F6D000DD866C /* CHANGELOG.md */,
-				DC99DD041DF6F6D000DD866C /* LICENSE */,
-				DC99DD051DF6F6D000DD866C /* README.md */,
-				DC99DD061DF6F6D000DD866C /* SwiftKit.podspec */,
-			);
-			path = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
 		DC2B5D821DF4110C00F9C9D7 /* Header */ = {
@@ -698,7 +680,7 @@
 				DCE2DDA91DFC1229006E462C /* RequestGenerator.swift */,
 				DCE2DDAB1DFC1229006E462C /* RxRequestGenerator.swift */,
 			);
-			name = RequestGenerator;
+			path = RequestGenerator;
 			sourceTree = "<group>";
 		};
 		DC99DD851DFA9BF900DD866C /* RxRouter */ = {
@@ -710,7 +692,7 @@
 				DC99DD8A1DFA9D2600DD866C /* RxRouter.swift */,
 				DCE2DDB21DFC12AE006E462C /* RxRouter+Request.swift */,
 			);
-			name = RxRouter;
+			path = RxRouter;
 			sourceTree = "<group>";
 		};
 		DCE2DDD41DFC6AA8006E462C /* RequestPerformer */ = {
@@ -720,7 +702,7 @@
 				DC2B5DAE1DF4182B00F9C9D7 /* ResponseVerifier */,
 				DCE2DDD51DFC6AD9006E462C /* Utils */,
 			);
-			name = RequestPerformer;
+			path = RequestPerformer;
 			sourceTree = "<group>";
 		};
 		DCE2DDD51DFC6AD9006E462C /* Utils */ = {
@@ -729,7 +711,7 @@
 				18E484B61BA8C054004CB09A /* String+UrlSafe.swift */,
 				18E484AE1BA8C054004CB09A /* URL+appendingPathComponentWithoutSlash.swift */,
 			);
-			name = Utils;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		DCE2DDD61DFC7B78006E462C /* ErrorHandler */ = {
@@ -742,7 +724,7 @@
 				DCE2DDDD1DFC833C006E462C /* NoInternetErrorHandler.swift */,
 				DCE2DDE11DFC887A006E462C /* RequestTimeOutErrorHandler.swift */,
 			);
-			name = ErrorHandler;
+			path = ErrorHandler;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
