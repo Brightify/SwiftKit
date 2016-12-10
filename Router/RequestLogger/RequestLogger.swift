@@ -20,7 +20,7 @@ public final class RequestLogger: RequestEnhancer {
         request.modifiers.append(RequestLoggerTimestamp(time: Date()))
     }
     
-    public func deenhance(response: Response<SupportedType>) {
+    public func deenhance(response: inout Response<SupportedType>) {
         let modifiers = response.request.modifiers.flatMap { $0 as? RequestLogging }
         guard modifiers.count > 0 else { return }
         

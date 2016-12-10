@@ -8,15 +8,15 @@
 
 public struct RequestLogging: OptionSet, RequestModifier {
     
-    public static let requestUrl = RequestLogging(rawValue: 1)
-    public static let time = RequestLogging(rawValue: 2)
-    public static let responseCode = RequestLogging(rawValue: 4)
+    public static let requestUrl = RequestLogging(rawValue: 1 << 0)
+    public static let time = RequestLogging(rawValue: 1 << 1)
+    public static let responseCode = RequestLogging(rawValue: 1 << 2)
     
-    public static let requestHeaders = RequestLogging(rawValue: 8)
-    public static let requestBody = RequestLogging(rawValue: 16)
+    public static let requestHeaders = RequestLogging(rawValue: 1 << 3)
+    public static let requestBody = RequestLogging(rawValue: 1 << 4)
     
-    public static let responseHeaders = RequestLogging(rawValue: 32)
-    public static let responseBody = RequestLogging(rawValue: 64)
+    public static let responseHeaders = RequestLogging(rawValue: 1 << 5)
+    public static let responseBody = RequestLogging(rawValue: 1 << 6)
     
     public static let all = RequestLogging(rawValue: Int.max)
     public static let disabled = RequestLogging(rawValue: 0)

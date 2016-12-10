@@ -21,18 +21,6 @@ extension String {
     var isKnownType: Bool {
         return isVoid || isSupportedType
     }
-    
-    var isValue: Bool {
-        return self == "OUT"
-    }
-    
-    var isArray: Bool {
-        return characters.last == "]" && !characters.contains(":")
-    }
-    
-    var isDictionary: Bool {
-        return characters.last == "]" && characters.contains(":")
-    }
 }
 
 let inputTypes = ["SupportedType", "Void", "IN", "IN?", "[IN]", "[IN]?", "[IN?]", "[IN?]?", "[String: IN]", "[String: IN]?", "[String: IN?]", "[String: IN?]?"]
