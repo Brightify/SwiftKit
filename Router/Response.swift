@@ -35,6 +35,8 @@ public final class Response<T> {
     /// Raw data of the response
     public let rawData: Data?
     
+    public let rawOutput: SupportedType
+    
     /**
         Initializes Response
     
@@ -45,20 +47,32 @@ public final class Response<T> {
         :param: rawResponse The raw response
         :param: rawData The raw data of the Response
     */
-    public init(output: T, statusCode: HTTPStatusCode?, error: Error?, request: Request, rawResponse: URLResponse?, rawData: Data?) {
+    public init(output: T, statusCode: HTTPStatusCode?, error: Error?, request: Request, rawResponse: URLResponse?, rawData: Data?, rawOutput: SupportedType) {
         self.output = output
         self.statusCode = statusCode
         self.error = error
         self.request = request
         self.rawResponse = rawResponse
         self.rawData = rawData
+        self.rawOutput = rawOutput
     }
     
     public func map<U>(_ transform: (T) -> U) -> Response<U> {
-        return Response<U>(output: transform(output), statusCode: statusCode, error: error, request: request, rawResponse: rawResponse, rawData: rawData)
+        return Response<U>(output: transform(output), statusCode: statusCode, error: error, request: request, rawResponse: rawResponse, rawData: rawData, rawOutput: rawOutput)
+    }
+    
+    public func demap() -> Response<SupportedType> {
+        return map { _ in rawOutput }
     }
     
     public func retry(max: Int = Int.max, delay: DispatchTime = DispatchTime.now(), failCallback: () -> () = {}) {
         request.retry(max: max, delay: delay, failCallback: failCallback)
+    }
+}
+
+extension Response where T: SupportedTypeProtocol {
+    
+    public convenience init(output: T, statusCode: HTTPStatusCode?, error: Error?, request: Request, rawResponse: URLResponse?, rawData: Data?) {
+        self.init(output: output, statusCode: statusCode, error: error, request: request, rawResponse: rawResponse, rawData: rawData, rawOutput: output.supportedType)
     }
 }
