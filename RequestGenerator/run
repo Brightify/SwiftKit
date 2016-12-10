@@ -1,0 +1,13 @@
+#! /bin/bash
+BASE_DIR="$(dirname "$0")"
+BASE_SCRIPT="$BASE_DIR/BaseScript.swift"
+for SCRIPT in "$BASE_DIR"/*.swift; do
+	if [[ "$SCRIPT" = "$BASE_SCRIPT" ]]; then
+		continue
+	fi
+	OUTPUT="$BASE_DIR/$(head -1 "$SCRIPT" | cut -d" " -f2-)"
+	read -p "Script $(basename "$SCRIPT") will rewrite file $(realpath "$OUTPUT" --relative-to=.). Proceed? (y): "
+	if [[ $REPLY =~ ^[Yy]([Ee][Ss])?$ ]]; then
+		cat "$BASE_SCRIPT" "$SCRIPT" | swift - > "$OUTPUT"
+	fi
+done

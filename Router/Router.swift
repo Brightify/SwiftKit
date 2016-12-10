@@ -54,7 +54,7 @@ public final class Router {
         request.cancellable.add(cancellable: self.requestPerformer.perform(request: request) { response in
             self.requestEnhancers.forEach { $0.deenhance(response: response) }
             
-            if errorHandler.shouldCallCallback(response) {
+            if self.errorHandler.shouldCallCallback(response: response) {
                 request.callback(response)
             }
         })
