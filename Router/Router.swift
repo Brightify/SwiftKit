@@ -19,7 +19,7 @@ public final class Router {
     
     public private(set) var requestEnhancers: [RequestEnhancer] = []
     
-    public init(requestPerformer: RequestPerformer, objectMapperPolymorph: Polymorph? = nil, errorHandler: ErrorHandler = ErrorHandler(),
+    public init(requestPerformer: RequestPerformer, objectMapperPolymorph: Polymorph? = nil, errorHandler: ErrorHandler = NoErrorHandler(),
                 callQueue: DispatchQueue = DispatchQueue.global(qos: .background), callbackQueue: DispatchQueue = DispatchQueue.main) {
         self.requestPerformer = requestPerformer
         objectMapper = ObjectMapper(polymorph: objectMapperPolymorph)
@@ -41,26 +41,36 @@ public final class Router {
         register(requestEnhancers: requestEnhancers)
     }
     
-    public func run<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> ()) -> Cancellable {
-        var request = prepareRequest(endpoint: endpoint, input: input, callback: callback)
-        self.requestEnhancers.forEach { $0.enhance(request: &request) }
-        
-        perform(request: request)
-        
-        return request.cancellable
+    public func run<IN, OUT>(endpoint: Endpoint<IN, OUT>, inputProvider: @escaping () -> (SupportedType),
+                    outputProvider: @escaping (SupportedType) -> OUT?, callback: @escaping (Response<OUT>) -> Void) -> Cancellable {
+        let cancellable = Cancellable()
+        callQueue.async {
+            let request = self.prepareRequest(endpoint: endpoint, input: inputProvider()) { response in
+                let mappedResponse = response.flatMap { outputProvider($0).map { .success($0) } ?? .failure(.nilValue) }
+                self.callbackQueue.async { callback(mappedResponse) }
+            }
+            
+            self.perform(request: request)
+            
+            cancellable.add(cancellable: request.cancellable)
+        }
+        return cancellable
     }
     
     private func perform(request: Request) {
         request.cancellable.add(cancellable: self.requestPerformer.perform(request: request) { response in
-            self.requestEnhancers.forEach { $0.deenhance(response: response) }
+            var mutableResponse = response
+            self.requestEnhancers.forEach { $0.deenhance(response: &mutableResponse) }
             
-            if self.errorHandler.shouldCallCallback(response: response) {
-                request.callback(response)
+            if case .failure = mutableResponse.result, self.errorHandler.canResolveError(response: mutableResponse) {
+                self.errorHandler.resolveError(response: mutableResponse) { request.callback($0) }
+            } else {
+                request.callback(mutableResponse)
             }
         })
     }
     
-    private func prepareRequest<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> ()) -> Request {
+    private func prepareRequest<IN, OUT>(endpoint: Endpoint<IN, OUT>, input: SupportedType, callback: @escaping (Response<SupportedType>) -> Void) -> Request {
         guard let url = URL(string: endpoint.path) else {
             preconditionFailure("Path\(endpoint.path) from endpoint doesn`t resolve to valid url.")
         }
@@ -82,16 +92,18 @@ public final class Router {
         default:
             requestPerformer.inputEncoder.encodeCustom(input: input, to: &request, inputEncoding: endpoint.inputEncoding)
         }
+        
+        requestEnhancers.forEach { $0.enhance(request: &request) }
 
         return request
     }
     
-    private func retry(request: Request, max: Int, delay: DispatchTime, failCallback: () -> ()) {
+    private func retry(request: Request, max: Int, delay: DispatchTimeInterval, failCallback: () -> Void) {
         guard request.retried < max else {
             return failCallback()
         }
         
-        callQueue.asyncAfter(deadline: delay) {
+        callQueue.asyncAfter(deadline: DispatchTime.now() + delay) {
             var requestCopy = request
             requestCopy.retried += 1
             self.perform(request: requestCopy)

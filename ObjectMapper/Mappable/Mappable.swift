@@ -13,7 +13,6 @@ public protocol Mappable: Serializable, Deserializable {
 
 extension Mappable {
     
-    // TODO Solve throws for serialize.
     public func serialize(to data: inout SerializableData) {
         do {
             try mapping(&data)

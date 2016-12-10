@@ -8,20 +8,19 @@
 
 import Foundation
 
-// TODO Delegate rest?
 public struct Request {
     
     public var modifiers: [RequestModifier] = []
     
-    public private(set) var urlRequest: URLRequest
+    public var urlRequest: URLRequest
     
-    public var retried = 0
+    internal let callback: (Response<SupportedType>) -> Void
     
-    public let callback: (Response<SupportedType>) -> ()
+    internal let cancellable: Cancellable
     
-    public let cancellable: Cancellable
+    internal var retried = 0
     
-    private let retryClosure: (Request, Int, DispatchTime, () -> ()) -> ()
+    private let retryClosure: (Request, Int, DispatchTimeInterval, () -> Void) -> Void
     
     public var url: URL? {
         get {
@@ -47,6 +46,15 @@ public struct Request {
         }
         set {
             urlRequest.timeoutInterval = newValue
+        }
+    }
+    
+    public var mainDocumentURL: URL? {
+        get {
+            return urlRequest.mainDocumentURL
+        }
+        set {
+            urlRequest.mainDocumentURL = newValue
         }
     }
     
@@ -95,7 +103,7 @@ public struct Request {
         }
     }
     
-    public var httpBodyStrem: InputStream? {
+    public var httpBodyStream: InputStream? {
         get {
             return urlRequest.httpBodyStream
         }
@@ -122,7 +130,7 @@ public struct Request {
         }
     }
     
-    public init(url: URL, retry: @escaping (Request, Int, DispatchTime, () -> ()) -> (), callback: @escaping (Response<SupportedType>) -> (), cancellable: Cancellable) {
+    public init(url: URL, retry: @escaping (Request, Int, DispatchTimeInterval, () -> Void) -> Void, callback: @escaping (Response<SupportedType>) -> Void, cancellable: Cancellable) {
         urlRequest = URLRequest(url: url)
         retryClosure = retry
         self.callback = callback
@@ -137,7 +145,7 @@ public struct Request {
         urlRequest.setValue(header.value, forHTTPHeaderField: header.name)
     }
     
-    public func retry(max: Int = Int.max, delay: DispatchTime = DispatchTime.now(), failCallback: () -> () = {}) {
+    public func retry(max: Int = Int.max, delay: DispatchTimeInterval = .seconds(0), failCallback: () -> Void = {}) {
         retryClosure(self, max, delay, failCallback)
     }
 }

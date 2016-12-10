@@ -17,7 +17,7 @@ public class MockRequestPerformer: RequestPerformer {
     public var endpoints: [MockEndpoint] = []
     public var delay: Double = 0.1
     
-    public func perform(request: Request, completion: @escaping (Response<Data?>) -> ()) -> Cancellable {
+    public func perform(request: Request, completion: @escaping (Response<Data?>) -> Void) -> Cancellable {
         let endpoint = endpoints
             .filter { $0.method == request.HTTPMethod && $0.url == request.URL?.absoluteString }.first
         

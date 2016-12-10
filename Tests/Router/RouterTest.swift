@@ -35,8 +35,8 @@ fileprivate struct UserProfile: Mappable {
 fileprivate struct TestEnhancer: RequestEnhancer {
     fileprivate struct TestModifier: RequestModifier { }
     
-    private let onRequest: () -> ()
-    private let onResponse: () -> ()
+    private let onRequest: () -> Void
+    private let onResponse: () -> Void
     
     fileprivate var priority = 0
     

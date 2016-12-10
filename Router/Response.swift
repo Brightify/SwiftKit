@@ -6,73 +6,43 @@
 //  Copyright © 2015 Brightify. All rights reserved.
 //
 
-import Foundation
 import HTTPStatusCodes
+import Result
 
 /**
     Response with generic type of output
 
     :param: T output type
 */
-// TODO Struct?
-public final class Response<T> {
+public struct Response<T> {
     
-    /// Output of the Reponse
-    public let output: T
+    public var result: Result<T, RouterError>
     
     /// Status code of the API request
-    public let statusCode: HTTPStatusCode?
+    public var statusCode: HTTPStatusCode?
     
-    /// Error of the API request
-    public let error: Error?
+    /// Raw API response
+    public var rawResponse: URLResponse?
+    
+    /// Raw data of the response
+    public var rawData: Data?
     
     /// Request that was used to obtain this response
     public let request: Request
     
-    /// Raw API response
-    public let rawResponse: URLResponse?
-    
-    /// Raw data of the response
-    public let rawData: Data?
-    
-    public let rawOutput: SupportedType
-    
-    /**
-        Initializes Response
-    
-        :param: output The output of the Response
-        :param: statusCode The status code of the Response
-        :param: error The Error of the API request
-        :param: rawRequest The raw request
-        :param: rawResponse The raw response
-        :param: rawData The raw data of the Response
-    */
-    public init(output: T, statusCode: HTTPStatusCode?, error: Error?, request: Request, rawResponse: URLResponse?, rawData: Data?, rawOutput: SupportedType) {
-        self.output = output
+    public init(result: Result<T, RouterError>, statusCode: HTTPStatusCode?, rawResponse: URLResponse?, rawData: Data?, request: Request) {
+        self.result = result
         self.statusCode = statusCode
-        self.error = error
-        self.request = request
         self.rawResponse = rawResponse
         self.rawData = rawData
-        self.rawOutput = rawOutput
+        self.request = request
     }
     
     public func map<U>(_ transform: (T) -> U) -> Response<U> {
-        return Response<U>(output: transform(output), statusCode: statusCode, error: error, request: request, rawResponse: rawResponse, rawData: rawData, rawOutput: rawOutput)
+        return Response<U>(result: result.map(transform), statusCode: statusCode, rawResponse: rawResponse, rawData: rawData, request: request)
     }
     
-    public func demap() -> Response<SupportedType> {
-        return map { _ in rawOutput }
-    }
-    
-    public func retry(max: Int = Int.max, delay: DispatchTime = DispatchTime.now(), failCallback: () -> () = {}) {
-        request.retry(max: max, delay: delay, failCallback: failCallback)
-    }
-}
-
-extension Response where T: SupportedTypeProtocol {
-    
-    public convenience init(output: T, statusCode: HTTPStatusCode?, error: Error?, request: Request, rawResponse: URLResponse?, rawData: Data?) {
-        self.init(output: output, statusCode: statusCode, error: error, request: request, rawResponse: rawResponse, rawData: rawData, rawOutput: output.supportedType)
+    public func flatMap<U>(_ transform: (T) -> Result<U, RouterError>) -> Response<U> {
+        return Response<U>(result: result.flatMap(transform), statusCode: statusCode, rawResponse: rawResponse, rawData: rawData, request: request)
     }
 }

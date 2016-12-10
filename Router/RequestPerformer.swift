@@ -16,7 +16,7 @@ public protocol RequestPerformer {
     
     var inputEncoder: InputEncoder { get }
     
-    func perform(request: Request, completion: @escaping (Response<SupportedType>) -> ()) -> Cancellable
+    func perform(request: Request, completion: @escaping (Response<SupportedType>) -> Void) -> Cancellable
 }
 
 extension RequestPerformer {
