@@ -23,7 +23,7 @@ public struct JsonSerializer: TypedSerializer {
     }
     
     public func deserialize(_ data: Data) -> SupportedType {
-        return typedDeserialize(JSON(data))
+        return typedDeserialize(JSON(data: data))
     }
     
     private func serializeToAny(_ supportedType: SupportedType) -> Any {

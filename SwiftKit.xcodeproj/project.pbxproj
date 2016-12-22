@@ -86,6 +86,9 @@
 		DC81E52F1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E52E1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift */; };
 		DC81E5321E0AF0D800E80FE3 /* TypedSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E5311E0AF0D800E80FE3 /* TypedSerializer.swift */; };
 		DC81E53A1E0BD17E00E80FE3 /* RouterResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E5391E0BD17E00E80FE3 /* RouterResult.swift */; };
+		DC81E53E1E0C226D00E80FE3 /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186D2E751B4ECDAA005BC06D /* RouterTest.swift */; };
+		DC81E53F1E0C227700E80FE3 /* MockRequestPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */; };
+		DC81E5411E0C377400E80FE3 /* BaseUrlRequestModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E5401E0C377400E80FE3 /* BaseUrlRequestModifier.swift */; };
 		DC99DCE71DF4242000DD866C /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DCE61DF4242000DD866C /* HttpMethod.swift */; };
 		DC99DCEF1DF46CB200DD866C /* RequestLoggerTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DCEE1DF46CB200DD866C /* RequestLoggerTimestamp.swift */; };
 		DC99DCF21DF4990D00DD866C /* EndpointProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC99DCF11DF4990D00DD866C /* EndpointProvider.swift */; };
@@ -226,6 +229,7 @@
 		DC81E52E1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUrlRequestEnhancer.swift; sourceTree = "<group>"; };
 		DC81E5311E0AF0D800E80FE3 /* TypedSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedSerializer.swift; sourceTree = "<group>"; };
 		DC81E5391E0BD17E00E80FE3 /* RouterResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterResult.swift; sourceTree = "<group>"; };
+		DC81E5401E0C377400E80FE3 /* BaseUrlRequestModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUrlRequestModifier.swift; sourceTree = "<group>"; };
 		DC99DCE61DF4242000DD866C /* HttpMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
 		DC99DCEE1DF46CB200DD866C /* RequestLoggerTimestamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLoggerTimestamp.swift; sourceTree = "<group>"; };
 		DC99DCF11DF4990D00DD866C /* EndpointProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointProvider.swift; sourceTree = "<group>"; };
@@ -626,6 +630,7 @@
 		DC81E52B1E0AE0DB00E80FE3 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				DC81E52E1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift */,
 				DC2B5D851DF4113C00F9C9D7 /* HeaderRequestEnhancer.swift */,
 			);
 			path = Internal;
@@ -634,10 +639,10 @@
 		DC81E5331E0B135800E80FE3 /* Enhancers */ = {
 			isa = PBXGroup;
 			children = (
+				DC81E5401E0C377400E80FE3 /* BaseUrlRequestModifier.swift */,
+				DC81E52B1E0AE0DB00E80FE3 /* Internal */,
 				DC2B5DB91DF418B100F9C9D7 /* RequestLogger */,
 				DC2B5DAE1DF4182B00F9C9D7 /* ResponseVerifier */,
-				DC81E52E1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift */,
-				DC81E52B1E0AE0DB00E80FE3 /* Internal */,
 			);
 			path = Enhancers;
 			sourceTree = "<group>";
@@ -925,6 +930,7 @@
 				DC5B83F21DBAA46E007751F6 /* CompositeTransformation.swift in Sources */,
 				DC2B5DAD1DF415D000F9C9D7 /* RequestEnhancerPriority.swift in Sources */,
 				DC2B5D861DF4113C00F9C9D7 /* HeaderRequestEnhancer.swift in Sources */,
+				DC81E5411E0C377400E80FE3 /* BaseUrlRequestModifier.swift in Sources */,
 				DC99DD8B1DFA9D2600DD866C /* RxRouter.swift in Sources */,
 				DC5B841D1DBAC5A4007751F6 /* DoubleTransformation.swift in Sources */,
 				DC2B5DB01DF4183E00F9C9D7 /* StatusCodeResponseVerifier.swift in Sources */,
@@ -1015,6 +1021,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC81E53E1E0C226D00E80FE3 /* RouterTest.swift in Sources */,
+				DC81E53F1E0C227700E80FE3 /* MockRequestPerformer.swift in Sources */,
 				DC5B845F1DBE0AFB007751F6 /* SwiftKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

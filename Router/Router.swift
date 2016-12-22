@@ -20,6 +20,7 @@ public final class Router {
     public let callbackQueue: DispatchQueue
     
     public private(set) var requestEnhancers: [RequestEnhancer] = []
+    public private(set) var requestModifiers: [RequestModifier] = []
     
     public init(requestPerformer: RequestPerformer, objectMapperPolymorph: Polymorph? = nil, errorHandler: ErrorHandler = NoErrorHandler(),
                 callQueue: DispatchQueue = DispatchQueue.global(qos: .background), callbackQueue: DispatchQueue = DispatchQueue.main) {
@@ -30,7 +31,7 @@ public final class Router {
         self.callQueue = callQueue
         self.callbackQueue = callbackQueue
         
-        register(requestEnhancers: HeaderRequestEnhancer())
+        register(requestEnhancers: HeaderRequestEnhancer(), BaseUrlRequestEnhancer())
         register(requestEnhancers: requestPerformer.implicitEnchancers)
     }
     
@@ -43,6 +44,16 @@ public final class Router {
     
     public func register(requestEnhancers: RequestEnhancer...) {
         register(requestEnhancers: requestEnhancers)
+    }
+    
+    public func register(requestModifiers: [RequestModifier]) {
+        Router.syncQueue.sync {
+            self.requestModifiers.append(contentsOf: requestModifiers)
+        }
+    }
+    
+    public func register(requestModifiers: RequestModifier...) {
+        register(requestModifiers: requestModifiers)
     }
     
     public func run<IN, OUT>(endpoint: Endpoint<IN, OUT>, inputProvider: @escaping () -> (SupportedType),
@@ -90,7 +101,7 @@ public final class Router {
         
         var request = Request(url: url, retry: retry, callback: callback, cancellable: Cancellable())
         request.httpMethod = endpoint.method
-        request.modifiers = [endpoint.modifiers, requestPerformer.implicitModifiers].flatMap { $0 }
+        request.modifiers = [endpoint.modifiers, requestPerformer.implicitModifiers, requestModifiers].flatMap { $0 }
         
         switch endpoint.inputEncoding {
         case let inputEncoding as StandardInputEncoding:

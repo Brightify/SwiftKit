@@ -8,57 +8,50 @@
 
 import SwiftKit
 import HTTPStatusCodes
-import SwiftKitStaging
 
 public typealias MockEndpoint = (method: String, url: String, response: String, statusCode: Int)
 
 public class MockRequestPerformer: RequestPerformer {
     
-    public var endpoints: [MockEndpoint] = []
-    public var delay: Double = 0.1
+    private static let syncQueue = DispatchQueue(label: "MockRequestPerformer_syncQueue")
     
-    public func perform(request: Request, completion: @escaping (Response<Data?>) -> Void) -> Cancellable {
-        let endpoint = endpoints
-            .filter { $0.method == request.HTTPMethod && $0.url == request.URL?.absoluteString }.first
+    public private(set) var endpoints: [MockEndpoint] = []
+    
+    public let dataEncoder: DataEncoder = AlamofireJsonDataEncoder()
+    
+    public init() {
+    }
+    
+    public func register(endpoint: MockEndpoint) {
+        MockRequestPerformer.syncQueue.sync {
+            endpoints.append(endpoint)
+        }
+    }
+    
+    public func perform(request: Request, callback: @escaping (Response<Data>) -> Void) -> Cancellable {
+        let endpoint = endpoints.first (where: { $0.method == request.httpMethod.rawValue && $0.url == request.url?.absoluteString })
         
-        let response: Response<Data?>
+        print(request.url)
+        let response: Response<Data>
         if let endpoint = endpoint {
-            let responseData = endpoint.response.data(using: String.Encoding.utf8)
+            let responseData = endpoint.response.data(using: String.Encoding.utf8) ?? Data()
             response = Response(
-                output: responseData,
+                result: .success(responseData),
                 statusCode: HTTPStatusCode(rawValue: endpoint.statusCode),
-                error: nil,
-                request: request,
                 rawResponse: nil,
-                rawData: responseData)
+                rawData: responseData,
+                request: request)
         } else {
             response = Response(
-                output: nil,
+                result: .failure(.invalidStatusCode),
                 statusCode: HTTPStatusCode(rawValue: 404),
-                error: nil,
-                request: request,
                 rawResponse: nil,
-                rawData: nil)
-        }
-     
-        let cancellable = MockCancellable()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            if (!cancellable.cancelled) {
-                completion(response)
-            }
+                rawData: nil,
+                request: request)
         }
         
-        return cancellable
+        callback(response)
+        return Cancellable()
     }
 }
 
-class MockCancellable: Cancellable {
-    
-    var cancelled = false
-    
-    func cancel() {
-        cancelled = true
-    }
-    
-}
