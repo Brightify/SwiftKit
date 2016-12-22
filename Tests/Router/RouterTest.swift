@@ -16,14 +16,14 @@ fileprivate struct UserProfile: Mappable {
     var id: Int?
     var type: ProfileType = .User
     
-    init?(_ map: Map) {
-        mapping(map)
+    init(_ data: DeserializableData) throws {
+        try mapping(data)
     }
     
-    fileprivate mutating func mapping(_ map: Map) {
-        map["login"].mapValueTo(field: &login, transformWith: StringTransformation())
-        map["id"].mapValueTo(field: &id, transformWith: IntTransformation())
-        map["type"].mapValueTo(field: &type, transformWith: EnumTransformation<ProfileType>())
+    fileprivate mutating func mapping(_ data: inout MappableData) throws {
+        data["login"].map(&login)
+        data["id"].map(&id)
+        try data["type"].map(&type, using: EnumTransformation())
     }
     
     enum ProfileType: String {
@@ -35,45 +35,56 @@ fileprivate struct UserProfile: Mappable {
 fileprivate struct TestEnhancer: RequestEnhancer {
     fileprivate struct TestModifier: RequestModifier { }
     
+    fileprivate let priority: RequestEnhancerPriority
+    
     private let onRequest: () -> Void
     private let onResponse: () -> Void
     
-    fileprivate var priority = 0
-    
-    fileprivate init(onRequest: @escaping () -> Void, onResponse: @escaping () -> Void) {
+    fileprivate init(onRequest: @escaping () -> Void, onResponse: @escaping () -> Void, priority: RequestEnhancerPriority = .normal) {
         self.onRequest = onRequest
         self.onResponse = onResponse
-    }
-    
-    fileprivate func canEnhance(request: Request) -> Bool {
-        return request.modifiers.filter { $0 is TestModifier }.count > 0
+        self.priority = priority
     }
     
     fileprivate func enhance(request: inout Request) {
-        onRequest()
+        if request.modifiers.contains(where: { $0 is TestModifier }) {
+            onRequest()
+        }
     }
     
-    fileprivate func deenhance(response: Response<Data?>) -> Response<Data?> {
-        onResponse()
-        return response
+    fileprivate func deenhance(response: inout Response<SupportedType>) {
+        if response.request.modifiers.contains(where: { $0 is TestModifier }) {
+            onResponse()
+        }
     }
 }
 
+import SwiftyJSON
+
 class RouterTest: QuickSpec {
     
-    private struct GitHubEndpoints {
+    private struct GitHubEndpoints: EndpointProvider {
         static let zen = GET<Void, String>("/zen")
-        static let userProfile = Target<GET<Void, UserProfile>, String> { "/users/\($0.urlPathSafe)" }
-        static let userRepositories = Target<GET<Void, String>, String> { "/users/\($0.urlPathSafe)/repos" }
-        static let test = GET<Void, String>("/zen", TestEnhancer.TestModifier())
-        static let nonGithubEndpoint = GET<Void, String>("ftp://test")
-        static let multipleInputTarget = Target<GET<Void, String>, (string: String, int: Int)> { "/zen/\($0)/\($1)" }
+        static let test = GET<Void, String>("/zen", modifiers: TestEnhancer.TestModifier())
+        static let nonGithubEndpoint = GET<Void, String>("ftp://test", modifiers: BaseUrlRequestModifier.Ignore)
+
+        static func userProfile(name: String) -> GET<Void, UserProfile> {
+            return create("/users/\(name.urlPathSafe)")
+        }
+        
+        static func userRepositories(name: String) -> GET<Void, String> {
+            return create("/users/\(name.urlPathSafe)/repos")
+        }
+        
+        static func multipleInputTarget(string: String, int: Int) -> GET<Void, String> {
+            return create("/zen/\(string)/\(int)")
+        }
     }
     
     private struct GitHubMockEndpoints {
-        static let zen: MockEndpoint = (method: "GET", url: "https://api.github.com/zen", response: "Practicality beats purity.", statusCode: 200)
-        static let userProfile: (String) -> MockEndpoint = { (method: "GET", url: "https://api.github.com/users/\($0.urlPathSafe)", response: "{\"login\": \"\($0)\", \"id\": 100, \"type\": \"Organization\"}", statusCode: 200) }
-        static let nonGithubEndpoint: MockEndpoint = (method: "GET", url: "ftp://test", response: "Works like a charmer.", statusCode: 200)
+        static let zen: MockEndpoint = (method: "GET", url: "https://api.github.com/zen?", response: "\"Practicality beats purity.\"", statusCode: 200)
+        static let userProfile: (String) -> MockEndpoint = { (method: "GET", url: "https://api.github.com/users/\($0.urlPathSafe)?", response: "{\"login\": \"\($0)\", \"id\": 100, \"type\": \"Organization\"}", statusCode: 200) }
+        static let nonGithubEndpoint: MockEndpoint = (method: "GET", url: "ftp://test?", response: "\"Works like a charmer.\"", statusCode: 200)
     }
     
     override func spec() {
@@ -82,23 +93,24 @@ class RouterTest: QuickSpec {
             var router: Router!
             beforeEach {
                 performer = MockRequestPerformer()
-                router = Router(baseURL: URL(string: "https://api.github.com")!, objectMapper: ObjectMapper(), requestPerformer: performer)
+                router = Router(requestPerformer: performer, callbackQueue: DispatchQueue.global(qos: .background))
+                router.register(requestModifiers: BaseUrlRequestModifier(baseUrl: "https://api.github.com"))
             }
             it("supports Void to String request") {
-                performer.endpoints.append(GitHubMockEndpoints.zen)
+                performer.register(endpoint: GitHubMockEndpoints.zen)
                 var zensponse: String?
-                _ = router.request(GitHubEndpoints.zen) { response in
-                    zensponse = response.output
+                router.request(GitHubEndpoints.zen) { response in
+                    zensponse = response.result.value
                 }
                 
                 expect(zensponse).toEventually(equal("Practicality beats purity."))
             }
 
             it("supports Void to Object request") {
-                performer.endpoints.append(GitHubMockEndpoints.userProfile("brightify"))
+                performer.register(endpoint: GitHubMockEndpoints.userProfile("brightify"))
                 var profile: UserProfile?
-                _ = router.request(GitHubEndpoints.userProfile.endpoint("brightify")) { response in
-                    profile = response.output
+                router.request(GitHubEndpoints.userProfile(name: "brightify")) { response in
+                    profile = response.result.value
                 }
                 
                 expect(profile).toEventuallyNot(beNil())
@@ -108,10 +120,10 @@ class RouterTest: QuickSpec {
             }
             
             it("supports absolute url in endpoint") {
-                performer.endpoints.append(GitHubMockEndpoints.nonGithubEndpoint)
+                performer.register(endpoint: GitHubMockEndpoints.nonGithubEndpoint)
                 var stringData: String?
-                _ = router.request(GitHubEndpoints.nonGithubEndpoint) { response in
-                    stringData = response.output
+                router.request(GitHubEndpoints.nonGithubEndpoint) { response in
+                    stringData = response.result.value
                 }
                 
                 expect(stringData).toEventually(equal("Works like a charmer."))
@@ -122,7 +134,7 @@ class RouterTest: QuickSpec {
             }
             
             it("supports custom RequestEnhancers") {
-                performer.endpoints.append(GitHubMockEndpoints.zen)
+                performer.register(endpoint: GitHubMockEndpoints.zen)
                 var firstEnhancerCalledTimes: (request: Int, response: Int) = (0, 0)
                 var secondEnhancerCalledTimes: (request: Int, response: Int) = (0, 0)
 
@@ -140,7 +152,7 @@ class RouterTest: QuickSpec {
                         expect(secondEnhancerCalledTimes.response) == 0
                         firstEnhancerCalledTimes.response += 1
                     })
-                var secondEnhancer = TestEnhancer(onRequest:
+                let secondEnhancer = TestEnhancer(onRequest:
                     {
                         expect(firstEnhancerCalledTimes.request) == 1
                         expect(firstEnhancerCalledTimes.response) == 0
@@ -153,16 +165,15 @@ class RouterTest: QuickSpec {
                         expect(secondEnhancerCalledTimes.request) == 1
                         expect(secondEnhancerCalledTimes.response) == 0
                         secondEnhancerCalledTimes.response += 1
-                    })
-                secondEnhancer.priority = 100
+                }, priority: .low)
                 
-                router.registerRequestEnhancer(firstEnhancer)
-                router.registerRequestEnhancer(secondEnhancer)
+                router.register(requestEnhancers: firstEnhancer)
+                router.register(requestEnhancers: secondEnhancer)
                 
-                _ = router.request(GitHubEndpoints.test) { _ in }
+                router.request(GitHubEndpoints.test) { _ in }
                 
-                expect(firstEnhancerCalledTimes.request) == 1
-                expect(secondEnhancerCalledTimes.request) == 1
+                expect(firstEnhancerCalledTimes.request).toEventually(equal(1), timeout: 10)
+                expect(secondEnhancerCalledTimes.request).toEventually(equal(1), timeout: 10)
                 
                 expect(firstEnhancerCalledTimes.response).toEventually(equal(1), timeout: 10)
                 expect(secondEnhancerCalledTimes.response).toEventually(equal(1), timeout: 10)
