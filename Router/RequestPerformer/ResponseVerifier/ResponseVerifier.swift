@@ -6,7 +6,20 @@
 //  Copyright © 2015 Brightify. All rights reserved.
 //
 
-public protocol ResponseVerifier {
+public protocol ResponseVerifier: RequestEnhancer {
 
-    func verify(response: Response<SupportedType>) -> Bool
+    func verify(response: Response<SupportedType>) -> RouterError?
+}
+
+extension ResponseVerifier {
+    
+    public var priority: RequestEnhancerPriority {
+        return .max
+    }
+    
+    public func deenhance(response: inout Response<SupportedType>) {
+        if let error = verify(response: response) {
+            response = response.flatMap { _ in .failure(error) }
+        }
+    }
 }

@@ -8,6 +8,8 @@
 
 internal struct HeaderRequestEnhancer: RequestEnhancer {
     
+    internal let priority = RequestEnhancerPriority.max
+    
     internal func enhance(request: inout Request) {
         request.modifiers.flatMap { $0 as? Header }.forEach { request.addHeader($0) }
     }

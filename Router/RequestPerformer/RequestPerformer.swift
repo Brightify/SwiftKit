@@ -14,9 +14,9 @@ public protocol RequestPerformer {
     
     var implicitModifiers: [RequestModifier] { get }
     
-    var inputEncoder: InputEncoder { get }
+    var dataEncoder: DataEncoder { get }
     
-    func perform(request: Request, completion: @escaping (Response<SupportedType>) -> Void) -> Cancellable
+    func perform(request: Request, callback: @escaping (Response<Data>) -> Void) -> Cancellable
 }
 
 extension RequestPerformer {

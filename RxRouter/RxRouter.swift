@@ -7,7 +7,6 @@
 //
 
 import RxSwift
-import Result
 
 public struct RxRouter {
     

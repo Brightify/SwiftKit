@@ -8,15 +8,22 @@
 
 import SwiftyJSON
 
-public struct JsonSerializer: Serializer {
+public struct JsonSerializer: TypedSerializer {
+    
+    public func typedSerialize(_ supportedType: SupportedType) -> JSON {
+        return JSON(serializeToAny(supportedType))
+    }
     
     public func serialize(_ supportedType: SupportedType) -> Data {
-        let json = JSON(serializeToAny(supportedType))
-        return (try? json.rawData()) ?? Data()
+        return (try? typedSerialize(supportedType).rawData()) ?? Data()
+    }
+    
+    public func typedDeserialize(_ data: JSON) -> SupportedType {
+        return deserializeToSupportedType(data)
     }
     
     public func deserialize(_ data: Data) -> SupportedType {
-        return deserialize(JSON(data: data))
+        return typedDeserialize(JSON(data))
     }
     
     private func serializeToAny(_ supportedType: SupportedType) -> Any {
@@ -38,7 +45,7 @@ public struct JsonSerializer: Serializer {
         }
     }
     
-    private func deserialize(_ json: JSON) -> SupportedType {
+    private func deserializeToSupportedType(_ json: JSON) -> SupportedType {
         if let string = json.string {
             return .string(string)
         } else if let int = json.int {
@@ -48,9 +55,9 @@ public struct JsonSerializer: Serializer {
         } else if let bool = json.bool {
             return .bool(bool)
         } else if let array = json.array {
-            return .array(array.map { deserialize($0) })
+            return .array(array.map { deserializeToSupportedType($0) })
         } else if let dictionary = json.dictionary {
-            return .dictionary(dictionary.mapValue { deserialize($0) })
+            return .dictionary(dictionary.mapValue { deserializeToSupportedType($0) })
         } else {
             return .null
         }

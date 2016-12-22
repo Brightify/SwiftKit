@@ -29,7 +29,7 @@ extension ObservableConvertibleType where E: ResponseProtocol {
         }
     }
     
-    public func asResult() -> Observable<Result<E.T, RouterError>> {
+    public func asResult() -> Observable<RouterResult<E.T>> {
         return asObservable().map { $0.result }
     }
 }

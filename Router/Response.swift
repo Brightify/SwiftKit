@@ -16,7 +16,7 @@ import Result
 */
 public struct Response<T> {
     
-    public var result: Result<T, RouterError>
+    public var result: RouterResult<T>
     
     /// Status code of the API request
     public var statusCode: HTTPStatusCode?
@@ -30,7 +30,7 @@ public struct Response<T> {
     /// Request that was used to obtain this response
     public let request: Request
     
-    public init(result: Result<T, RouterError>, statusCode: HTTPStatusCode?, rawResponse: URLResponse?, rawData: Data?, request: Request) {
+    public init(result: RouterResult<T>, statusCode: HTTPStatusCode?, rawResponse: URLResponse?, rawData: Data?, request: Request) {
         self.result = result
         self.statusCode = statusCode
         self.rawResponse = rawResponse
@@ -42,7 +42,7 @@ public struct Response<T> {
         return Response<U>(result: result.map(transform), statusCode: statusCode, rawResponse: rawResponse, rawData: rawData, request: request)
     }
     
-    public func flatMap<U>(_ transform: (T) -> Result<U, RouterError>) -> Response<U> {
+    public func flatMap<U>(_ transform: (T) -> RouterResult<U>) -> Response<U> {
         return Response<U>(result: result.flatMap(transform), statusCode: statusCode, rawResponse: rawResponse, rawData: rawData, request: request)
     }
 }
