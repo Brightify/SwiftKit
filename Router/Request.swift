@@ -14,7 +14,7 @@ public struct Request {
     
     public var urlRequest: URLRequest
     
-    internal let callback: (Response<SupportedType>) -> Void
+    internal let callback: (Response<Data>) -> Void
     
     internal let cancellable: Cancellable
     
@@ -130,7 +130,7 @@ public struct Request {
         }
     }
     
-    public init(url: URL, retry: @escaping (Request, Int, DispatchTimeInterval, () -> Void) -> Void, callback: @escaping (Response<SupportedType>) -> Void, cancellable: Cancellable) {
+    public init(url: URL, retry: @escaping (Request, Int, DispatchTimeInterval, () -> Void) -> Void, callback: @escaping (Response<Data>) -> Void, cancellable: Cancellable) {
         urlRequest = URLRequest(url: url)
         retryClosure = retry
         self.callback = callback

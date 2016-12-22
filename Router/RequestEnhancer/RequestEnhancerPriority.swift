@@ -11,6 +11,7 @@ public enum RequestEnhancerPriority {
     case normal
     case low
     case high
+    case max
     case custom(value: Int)
     
     public var value: Int {
@@ -21,6 +22,8 @@ public enum RequestEnhancerPriority {
             return -100
         case .high:
             return 100
+        case .max:
+            return 1000
         case .custom(let value):
             return value
         }

@@ -14,7 +14,7 @@ public protocol ResponseProtocol {
     
     associatedtype T
     
-    var result: Result<T, RouterError> { get }
+    var result: RouterResult<T> { get }
     
     var request: Request  { get }
 }

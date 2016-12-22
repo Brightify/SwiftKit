@@ -11,53 +11,39 @@ import HTTPStatusCodes
 
 public struct AlamofireRequestPerformer: RequestPerformer {
     
-    public func perform(request: Request, completion: @escaping (Response<Data?>) -> Void) -> Cancellable {
-        let alamofireRequest = Alamofire
-            .request(request.urlRequest)
-            .responseData {
-                let response = Response<Data?>(
-                    output: $0.result.value,
-                    statusCode: $0.response?.statusCodeValue,
-                    error: $0.result.error,
-                    request: request,
-                    rawResponse: $0.response,
-                    rawData: $0.result.value)
-                
-                completion(response)
+    public let dataEncoder: DataEncoder
+    
+    public init(dataEncoder: DataEncoder = AlamofireJsonDataEncoder()) {
+        self.dataEncoder = dataEncoder
+    }
+    
+    public func perform(request: Request, callback: @escaping (Response<Data>) -> Void) -> Cancellable {
+        let alamofireRequest = Alamofire.request(request.urlRequest).responseData {
+            self.handleResponse(data: $0, request: request, callback: callback)
         }
         
         return Cancellable {
             alamofireRequest.cancel()
         }
     }
-}
-/*
-
-public func asResult() -> Observable<RouterResult<E.T>> {
-    return asObservable().map { responseProtocol in
-        let response = responseProtocol.response
-        if let error = response.error {
-            return .failure(.requestError(error, response.demap()))
-        } else if response.statusCode?.isSuccess == false {
-            return .failure(.invalidStatusCode(response.demap()))
-        } else {
-            return .success(response.output)
-        }
-    }
-}
-
-
-public func asResult() -> Observable<RouterResult<E.T.Wrapped>> {
-    return asResult().map { (result: RouterResult<E.T>) in
-        switch result {
-        case .success(let maybeValue):
-            if let value = maybeValue.value {
-                return .success(value)
-            } else {
-                return .failure(.unknownError)
-            }
+    
+    private func handleResponse(data: DataResponse<Data>, request: Request, callback: (Response<Data>) -> Void) {
+        let result: RouterResult<Data>
+        // Alamofire uses different type of Result.
+        switch data.result {
+        case .success(let value):
+            result = .success(value)
         case .failure(let error):
-            return .failure(error)
+            result = .failure(.requestError(error))
         }
+        
+        let response = Response<Data>(
+            result: result,
+            statusCode: data.response?.statusCodeValue,
+            rawResponse: data.response,
+            rawData: data.data,
+            request: request)
+        
+        callback(response)
     }
-}*/
+}
