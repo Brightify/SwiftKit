@@ -10,6 +10,9 @@ import SwiftyJSON
 
 public struct JsonSerializer: TypedSerializer {
     
+    public init() {
+    }
+    
     public func typedSerialize(_ supportedType: SupportedType) -> JSON {
         return JSON(serializeToAny(supportedType))
     }
@@ -32,10 +35,8 @@ public struct JsonSerializer: TypedSerializer {
             return NSNull()
         case .string(let string):
             return string
-        case .int(let int):
-            return int
-        case .double(let double):
-            return double
+        case .number(let number):
+            return number
         case .bool(let bool):
             return bool
         case .array(let array):
@@ -46,19 +47,18 @@ public struct JsonSerializer: TypedSerializer {
     }
     
     private func deserializeToSupportedType(_ json: JSON) -> SupportedType {
-        if let string = json.string {
-            return .string(string)
-        } else if let int = json.int {
-            return .int(int)
-        } else if let double = json.double {
-            return .double(double)
-        } else if let bool = json.bool {
-            return .bool(bool)
-        } else if let array = json.array {
-            return .array(array.map { deserializeToSupportedType($0) })
-        } else if let dictionary = json.dictionary {
-            return .dictionary(dictionary.mapValue { deserializeToSupportedType($0) })
-        } else {
+        switch json.type {
+        case .array:
+            return .array(json.array!.map { deserializeToSupportedType($0) })
+        case .dictionary:
+            return .dictionary(json.dictionary!.mapValue { deserializeToSupportedType($0) })
+        case .string:
+            return .string(json.string!)
+        case .number:
+            return .number(json.number!)
+        case .bool:
+            return .bool(json.bool!)
+        default:
             return .null
         }
     }

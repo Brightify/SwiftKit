@@ -8,37 +8,40 @@
 
 import XCTest
 import SwiftKit
+import SwiftyJSON
 
 class PerfomanceTest: XCTestCase {
     
     var objectMapper: ObjectMapper!
+    var serializer: JsonSerializer!
+    
+    private let x = 7
     
     override func setUp() {
         objectMapper = ObjectMapper()
+        serializer = JsonSerializer()
     }
     
     func testSerialize() {
-        let data = testData(x: 8)
-        var result: SupportedType = .null
+        let data = testData(x: x)
+        var result: JSON! = nil
         measure {
-             result = self.objectMapper.serialize(data)
+             result = self.serializer.typedSerialize(self.objectMapper.serialize(data))
         }
     }
     
     func testDeserialize() {
-        let data: SupportedType = objectMapper.serialize(testData(x: 8))
+        let data: JSON = serializer.typedSerialize(objectMapper.serialize(testData(x: x)))
         var result: MappableStruct! = nil
         measure {
-            result = self.objectMapper.deserialize(data)
+            result = self.objectMapper.deserialize(self.serializer.typedDeserialize(data))
         }
     }
     
     func testSerializeWithPolymorph() {
-        
     }
     
     func testDeserializeWithPolymorph() {
-        
     }
     
     private func testData(x: Int) -> MappableStruct {

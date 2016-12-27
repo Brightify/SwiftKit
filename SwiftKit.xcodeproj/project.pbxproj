@@ -103,7 +103,6 @@
 		DC5B84521DBCA074007751F6 /* SerializableSupportedTypeConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B844F1DBCA074007751F6 /* SerializableSupportedTypeConvertible.swift */; };
 		DC5B845D1DBD1C36007751F6 /* DeserializableMappableDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B845B1DBD1C36007751F6 /* DeserializableMappableDataWrapper.swift */; };
 		DC5B845E1DBD1C36007751F6 /* SerializableMappableDataWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B845C1DBD1C36007751F6 /* SerializableMappableDataWrapper.swift */; };
-		DC5B845F1DBE0AFB007751F6 /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */; };
 		DC5F6E781DBFEB2F005DDC61 /* Deserializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5F6E751DBFEB2F005DDC61 /* Deserializable.swift */; };
 		DC5F6E791DBFEB2F005DDC61 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5F6E761DBFEB2F005DDC61 /* Mappable.swift */; };
 		DC5F6E7A1DBFEB2F005DDC61 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5F6E771DBFEB2F005DDC61 /* Serializable.swift */; };
@@ -167,7 +166,6 @@
 		18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E484511BA8BFB1004CB09A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = SwiftKit/Info.plist; sourceTree = "<group>"; };
 		18E484561BA8BFB1004CB09A /* SwiftKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftKitTests.swift; sourceTree = "<group>"; };
 		18E4845F1BA8BFB1004CB09A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18E484AA1BA8C054004CB09A /* AlamofireRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireRequestPerformer.swift; sourceTree = "<group>"; };
 		18E484AC1BA8C054004CB09A /* Headers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Headers.swift; sourceTree = "<group>"; };
@@ -366,6 +364,7 @@
 				DC2C72E31E0EC1C500EE380C /* Old */,
 				DC2C72EB1E0EC67E00EE380C /* StaticPolymorph */,
 				DC2C72EC1E0EC6F700EE380C /* Transformation */,
+				DC6540631E12AACE006BC731 /* Utils */,
 			);
 			path = ObjectMapper;
 			sourceTree = "<group>";
@@ -375,7 +374,6 @@
 			children = (
 				186D2E741B4ECD88005BC06D /* Router */,
 				187C609F1B3CB71A00B8457A /* ObjectMapper */,
-				18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */,
 				18E4845F1BA8BFB1004CB09A /* Info.plist */,
 			);
 			path = Tests;
@@ -774,6 +772,13 @@
 				DC5F6E771DBFEB2F005DDC61 /* Serializable.swift */,
 			);
 			path = Mappable;
+			sourceTree = "<group>";
+		};
+		DC6540631E12AACE006BC731 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		DC81E52B1E0AE0DB00E80FE3 /* Internal */ = {
@@ -1196,7 +1201,6 @@
 				DC65405E1E1275D3006BC731 /* ConvertiblesTest.swift in Sources */,
 				DC2C730B1E0EC9EF00EE380C /* URLTransformationTest.swift in Sources */,
 				DC81E53F1E0C227700E80FE3 /* MockRequestPerformer.swift in Sources */,
-				DC5B845F1DBE0AFB007751F6 /* SwiftKitTests.swift in Sources */,
 				DC2C73071E0EC8DC00EE380C /* SerializableMappableDataWrapperTest.swift in Sources */,
 				DC2C72FC1E0EC7F800EE380C /* GenericPolymorphicInfoTest.swift in Sources */,
 				DC2C73051E0EC86E00EE380C /* ApiTest.swift in Sources */,

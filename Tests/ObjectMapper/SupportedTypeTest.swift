@@ -29,19 +29,11 @@ class SupportedTypeTest: QuickSpec {
                     
                 }
             }
-            describe("int") {
-                it("returns int if is int") {
+            describe("number") {
+                it("returns number if is number") {
                     
                 }
-                it("returns nil if is not int") {
-                    
-                }
-            }
-            describe("double") {
-                it("returns double if is double") {
-                    
-                }
-                it("returns nil if is not double") {
+                it("returns nil if is not number") {
                     
                 }
             }

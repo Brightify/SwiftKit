@@ -8,7 +8,7 @@
 
 extension Dictionary {
     
-    internal func mapValue<V>(_ transform: (Value) -> V) -> [Key: V] {
+    public func mapValue<V>(_ transform: (Value) -> V) -> [Key: V] {
         var output: [Key: V] = [:]
         for (key, value) in self {
             output[key] = transform(value)
