@@ -10,7 +10,7 @@ public struct AnyDeserializableTransformation<T>: DeserializableTransformation {
     
     private let transformFrom: (SupportedType) -> T?
     
-    internal init(transformFrom: @escaping (SupportedType) -> T?) {
+    public init(transformFrom: @escaping (SupportedType) -> T?) {
         self.transformFrom = transformFrom
     }
     

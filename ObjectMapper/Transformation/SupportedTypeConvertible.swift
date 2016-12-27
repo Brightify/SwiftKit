@@ -25,12 +25,7 @@ extension SupportedTypeConvertible {
 extension SupportedTypeConvertible {
     
     public func serialize(to data: inout SerializableData) {
-        do {
-            try mapping(&data)
-        }
-        catch {
-            preconditionFailure("Mapping called for serialization cannot throw exception.")
-        }
+        mapping(&data)
     }
     
     public mutating func mapping(_ data: inout MappableData) throws {

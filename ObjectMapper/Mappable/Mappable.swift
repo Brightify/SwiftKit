@@ -14,12 +14,7 @@ public protocol Mappable: Serializable, Deserializable {
 extension Mappable {
     
     public func serialize(to data: inout SerializableData) {
-        do {
-            try mapping(&data)
-        }
-        catch {
-            preconditionFailure("Mapping called for serialization cannot throw exception.")
-        }
+        mapping(&data)
     }
 }
 
@@ -30,12 +25,17 @@ extension Mappable {
         try mapping(&wrapper)
     }
     
-    public func mapping(_ data: inout SerializableData) throws {
-        var wrapper: MappableData = SerializableMappableDataWrapper(delegate: data)
-        var s = self
-        try s.mapping(&wrapper)
-        if let wrapper = wrapper as? SerializableMappableDataWrapper {
-            data = wrapper.delegate
+    public func mapping(_ data: inout SerializableData) {
+        do {
+            var wrapper: MappableData = SerializableMappableDataWrapper(delegate: data)
+            var s = self
+            try s.mapping(&wrapper)
+            if let wrapper = wrapper as? SerializableMappableDataWrapper {
+                data = wrapper.delegate
+            }
+        }
+        catch {
+            preconditionFailure("Mapping called for serialization cannot throw exception.")
         }
     }
 }

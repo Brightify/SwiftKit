@@ -6,4 +6,4 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-public typealias PolymorphicMappable = Mappable & PolymorphicSerializable & PolymorphicDeserializable
+public typealias PolymorphicMappable = Mappable & Polymorphic

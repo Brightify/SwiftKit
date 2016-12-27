@@ -29,6 +29,30 @@
 		DC2B5DB81DF4187A00F9C9D7 /* RequestEnhancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E484B01BA8C054004CB09A /* RequestEnhancer.swift */; };
 		DC2B5DBB1DF4192600F9C9D7 /* RequestLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B5DBA1DF4192600F9C9D7 /* RequestLogging.swift */; };
 		DC2B5DBE1DF4194600F9C9D7 /* RequestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18640EBA1C58378C00A9AC22 /* RequestLogger.swift */; };
+		DC2C72E51E0EC25600EE380C /* ObjectMapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C72E41E0EC25600EE380C /* ObjectMapperTest.swift */; };
+		DC2C72E81E0EC54900EE380C /* SupportedTypeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C72E61E0EC53700EE380C /* SupportedTypeTest.swift */; };
+		DC2C72F41E0EC78C00EE380C /* DeserializableDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C72F31E0EC78C00EE380C /* DeserializableDataTest.swift */; };
+		DC2C72F61E0EC7B900EE380C /* DeserializableMappableDataWrapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C72F51E0EC7B900EE380C /* DeserializableMappableDataWrapperTest.swift */; };
+		DC2C72F81E0EC7C600EE380C /* SerializableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C72F71E0EC7C600EE380C /* SerializableData.swift */; };
+		DC2C72FA1E0EC7DE00EE380C /* MappableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C72F91E0EC7DE00EE380C /* MappableTest.swift */; };
+		DC2C72FC1E0EC7F800EE380C /* GenericPolymorphicInfoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C72FB1E0EC7F800EE380C /* GenericPolymorphicInfoTest.swift */; };
+		DC2C72FE1E0EC80F00EE380C /* PolymorphDataProviderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C72FD1E0EC80F00EE380C /* PolymorphDataProviderTest.swift */; };
+		DC2C73001E0EC82D00EE380C /* PolymorphicTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C72FF1E0EC82D00EE380C /* PolymorphicTest.swift */; };
+		DC2C73021E0EC83D00EE380C /* StaticPolymorphTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C73011E0EC83D00EE380C /* StaticPolymorphTest.swift */; };
+		DC2C73051E0EC86E00EE380C /* ApiTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C73041E0EC86E00EE380C /* ApiTest.swift */; };
+		DC2C73071E0EC8DC00EE380C /* SerializableMappableDataWrapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C73061E0EC8DC00EE380C /* SerializableMappableDataWrapperTest.swift */; };
+		DC2C73091E0EC9E400EE380C /* EnumTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C73081E0EC9E400EE380C /* EnumTransformationTest.swift */; };
+		DC2C730B1E0EC9EF00EE380C /* URLTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C730A1E0EC9EF00EE380C /* URLTransformationTest.swift */; };
+		DC2C730E1E0ECA5F00EE380C /* CompositeTransformationsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C730D1E0ECA5F00EE380C /* CompositeTransformationsTest.swift */; };
+		DC2C73101E0ECA6B00EE380C /* DelegatedTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C730F1E0ECA6B00EE380C /* DelegatedTransformationTest.swift */; };
+		DC2C73151E0ECA8D00EE380C /* CustomDateFormatTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C73141E0ECA8D00EE380C /* CustomDateFormatTransformationTest.swift */; };
+		DC2C73171E0ECA9A00EE380C /* DateFormatterTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C73161E0ECA9A00EE380C /* DateFormatterTransformationTest.swift */; };
+		DC2C73191E0ECAA700EE380C /* DateTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C73181E0ECAA700EE380C /* DateTransformationTest.swift */; };
+		DC2C731B1E0ECAB300EE380C /* ISO8601DateTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C731A1E0ECAB300EE380C /* ISO8601DateTransformationTest.swift */; };
+		DC2C731D1E0ECABF00EE380C /* BoolTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C731C1E0ECABF00EE380C /* BoolTransformationTest.swift */; };
+		DC2C731F1E0ECAC800EE380C /* DoubleTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C731E1E0ECAC800EE380C /* DoubleTransformationTest.swift */; };
+		DC2C73211E0ECAD200EE380C /* IntTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C73201E0ECAD200EE380C /* IntTransformationTest.swift */; };
+		DC2C73231E0ECAE900EE380C /* StringTransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C73221E0ECAE900EE380C /* StringTransformationTest.swift */; };
 		DC4D91721DC341B30095A348 /* Polymorph.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91711DC341B30095A348 /* Polymorph.swift */; };
 		DC4D917B1DC3425C0095A348 /* GenericPolymorphicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91741DC3425C0095A348 /* GenericPolymorphicInfo.swift */; };
 		DC4D917C1DC3425C0095A348 /* PolymorphDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D91751DC3425C0095A348 /* PolymorphDataProvider.swift */; };
@@ -83,6 +107,11 @@
 		DC5F6E781DBFEB2F005DDC61 /* Deserializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5F6E751DBFEB2F005DDC61 /* Deserializable.swift */; };
 		DC5F6E791DBFEB2F005DDC61 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5F6E761DBFEB2F005DDC61 /* Mappable.swift */; };
 		DC5F6E7A1DBFEB2F005DDC61 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5F6E771DBFEB2F005DDC61 /* Serializable.swift */; };
+		DC65405A1E127248006BC731 /* DeserializableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540561E127238006BC731 /* DeserializableTest.swift */; };
+		DC65405B1E127248006BC731 /* SerializableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540581E127243006BC731 /* SerializableTest.swift */; };
+		DC65405C1E127256006BC731 /* TransformationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540541E126FEC006BC731 /* TransformationTest.swift */; };
+		DC65405E1E1275D3006BC731 /* ConvertiblesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC65405D1E1275D3006BC731 /* ConvertiblesTest.swift */; };
+		DC6540601E127692006BC731 /* PerformanceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC65405F1E127692006BC731 /* PerformanceTest.swift */; };
 		DC81E52F1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E52E1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift */; };
 		DC81E5321E0AF0D800E80FE3 /* TypedSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E5311E0AF0D800E80FE3 /* TypedSerializer.swift */; };
 		DC81E53A1E0BD17E00E80FE3 /* RouterResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E5391E0BD17E00E80FE3 /* RouterResult.swift */; };
@@ -130,10 +159,9 @@
 		06A3361664629697F20BE8C3 /* Pods-SwiftKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftKitTests/Pods-SwiftKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		182A5A271C5927DD00BA76C7 /* InputEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputEncoding.swift; sourceTree = "<group>"; };
 		1831E0181B58A7B20029C328 /* BoolMappingOperatorsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolMappingOperatorsTest.swift; sourceTree = "<group>"; };
-		184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		18640EBA1C58378C00A9AC22 /* RequestLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLogger.swift; sourceTree = "<group>"; };
 		186D2E751B4ECDAA005BC06D /* RouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterTest.swift; sourceTree = "<group>"; };
-		187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest.swift; sourceTree = "<group>"; };
+		187C60A01B3CB73D00B8457A /* ObjectMapperTest_old.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest_old.swift; sourceTree = "<group>"; };
 		18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperPolymorphismTest.swift; sourceTree = "<group>"; };
 		18B120051B66EFC1003E29E1 /* MockRequestPerformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequestPerformer.swift; sourceTree = "<group>"; };
 		18E4844D1BA8BFB1004CB09A /* SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +202,30 @@
 		DC2B5DAC1DF415D000F9C9D7 /* RequestEnhancerPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestEnhancerPriority.swift; sourceTree = "<group>"; };
 		DC2B5DAF1DF4183E00F9C9D7 /* StatusCodeResponseVerifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusCodeResponseVerifier.swift; sourceTree = "<group>"; };
 		DC2B5DBA1DF4192600F9C9D7 /* RequestLogging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestLogging.swift; sourceTree = "<group>"; };
+		DC2C72E41E0EC25600EE380C /* ObjectMapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperTest.swift; sourceTree = "<group>"; };
+		DC2C72E61E0EC53700EE380C /* SupportedTypeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportedTypeTest.swift; sourceTree = "<group>"; };
+		DC2C72F31E0EC78C00EE380C /* DeserializableDataTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeserializableDataTest.swift; sourceTree = "<group>"; };
+		DC2C72F51E0EC7B900EE380C /* DeserializableMappableDataWrapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeserializableMappableDataWrapperTest.swift; sourceTree = "<group>"; };
+		DC2C72F71E0EC7C600EE380C /* SerializableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerializableData.swift; sourceTree = "<group>"; };
+		DC2C72F91E0EC7DE00EE380C /* MappableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappableTest.swift; sourceTree = "<group>"; };
+		DC2C72FB1E0EC7F800EE380C /* GenericPolymorphicInfoTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericPolymorphicInfoTest.swift; sourceTree = "<group>"; };
+		DC2C72FD1E0EC80F00EE380C /* PolymorphDataProviderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolymorphDataProviderTest.swift; sourceTree = "<group>"; };
+		DC2C72FF1E0EC82D00EE380C /* PolymorphicTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolymorphicTest.swift; sourceTree = "<group>"; };
+		DC2C73011E0EC83D00EE380C /* StaticPolymorphTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticPolymorphTest.swift; sourceTree = "<group>"; };
+		DC2C73041E0EC86E00EE380C /* ApiTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiTest.swift; sourceTree = "<group>"; };
+		DC2C73061E0EC8DC00EE380C /* SerializableMappableDataWrapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerializableMappableDataWrapperTest.swift; sourceTree = "<group>"; };
+		DC2C73081E0EC9E400EE380C /* EnumTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumTransformationTest.swift; sourceTree = "<group>"; };
+		DC2C730A1E0EC9EF00EE380C /* URLTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLTransformationTest.swift; sourceTree = "<group>"; };
+		DC2C730D1E0ECA5F00EE380C /* CompositeTransformationsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeTransformationsTest.swift; sourceTree = "<group>"; };
+		DC2C730F1E0ECA6B00EE380C /* DelegatedTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegatedTransformationTest.swift; sourceTree = "<group>"; };
+		DC2C73141E0ECA8D00EE380C /* CustomDateFormatTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDateFormatTransformationTest.swift; sourceTree = "<group>"; };
+		DC2C73161E0ECA9A00EE380C /* DateFormatterTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterTransformationTest.swift; sourceTree = "<group>"; };
+		DC2C73181E0ECAA700EE380C /* DateTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTransformationTest.swift; sourceTree = "<group>"; };
+		DC2C731A1E0ECAB300EE380C /* ISO8601DateTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISO8601DateTransformationTest.swift; sourceTree = "<group>"; };
+		DC2C731C1E0ECABF00EE380C /* BoolTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolTransformationTest.swift; sourceTree = "<group>"; };
+		DC2C731E1E0ECAC800EE380C /* DoubleTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleTransformationTest.swift; sourceTree = "<group>"; };
+		DC2C73201E0ECAD200EE380C /* IntTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntTransformationTest.swift; sourceTree = "<group>"; };
+		DC2C73221E0ECAE900EE380C /* StringTransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTransformationTest.swift; sourceTree = "<group>"; };
 		DC4D91711DC341B30095A348 /* Polymorph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Polymorph.swift; sourceTree = "<group>"; };
 		DC4D91741DC3425C0095A348 /* GenericPolymorphicInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericPolymorphicInfo.swift; sourceTree = "<group>"; };
 		DC4D91751DC3425C0095A348 /* PolymorphDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolymorphDataProvider.swift; sourceTree = "<group>"; };
@@ -226,6 +278,11 @@
 		DC5F6E751DBFEB2F005DDC61 /* Deserializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deserializable.swift; sourceTree = "<group>"; };
 		DC5F6E761DBFEB2F005DDC61 /* Mappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
 		DC5F6E771DBFEB2F005DDC61 /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
+		DC6540541E126FEC006BC731 /* TransformationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformationTest.swift; sourceTree = "<group>"; };
+		DC6540561E127238006BC731 /* DeserializableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeserializableTest.swift; sourceTree = "<group>"; };
+		DC6540581E127243006BC731 /* SerializableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerializableTest.swift; sourceTree = "<group>"; };
+		DC65405D1E1275D3006BC731 /* ConvertiblesTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertiblesTest.swift; sourceTree = "<group>"; };
+		DC65405F1E127692006BC731 /* PerformanceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTest.swift; sourceTree = "<group>"; };
 		DC81E52E1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUrlRequestEnhancer.swift; sourceTree = "<group>"; };
 		DC81E5311E0AF0D800E80FE3 /* TypedSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedSerializer.swift; sourceTree = "<group>"; };
 		DC81E5391E0BD17E00E80FE3 /* RouterResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterResult.swift; sourceTree = "<group>"; };
@@ -300,9 +357,15 @@
 		187C609F1B3CB71A00B8457A /* ObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
-				1831E0171B58A79F0029C328 /* Operators */,
-				187C60A01B3CB73D00B8457A /* ObjectMapperTest.swift */,
-				18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */,
+				DC2C73041E0EC86E00EE380C /* ApiTest.swift */,
+				DC2C72E41E0EC25600EE380C /* ObjectMapperTest.swift */,
+				DC65405F1E127692006BC731 /* PerformanceTest.swift */,
+				DC2C72E61E0EC53700EE380C /* SupportedTypeTest.swift */,
+				DC2C72E91E0EC64E00EE380C /* Map */,
+				DC2C72EA1E0EC67500EE380C /* Mappable */,
+				DC2C72E31E0EC1C500EE380C /* Old */,
+				DC2C72EB1E0EC67E00EE380C /* StaticPolymorph */,
+				DC2C72EC1E0EC6F700EE380C /* Transformation */,
 			);
 			path = ObjectMapper;
 			sourceTree = "<group>";
@@ -312,7 +375,6 @@
 			children = (
 				186D2E741B4ECD88005BC06D /* Router */,
 				187C609F1B3CB71A00B8457A /* ObjectMapper */,
-				184A8FC61B114E91004665A5 /* Tests-Bridging-Header.h */,
 				18E4845D1BA8BFB1004CB09A /* SwiftKitTests.swift */,
 				18E4845F1BA8BFB1004CB09A /* Info.plist */,
 			);
@@ -379,10 +441,10 @@
 				DC99DD851DFA9BF900DD866C /* RxRouter */,
 				18E484A91BA8C054004CB09A /* Router */,
 				DC99DD271DF94B9C00DD866C /* RequestGenerator */,
+				18E4845C1BA8BFB1004CB09A /* Tests */,
 				40530704BB654DF2297D1CF7 /* Pods */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
-				18E4845C1BA8BFB1004CB09A /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -479,6 +541,93 @@
 				DC99DCED1DF46C8C00DD866C /* Internal */,
 			);
 			path = RequestLogger;
+			sourceTree = "<group>";
+		};
+		DC2C72E31E0EC1C500EE380C /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				18AB51FA1B40B7A500ADBFD1 /* ObjectMapperPolymorphismTest.swift */,
+				187C60A01B3CB73D00B8457A /* ObjectMapperTest_old.swift */,
+				1831E0171B58A79F0029C328 /* Operators */,
+			);
+			name = Old;
+			sourceTree = "<group>";
+		};
+		DC2C72E91E0EC64E00EE380C /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				DC2C72F31E0EC78C00EE380C /* DeserializableDataTest.swift */,
+				DC2C72F51E0EC7B900EE380C /* DeserializableMappableDataWrapperTest.swift */,
+				DC2C72F71E0EC7C600EE380C /* SerializableData.swift */,
+				DC2C73061E0EC8DC00EE380C /* SerializableMappableDataWrapperTest.swift */,
+			);
+			name = Map;
+			sourceTree = "<group>";
+		};
+		DC2C72EA1E0EC67500EE380C /* Mappable */ = {
+			isa = PBXGroup;
+			children = (
+				DC6540561E127238006BC731 /* DeserializableTest.swift */,
+				DC2C72F91E0EC7DE00EE380C /* MappableTest.swift */,
+				DC6540581E127243006BC731 /* SerializableTest.swift */,
+			);
+			name = Mappable;
+			sourceTree = "<group>";
+		};
+		DC2C72EB1E0EC67E00EE380C /* StaticPolymorph */ = {
+			isa = PBXGroup;
+			children = (
+				DC2C72FB1E0EC7F800EE380C /* GenericPolymorphicInfoTest.swift */,
+				DC2C72FD1E0EC80F00EE380C /* PolymorphDataProviderTest.swift */,
+				DC2C72FF1E0EC82D00EE380C /* PolymorphicTest.swift */,
+				DC2C73011E0EC83D00EE380C /* StaticPolymorphTest.swift */,
+			);
+			name = StaticPolymorph;
+			sourceTree = "<group>";
+		};
+		DC2C72EC1E0EC6F700EE380C /* Transformation */ = {
+			isa = PBXGroup;
+			children = (
+				DC2C730D1E0ECA5F00EE380C /* CompositeTransformationsTest.swift */,
+				DC65405D1E1275D3006BC731 /* ConvertiblesTest.swift */,
+				DC2C730F1E0ECA6B00EE380C /* DelegatedTransformationTest.swift */,
+				DC6540541E126FEC006BC731 /* TransformationTest.swift */,
+				DC2C730C1E0ECA4100EE380C /* Transformations */,
+			);
+			name = Transformation;
+			sourceTree = "<group>";
+		};
+		DC2C730C1E0ECA4100EE380C /* Transformations */ = {
+			isa = PBXGroup;
+			children = (
+				DC2C73081E0EC9E400EE380C /* EnumTransformationTest.swift */,
+				DC2C730A1E0EC9EF00EE380C /* URLTransformationTest.swift */,
+				DC2C73121E0ECA7A00EE380C /* Date */,
+				DC2C73131E0ECA7D00EE380C /* Value */,
+			);
+			name = Transformations;
+			sourceTree = "<group>";
+		};
+		DC2C73121E0ECA7A00EE380C /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				DC2C73141E0ECA8D00EE380C /* CustomDateFormatTransformationTest.swift */,
+				DC2C73161E0ECA9A00EE380C /* DateFormatterTransformationTest.swift */,
+				DC2C73181E0ECAA700EE380C /* DateTransformationTest.swift */,
+				DC2C731A1E0ECAB300EE380C /* ISO8601DateTransformationTest.swift */,
+			);
+			name = Date;
+			sourceTree = "<group>";
+		};
+		DC2C73131E0ECA7D00EE380C /* Value */ = {
+			isa = PBXGroup;
+			children = (
+				DC2C731C1E0ECABF00EE380C /* BoolTransformationTest.swift */,
+				DC2C731E1E0ECAC800EE380C /* DoubleTransformationTest.swift */,
+				DC2C73201E0ECAD200EE380C /* IntTransformationTest.swift */,
+				DC2C73221E0ECAE900EE380C /* StringTransformationTest.swift */,
+			);
+			name = Value;
 			sourceTree = "<group>";
 		};
 		DC4D91731DC3424B0095A348 /* StaticPolymorph */ = {
@@ -1021,9 +1170,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC2C73101E0ECA6B00EE380C /* DelegatedTransformationTest.swift in Sources */,
 				DC81E53E1E0C226D00E80FE3 /* RouterTest.swift in Sources */,
+				DC6540601E127692006BC731 /* PerformanceTest.swift in Sources */,
+				DC2C731D1E0ECABF00EE380C /* BoolTransformationTest.swift in Sources */,
+				DC2C73191E0ECAA700EE380C /* DateTransformationTest.swift in Sources */,
+				DC65405B1E127248006BC731 /* SerializableTest.swift in Sources */,
+				DC2C72FA1E0EC7DE00EE380C /* MappableTest.swift in Sources */,
+				DC2C72F41E0EC78C00EE380C /* DeserializableDataTest.swift in Sources */,
+				DC2C731F1E0ECAC800EE380C /* DoubleTransformationTest.swift in Sources */,
+				DC2C73151E0ECA8D00EE380C /* CustomDateFormatTransformationTest.swift in Sources */,
+				DC2C73211E0ECAD200EE380C /* IntTransformationTest.swift in Sources */,
+				DC2C73091E0EC9E400EE380C /* EnumTransformationTest.swift in Sources */,
+				DC2C73231E0ECAE900EE380C /* StringTransformationTest.swift in Sources */,
+				DC65405A1E127248006BC731 /* DeserializableTest.swift in Sources */,
+				DC2C730E1E0ECA5F00EE380C /* CompositeTransformationsTest.swift in Sources */,
+				DC2C73021E0EC83D00EE380C /* StaticPolymorphTest.swift in Sources */,
+				DC2C72F81E0EC7C600EE380C /* SerializableData.swift in Sources */,
+				DC2C72F61E0EC7B900EE380C /* DeserializableMappableDataWrapperTest.swift in Sources */,
+				DC2C72E51E0EC25600EE380C /* ObjectMapperTest.swift in Sources */,
+				DC2C73171E0ECA9A00EE380C /* DateFormatterTransformationTest.swift in Sources */,
+				DC2C73001E0EC82D00EE380C /* PolymorphicTest.swift in Sources */,
+				DC65405C1E127256006BC731 /* TransformationTest.swift in Sources */,
+				DC2C72FE1E0EC80F00EE380C /* PolymorphDataProviderTest.swift in Sources */,
+				DC65405E1E1275D3006BC731 /* ConvertiblesTest.swift in Sources */,
+				DC2C730B1E0EC9EF00EE380C /* URLTransformationTest.swift in Sources */,
 				DC81E53F1E0C227700E80FE3 /* MockRequestPerformer.swift in Sources */,
 				DC5B845F1DBE0AFB007751F6 /* SwiftKitTests.swift in Sources */,
+				DC2C73071E0EC8DC00EE380C /* SerializableMappableDataWrapperTest.swift in Sources */,
+				DC2C72FC1E0EC7F800EE380C /* GenericPolymorphicInfoTest.swift in Sources */,
+				DC2C73051E0EC86E00EE380C /* ApiTest.swift in Sources */,
+				DC2C72E81E0EC54900EE380C /* SupportedTypeTest.swift in Sources */,
+				DC2C731B1E0ECAB300EE380C /* ISO8601DateTransformationTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,7 +1352,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

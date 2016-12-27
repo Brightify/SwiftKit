@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PolymorphDataProvider {
+public final class PolymorphDataProvider {
     
     private var nameAndKeyOfTypeCache: [ObjectIdentifier: (name: String, key: String)] = [:]
     private var keysOfTypeCache: [ObjectIdentifier: Set<String>] = [:]

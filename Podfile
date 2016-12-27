@@ -11,6 +11,6 @@ target 'SwiftKit' do
 end
 
 target 'SwiftKitTests' do
-    pod 'Nimble', '~> 5.0'
-    pod 'Quick',  :git => 'https://github.com/Quick/Quick.git', :commit => '5e38179a69efd3601dea91c8825b9c35c28f9357'
+    pod 'Nimble', '~> 5.1.1'
+    pod 'Quick', '~> 1.0'
 end

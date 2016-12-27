@@ -11,7 +11,7 @@ public struct AnyTransformation<T>: Transformation {
     private let transformFrom: (SupportedType) -> T?
     private let transformObject: (T?) -> SupportedType
     
-    internal init(transformFrom: @escaping (SupportedType) -> T?, transformObject: @escaping (T?) -> SupportedType) {
+    public init(transformFrom: @escaping (SupportedType) -> T?, transformObject: @escaping (T?) -> SupportedType) {
         self.transformFrom = transformFrom
         self.transformObject = transformObject
     }
