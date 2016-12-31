@@ -34,3 +34,5 @@ Podfile.lock
 *.xcworkspace
 Pods
 .idea
+
+xcbaselines/
