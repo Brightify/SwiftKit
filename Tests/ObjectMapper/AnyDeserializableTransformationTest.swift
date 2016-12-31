@@ -8,6 +8,7 @@
 
 import Quick
 import Nimble
+import SwiftKit
 
 class AnyDeserializableTransformationTest: QuickSpec {
     
@@ -15,7 +16,12 @@ class AnyDeserializableTransformationTest: QuickSpec {
         describe("AnyDeserializableTransformation") {
             describe("transform(from)") {
                 it("calls closure from init") {
+                    var called = false
+                    let transformation = AnyDeserializableTransformation(transformFrom: { _ -> Int in called = true; return 0 })
                     
+                    _ = transformation.transform(from: .null)
+                    
+                    expect(called).to(beTrue())
                 }
             }
         }

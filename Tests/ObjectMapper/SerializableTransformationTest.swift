@@ -8,6 +8,7 @@
 
 import Quick
 import Nimble
+import SwiftKit
 
 class SerializableTransformationTest: QuickSpec {
     
@@ -15,9 +16,20 @@ class SerializableTransformationTest: QuickSpec {
         describe("SerializableTransformation extension") {
             describe("typeErased") {
                 it("returns AnySerializableTransformation") {
+                    let transformation: AnySerializableTransformation<Int> = SerializableTransformationStub().typeErased()
                     
+                    expect(transformation.transform(object: nil)) == SupportedType.int(1)
                 }
             }
+        }
+    }
+    
+    struct SerializableTransformationStub: SerializableTransformation {
+        
+        typealias Object = Int
+
+        func transform(object: Int?) -> SupportedType {
+            return .int(1)
         }
     }
 }

@@ -133,6 +133,7 @@
 		DC6540B31E17BC68006BC731 /* Int+SupportedTypeConvertibleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540B21E17BC68006BC731 /* Int+SupportedTypeConvertibleTest.swift */; };
 		DC6540B51E17BC72006BC731 /* String+SupportedTypeConvertibleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540B41E17BC72006BC731 /* String+SupportedTypeConvertibleTest.swift */; };
 		DC6540B71E17BC7E006BC731 /* URL+SupportedTypeConvertibleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540B61E17BC7E006BC731 /* URL+SupportedTypeConvertibleTest.swift */; };
+		DC6540B91E1824E7006BC731 /* StaticPolymorphTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540B81E1824E7006BC731 /* StaticPolymorphTestData.swift */; };
 		DC81E52F1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E52E1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift */; };
 		DC81E5321E0AF0D800E80FE3 /* TypedSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E5311E0AF0D800E80FE3 /* TypedSerializer.swift */; };
 		DC81E53A1E0BD17E00E80FE3 /* RouterResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E5391E0BD17E00E80FE3 /* RouterResult.swift */; };
@@ -325,6 +326,7 @@
 		DC6540B21E17BC68006BC731 /* Int+SupportedTypeConvertibleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+SupportedTypeConvertibleTest.swift"; sourceTree = "<group>"; };
 		DC6540B41E17BC72006BC731 /* String+SupportedTypeConvertibleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+SupportedTypeConvertibleTest.swift"; sourceTree = "<group>"; };
 		DC6540B61E17BC7E006BC731 /* URL+SupportedTypeConvertibleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+SupportedTypeConvertibleTest.swift"; sourceTree = "<group>"; };
+		DC6540B81E1824E7006BC731 /* StaticPolymorphTestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticPolymorphTestData.swift; sourceTree = "<group>"; };
 		DC81E52E1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUrlRequestEnhancer.swift; sourceTree = "<group>"; };
 		DC81E5311E0AF0D800E80FE3 /* TypedSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedSerializer.swift; sourceTree = "<group>"; };
 		DC81E5391E0BD17E00E80FE3 /* RouterResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterResult.swift; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 				DC2C72FD1E0EC80F00EE380C /* PolymorphDataProviderTest.swift */,
 				DC2C72FF1E0EC82D00EE380C /* PolymorphicTest.swift */,
 				DC2C73011E0EC83D00EE380C /* StaticPolymorphTest.swift */,
+				DC6540B81E1824E7006BC731 /* StaticPolymorphTestData.swift */,
 			);
 			name = StaticPolymorph;
 			sourceTree = "<group>";
@@ -630,15 +633,15 @@
 		DC2C72EC1E0EC6F700EE380C /* Transformation */ = {
 			isa = PBXGroup;
 			children = (
-				DC6540991E17BA22006BC731 /* Convertibles */,
-				DC6540961E17BA0A006BC731 /* Transformations */,
 				DC6540691E12C121006BC731 /* AnyTransformationTest.swift */,
 				DC2C730D1E0ECA5F00EE380C /* CompositeTransformationTest.swift */,
 				DC2C730F1E0ECA6B00EE380C /* DelegatedTransformationTest.swift */,
 				DC65406B1E12C14E006BC731 /* SupportedTypeConvertibleTest.swift */,
 				DC6540541E126FEC006BC731 /* TransformationTest.swift */,
+				DC6540991E17BA22006BC731 /* Convertibles */,
 				DC6540671E12C0DF006BC731 /* Deserializable */,
 				DC6540681E12C102006BC731 /* Serializable */,
+				DC6540961E17BA0A006BC731 /* Transformations */,
 			);
 			name = Transformation;
 			sourceTree = "<group>";
@@ -1293,6 +1296,7 @@
 				DC2C73101E0ECA6B00EE380C /* DelegatedTransformationTest.swift in Sources */,
 				DC81E53E1E0C226D00E80FE3 /* RouterTest.swift in Sources */,
 				DC6540601E127692006BC731 /* PerformanceTest.swift in Sources */,
+				DC6540B91E1824E7006BC731 /* StaticPolymorphTestData.swift in Sources */,
 				DC6540AF1E17BC51006BC731 /* Bool+SupportedTypeConvertibleTest.swift in Sources */,
 				DC65407E1E12C203006BC731 /* SerializableSupportedTypeConvertibleTest.swift in Sources */,
 				DC6540AD1E17BA99006BC731 /* StringTransformationTest.swift in Sources */,

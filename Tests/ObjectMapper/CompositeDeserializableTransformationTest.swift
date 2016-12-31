@@ -8,19 +8,30 @@
 
 import Quick
 import Nimble
+import SwiftKit
 
 class CompositeDeserializableTransformationTest: QuickSpec {
     
     override func spec() {
-        describe("CompositeDeserializableDeserializableTransformation") {
+        describe("CompositeDeserializableTransformation") {
             describe("transform(from)") {
-                it("calls transformationDelegate") {
+                it("transforms SupportedType using delegate and convert") {
+                    let transformation = CompositeDeserializableTransformationStub()
                     
-                }
-                it("calls convert(from)") {
-                    
+                    expect(transformation.transform(from: .int(1))) == "1"
                 }
             }
+        }
+    }
+    
+    private struct CompositeDeserializableTransformationStub: CompositeDeserializableTransformation {
+        
+        typealias Object = String
+        
+        var deserializableTransformationDelegate: AnyDeserializableTransformation<Int> = IntTransformation().typeErased()
+        
+        func convert(from value: Int?) -> String? {
+            return value.map { "\($0)" }
         }
     }
 }

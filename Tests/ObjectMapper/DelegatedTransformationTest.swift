@@ -8,21 +8,30 @@
 
 import Quick
 import Nimble
+import SwiftKit
 
 class DelegatedTransformationTest: QuickSpec {
     
     override func spec() {
         describe("DelegatedTransformation") {
+            let transformation = DelegatedTransformationStub()
             describe("transform(from)") {
-                it("calls transformationDelegate") {
-                    
+                it("transforms SupportedType using delegate") {
+                    expect(transformation.transform(from: .int(1))) == 1
                 }
             }
             describe("transform(object)") {
-                it("calls transformationDelegate") {
-                    
+                it("transforms object using delegate and convert") {
+                    expect(transformation.transform(object: 1)) == SupportedType.int(1)
                 }
             }
         }
+    }
+    
+    private struct DelegatedTransformationStub: DelegatedTransformation {
+        
+        typealias Object = Int
+        
+        var transformationDelegate: AnyTransformation<Int> = IntTransformation().typeErased()
     }
 }

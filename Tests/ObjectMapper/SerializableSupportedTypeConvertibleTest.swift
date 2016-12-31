@@ -8,21 +8,25 @@
 
 import Quick
 import Nimble
+import SwiftKit
 
 class SerializableSupportedTypeConvertibleTest: QuickSpec {
     
     override func spec() {
         describe("SerializableSupportedTypeConvertible") {
-            describe("transform(from)") {
-                it("calls defaultTransformation") {
-                    
-                }
-            }
-            describe("transform(object)") {
-                it("calls defaultTransformation") {
-                    
-                }
+            it("can be used in ObjectMapper without transformation") {
+                let objectMapper = ObjectMapper()
+                let value = SerializableSupportedTypeConvertibleStub()
+                let type: SupportedType = .null
+                
+                expect(objectMapper.serialize(value)) == type
             }
         }
+    }
+
+    private struct SerializableSupportedTypeConvertibleStub: SerializableSupportedTypeConvertible {
+        
+        static let defaultSerializableTransformation: AnySerializableTransformation<SerializableSupportedTypeConvertibleStub> =
+            AnySerializableTransformation(transformObject: { _ in .null })
     }
 }

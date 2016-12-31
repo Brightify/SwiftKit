@@ -15,7 +15,7 @@ class PerfomanceTest: XCTestCase {
     var objectMapper: ObjectMapper!
     var serializer: JsonSerializer!
     
-    private let x = 7
+    private let x = 6
     
     override func setUp() {
         objectMapper = ObjectMapper()
@@ -38,12 +38,6 @@ class PerfomanceTest: XCTestCase {
             result = self.objectMapper.deserialize(self.serializer.typedDeserialize(data))
         }
         _ = result
-    }
-    
-    func testSerializeWithPolymorph() {
-    }
-    
-    func testDeserializeWithPolymorph() {
     }
     
     private func testData(x: Int) -> MappableStruct {

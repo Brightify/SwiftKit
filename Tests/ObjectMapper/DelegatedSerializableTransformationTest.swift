@@ -8,16 +8,26 @@
 
 import Quick
 import Nimble
+import SwiftKit
 
 class DelegatedSerializableTransformationTest: QuickSpec {
     
     override func spec() {
         describe("DelegatedSerializableTransformation") {
             describe("transform(object)") {
-                it("calls transformationDelegate") {
+                it("transforms object using delegate and convert") {
+                    let transformation = DelegatedSerializableTransformationStub()
                     
+                    expect(transformation.transform(object: 1)) == SupportedType.int(1)
                 }
             }
         }
+    }
+    
+    private struct DelegatedSerializableTransformationStub: DelegatedSerializableTransformation {
+        
+        typealias Object = Int
+        
+        var serializableTransformationDelegate: AnySerializableTransformation<Int> = IntTransformation().typeErased()
     }
 }

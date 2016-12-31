@@ -8,6 +8,7 @@
 
 import Quick
 import Nimble
+import SwiftKit
 
 class AnySerializableTransformationTest: QuickSpec {
     
@@ -15,7 +16,12 @@ class AnySerializableTransformationTest: QuickSpec {
         describe("AnySerializableTransformation") {
             describe("transform(object)") {
                 it("calls closure from init") {
+                    var called = false
+                    let transformation = AnySerializableTransformation<Int>(transformObject: { _ in called = true; return .null })
                     
+                    _ = transformation.transform(object: 0)
+                    
+                    expect(called).to(beTrue())
                 }
             }
         }

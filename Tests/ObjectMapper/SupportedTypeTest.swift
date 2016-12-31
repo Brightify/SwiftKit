@@ -17,11 +17,11 @@ class SupportedTypeTest: QuickSpec {
             describe("isNull") {
                 it("returns true if is null") {
                     let type: SupportedType = .null
-                    expect(type.isNull) == true
+                    expect(type.isNull).to(beTrue())
                 }
                 it("returns false if is not null") {
                     let type: SupportedType = .bool(true)
-                    expect(type.isNull) == false
+                    expect(type.isNull).to(beFalse())
                 }
             }
             describe("string") {
@@ -47,7 +47,7 @@ class SupportedTypeTest: QuickSpec {
             describe("bool") {
                 it("returns bool if is bool") {
                     let type: SupportedType = .bool(true)
-                    expect(type.bool) == true
+                    expect(type.bool).to(beTrue())
                 }
                 it("returns nil if is not bool") {
                     let type: SupportedType = .int(1)

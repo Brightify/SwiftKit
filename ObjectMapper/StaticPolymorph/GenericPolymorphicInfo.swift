@@ -17,8 +17,18 @@ public struct GenericPolymorphicInfo<T: Polymorphic>: PolymorphicInfo {
     }
     
     public mutating func register(subtype: T.Type) {
-        precondition(subtype != T.self, "Cannot register self.")
-        registeredSubtypes.append(subtype)
+        register(subtypes: subtype)
+    }
+    
+    public mutating func register(subtypes: T.Type...) {
+        register(subtypes: subtypes)
+    }
+    
+    public mutating func register(subtypes: [T.Type]) {
+        for subtype in subtypes {
+            precondition(subtype != T.self, "Cannot register self.")
+            registeredSubtypes.append(subtype)
+        }
     }
 }
 
@@ -27,6 +37,18 @@ extension GenericPolymorphicInfo {
     public func with(subtype: T.Type) -> GenericPolymorphicInfo<T> {
         var mutableCopy = self
         mutableCopy.register(subtype: subtype)
+        return mutableCopy
+    }
+    
+    public func with(subtypes: T.Type...) -> GenericPolymorphicInfo<T> {
+        var mutableCopy = self
+        mutableCopy.register(subtypes: subtypes)
+        return mutableCopy
+    }
+    
+    public func with(subtypes: [T.Type]) -> GenericPolymorphicInfo<T> {
+        var mutableCopy = self
+        mutableCopy.register(subtypes: subtypes)
         return mutableCopy
     }
 }
