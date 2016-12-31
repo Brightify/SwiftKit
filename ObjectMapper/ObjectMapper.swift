@@ -15,9 +15,11 @@ public struct ObjectMapper {
     }
     
     public func serialize<T: Serializable>(_ value: T?) -> SupportedType {
-        var data = serializableData()
-        data.set(value)
-        return data.data
+        var serializableData = SerializableData(objectMapper: self)
+        value?.serialize(to: &serializableData)
+        var data = serializableData.data
+        polymorph?.writeTypeInfo(to: &data, of: type(of: value))
+        return data
     }
     
     public func serialize<T: Serializable>(_ array: [T?]?) -> SupportedType {
@@ -51,7 +53,9 @@ public struct ObjectMapper {
     }
     
     public func deserialize<T: Deserializable>(_ type: SupportedType) -> T? {
-        return deserializableData(data: type).get()
+        let data = DeserializableData(data: type, objectMapper: self)
+        let type = polymorph?.polymorphType(for: T.self, in: type) ?? T.self
+        return try? type.init(data)
     }
     
     public func deserialize<T: Deserializable>(_ type: SupportedType) -> [T]? {
@@ -91,10 +95,10 @@ public struct ObjectMapper {
     }
     
     public func serializableData() -> SerializableData {
-        return SerializableData(polymorph: polymorph)
+        return SerializableData(objectMapper: self)
     }
     
     public func deserializableData(data: SupportedType) -> DeserializableData {
-        return DeserializableData(data: data, polymorph: polymorph)
+        return DeserializableData(data: data, objectMapper: self)
     }
 }

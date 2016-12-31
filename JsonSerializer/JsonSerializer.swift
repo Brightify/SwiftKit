@@ -36,7 +36,7 @@ public struct JsonSerializer: TypedSerializer {
         case .string(let string):
             return string
         case .number(let number):
-            return number
+            return number.double ?? number.int
         case .bool(let bool):
             return bool
         case .array(let array):
@@ -55,7 +55,12 @@ public struct JsonSerializer: TypedSerializer {
         case .string:
             return .string(json.string!)
         case .number:
-            return .number(json.number!)
+            let double = json.number!.doubleValue
+            if double.truncatingRemainder(dividingBy: 1) == 0 {
+                return .number(SupportedNumber(int: json.number!.intValue, double: double))
+            } else {
+                return .double(double)
+            }
         case .bool:
             return .bool(json.bool!)
         default:

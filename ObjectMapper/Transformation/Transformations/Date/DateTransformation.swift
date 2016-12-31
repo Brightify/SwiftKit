@@ -14,10 +14,10 @@ public struct DateTransformation: Transformation {
     }
     
     public func transform(from value: SupportedType) -> Date? {
-        return value.number.map { Date(timeIntervalSince1970: $0.doubleValue) }
+        return value.double.map { Date(timeIntervalSince1970: $0) }
     }
     
     public func transform(object: Date?) -> SupportedType {
-        return object.map { .number(NSNumber(value: $0.timeIntervalSince1970)) } ?? .null
+        return object.map { .double($0.timeIntervalSince1970) } ?? .null
     }
 }

@@ -6,13 +6,11 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-import Foundation
-
 public enum SupportedType {
     
     case null
     case string(String)
-    case number(NSNumber)
+    case number(SupportedNumber)
     case bool(Bool)
     indirect case array([SupportedType])
     indirect case dictionary([String: SupportedType])
@@ -36,7 +34,7 @@ extension SupportedType {
         }
     }
     
-    public var number: NSNumber? {
+    public var number: SupportedNumber? {
         if case .number(let value) = self {
             return value
         } else {

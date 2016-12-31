@@ -1,5 +1,5 @@
 //
-//  TransformationTest.swift
+//  SerializableTransformationTest.swift
 //  SwiftKit
 //
 //  Created by Filip Dolnik on 27.12.16.
@@ -9,12 +9,12 @@
 import Quick
 import Nimble
 
-class TransformationTest: QuickSpec {
+class SerializableTransformationTest: QuickSpec {
     
     override func spec() {
-        describe("Transformation extension") {
+        describe("SerializableTransformation extension") {
             describe("typeErased") {
-                it("returns AnyTransformation") {
+                it("returns AnySerializableTransformation") {
                     
                 }
             }

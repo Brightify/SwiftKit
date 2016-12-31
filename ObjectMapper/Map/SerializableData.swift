@@ -8,12 +8,12 @@
 
 public struct SerializableData {
     
-    public let polymorph: Polymorph?
+    public let objectMapper: ObjectMapper
     
     public var data: SupportedType
     
-    public init(data: SupportedType = .null, polymorph: Polymorph?) {
-        self.polymorph = polymorph
+    public init(data: SupportedType = .null, objectMapper: ObjectMapper) {
+        self.objectMapper = objectMapper
         self.data = data
     }
     
@@ -42,12 +42,12 @@ public struct SerializableData {
     }
 
     public mutating func set<T: Serializable>(_ value: T?) {
-        data = serialize(value)
+        data = objectMapper.serialize(value)
     }
     
     public mutating func set<T: Serializable>(_ array: [T?]?) {
         if let array = array {
-            data = .array(array.map { serialize($0) })
+            data = .array(array.map { objectMapper.serialize($0) })
         } else {
             data = .null
         }
@@ -55,7 +55,7 @@ public struct SerializableData {
     
     public mutating func set<T: Serializable>(_ dictionary: [String: T?]?) {
         if let dictionary = dictionary {
-            data = .dictionary(dictionary.mapValue { serialize($0) })
+            data = .dictionary(dictionary.mapValue { objectMapper.serialize($0) })
         } else {
             data = .null
         }
@@ -81,17 +81,9 @@ public struct SerializableData {
         }
     }
     
-    public func serialize<T: Serializable>(_ value: T?) -> SupportedType {
-        var serializableData = SerializableData(polymorph: polymorph)
-        value?.serialize(to: &serializableData)
-        var data = serializableData.data
-        polymorph?.writeTypeInfo(to: &data, of: type(of: value))
-        return data
-    }
-    
     private subscript(path: String) -> SerializableData {
         get {
-            return SerializableData(data: data.dictionary?[path] ?? .null, polymorph: polymorph)
+            return SerializableData(data: data.dictionary?[path] ?? .null, objectMapper: objectMapper)
         }
         set {
             data.addToDictionary(key: path, value: newValue.data)

@@ -6,18 +6,16 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-import Foundation
-
 public struct DoubleTransformation: Transformation {
     
     public init() {
     }
     
     public func transform(from value: SupportedType) -> Double? {
-        return value.number?.doubleValue
+        return value.double
     }
     
     public func transform(object: Double?) -> SupportedType {
-        return object.map(NSNumber.init(value:)).map(SupportedType.number) ?? .null
+        return object.map(SupportedType.double) ?? .null
     }
 }

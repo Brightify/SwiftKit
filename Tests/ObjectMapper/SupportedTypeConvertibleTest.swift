@@ -1,25 +1,25 @@
 //
-//  DelegatedTransformationTest.swift
+//  SupportedTypeConvertibleTest.swift
 //  SwiftKit
 //
-//  Created by Filip Dolnik on 24.12.16.
+//  Created by Filip Dolnik on 27.12.16.
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
 import Quick
 import Nimble
 
-class DelegatedTransformationTest: QuickSpec {
+class SupportedTypeConvertibleTest: QuickSpec {
     
     override func spec() {
-        describe("DelegatedTransformation") {
+        describe("SupportedTypeConvertible") {
             describe("transform(from)") {
-                it("calls transformationDelegate") {
+                it("calls defaultTransformation") {
                     
                 }
             }
             describe("transform(object)") {
-                it("calls transformationDelegate") {
+                it("calls defaultTransformation") {
                     
                 }
             }

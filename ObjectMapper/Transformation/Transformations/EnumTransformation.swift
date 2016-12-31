@@ -9,9 +9,9 @@
 public struct EnumTransformation<T: RawRepresentable>: Transformation {
     
     fileprivate let rawValueTransformation: AnyTransformation<T.RawValue>
-    
-    public init(rawValueTransformation: AnyTransformation<T.RawValue>) {
-        self.rawValueTransformation = rawValueTransformation
+
+    public init<R: Transformation>(rawValueTransformation: R) where R.Object == T.RawValue {
+        self.rawValueTransformation = rawValueTransformation.typeErased()
     }
     
     public func transform(from value: SupportedType) -> T? {

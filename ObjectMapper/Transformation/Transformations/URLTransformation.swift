@@ -21,7 +21,7 @@ public struct URLTransformation: Transformation {
     }
     
     public func transform(object: URL?) -> SupportedType {
-        let path = useRelative ? object?.relativePath : object?.absoluteURL.path
+        let path = useRelative ? object?.relativePath : object?.absoluteURL.absoluteString
         return path.map(SupportedType.string) ?? .null
     }
 }

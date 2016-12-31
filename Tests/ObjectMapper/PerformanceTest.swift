@@ -28,6 +28,7 @@ class PerfomanceTest: XCTestCase {
         measure {
              result = self.serializer.typedSerialize(self.objectMapper.serialize(data))
         }
+        _ = result
     }
     
     func testDeserialize() {
@@ -36,6 +37,7 @@ class PerfomanceTest: XCTestCase {
         measure {
             result = self.objectMapper.deserialize(self.serializer.typedDeserialize(data))
         }
+        _ = result
     }
     
     func testSerializeWithPolymorph() {

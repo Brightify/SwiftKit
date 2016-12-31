@@ -9,16 +9,16 @@
 public struct DeserializableData {
     
     public let data: SupportedType
-    public let polymorph: Polymorph?
+    public let objectMapper: ObjectMapper
     
-    public init(data: SupportedType, polymorph: Polymorph?) {
-        self.polymorph = polymorph
+    public init(data: SupportedType, objectMapper: ObjectMapper) {
         self.data = data
+        self.objectMapper = objectMapper
     }
     
     public subscript(path: [String]) -> DeserializableData {
         return path.reduce(self) { deserializableData, path in
-            DeserializableData(data: deserializableData.data.dictionary?[path] ?? .null, polymorph: polymorph)
+            DeserializableData(data: deserializableData.data.dictionary?[path] ?? .null, objectMapper: objectMapper)
         }
     }
     
@@ -27,7 +27,7 @@ public struct DeserializableData {
     }
 
     public func get<T: Deserializable>() -> T? {
-        return deserialize(self.data)
+        return objectMapper.deserialize(self.data)
     }
     
     public func get<T: Deserializable>(or: T) -> T {
@@ -45,7 +45,7 @@ public struct DeserializableData {
         
         var result: [T] = []
         for type in array {
-            if let value: T = deserialize(type) {
+            if let value: T = objectMapper.deserialize(type) {
                 result.append(value)
             } else {
                 return nil
@@ -63,7 +63,7 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> [T?]? {
-        return data.array?.map { deserialize($0) }
+        return data.array?.map { objectMapper.deserialize($0) }
     }
     
     public func get<T: Deserializable>(or: [T?]) -> [T?] {
@@ -81,7 +81,7 @@ public struct DeserializableData {
         
         var result: [String: T] = [:]
         for (key, type) in dictionary {
-            if let value: T = deserialize(type) {
+            if let value: T = objectMapper.deserialize(type) {
                 result[key] = value
             } else {
                 return nil
@@ -99,7 +99,7 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> [String: T?]? {
-        return data.dictionary?.mapValue { deserialize($0) }
+        return data.dictionary?.mapValue { objectMapper.deserialize($0) }
     }
     
     public func get<T: Deserializable>(or: [String: T?]) -> [String: T?] {
@@ -192,12 +192,6 @@ public struct DeserializableData {
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) throws -> [String: T?] where R.Object == T {
         return try valueOrThrow(get(using: transformation))
-    }
-    
-    public func deserialize<T: Deserializable>(_ type: SupportedType) -> T? {
-        let data = DeserializableData(data: type, polymorph: polymorph)
-        let type = polymorph?.polymorphType(for: T.self, in: type) ?? T.self
-        return try? type.init(data)
     }
     
     public func valueOrThrow<T>(_ optionalValue: T?) throws -> T {

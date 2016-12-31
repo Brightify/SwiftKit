@@ -19,6 +19,7 @@ public struct DeserializableMappableDataWrapper: MappableData {
             return DeserializableMappableDataWrapper(delegate: delegate[path])
         }
         set {
+            // Intentionally left empty to conform protocol requirements.
         }
     }
     
