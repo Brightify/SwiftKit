@@ -8,7 +8,7 @@
 
 import Quick
 import Nimble
-import SwiftKit
+@testable import SwiftKit
 
 class PolymorphicTest: QuickSpec {
     
@@ -16,6 +16,22 @@ class PolymorphicTest: QuickSpec {
         describe("Polymorphic extension") {
             let A = StaticPolymorphTestData.A.self
 
+            describe("defaultName") {
+                it("returns name of class") {
+                    expect(PolymorphicClass.defaultName) == "PolymorphicClass"
+                }
+                it("returns name of struct") {
+                    expect(PolymorphicStruct.defaultName) == "PolymorphicStruct"
+                }
+                context("type is private") {
+                    it("returns name of class") {
+                        expect(PrivatePolymorphicClass.defaultName) == "PrivatePolymorphicClass"
+                    }
+                    it("returns name of struct") {
+                        expect(PrivatePolymorphicStruct.defaultName) == "PrivatePolymorphicStruct"
+                    }
+                }
+            }
             describe("createPolymorphicInfo") {
                 it("creates GenericPolymorphicInfo of type Self named as type") {
                     let info = A.createPolymorphicInfo()
@@ -33,5 +49,33 @@ class PolymorphicTest: QuickSpec {
                 }
             }
         }
+    }
+    
+    class PolymorphicClass: Polymorphic {
+        
+        static let polymorphicKey = "K"
+        
+        static let polymorphicInfo: PolymorphicInfo = createPolymorphicInfo()
+    }
+    
+    struct PolymorphicStruct: Polymorphic {
+        
+        static let polymorphicKey = "K"
+        
+        static let polymorphicInfo: PolymorphicInfo = createPolymorphicInfo()
+    }
+    
+    private class PrivatePolymorphicClass: Polymorphic {
+        
+        static let polymorphicKey = "K"
+        
+        static let polymorphicInfo: PolymorphicInfo = createPolymorphicInfo()
+    }
+    
+    struct PrivatePolymorphicStruct: Polymorphic {
+        
+        static let polymorphicKey = "K"
+        
+        static let polymorphicInfo: PolymorphicInfo = createPolymorphicInfo()
     }
 }

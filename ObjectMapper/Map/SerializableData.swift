@@ -46,39 +46,23 @@ public struct SerializableData {
     }
     
     public mutating func set<T: Serializable>(_ array: [T?]?) {
-        if let array = array {
-            data = .array(array.map { objectMapper.serialize($0) })
-        } else {
-            data = .null
-        }
+        data = objectMapper.serialize(array)
     }
     
     public mutating func set<T: Serializable>(_ dictionary: [String: T?]?) {
-        if let dictionary = dictionary {
-            data = .dictionary(dictionary.mapValue { objectMapper.serialize($0) })
-        } else {
-            data = .null
-        }
+        data = objectMapper.serialize(dictionary)
     }
     
     public mutating func set<T, R: SerializableTransformation>(_ value: T?, using transformation: R) where R.Object == T {
-        data = transformation.transform(object: value)
+        data = objectMapper.serialize(value, using: transformation)
     }
     
     public mutating func set<T, R: SerializableTransformation>(_ array: [T?]?, using transformation: R) where R.Object == T {
-        if let array = array?.map({ transformation.transform(object: $0) }) {
-            data = .array(array)
-        } else {
-            data = .null
-        }
+        data = objectMapper.serialize(array, using: transformation)
     }
     
     public mutating func set<T, R: SerializableTransformation>(_ dictionary: [String: T?]?, using transformation: R) where R.Object == T {
-        if let dictionary = dictionary?.mapValue({ transformation.transform(object: $0) }) {
-            data = .dictionary(dictionary)
-        } else {
-            data = .null
-        }
+        data = objectMapper.serialize(dictionary, using: transformation)
     }
     
     private subscript(path: String) -> SerializableData {

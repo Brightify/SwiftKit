@@ -14,14 +14,32 @@ class DeserializableTest: QuickSpec {
     
     override func spec() {
         describe("Deserializable") {
-            describe("deserialize") {
-                it("deserializes object") {
+            let objectMapper = ObjectMapper()
+            let type = SupportedType.dictionary(["number": .int(1), "text": .string("a")])
+            
+            describe("init") {
+                it("creates object") {
+                    let data = DeserializableData(data: type, objectMapper: objectMapper)
                     
+                    let object = try? DeserializableStruct(data)
+                    
+                    expect(object?.number) == 1
+                    expect(object?.text) == "a"
                 }
-                context("invalid SupportedType") {
-                    it("throws error") {
-                        
-                    }
+                it("throws error if SupportedType is invalid") {
+                    let data = DeserializableData(data: .dictionary(["number": .int(1)]), objectMapper: objectMapper)
+                    
+                    let object = try? DeserializableStruct(data)
+                    
+                    expect(object).to(beNil())
+                }
+            }
+            describe("ObjectMapper.deserialize") {
+                it("deserializes object") {
+                    let object: DeserializableStruct? = objectMapper.deserialize(type)
+                    
+                    expect(object?.number) == 1
+                    expect(object?.text) == "a"
                 }
             }
         }

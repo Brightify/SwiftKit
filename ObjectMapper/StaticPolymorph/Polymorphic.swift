@@ -16,7 +16,14 @@ public protocol Polymorphic {
 extension Polymorphic {
     
     internal static var defaultName: String {
-        return String(describing: self)
+        let name = String(describing: self)
+        if name.hasPrefix("(") {
+            let fromIndex = name.index(after: name.startIndex)
+            let toIndex = (name.range(of: " in ", options: .backwards)?.lowerBound ?? name.endIndex)
+            return name.substring(with: fromIndex..<toIndex)
+        } else {
+            return name
+        }
     }
     
     public static func createPolymorphicInfo() -> GenericPolymorphicInfo<Self> {

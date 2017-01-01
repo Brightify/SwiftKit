@@ -15,15 +15,16 @@ class PerfomanceTest: XCTestCase {
     var objectMapper: ObjectMapper!
     var serializer: JsonSerializer!
     
-    private let x = 6
+    private let x = 8
     
     override func setUp() {
         objectMapper = ObjectMapper()
         serializer = JsonSerializer()
     }
     
-    func testSerialize() {
-        let data = testData(x: x)
+    // TODO Move to tests for JSONSerializer.
+    func testSerializeObjectsToJSON() {
+        let data: MappableStruct = testData(x: x)
         var result: JSON! = nil
         measure {
              result = self.serializer.typedSerialize(self.objectMapper.serialize(data))
@@ -31,11 +32,47 @@ class PerfomanceTest: XCTestCase {
         _ = result
     }
     
-    func testDeserialize() {
+    func testDeserializeJSONToObjects() {
         let data: JSON = serializer.typedSerialize(objectMapper.serialize(testData(x: x)))
         var result: MappableStruct! = nil
         measure {
             result = self.objectMapper.deserialize(self.serializer.typedDeserialize(data))
+        }
+        _ = result
+    }
+    
+    func testSerializeSupportedTypeToJSON() {
+        let data: SupportedType = objectMapper.serialize(testData(x: x))
+        var result: JSON! = nil
+        measure {
+            result = self.serializer.typedSerialize(data)
+        }
+        _ = result
+    }
+    
+    func testDeserializeJSONToSupportedType() {
+        let data: JSON = serializer.typedSerialize(objectMapper.serialize(testData(x: x)))
+        var result: SupportedType = .null
+        measure {
+            result = self.serializer.typedDeserialize(data)
+        }
+        _ = result
+    }
+    
+    func testSerializeObjectsToSupportedType() {
+        let data: MappableStruct = testData(x: x)
+        var result: SupportedType = .null
+        measure {
+            result = self.objectMapper.serialize(data)
+        }
+        _ = result
+    }
+    
+    func testDeserializeSupportedTypeToObjects() {
+        let data: SupportedType = objectMapper.serialize(testData(x: x))
+        var result: MappableStruct! = nil
+        measure {
+            result = self.objectMapper.deserialize(data)
         }
         _ = result
     }

@@ -17,11 +17,16 @@ struct StaticPolymorphTestData {
         }
         
         class var polymorphicInfo: PolymorphicInfo {
-            return createPolymorphicInfo().with(subtypes: B.self, C.self, D.self)
+            return createPolymorphicInfo().with(subtype: B.self)
         }
     }
     
     class B: A {
+        
+        override class var polymorphicInfo: PolymorphicInfo {
+            // D is intentionally registered here.
+            return createPolymorphicInfo().with(subtypes: C.self, D.self)
+        }
     }
     
     class C: B {

@@ -45,15 +45,14 @@ class PolymorphDataProviderTest: QuickSpec {
                 it("returns subtype corresponding to name and key in type hiearchy") {
                     expect("\(provider.polymorphType(of: A, named: "A", forKey: "K"))") == "\(A as Polymorphic.Type?)"
                     expect("\(provider.polymorphType(of: A, named: "B", forKey: "K"))") == "\(B as Polymorphic.Type?)"
-                    expect("\(provider.polymorphType(of: A, named: "C", forKey: "C"))") == "\(D as Polymorphic.Type?)"
+                    expect("\(provider.polymorphType(of: A, named: "C", forKey: "C"))") == "\(C as Polymorphic.Type?)"
                     expect("\(provider.polymorphType(of: A, named: "D2", forKey: "C"))") == "\(D as Polymorphic.Type?)"
                     
                     expect("\(provider.polymorphType(of: B, named: "B", forKey: "K"))") == "\(B as Polymorphic.Type?)"
-                    expect("\(provider.polymorphType(of: B, named: "C", forKey: "C"))") == "\(D as Polymorphic.Type?)"
+                    expect("\(provider.polymorphType(of: B, named: "C", forKey: "C"))") == "\(C as Polymorphic.Type?)"
                     expect("\(provider.polymorphType(of: B, named: "D2", forKey: "C"))") == "\(D as Polymorphic.Type?)"
                     
-                    expect("\(provider.polymorphType(of: C, named: "C", forKey: "C"))") == "\(D as Polymorphic.Type?)"
-                    expect("\(provider.polymorphType(of: C, named: "D2", forKey: "C"))") == "\(D as Polymorphic.Type?)"
+                    expect("\(provider.polymorphType(of: C, named: "C", forKey: "C"))") == "\(C as Polymorphic.Type?)"
                     
                     expect("\(provider.polymorphType(of: D, named: "D2", forKey: "C"))") == "\(D as Polymorphic.Type?)"
                     
@@ -69,6 +68,9 @@ class PolymorphDataProviderTest: QuickSpec {
                 }
                 it("returns nil if referred type is not registered") {
                     expect(provider.polymorphType(of: A, named: "E", forKey: "C")).to(beNil())
+                }
+                it("returns nil if referred type is not registered in type hiearchy") {
+                    expect(provider.polymorphType(of: C, named: "D2", forKey: "C")).to(beNil())
                 }
             }
         }

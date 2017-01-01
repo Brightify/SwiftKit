@@ -14,9 +14,22 @@ class SerializableTest: QuickSpec {
     
     override func spec() {
         describe("Serializable") {
+            let objectMapper = ObjectMapper()
+            let object = SerializableStruct(number: 1, text: "a")
+            let type = SupportedType.dictionary(["number": .int(1), "text": .string("a")])
+            
             describe("serialize") {
                 it("serializes object") {
+                    var data = SerializableData(objectMapper: objectMapper)
                     
+                    object.serialize(to: &data)
+                    
+                    expect(data.data) == type
+                }
+            }
+            describe("ObjectMapper.serialize") {
+                it("serializes object") {
+                    expect(objectMapper.serialize(object)) == type
                 }
             }
         }
