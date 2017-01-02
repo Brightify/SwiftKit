@@ -12,10 +12,10 @@ import Nimble
 
 class PolymorphicTest: QuickSpec {
     
+    private typealias A = TestData.StaticPolymorph.A
+    
     override func spec() {
         describe("Polymorphic extension") {
-            let A = StaticPolymorphTestData.A.self
-
             describe("defaultName") {
                 it("returns name of class") {
                     expect(PolymorphicClass.defaultName) == "PolymorphicClass"
@@ -37,7 +37,7 @@ class PolymorphicTest: QuickSpec {
                     let info = A.createPolymorphicInfo()
                     
                     expect(info.name) == "A"
-                    expect("\(info.type)") == "\(A)"
+                    expect("\(info.type)") == "\(A.self)"
                 }
             }
             describe("createPolymorphicInfo(String)") {
@@ -45,7 +45,7 @@ class PolymorphicTest: QuickSpec {
                     let info = A.createPolymorphicInfo(name: "Name")
                     
                     expect(info.name) == "Name"
-                    expect("\(info.type)") == "\(A)"
+                    expect("\(info.type)") == "\(A.self)"
                 }
             }
         }
@@ -72,7 +72,7 @@ class PolymorphicTest: QuickSpec {
         static let polymorphicInfo: PolymorphicInfo = createPolymorphicInfo()
     }
     
-    struct PrivatePolymorphicStruct: Polymorphic {
+    private struct PrivatePolymorphicStruct: Polymorphic {
         
         static let polymorphicKey = "K"
         

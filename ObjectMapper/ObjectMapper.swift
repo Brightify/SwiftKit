@@ -6,7 +6,7 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-public struct ObjectMapper {
+public final class ObjectMapper {
     
     private let polymorph: Polymorph?
     
@@ -44,7 +44,7 @@ public struct ObjectMapper {
     
     public func serialize<T, R: SerializableTransformation>(_ array: [T?]?, using transformation: R) -> SupportedType where R.Object == T {
         if let array = array {
-            return .array(array.map{ transformation.transform(object: $0) })
+            return .array(array.map { transformation.transform(object: $0) })
         } else {
             return .null
         }

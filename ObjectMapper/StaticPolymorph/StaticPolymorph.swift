@@ -6,7 +6,7 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-public struct StaticPolymorph: Polymorph {
+public final class StaticPolymorph: Polymorph {
     
     private let dataProvider = PolymorphDataProvider()
     

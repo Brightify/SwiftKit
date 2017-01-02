@@ -8,6 +8,7 @@
 
 public struct DeserializableData {
     
+    // TODO raw
     public let data: SupportedType
     public let objectMapper: ObjectMapper
     

@@ -12,58 +12,59 @@ import Nimble
 
 class GenericPolymorphicInfoTest: QuickSpec {
     
+    private typealias A = TestData.StaticPolymorph.A
+    private typealias B = TestData.StaticPolymorph.B
+    private typealias C = TestData.StaticPolymorph.C
+    
     override func spec() {
         describe("GenericPolymorphicInfo") {
-            let B = StaticPolymorphTestData.B.self
-            let C = StaticPolymorphTestData.C.self
-            
             describe("register") {
                 it("registers subtype") {
-                    var info = GenericPolymorphicInfo<StaticPolymorphTestData.A>(name: "A")
+                    var info = GenericPolymorphicInfo<A>(name: "A")
                     
-                    info.register(subtype: B)
+                    info.register(subtype: B.self)
                     
-                    expect("\(info.registeredSubtypes)") == "\([B])"
+                    expect("\(info.registeredSubtypes)") == "\([B.self])"
                 }
                 it("accepts array") {
-                    var info = GenericPolymorphicInfo<StaticPolymorphTestData.A>(name: "A")
+                    var info = GenericPolymorphicInfo<A>(name: "A")
                     
-                    info.register(subtypes: [B, C])
+                    info.register(subtypes: [B.self, C.self])
                     
-                    expect("\(info.registeredSubtypes)") == "\([B, C])"
+                    expect("\(info.registeredSubtypes)") == "\([B.self, C.self])"
                 }
                 it("accepts vararg") {
-                    var info = GenericPolymorphicInfo<StaticPolymorphTestData.A>(name: "A")
+                    var info = GenericPolymorphicInfo<A>(name: "A")
                     
-                    info.register(subtypes: B, C)
+                    info.register(subtypes: B.self, C.self)
                     
-                    expect("\(info.registeredSubtypes)") == "\([B, C])"
+                    expect("\(info.registeredSubtypes)") == "\([B.self, C.self])"
                 }
             }
             describe("with") {
                 it("returns copy of self with registered subtype") {
-                    let info = GenericPolymorphicInfo<StaticPolymorphTestData.A>(name: "A")
+                    let info = GenericPolymorphicInfo<A>(name: "A")
                     
-                    let info2 = info.with(subtype: B)
+                    let info2 = info.with(subtype: B.self)
                     
                     expect("\(info.registeredSubtypes)") == "\([])"
-                    expect("\(info2.registeredSubtypes)") == "\([B])"
+                    expect("\(info2.registeredSubtypes)") == "\([B.self])"
                 }
                 it("accepts array") {
-                    let info = GenericPolymorphicInfo<StaticPolymorphTestData.A>(name: "A")
+                    let info = GenericPolymorphicInfo<A>(name: "A")
                     
-                    let info2 = info.with(subtypes: [B, C])
+                    let info2 = info.with(subtypes: [B.self, C.self])
                     
                     expect("\(info.registeredSubtypes)") == "\([])"
-                    expect("\(info2.registeredSubtypes)") == "\([B, C])"
+                    expect("\(info2.registeredSubtypes)") == "\([B.self, C.self])"
                 }
                 it("accepts vararg") {
-                    let info = GenericPolymorphicInfo<StaticPolymorphTestData.A>(name: "A")
+                    let info = GenericPolymorphicInfo<A>(name: "A")
                     
-                    let info2 = info.with(subtypes: B, C)
+                    let info2 = info.with(subtypes: B.self, C.self)
                     
                     expect("\(info.registeredSubtypes)") == "\([])"
-                    expect("\(info2.registeredSubtypes)") == "\([B, C])"
+                    expect("\(info2.registeredSubtypes)") == "\([B.self, C.self])"
                 }
             }
         }

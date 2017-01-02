@@ -8,167 +8,204 @@
 
 import Quick
 import Nimble
+import SwiftKit
 
 class DeserializableDataTest: QuickSpec {
     
+    private typealias CustomIntTransformation = TestData.CustomIntTransformation
+    
     override func spec() {
         describe("DeserializableData") {
-            describe("get") {
-                context("value is Deserializable") {
-                    context("return type is optional") {
-                        it("works with value") {
-                            
-                        }
-                        it("works with array") {
-                            
-                        }
-                        it("works with dictionary") {
-                            
-                        }
-                        it("works with array with optionals") {
-                            
-                        }
-                        it("works with dictionary with optionals") {
-                            
-                        }
-                    }
-                    context("default value provided") {
-                        it("works with value") {
-                            
-                        }
-                        it("works with array") {
-                            
-                        }
-                        it("works with dictionary") {
-                            
-                        }
-                        it("works with array with optionals") {
-                            
-                        }
-                        it("works with dictionary with optionals") {
-                            
-                        }
-                    }
-                    context("can throws") {
-                        it("works with value") {
-                            
-                        }
-                        it("works with array") {
-                            
-                        }
-                        it("works with dictionary") {
-                            
-                        }
-                        it("works with array with optionals") {
-                            
-                        }
-                        it("works with dictionary with optionals") {
-                            
-                        }
-                    }
+            describe("get optional") {
+                it("returns data if type is valid") {
+                    let data = DeserializableData(data: TestData.Map.validType, objectMapper: ObjectMapper())
+                    
+                    let value: Int? = data["value"].get()
+                    let array: [Int]? = data["array"].get()
+                    let dictionary: [String: Int]? = data["dictionary"].get()
+                    let optionalArray: [Int?]? = data["optionalArray"].get()
+                    let optionalDictionary: [String: Int?]? = data["optionalDictionary"].get()
+                    
+                    let valueTransformation: Int? = data["value"].get(using: CustomIntTransformation())
+                    let arrayTransformation: [Int]? = data["array"].get(using: CustomIntTransformation())
+                    let dictionaryTransformation: [String: Int]? = data["dictionary"].get(using: CustomIntTransformation())
+                    let optionalArrayTransformation: [Int?]? = data["optionalArray"].get(using: CustomIntTransformation())
+                    let optionalDictionaryTransformation: [String: Int?]? = data["optionalDictionary"].get(using: CustomIntTransformation())
+                    
+                    expect(value) == 1
+                    expect(array) == [1, 2]
+                    expect(dictionary) == ["a": 1, "b": 2]
+                    expect(areEqual(optionalArray, [1, nil])).to(beTrue())
+                    expect(areEqual(optionalDictionary, ["a": 1, "b": nil])).to(beTrue())
+                    
+                    expect(valueTransformation) == 2
+                    expect(arrayTransformation) == [2, 4]
+                    expect(dictionaryTransformation) == ["a": 2, "b": 4]
+                    expect(areEqual(optionalArrayTransformation, [2, nil])).to(beTrue())
+                    expect(areEqual(optionalDictionaryTransformation, ["a": 2, "b": nil])).to(beTrue())
                 }
-                context("transformation provided") {
-                    context("return type is optional") {
-                        it("works with value") {
-                            
-                        }
-                        it("works with array") {
-                            
-                        }
-                        it("works with dictionary") {
-                            
-                        }
-                        it("works with array with optionals") {
-                            
-                        }
-                        it("works with dictionary with optionals") {
-                            
-                        }
-                    }
-                    context("default value provided") {
-                        it("works with value") {
-                            
-                        }
-                        it("works with array") {
-                            
-                        }
-                        it("works with dictionary") {
-                            
-                        }
-                        it("works with array with optionals") {
-                            
-                        }
-                        it("works with dictionary with optionals") {
-                            
-                        }
-                    }
-                    context("can throws") {
-                        it("works with value") {
-                            
-                        }
-                        it("works with array") {
-                            
-                        }
-                        it("works with dictionary") {
-                            
-                        }
-                        it("works with array with optionals") {
-                            
-                        }
-                        it("works with dictionary with optionals") {
-                            
-                        }
-                    }
+                it("returns nil if type is not valid") {
+                    let data = DeserializableData(data: TestData.Map.invalidType, objectMapper: ObjectMapper())
+                    
+                    let value: Int? = data["value"].get()
+                    let array: [Int]? = data["array"].get()
+                    let dictionary: [String: Int]? = data["dictionary"].get()
+                    let optionalArray: [Int?]? = data["optionalArray"].get()
+                    let optionalDictionary: [String: Int?]? = data["optionalDictionary"].get()
+                    
+                    let valueTransformation: Int? = data["value"].get(using: CustomIntTransformation())
+                    let arrayTransformation: [Int]? = data["array"].get(using: CustomIntTransformation())
+                    let dictionaryTransformation: [String: Int]? = data["dictionary"].get(using: CustomIntTransformation())
+                    let optionalArrayTransformation: [Int?]? = data["optionalArray"].get(using: CustomIntTransformation())
+                    let optionalDictionaryTransformation: [String: Int?]? = data["optionalDictionary"].get(using: CustomIntTransformation())
+                    
+                    expect(value).to(beNil())
+                    expect(array).to(beNil())
+                    expect(dictionary).to(beNil())
+                    expect(optionalArray).to(beNil())
+                    expect(optionalDictionary).to(beNil())
+                    
+                    expect(valueTransformation).to(beNil())
+                    expect(arrayTransformation).to(beNil())
+                    expect(dictionaryTransformation).to(beNil())
+                    expect(optionalArrayTransformation).to(beNil())
+                    expect(optionalDictionaryTransformation).to(beNil())
                 }
-                context("used polymorp") {
-                    // TODO
+            }
+            describe("get value or") {
+                it("returns data if type is valid") {
+                    let data = DeserializableData(data: TestData.Map.validType, objectMapper: ObjectMapper())
+                    
+                    let value: Int = data["value"].get(or: 0)
+                    let array: [Int] = data["array"].get(or: [0])
+                    let dictionary: [String: Int] = data["dictionary"].get(or: ["a": 0])
+                    let optionalArray: [Int?] = data["optionalArray"].get(or: [0])
+                    let optionalDictionary: [String: Int?] = data["optionalDictionary"].get(or: ["a": 0])
+                    
+                    let valueTransformation: Int = data["value"].get(using: CustomIntTransformation(), or: 0)
+                    let arrayTransformation: [Int] = data["array"].get(using: CustomIntTransformation(), or: [0])
+                    let dictionaryTransformation: [String: Int] = data["dictionary"].get(using: CustomIntTransformation(), or: ["a": 0])
+                    let optionalArrayTransformation: [Int?] = data["optionalArray"].get(using: CustomIntTransformation(), or: [0])
+                    let optionalDictionaryTransformation: [String: Int?] = data["optionalDictionary"].get(using: CustomIntTransformation(), or: ["a": 0])
+                    
+                    expect(value) == 1
+                    expect(array) == [1, 2]
+                    expect(dictionary) == ["a": 1, "b": 2]
+                    expect(areEqual(optionalArray, [1, nil])).to(beTrue())
+                    expect(areEqual(optionalDictionary, ["a": 1, "b": nil])).to(beTrue())
+                    
+                    expect(valueTransformation) == 2
+                    expect(arrayTransformation) == [2, 4]
+                    expect(dictionaryTransformation) == ["a": 2, "b": 4]
+                    expect(areEqual(optionalArrayTransformation, [2, nil])).to(beTrue())
+                    expect(areEqual(optionalDictionaryTransformation, ["a": 2, "b": nil])).to(beTrue())
+                }
+                it("returns defaultValue if type is not valid") {
+                    let data = DeserializableData(data: TestData.Map.invalidType, objectMapper: ObjectMapper())
+                    
+                    let value: Int = data["value"].get(or: 0)
+                    let array: [Int] = data["array"].get(or: [0])
+                    let dictionary: [String: Int] = data["dictionary"].get(or: ["a": 0])
+                    let optionalArray: [Int?] = data["optionalArray"].get(or: [0])
+                    let optionalDictionary: [String: Int?] = data["optionalDictionary"].get(or: ["a": 0])
+                    
+                    let valueTransformation: Int = data["value"].get(using: CustomIntTransformation(), or: 0)
+                    let arrayTransformation: [Int] = data["array"].get(using: CustomIntTransformation(), or: [0])
+                    let dictionaryTransformation: [String: Int] = data["dictionary"].get(using: CustomIntTransformation(), or: ["a": 0])
+                    let optionalArrayTransformation: [Int?] = data["optionalArray"].get(using: CustomIntTransformation(), or: [0])
+                    let optionalDictionaryTransformation: [String: Int?] = data["optionalDictionary"].get(using: CustomIntTransformation(), or: ["a": 0])
+                    
+                    expect(value) == 0
+                    expect(array) == [0]
+                    expect(dictionary) == ["a": 0]
+                    expect(areEqual(optionalArray, [0])).to(beTrue())
+                    expect(areEqual(optionalDictionary, ["a": 0])).to(beTrue())
+                    
+                    expect(valueTransformation) == 0
+                    expect(arrayTransformation) == [0]
+                    expect(dictionaryTransformation) == ["a": 0]
+                    expect(areEqual(optionalArrayTransformation, [0])).to(beTrue())
+                    expect(areEqual(optionalDictionaryTransformation, ["a": 0])).to(beTrue())
+                }
+            }
+            describe("get throws") {
+                it("returns data if type is valid") {
+                    let data = DeserializableData(data: TestData.Map.validType, objectMapper: ObjectMapper())
+                    
+                    expect {
+                        let value: Int = try data["value"].get()
+                        let array: [Int] = try data["array"].get()
+                        let dictionary: [String: Int] = try data["dictionary"].get()
+                        let optionalArray: [Int?] = try data["optionalArray"].get()
+                        let optionalDictionary: [String: Int?] = try data["optionalDictionary"].get()
+                        
+                        let valueTransformation: Int = try data["value"].get(using: CustomIntTransformation())
+                        let arrayTransformation: [Int] = try data["array"].get(using: CustomIntTransformation())
+                        let dictionaryTransformation: [String: Int] = try data["dictionary"].get(using: CustomIntTransformation())
+                        let optionalArrayTransformation: [Int?] = try data["optionalArray"].get(using: CustomIntTransformation())
+                        let optionalDictionaryTransformation: [String: Int?] = try data["optionalDictionary"].get(using: CustomIntTransformation())
+                        
+                        expect(value) == 1
+                        expect(array) == [1, 2]
+                        expect(dictionary) == ["a": 1, "b": 2]
+                        expect(areEqual(optionalArray, [1, nil])).to(beTrue())
+                        expect(areEqual(optionalDictionary, ["a": 1, "b": nil])).to(beTrue())
+                        
+                        expect(valueTransformation) == 2
+                        expect(arrayTransformation) == [2, 4]
+                        expect(dictionaryTransformation) == ["a": 2, "b": 4]
+                        expect(areEqual(optionalArrayTransformation, [2, nil])).to(beTrue())
+                        expect(areEqual(optionalDictionaryTransformation, ["a": 2, "b": nil])).to(beTrue())
+                        
+                        return 0
+                    }.toNot(throwError())
+                    
+                }
+                it("throws error if type is not valid") {
+                    let data = DeserializableData(data: TestData.Map.invalidType, objectMapper: ObjectMapper())
+
+                    expect { let _: Int = try data["value"].get(); return 0 }.to(throwError())
+                    expect { let _: [Int] = try data["array"].get(); return 0 }.to(throwError())
+                    expect { let _: [String: Int] = try data["dictionary"].get(); return 0 }.to(throwError())
+                    expect { let _: [Int?] = try data["optionalArray"].get(); return 0 }.to(throwError())
+                    expect { let _: [String: Int?] = try data["optionalDictionary"].get(); return 0 }.to(throwError())
+                        
+                    expect { let _: Int = try data["value"].get(using: CustomIntTransformation()); return 0 }.to(throwError())
+                    expect { let _: [Int] = try data["array"].get(using: CustomIntTransformation()); return 0 }.to(throwError())
+                    expect { let _: [String: Int] = try data["dictionary"].get(using: CustomIntTransformation()); return 0 }.to(throwError())
+                    expect { let _: [Int?] = try data["optionalArray"].get(using: CustomIntTransformation()); return 0 }.to(throwError())
+                    expect { let _: [String: Int?] = try data["optionalDictionary"].get(using: CustomIntTransformation()); return 0 }.to(throwError())
                 }
             }
             describe("subscript") {
-                context("existing path") {
-                    it("returns DeserializableData with subData") {
-                        
-                    }
+                let data = DeserializableData(data: TestData.Map.pathType, objectMapper: ObjectMapper(polymorph: StaticPolymorph()))
+                it("returns DeserializableData with subData if path exists") {
+                    expect(data["a"]["b"].data) == SupportedType.int(1)
                 }
-                context("nonexisting path") {
-                    it("returns DeserializableData with .null") {
-                        
-                    }
+                it("returns DeserializableData with .null if path does not exist") {
+                    expect(data["b"].data) == SupportedType.null
                 }
                 it("accepts array") {
-                    
+                    expect(data[["a", "b"]].data) == SupportedType.int(1)
                 }
                 it("accepts vararg") {
-                    
+                    expect(data["a", "b"].data) == SupportedType.int(1)
                 }
-            }
-            describe("deserialize") {
-                context("correct value") {
-                    it("returns value") {
-                        
-                    }
-                }
-                context("incorrect value") {
-                    it("returns nil") {
-                        
-                    }
-                }
-                context("value is polymorphic") {
-                    it("returns value") {
-                        
-                    }
+                it("passes correct ObjectMapper") {
+                    expect(data["a"].objectMapper) === data.objectMapper
                 }
             }
             describe("valueOrThrow") {
-                context("value is present") {
-                    it("returns value") {
-                        
-                    }
+                let data = DeserializableData(data: .null, objectMapper: ObjectMapper())
+                it("returns value if value is present") {
+                    let x: Int? = 1
+                    
+                    expect(try? data.valueOrThrow(x)).toNot(beNil())
                 }
-                context("value is nil") {
-                    it("throws error") {
-                        
-                    }
+                it("throws error if value is nil") {
+                    let x: Int? = nil
+                    
+                    expect { try data.valueOrThrow(x) }.to(throwError())
                 }
             }
         }

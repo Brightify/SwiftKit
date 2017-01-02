@@ -25,7 +25,7 @@ class TransformationTest: QuickSpec {
         }
     }
     
-    struct TransformationStub: Transformation {
+    private struct TransformationStub: Transformation {
         
         typealias Object = Int
         

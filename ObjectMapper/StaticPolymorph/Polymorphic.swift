@@ -26,6 +26,8 @@ extension Polymorphic {
         }
     }
     
+    // TODO Add unsafe variant.
+    
     public static func createPolymorphicInfo() -> GenericPolymorphicInfo<Self> {
         return GenericPolymorphicInfo(name: defaultName)
     }

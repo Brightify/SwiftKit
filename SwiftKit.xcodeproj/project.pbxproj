@@ -133,7 +133,7 @@
 		DC6540B31E17BC68006BC731 /* Int+SupportedTypeConvertibleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540B21E17BC68006BC731 /* Int+SupportedTypeConvertibleTest.swift */; };
 		DC6540B51E17BC72006BC731 /* String+SupportedTypeConvertibleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540B41E17BC72006BC731 /* String+SupportedTypeConvertibleTest.swift */; };
 		DC6540B71E17BC7E006BC731 /* URL+SupportedTypeConvertibleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540B61E17BC7E006BC731 /* URL+SupportedTypeConvertibleTest.swift */; };
-		DC6540B91E1824E7006BC731 /* StaticPolymorphTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540B81E1824E7006BC731 /* StaticPolymorphTestData.swift */; };
+		DC6540BB1E1922B6006BC731 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6540BA1E1922B6006BC731 /* TestData.swift */; };
 		DC81E52F1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E52E1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift */; };
 		DC81E5321E0AF0D800E80FE3 /* TypedSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E5311E0AF0D800E80FE3 /* TypedSerializer.swift */; };
 		DC81E53A1E0BD17E00E80FE3 /* RouterResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81E5391E0BD17E00E80FE3 /* RouterResult.swift */; };
@@ -326,7 +326,7 @@
 		DC6540B21E17BC68006BC731 /* Int+SupportedTypeConvertibleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+SupportedTypeConvertibleTest.swift"; sourceTree = "<group>"; };
 		DC6540B41E17BC72006BC731 /* String+SupportedTypeConvertibleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+SupportedTypeConvertibleTest.swift"; sourceTree = "<group>"; };
 		DC6540B61E17BC7E006BC731 /* URL+SupportedTypeConvertibleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+SupportedTypeConvertibleTest.swift"; sourceTree = "<group>"; };
-		DC6540B81E1824E7006BC731 /* StaticPolymorphTestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticPolymorphTestData.swift; sourceTree = "<group>"; };
+		DC6540BA1E1922B6006BC731 /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		DC81E52E1E0AEC5700E80FE3 /* BaseUrlRequestEnhancer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUrlRequestEnhancer.swift; sourceTree = "<group>"; };
 		DC81E5311E0AF0D800E80FE3 /* TypedSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedSerializer.swift; sourceTree = "<group>"; };
 		DC81E5391E0BD17E00E80FE3 /* RouterResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterResult.swift; sourceTree = "<group>"; };
@@ -404,6 +404,7 @@
 				DC2C73041E0EC86E00EE380C /* ApiTest.swift */,
 				DC2C72E41E0EC25600EE380C /* ObjectMapperTest.swift */,
 				DC65405F1E127692006BC731 /* PerformanceTest.swift */,
+				DC6540BA1E1922B6006BC731 /* TestData.swift */,
 				DC2C72E91E0EC64E00EE380C /* Map */,
 				DC2C72EA1E0EC67500EE380C /* Mappable */,
 				DC2C72E31E0EC1C500EE380C /* Old */,
@@ -625,7 +626,6 @@
 				DC2C72FD1E0EC80F00EE380C /* PolymorphDataProviderTest.swift */,
 				DC2C72FF1E0EC82D00EE380C /* PolymorphicTest.swift */,
 				DC2C73011E0EC83D00EE380C /* StaticPolymorphTest.swift */,
-				DC6540B81E1824E7006BC731 /* StaticPolymorphTestData.swift */,
 			);
 			name = StaticPolymorph;
 			sourceTree = "<group>";
@@ -1296,7 +1296,7 @@
 				DC2C73101E0ECA6B00EE380C /* DelegatedTransformationTest.swift in Sources */,
 				DC81E53E1E0C226D00E80FE3 /* RouterTest.swift in Sources */,
 				DC6540601E127692006BC731 /* PerformanceTest.swift in Sources */,
-				DC6540B91E1824E7006BC731 /* StaticPolymorphTestData.swift in Sources */,
+				DC6540BB1E1922B6006BC731 /* TestData.swift in Sources */,
 				DC6540AF1E17BC51006BC731 /* Bool+SupportedTypeConvertibleTest.swift in Sources */,
 				DC65407E1E12C203006BC731 /* SerializableSupportedTypeConvertibleTest.swift in Sources */,
 				DC6540AD1E17BA99006BC731 /* StringTransformationTest.swift in Sources */,
@@ -1488,7 +1488,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

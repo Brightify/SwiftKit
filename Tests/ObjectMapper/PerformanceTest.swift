@@ -12,19 +12,15 @@ import SwiftyJSON
 
 class PerfomanceTest: XCTestCase {
     
-    var objectMapper: ObjectMapper!
-    var serializer: JsonSerializer!
+    private typealias Object = TestData.MappableStruct
     
-    private let x = 8
-    
-    override func setUp() {
-        objectMapper = ObjectMapper()
-        serializer = JsonSerializer()
-    }
+    private let objectMapper = ObjectMapper()
+    private let serializer = JsonSerializer()
+    private let objects = TestData.generate(x: 6)
     
     // TODO Move to tests for JSONSerializer.
-    func testSerializeObjectsToJSON() {
-        let data: MappableStruct = testData(x: x)
+    func testSerializeObjectToJSON() {
+        let data: Object = objects
         var result: JSON! = nil
         measure {
              result = self.serializer.typedSerialize(self.objectMapper.serialize(data))
@@ -32,9 +28,9 @@ class PerfomanceTest: XCTestCase {
         _ = result
     }
     
-    func testDeserializeJSONToObjects() {
-        let data: JSON = serializer.typedSerialize(objectMapper.serialize(testData(x: x)))
-        var result: MappableStruct! = nil
+    func testDeserializeJSONToObject() {
+        let data: JSON = serializer.typedSerialize(objectMapper.serialize(objects))
+        var result: Object! = nil
         measure {
             result = self.objectMapper.deserialize(self.serializer.typedDeserialize(data))
         }
@@ -42,7 +38,7 @@ class PerfomanceTest: XCTestCase {
     }
     
     func testSerializeSupportedTypeToJSON() {
-        let data: SupportedType = objectMapper.serialize(testData(x: x))
+        let data: SupportedType = objectMapper.serialize(objects)
         var result: JSON! = nil
         measure {
             result = self.serializer.typedSerialize(data)
@@ -51,7 +47,7 @@ class PerfomanceTest: XCTestCase {
     }
     
     func testDeserializeJSONToSupportedType() {
-        let data: JSON = serializer.typedSerialize(objectMapper.serialize(testData(x: x)))
+        let data: JSON = serializer.typedSerialize(objectMapper.serialize(objects))
         var result: SupportedType = .null
         measure {
             result = self.serializer.typedDeserialize(data)
@@ -59,8 +55,8 @@ class PerfomanceTest: XCTestCase {
         _ = result
     }
     
-    func testSerializeObjectsToSupportedType() {
-        let data: MappableStruct = testData(x: x)
+    func testSerializeObjectToSupportedType() {
+        let data: Object = objects
         var result: SupportedType = .null
         measure {
             result = self.objectMapper.serialize(data)
@@ -68,47 +64,12 @@ class PerfomanceTest: XCTestCase {
         _ = result
     }
     
-    func testDeserializeSupportedTypeToObjects() {
-        let data: SupportedType = objectMapper.serialize(testData(x: x))
-        var result: MappableStruct! = nil
+    func testDeserializeSupportedTypeToObject() {
+        let data: SupportedType = objectMapper.serialize(objects)
+        var result: Object! = nil
         measure {
             result = self.objectMapper.deserialize(data)
         }
         _ = result
-    }
-    
-    private func testData(x: Int) -> MappableStruct {
-        var object: MappableStruct = MappableStruct(number: 0, text: "0", points: [], children: [])
-        // Floor[ x! * e ] x is max i
-        for i in 1...x {
-            object = MappableStruct(number: i, text: "\(i)", points: (1...i).map { Double($0) }, children: (1...i).map { _ in object })
-        }
-        return object
-    }
-}
-
-private struct MappableStruct: Mappable {
-    
-    private(set) var number: Int?
-    private(set) var text: String = ""
-    private(set) var points: [Double] = []
-    private(set) var children: [MappableStruct] = []
-    
-    init(number: Int?, text: String, points: [Double], children: [MappableStruct]) {
-        self.number = number
-        self.text = text
-        self.points = points
-        self.children = children
-    }
-    
-    init(_ data: DeserializableData) throws {
-        try mapping(data)
-    }
-    
-    mutating func mapping(_ data: inout MappableData) throws {
-        data["number"].map(&number)
-        try data["text"].map(&text)
-        data["points"].map(&points, or: [])
-        data["children"].map(&children, or: [])
     }
 }

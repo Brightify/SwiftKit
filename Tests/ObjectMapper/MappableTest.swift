@@ -15,103 +15,45 @@ class MappableTest: QuickSpec {
     override func spec() {
         describe("Mappable") {
             let objectMapper = ObjectMapper()
-            let object = MappableStruct(number: 1, text: "a")
-            let type = SupportedType.dictionary(["number": .int(1), "text": .string("a")])
-            let resultType = SupportedType.dictionary(["id": .int(1), "number": .int(1), "text": .string("a")])
-            
+
             describe("init") {
                 it("creates class") {
-                    let data = DeserializableData(data: type, objectMapper: objectMapper)
+                    let data = DeserializableData(data: TestData.type, objectMapper: objectMapper)
                     
-                    let object = try? MappableClass(data)
-                    
-                    expect(object?.number) == 1
-                    expect(object?.text) == "a"
+                    expect(try? TestData.MappableClass(data)) == TestData.mappableClass
                 }
                 it("creates struct") {
-                    let data = DeserializableData(data: type, objectMapper: objectMapper)
+                    let data = DeserializableData(data: TestData.type, objectMapper: objectMapper)
                     
-                    let object = try? MappableStruct(data)
-                    
-                    expect(object?.number) == 1
-                    expect(object?.text) == "a"
+                    expect(try? TestData.MappableStruct(data)) == TestData.mappableStruct
                 }
                 it("throws error if SupportedType is invalid") {
-                    let data = DeserializableData(data: .dictionary(["number": .int(1)]), objectMapper: objectMapper)
+                    let data = DeserializableData(data: TestData.invalidType, objectMapper: objectMapper)
                     
-                    let object = try? MappableStruct(data)
-                    
-                    expect(object).to(beNil())
+                    expect(try? TestData.MappableStruct(data)).to(beNil())
                 }
             }
             describe("serialize") {
                 it("serializes object") {
                     var data = SerializableData(objectMapper: objectMapper)
                     
-                    object.serialize(to: &data)
+                    TestData.mappableStruct.serialize(to: &data)
                     
-                    expect(data.data) == resultType
+                    expect(data.data) == TestData.type
                 }
             }
             describe("ObjectMapper.deserialize") {
                 it("deserializes object") {
-                    let object: MappableStruct? = objectMapper.deserialize(type)
+                    let object: TestData.MappableStruct? = objectMapper.deserialize(TestData.type)
                     
-                    expect(object?.number) == 1
-                    expect(object?.text) == "a"
+                    expect(object) == TestData.mappableStruct
                 }
             }
             describe("ObjectMapper.serialize") {
                 it("serializes object") {
-                    expect(objectMapper.serialize(object)) == resultType
+                    expect(objectMapper.serialize(TestData.mappableStruct)) == TestData.type
                 }
             }
         }
-    }
-}
-
-private struct MappableStruct: Mappable {
-    
-    var number: Int?
-    var text: String = ""
-    
-    init(number: Int?, text: String) {
-        self.number = number
-        self.text = text
-    }
-    
-    init(_ data: DeserializableData) throws {
-        try mapping(data)
-    }
-    
-    func serialize(to data: inout SerializableData) {
-        mapping(&data)
-        
-        data["id"].set(1)
-    }
-    
-    mutating func mapping(_ data: inout MappableData) throws {
-        data["number"].map(&number)
-        try data["text"].map(&text)
-    }
-}
-
-private class MappableClass: Mappable {
-    
-    var number: Int?
-    var text: String = ""
-    
-    init(number: Int?, text: String) {
-        self.number = number
-        self.text = text
-    }
-    
-    required init(_ data: DeserializableData) throws {
-        try mapping(data)
-    }
-    
-    func mapping(_ data: inout MappableData) throws {
-        data["number"].map(&number)
-        try data["text"].map(&text)
     }
 }

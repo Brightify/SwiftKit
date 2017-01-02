@@ -24,7 +24,7 @@ class DeserializableTransformationTest: QuickSpec {
         }
     }
 
-    struct DeserializableTransformationStub: DeserializableTransformation {
+    private struct DeserializableTransformationStub: DeserializableTransformation {
         
         typealias Object = Int
         

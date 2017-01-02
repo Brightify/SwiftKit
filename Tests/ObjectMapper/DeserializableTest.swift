@@ -15,44 +15,25 @@ class DeserializableTest: QuickSpec {
     override func spec() {
         describe("Deserializable") {
             let objectMapper = ObjectMapper()
-            let type = SupportedType.dictionary(["number": .int(1), "text": .string("a")])
-            
             describe("init") {
                 it("creates object") {
-                    let data = DeserializableData(data: type, objectMapper: objectMapper)
+                    let data = DeserializableData(data: TestData.type, objectMapper: objectMapper)
                     
-                    let object = try? DeserializableStruct(data)
-                    
-                    expect(object?.number) == 1
-                    expect(object?.text) == "a"
+                    expect(try? TestData.DeserializableStruct(data)) == TestData.deserializableStruct
                 }
                 it("throws error if SupportedType is invalid") {
-                    let data = DeserializableData(data: .dictionary(["number": .int(1)]), objectMapper: objectMapper)
-                    
-                    let object = try? DeserializableStruct(data)
-                    
-                    expect(object).to(beNil())
+                    let data = DeserializableData(data: TestData.invalidType, objectMapper: objectMapper)
+
+                    expect(try? TestData.DeserializableStruct(data)).to(beNil())
                 }
             }
             describe("ObjectMapper.deserialize") {
                 it("deserializes object") {
-                    let object: DeserializableStruct? = objectMapper.deserialize(type)
+                    let result: TestData.DeserializableStruct? = objectMapper.deserialize(TestData.type)
                     
-                    expect(object?.number) == 1
-                    expect(object?.text) == "a"
+                    expect(result) == TestData.deserializableStruct
                 }
             }
         }
-    }
-}
-
-private struct DeserializableStruct: Deserializable {
-    
-    let number: Int?
-    let text: String
-    
-    init(_ data: DeserializableData) throws {
-        number = data["number"].get()
-        text = try data["text"].get()
     }
 }
