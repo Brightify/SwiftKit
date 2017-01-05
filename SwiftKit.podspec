@@ -9,12 +9,12 @@
 
 Pod::Spec.new do |spec|
     spec.name             = "SwiftKit"
-    spec.version          = "0.10.0"
+    spec.version          = "0.11.0"
     spec.summary          = "SwiftKit is a collection of simple libraries that make your life easier."
     spec.description      = <<-DESC
                        SwiftKit's main purpose is to jumpstart iOS app development. We strive to deliver multiple small libraries that will solve the most basic things so you will not have to do it yourself.
                        DESC
-    spec.homepage         = "https://github.com/SwiftKit/SwiftKit"
+    spec.homepage         = "https://github.com/Brightify/SwiftKit"
     spec.license          = 'MIT'
     spec.author           = {
         "Tadeas Kriz" => "tadeas@brightify.org",
@@ -22,26 +22,18 @@ Pod::Spec.new do |spec|
         "Maros Seleng" => "maros@brightify.org"
     }
     spec.source           = {
-        :git => "https://github.com/SwiftKit/SwiftKit.git",
+        :git => "https://github.com/Brightify/SwiftKit.git",
         :tag => spec.version.to_s
     }
     spec.social_media_url = 'https://twitter.com/BrightifyOrg'
     spec.platform     = :ios, '9.0'
     spec.requires_arc = true
 
-    spec.default_subspec = 'Router'
-
-    spec.subspec 'Router' do |router|
-        router.source_files = 'SwiftKit/Router/**/*.swift'
-        router.frameworks = 'Foundation'
-        router.dependency 'SwiftKit/ObjectMapper'
-        router.dependency 'Alamofire', '~> 4.0'
-        router.dependency 'HTTPStatusCodes', '~> 3.1'
-        router.dependency 'SwiftyJSON', '~> 3.1'
-    end
-
-    spec.subspec 'ObjectMapper' do |objectMapper|
-        objectMapper.source_files = 'SwiftKit/ObjectMapper/**/*.swift'
-        objectMapper.dependency 'SwiftyJSON', '~> 3.1'
-    end
+    spec.source_files = ['AlamofireRequestPerformer/**/*.swift', 'JsonSerializer/**/*.swift', 'ObjectMapper/**/*.swift', 'Router/**/*.swift', 'RxRouter/**/*.swift']
+    spec.frameworks = 'Foundation'
+    spec.dependency 'Alamofire', '~> 4.0'
+    spec.dependency 'HTTPStatusCodes', '~> 3.1'
+    spec.dependency 'SwiftyJSON', '~> 3.1'
+    spec.dependency 'RxSwift', '~> 3.0'
+    spec.dependency 'Result'
 end
