@@ -34,63 +34,63 @@ public struct SerializableMappableDataWrapper: MappableData {
         }
     }
     
-    public mutating func map<T: Mappable>(_ value: inout T?) {
+    public mutating func map<T: SerializableAndDeserializable>(_ value: inout T?) {
         delegate.set(value)
     }
     
-    public mutating func map<T: Mappable>(_ value: inout T, or: T) {
+    public mutating func map<T: SerializableAndDeserializable>(_ value: inout T, or: T) {
         delegate.set(value)
     }
     
-    public mutating func map<T: Mappable>(_ value: inout T) throws {
+    public mutating func map<T: SerializableAndDeserializable>(_ value: inout T) throws {
         delegate.set(value)
     }
     
-    public mutating func map<T: Mappable>(_ array: inout [T]?) {
+    public mutating func map<T: SerializableAndDeserializable>(_ array: inout [T]?) {
         delegate.set(array)
     }
     
-    public mutating func map<T: Mappable>(_ array: inout [T], or: [T]) {
+    public mutating func map<T: SerializableAndDeserializable>(_ array: inout [T], or: [T]) {
         delegate.set(array)
     }
     
-    public mutating func map<T: Mappable>(_ array: inout [T]) throws {
+    public mutating func map<T: SerializableAndDeserializable>(_ array: inout [T]) throws {
         delegate.set(array)
     }
     
-    public mutating func map<T: Mappable>(_ array: inout [T?]?) {
+    public mutating func map<T: SerializableAndDeserializable>(_ array: inout [T?]?) {
         delegate.set(array)
     }
     
-    public mutating func map<T: Mappable>(_ array: inout [T?], or: [T?]) {
+    public mutating func map<T: SerializableAndDeserializable>(_ array: inout [T?], or: [T?]) {
         delegate.set(array)
     }
     
-    public mutating func map<T: Mappable>(_ array: inout [T?]) throws {
+    public mutating func map<T: SerializableAndDeserializable>(_ array: inout [T?]) throws {
         delegate.set(array)
     }
     
-    public mutating func map<T: Mappable>(_ dictionary: inout [String: T]?) {
+    public mutating func map<T: SerializableAndDeserializable>(_ dictionary: inout [String: T]?) {
         delegate.set(dictionary)
     }
     
-    public mutating func map<T: Mappable>(_ dictionary: inout [String: T], or: [String: T]) {
+    public mutating func map<T: SerializableAndDeserializable>(_ dictionary: inout [String: T], or: [String: T]) {
         delegate.set(dictionary)
     }
     
-    public mutating func map<T: Mappable>(_ dictionary: inout [String: T]) throws {
+    public mutating func map<T: SerializableAndDeserializable>(_ dictionary: inout [String: T]) throws {
         delegate.set(dictionary)
     }
     
-    public mutating func map<T: Mappable>(_ dictionary: inout [String: T?]?) {
+    public mutating func map<T: SerializableAndDeserializable>(_ dictionary: inout [String: T?]?) {
         delegate.set(dictionary)
     }
     
-    public mutating func map<T: Mappable>(_ dictionary: inout [String: T?], or: [String: T?]) {
+    public mutating func map<T: SerializableAndDeserializable>(_ dictionary: inout [String: T?], or: [String: T?]) {
         delegate.set(dictionary)
     }
     
-    public mutating func map<T: Mappable>(_ dictionary: inout [String: T?]) throws {
+    public mutating func map<T: SerializableAndDeserializable>(_ dictionary: inout [String: T?]) throws {
         delegate.set(dictionary)
     }
     

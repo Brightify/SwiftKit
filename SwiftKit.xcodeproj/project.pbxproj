@@ -651,8 +651,8 @@
 			children = (
 				DC4D91741DC3425C0095A348 /* GenericPolymorphicInfo.swift */,
 				DC4D91751DC3425C0095A348 /* PolymorphDataProvider.swift */,
-				DC4D91771DC3425C0095A348 /* PolymorphicInfo.swift */,
 				DC4D91781DC3425C0095A348 /* Polymorphic.swift */,
+				DC4D91771DC3425C0095A348 /* PolymorphicInfo.swift */,
 				DC4D91941DC34D300095A348 /* StaticPolymorph.swift */,
 				DC4D91821DC342750095A348 /* PolymorphicMappable */,
 			);

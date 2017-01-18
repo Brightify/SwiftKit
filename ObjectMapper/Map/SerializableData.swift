@@ -10,11 +10,11 @@ public struct SerializableData {
     
     public let objectMapper: ObjectMapper
     
-    public var data: SupportedType
+    public var raw: SupportedType
     
     public init(data: SupportedType = .null, objectMapper: ObjectMapper) {
         self.objectMapper = objectMapper
-        self.data = data
+        self.raw = data
     }
     
     public subscript(path: [String]) -> SerializableData {
@@ -42,35 +42,35 @@ public struct SerializableData {
     }
 
     public mutating func set<T: Serializable>(_ value: T?) {
-        data = objectMapper.serialize(value)
+        raw = objectMapper.serialize(value)
     }
     
     public mutating func set<T: Serializable>(_ array: [T?]?) {
-        data = objectMapper.serialize(array)
+        raw = objectMapper.serialize(array)
     }
     
     public mutating func set<T: Serializable>(_ dictionary: [String: T?]?) {
-        data = objectMapper.serialize(dictionary)
+        raw = objectMapper.serialize(dictionary)
     }
     
     public mutating func set<T, R: SerializableTransformation>(_ value: T?, using transformation: R) where R.Object == T {
-        data = objectMapper.serialize(value, using: transformation)
+        raw = objectMapper.serialize(value, using: transformation)
     }
     
     public mutating func set<T, R: SerializableTransformation>(_ array: [T?]?, using transformation: R) where R.Object == T {
-        data = objectMapper.serialize(array, using: transformation)
+        raw = objectMapper.serialize(array, using: transformation)
     }
     
     public mutating func set<T, R: SerializableTransformation>(_ dictionary: [String: T?]?, using transformation: R) where R.Object == T {
-        data = objectMapper.serialize(dictionary, using: transformation)
+        raw = objectMapper.serialize(dictionary, using: transformation)
     }
     
     private subscript(path: String) -> SerializableData {
         get {
-            return SerializableData(data: data.dictionary?[path] ?? .null, objectMapper: objectMapper)
+            return SerializableData(data: raw.dictionary?[path] ?? .null, objectMapper: objectMapper)
         }
         set {
-            data.addToDictionary(key: path, value: newValue.data)
+            raw.addToDictionary(key: path, value: newValue.raw)
         }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import SwiftKit
+import Nimble
 
 struct TestData {
     
@@ -14,6 +15,7 @@ struct TestData {
     static let mappableStruct = MappableStruct(number: 1, text: "a", points: [2], children: [])
     static let mappableClass = MappableClass(number: 1, text: "a", points: [2], children: [])
     static let serializableStruct = SerializableStruct(number: 1, text: "a", points: [2], children: [])
+    
     static let type = SupportedType.dictionary(["number": .int(1), "text": .string("a"), "points": .array([.double(2)]), "children": .array([])])
     static let invalidType = SupportedType.dictionary(["number": .int(1)])
     
@@ -157,6 +159,42 @@ struct TestData {
             ])
         
         static let pathType = SupportedType.dictionary(["a": .dictionary(["b": .int(1)])])
+        
+        static func assertValidType(_ value: Int?, _ array: [Int]?, _ dictionary: [String: Int]?, _ optionalArray: [Int?]?,
+                                    _ optionalDictionary: [String: Int?]?, file: FileString = #file, line: UInt = #line) {
+            expect(value, file: file, line: line) == 1
+            expect(array, file: file, line: line) == [1, 2]
+            expect(dictionary, file: file, line: line) == ["a": 1, "b": 2]
+            expect(areEqual(optionalArray, [1, nil]), file: file, line: line).to(beTrue())
+            expect(areEqual(optionalDictionary, ["a": 1, "b": nil]), file: file, line: line).to(beTrue())
+        }
+        
+        static func assertValidTypeUsingTransformation(_ value: Int?, _ array: [Int]?, _ dictionary: [String: Int]?, _ optionalArray: [Int?]?,
+                                    _ optionalDictionary: [String: Int?]?, file: FileString = #file, line: UInt = #line) {
+            expect(value, file: file, line: line) == 2
+            expect(array, file: file, line: line) == [2, 4]
+            expect(dictionary, file: file, line: line) == ["a": 2, "b": 4]
+            expect(areEqual(optionalArray, [2, nil]), file: file, line: line).to(beTrue())
+            expect(areEqual(optionalDictionary, ["a": 2, "b": nil]), file: file, line: line).to(beTrue())
+        }
+        
+        static func assertInvalidTypeOr(_ value: Int?, _ array: [Int]?, _ dictionary: [String: Int]?, _ optionalArray: [Int?]?,
+                                                       _ optionalDictionary: [String: Int?]?, file: FileString = #file, line: UInt = #line) {
+            expect(value, file: file, line: line) == 0
+            expect(array, file: file, line: line) == [0]
+            expect(dictionary, file: file, line: line) == ["a": 0]
+            expect(areEqual(optionalArray, [0]), file: file, line: line).to(beTrue())
+            expect(areEqual(optionalDictionary, ["a": 0]), file: file, line: line).to(beTrue())
+        }
+        
+        static func assertInvalidType(_ value: Int?, _ array: [Int]?, _ dictionary: [String: Int]?, _ optionalArray: [Int?]?,
+                                    _ optionalDictionary: [String: Int?]?, file: FileString = #file, line: UInt = #line) {
+            expect(value, file: file, line: line).to(beNil())
+            expect(array, file: file, line: line).to(beNil())
+            expect(dictionary, file: file, line: line).to(beNil())
+            expect(optionalArray, file: file, line: line).to(beNil())
+            expect(optionalDictionary, file: file, line: line).to(beNil())
+        }
     }
     
     struct StaticPolymorph {
@@ -199,6 +237,93 @@ struct TestData {
         }
         
         class X {
+        }
+    }
+    
+    struct PolymorphicTypes {
+        
+        static let a = A(id: 1)
+        static let b = B(id: 2, name: "name")
+        static let c = C(id: 3, number: 0)
+        
+        static let aType = SupportedType.dictionary(["id": .int(1), "type": .string("A")])
+        static let bType = SupportedType.dictionary(["id": .int(2), "name": .string("name"), "type": .string("B")])
+        static let cType = SupportedType.dictionary(["id": .int(3), "number": .int(0), "type": .string("C")])
+        
+        static let aTypeWithoutPolymorphicData = SupportedType.dictionary(["id": .int(1)])
+        static let bTypeWithoutPolymorphicData = SupportedType.dictionary(["id": .int(2), "name": .string("name")])
+        static let cTypeWithoutPolymorphicData = SupportedType.dictionary(["id": .int(3), "number": .int(0)])
+        
+        class A: PolymorphicMappable {
+            
+            static var polymorphicKey = "type"
+            
+            static var polymorphicInfo: PolymorphicInfo {
+                return createPolymorphicInfo().with(subtypes: B.self, C.self)
+            }
+            
+            let id: Int
+            
+            init(id: Int) {
+                self.id = id
+            }
+            
+            required init(_ data: DeserializableData) throws {
+                id = try data["id"].get()
+                
+                try mapping(data)
+            }
+            
+            func serialize(to data: inout SerializableData) {
+                data["id"].set(id)
+                
+                mapping(&data)
+            }
+            
+            func mapping(_ data: inout MappableData) throws {
+            }
+        }
+        
+        class B: A {
+            
+            var name: String?
+            
+            init(id: Int, name: String?) {
+                super.init(id: id)
+                
+                self.name = name
+            }
+            
+            required init(_ data: DeserializableData) throws {
+                try super.init(data)
+            }
+            
+            override func mapping(_ data: inout MappableData) throws {
+                try super.mapping(&data)
+                
+                data["name"].map(&name)
+            }
+        }
+        
+        class C: A {
+            
+            var number: Int?
+            
+            init(id: Int, number: Int?) {
+                super.init(id: id)
+                
+                self.number = number
+            }
+            
+            required init(_ data: DeserializableData) throws {
+                try super.init(data)
+            }
+            
+            override func mapping(_ data: inout MappableData) throws {
+                try super.mapping(&data)
+                
+                data["number"].map(&number)
+            }
         }
     }
     

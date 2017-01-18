@@ -13,18 +13,18 @@ import SwiftKit
 class StaticPolymorphTest: QuickSpec {
     
     private typealias A = TestData.StaticPolymorph.A
-    private typealias C = TestData.StaticPolymorph.C
+    private typealias D = TestData.StaticPolymorph.D
     private typealias X = TestData.StaticPolymorph.X
     
     override func spec() {
         describe("StaticPolymorph") {
             let polymorph = StaticPolymorph()
-            let data = SupportedType.dictionary(["C": .string("C")])
+            let data = SupportedType.dictionary(["C": .string("D2")])
             describe("polymorphType") {
                 it("returns polymorphic type based on data in SupportedType") {
                     let type = polymorph.polymorphType(for: A.self, in: data)
                     
-                    expect("\(type)") == "\(C.self)"
+                    expect("\(type)") == "\(D.self)"
                 }
                 it("returns passed type if type is not polymorphic") {
                     let type = polymorph.polymorphType(for: X.self, in: data)
@@ -41,7 +41,7 @@ class StaticPolymorphTest: QuickSpec {
                 it("writes info about type in SupportedType") {
                     var type = SupportedType.null
                     
-                    polymorph.writeTypeInfo(to: &type, of: C.self)
+                    polymorph.writeTypeInfo(to: &type, of: D.self)
                     
                     expect(type) == data
                 }

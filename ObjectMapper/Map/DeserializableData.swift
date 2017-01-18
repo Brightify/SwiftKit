@@ -8,18 +8,17 @@
 
 public struct DeserializableData {
     
-    // TODO raw
-    public let data: SupportedType
+    public let raw: SupportedType
     public let objectMapper: ObjectMapper
     
     public init(data: SupportedType, objectMapper: ObjectMapper) {
-        self.data = data
+        self.raw = data
         self.objectMapper = objectMapper
     }
     
     public subscript(path: [String]) -> DeserializableData {
         return path.reduce(self) { deserializableData, path in
-            DeserializableData(data: deserializableData.data.dictionary?[path] ?? .null, objectMapper: objectMapper)
+            DeserializableData(data: deserializableData.raw.dictionary?[path] ?? .null, objectMapper: objectMapper)
         }
     }
     
@@ -28,7 +27,7 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> T? {
-        return objectMapper.deserialize(data)
+        return objectMapper.deserialize(raw)
     }
     
     public func get<T: Deserializable>(or: T) -> T {
@@ -40,7 +39,7 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> [T]? {
-        return objectMapper.deserialize(data)
+        return objectMapper.deserialize(raw)
     }
     
     public func get<T: Deserializable>(or: [T]) -> [T] {
@@ -52,7 +51,7 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> [T?]? {
-        return objectMapper.deserialize(data)
+        return objectMapper.deserialize(raw)
     }
     
     public func get<T: Deserializable>(or: [T?]) -> [T?] {
@@ -64,7 +63,7 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> [String: T]? {
-        return objectMapper.deserialize(data)
+        return objectMapper.deserialize(raw)
     }
     
     public func get<T: Deserializable>(or: [String: T]) -> [String: T] {
@@ -76,7 +75,7 @@ public struct DeserializableData {
     }
     
     public func get<T: Deserializable>() -> [String: T?]? {
-        return objectMapper.deserialize(data)
+        return objectMapper.deserialize(raw)
     }
     
     public func get<T: Deserializable>(or: [String: T?]) -> [String: T?] {
@@ -88,7 +87,7 @@ public struct DeserializableData {
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) -> T? where R.Object == T {
-        return objectMapper.deserialize(data, using: transformation)
+        return objectMapper.deserialize(raw, using: transformation)
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R, or: T) -> T where R.Object == T {
@@ -100,7 +99,7 @@ public struct DeserializableData {
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) -> [T]? where R.Object == T {
-        return objectMapper.deserialize(data, using: transformation)
+        return objectMapper.deserialize(raw, using: transformation)
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R, or: [T]) -> [T] where R.Object == T {
@@ -112,7 +111,7 @@ public struct DeserializableData {
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) -> [T?]? where R.Object == T {
-        return objectMapper.deserialize(data, using: transformation)
+        return objectMapper.deserialize(raw, using: transformation)
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R, or: [T?]) -> [T?] where R.Object == T {
@@ -124,7 +123,7 @@ public struct DeserializableData {
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) -> [String: T]? where R.Object == T {
-        return objectMapper.deserialize(data, using: transformation)
+        return objectMapper.deserialize(raw, using: transformation)
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R, or: [String: T]) -> [String: T] where R.Object == T {
@@ -136,7 +135,7 @@ public struct DeserializableData {
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R) -> [String: T?]? where R.Object == T {
-        return objectMapper.deserialize(data, using: transformation)
+        return objectMapper.deserialize(raw, using: transformation)
     }
     
     public func get<T, R: DeserializableTransformation>(using transformation: R, or: [String: T?]) -> [String: T?] where R.Object == T {
@@ -151,7 +150,7 @@ public struct DeserializableData {
         if let value = optionalValue {
             return value
         } else {
-            throw DeserializationError.wrongType(type: data)
+            throw DeserializationError.wrongType(type: raw)
         }
     }
 }

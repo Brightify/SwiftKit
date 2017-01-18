@@ -6,7 +6,9 @@
 //  Copyright © 2016 Brightify. All rights reserved.
 //
 
-public protocol Mappable: Serializable, Deserializable {
+public typealias SerializableAndDeserializable = Serializable & Deserializable
+
+public protocol Mappable: SerializableAndDeserializable {
     
     mutating func mapping(_ data: inout MappableData) throws
 }

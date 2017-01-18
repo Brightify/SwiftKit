@@ -22,7 +22,7 @@ class SerializableTest: QuickSpec {
                     
                     TestData.serializableStruct.serialize(to: &data)
                     
-                    expect(data.data) == TestData.type
+                    expect(data.raw) == TestData.type
                 }
             }
             describe("ObjectMapper.serialize") {

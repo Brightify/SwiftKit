@@ -15,11 +15,15 @@ public final class ObjectMapper {
     }
     
     public func serialize<T: Serializable>(_ value: T?) -> SupportedType {
-        var serializableData = SerializableData(objectMapper: self)
-        value?.serialize(to: &serializableData)
-        var data = serializableData.data
-        polymorph?.writeTypeInfo(to: &data, of: type(of: value))
-        return data
+        if let value = value {
+            var serializableData = SerializableData(objectMapper: self)
+            value.serialize(to: &serializableData)
+            var data = serializableData.raw
+            polymorph?.writeTypeInfo(to: &data, of: type(of: value))
+            return data
+        } else {
+            return .null
+        }
     }
     
     public func serialize<T: Serializable>(_ array: [T?]?) -> SupportedType {

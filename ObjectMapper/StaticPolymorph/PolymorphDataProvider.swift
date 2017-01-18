@@ -21,7 +21,8 @@ public final class PolymorphDataProvider {
     
     public func nameAndKey(of type: Polymorphic.Type) -> (name: String, key: String) {
         return syncQueue.sync {
-            cache(type: type)
+            // Used also in serialization (not as a base type).
+            cache(type: type, throwErrorIfPolymorphicInfoIsNotOverriden: false)
             // Value always exists.
             return nameAndKeyOfTypeCache[ObjectIdentifier(type)]!
         }
@@ -42,7 +43,10 @@ public final class PolymorphDataProvider {
         }
     }
     
-    private func cache(type: Polymorphic.Type) {
+    private func cache(type: Polymorphic.Type, throwErrorIfPolymorphicInfoIsNotOverriden: Bool = true) {
+        precondition(!throwErrorIfPolymorphicInfoIsNotOverriden || type.polymorphicInfo.type == type,
+                     "\(type) does not override polymorphicInfo. Using it as a base polymorphic type is in most cases programming error.")
+        
         if nameAndKeyOfTypeCache[ObjectIdentifier(type)] == nil {
             addToCache(type: type)
         }
@@ -64,7 +68,7 @@ public final class PolymorphDataProvider {
     }
     
     private func addSubtypeToCache(for typeIdentifier: ObjectIdentifier, subtype: Polymorphic.Type) {
-        cache(type: subtype)
+        cache(type: subtype, throwErrorIfPolymorphicInfoIsNotOverriden: false)
         
         let subtypeIdentifier = ObjectIdentifier(subtype)
         keysOfTypeCache[typeIdentifier]?.formUnion(keysOfTypeCache[subtypeIdentifier] ?? [])

@@ -39,7 +39,7 @@ class MappableTest: QuickSpec {
                     
                     TestData.mappableStruct.serialize(to: &data)
                     
-                    expect(data.data) == TestData.type
+                    expect(data.raw) == TestData.type
                 }
             }
             describe("ObjectMapper.deserialize") {

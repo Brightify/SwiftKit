@@ -32,17 +32,10 @@ class DeserializableDataTest: QuickSpec {
                     let optionalArrayTransformation: [Int?]? = data["optionalArray"].get(using: CustomIntTransformation())
                     let optionalDictionaryTransformation: [String: Int?]? = data["optionalDictionary"].get(using: CustomIntTransformation())
                     
-                    expect(value) == 1
-                    expect(array) == [1, 2]
-                    expect(dictionary) == ["a": 1, "b": 2]
-                    expect(areEqual(optionalArray, [1, nil])).to(beTrue())
-                    expect(areEqual(optionalDictionary, ["a": 1, "b": nil])).to(beTrue())
+                    TestData.Map.assertValidType(value, array, dictionary, optionalArray, optionalDictionary)
                     
-                    expect(valueTransformation) == 2
-                    expect(arrayTransformation) == [2, 4]
-                    expect(dictionaryTransformation) == ["a": 2, "b": 4]
-                    expect(areEqual(optionalArrayTransformation, [2, nil])).to(beTrue())
-                    expect(areEqual(optionalDictionaryTransformation, ["a": 2, "b": nil])).to(beTrue())
+                    TestData.Map.assertValidTypeUsingTransformation(valueTransformation, arrayTransformation,
+                                                                    dictionaryTransformation, optionalArrayTransformation, optionalDictionaryTransformation)
                 }
                 it("returns nil if type is not valid") {
                     let data = DeserializableData(data: TestData.Map.invalidType, objectMapper: ObjectMapper())
@@ -59,17 +52,10 @@ class DeserializableDataTest: QuickSpec {
                     let optionalArrayTransformation: [Int?]? = data["optionalArray"].get(using: CustomIntTransformation())
                     let optionalDictionaryTransformation: [String: Int?]? = data["optionalDictionary"].get(using: CustomIntTransformation())
                     
-                    expect(value).to(beNil())
-                    expect(array).to(beNil())
-                    expect(dictionary).to(beNil())
-                    expect(optionalArray).to(beNil())
-                    expect(optionalDictionary).to(beNil())
+                    TestData.Map.assertInvalidType(value, array, dictionary, optionalArray, optionalDictionary)
                     
-                    expect(valueTransformation).to(beNil())
-                    expect(arrayTransformation).to(beNil())
-                    expect(dictionaryTransformation).to(beNil())
-                    expect(optionalArrayTransformation).to(beNil())
-                    expect(optionalDictionaryTransformation).to(beNil())
+                    TestData.Map.assertInvalidType(valueTransformation, arrayTransformation,
+                                                                    dictionaryTransformation, optionalArrayTransformation, optionalDictionaryTransformation)
                 }
             }
             describe("get value or") {
@@ -88,17 +74,10 @@ class DeserializableDataTest: QuickSpec {
                     let optionalArrayTransformation: [Int?] = data["optionalArray"].get(using: CustomIntTransformation(), or: [0])
                     let optionalDictionaryTransformation: [String: Int?] = data["optionalDictionary"].get(using: CustomIntTransformation(), or: ["a": 0])
                     
-                    expect(value) == 1
-                    expect(array) == [1, 2]
-                    expect(dictionary) == ["a": 1, "b": 2]
-                    expect(areEqual(optionalArray, [1, nil])).to(beTrue())
-                    expect(areEqual(optionalDictionary, ["a": 1, "b": nil])).to(beTrue())
+                    TestData.Map.assertValidType(value, array, dictionary, optionalArray, optionalDictionary)
                     
-                    expect(valueTransformation) == 2
-                    expect(arrayTransformation) == [2, 4]
-                    expect(dictionaryTransformation) == ["a": 2, "b": 4]
-                    expect(areEqual(optionalArrayTransformation, [2, nil])).to(beTrue())
-                    expect(areEqual(optionalDictionaryTransformation, ["a": 2, "b": nil])).to(beTrue())
+                    TestData.Map.assertValidTypeUsingTransformation(valueTransformation, arrayTransformation,
+                                                                    dictionaryTransformation, optionalArrayTransformation, optionalDictionaryTransformation)
                 }
                 it("returns defaultValue if type is not valid") {
                     let data = DeserializableData(data: TestData.Map.invalidType, objectMapper: ObjectMapper())
@@ -126,6 +105,11 @@ class DeserializableDataTest: QuickSpec {
                     expect(dictionaryTransformation) == ["a": 0]
                     expect(areEqual(optionalArrayTransformation, [0])).to(beTrue())
                     expect(areEqual(optionalDictionaryTransformation, ["a": 0])).to(beTrue())
+                    
+                    TestData.Map.assertInvalidTypeOr(value, array, dictionary, optionalArray, optionalDictionary)
+                    
+                    TestData.Map.assertInvalidTypeOr(valueTransformation, arrayTransformation,
+                                                   dictionaryTransformation, optionalArrayTransformation, optionalDictionaryTransformation)
                 }
             }
             describe("get throws") {
@@ -145,21 +129,13 @@ class DeserializableDataTest: QuickSpec {
                         let optionalArrayTransformation: [Int?] = try data["optionalArray"].get(using: CustomIntTransformation())
                         let optionalDictionaryTransformation: [String: Int?] = try data["optionalDictionary"].get(using: CustomIntTransformation())
                         
-                        expect(value) == 1
-                        expect(array) == [1, 2]
-                        expect(dictionary) == ["a": 1, "b": 2]
-                        expect(areEqual(optionalArray, [1, nil])).to(beTrue())
-                        expect(areEqual(optionalDictionary, ["a": 1, "b": nil])).to(beTrue())
+                        TestData.Map.assertValidType(value, array, dictionary, optionalArray, optionalDictionary)
                         
-                        expect(valueTransformation) == 2
-                        expect(arrayTransformation) == [2, 4]
-                        expect(dictionaryTransformation) == ["a": 2, "b": 4]
-                        expect(areEqual(optionalArrayTransformation, [2, nil])).to(beTrue())
-                        expect(areEqual(optionalDictionaryTransformation, ["a": 2, "b": nil])).to(beTrue())
+                        TestData.Map.assertValidTypeUsingTransformation(valueTransformation, arrayTransformation,
+                                                                        dictionaryTransformation, optionalArrayTransformation, optionalDictionaryTransformation)
                         
                         return 0
                     }.toNot(throwError())
-                    
                 }
                 it("throws error if type is not valid") {
                     let data = DeserializableData(data: TestData.Map.invalidType, objectMapper: ObjectMapper())
@@ -180,16 +156,16 @@ class DeserializableDataTest: QuickSpec {
             describe("subscript") {
                 let data = DeserializableData(data: TestData.Map.pathType, objectMapper: ObjectMapper(polymorph: StaticPolymorph()))
                 it("returns DeserializableData with subData if path exists") {
-                    expect(data["a"]["b"].data) == SupportedType.int(1)
+                    expect(data["a"]["b"].raw) == SupportedType.int(1)
                 }
                 it("returns DeserializableData with .null if path does not exist") {
-                    expect(data["b"].data) == SupportedType.null
+                    expect(data["b"].raw) == SupportedType.null
                 }
                 it("accepts array") {
-                    expect(data[["a", "b"]].data) == SupportedType.int(1)
+                    expect(data[["a", "b"]].raw) == SupportedType.int(1)
                 }
                 it("accepts vararg") {
-                    expect(data["a", "b"].data) == SupportedType.int(1)
+                    expect(data["a", "b"].raw) == SupportedType.int(1)
                 }
                 it("passes correct ObjectMapper") {
                     expect(data["a"].objectMapper) === data.objectMapper

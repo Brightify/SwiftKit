@@ -33,7 +33,7 @@ class SerializableDataTest: QuickSpec {
                         data["optionalArray"].set(optionalArray)
                         data["optionalDictionary"].set(optionalDictionary)
                         
-                        expect(data.data) == TestData.Map.validType
+                        expect(data.raw) == TestData.Map.validType
                     }
                     it("sets .null if value is nil") {
                         var data = SerializableData(objectMapper: ObjectMapper())
@@ -50,7 +50,7 @@ class SerializableDataTest: QuickSpec {
                         data["optionalArray"].set(optionalArray)
                         data["optionalDictionary"].set(optionalDictionary)
                         
-                        expect(data.data) == TestData.Map.nullType
+                        expect(data.raw) == TestData.Map.nullType
                     }
                 }
                 describe("using transformation") {
@@ -69,7 +69,7 @@ class SerializableDataTest: QuickSpec {
                         data["optionalArray"].set(optionalArrayTransformation, using: CustomIntTransformation())
                         data["optionalDictionary"].set(optionalDictionaryTransformation, using: CustomIntTransformation())
                         
-                        expect(data.data) == TestData.Map.validType
+                        expect(data.raw) == TestData.Map.validType
                     }
                     it("sets .null if value is nil") {
                         var data = SerializableData(objectMapper: ObjectMapper())
@@ -86,7 +86,7 @@ class SerializableDataTest: QuickSpec {
                         data["optionalArray"].set(optionalArrayTransformation, using: CustomIntTransformation())
                         data["optionalDictionary"].set(optionalDictionaryTransformation, using: CustomIntTransformation())
                         
-                        expect(data.data) == TestData.Map.nullType
+                        expect(data.raw) == TestData.Map.nullType
                     }
                 }
             }
@@ -98,21 +98,21 @@ class SerializableDataTest: QuickSpec {
                     
                     data["a"]["b"].set(value)
                     
-                    expect(data.data) == TestData.Map.pathType
+                    expect(data.raw) == TestData.Map.pathType
                 }
                 it("accepts array") {
                     var data = SerializableData(objectMapper: ObjectMapper(polymorph: StaticPolymorph()))
                     
                     data[["a", "b"]].set(value)
                     
-                    expect(data.data) == TestData.Map.pathType
+                    expect(data.raw) == TestData.Map.pathType
                 }
                 it("accepts vararg") {
                     var data = SerializableData(objectMapper: ObjectMapper(polymorph: StaticPolymorph()))
                     
                     data["a", "b"].set(value)
                     
-                    expect(data.data) == TestData.Map.pathType
+                    expect(data.raw) == TestData.Map.pathType
                 }
                 it("passes correct ObjectMapper") {
                     var data = SerializableData(objectMapper: ObjectMapper(polymorph: StaticPolymorph()))

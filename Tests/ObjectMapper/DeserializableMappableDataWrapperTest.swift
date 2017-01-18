@@ -45,17 +45,10 @@ class DeserializableMappableDataWrapperTest: QuickSpec {
                     data["optionalArray"].map(&optionalArrayTransformation, using: CustomIntTransformation())
                     data["optionalDictionary"].map(&optionalDictionaryTransformation, using: CustomIntTransformation())
                     
-                    expect(value) == 1
-                    expect(array) == [1, 2]
-                    expect(dictionary) == ["a": 1, "b": 2]
-                    expect(areEqual(optionalArray, [1, nil])).to(beTrue())
-                    expect(areEqual(optionalDictionary, ["a": 1, "b": nil])).to(beTrue())
+                    TestData.Map.assertValidType(value, array, dictionary, optionalArray, optionalDictionary)
                     
-                    expect(valueTransformation) == 2
-                    expect(arrayTransformation) == [2, 4]
-                    expect(dictionaryTransformation) == ["a": 2, "b": 4]
-                    expect(areEqual(optionalArrayTransformation, [2, nil])).to(beTrue())
-                    expect(areEqual(optionalDictionaryTransformation, ["a": 2, "b": nil])).to(beTrue())
+                    TestData.Map.assertValidTypeUsingTransformation(valueTransformation, arrayTransformation,
+                                                                    dictionaryTransformation, optionalArrayTransformation, optionalDictionaryTransformation)
                 }
                 it("puts nil to value if type is not valid") {
                     let delegate = DeserializableData(data: TestData.Map.invalidType, objectMapper: ObjectMapper())
@@ -85,17 +78,10 @@ class DeserializableMappableDataWrapperTest: QuickSpec {
                     data["optionalArray"].map(&optionalArrayTransformation, using: CustomIntTransformation())
                     data["optionalDictionary"].map(&optionalDictionaryTransformation, using: CustomIntTransformation())
                     
-                    expect(value).to(beNil())
-                    expect(array).to(beNil())
-                    expect(dictionary).to(beNil())
-                    expect(optionalArray).to(beNil())
-                    expect(optionalDictionary).to(beNil())
+                    TestData.Map.assertInvalidType(value, array, dictionary, optionalArray, optionalDictionary)
                     
-                    expect(valueTransformation).to(beNil())
-                    expect(arrayTransformation).to(beNil())
-                    expect(dictionaryTransformation).to(beNil())
-                    expect(optionalArrayTransformation).to(beNil())
-                    expect(optionalDictionaryTransformation).to(beNil())
+                    TestData.Map.assertInvalidType(valueTransformation, arrayTransformation,
+                                                   dictionaryTransformation, optionalArrayTransformation, optionalDictionaryTransformation)
                 }
             }
             describe("map value or") {
@@ -127,17 +113,10 @@ class DeserializableMappableDataWrapperTest: QuickSpec {
                     data["optionalArray"].map(&optionalArrayTransformation, using: CustomIntTransformation(), or: [0])
                     data["optionalDictionary"].map(&optionalDictionaryTransformation, using: CustomIntTransformation(), or: ["a": 0])
 
-                    expect(value) == 1
-                    expect(array) == [1, 2]
-                    expect(dictionary) == ["a": 1, "b": 2]
-                    expect(areEqual(optionalArray, [1, nil])).to(beTrue())
-                    expect(areEqual(optionalDictionary, ["a": 1, "b": nil])).to(beTrue())
+                    TestData.Map.assertValidType(value, array, dictionary, optionalArray, optionalDictionary)
                     
-                    expect(valueTransformation) == 2
-                    expect(arrayTransformation) == [2, 4]
-                    expect(dictionaryTransformation) == ["a": 2, "b": 4]
-                    expect(areEqual(optionalArrayTransformation, [2, nil])).to(beTrue())
-                    expect(areEqual(optionalDictionaryTransformation, ["a": 2, "b": nil])).to(beTrue())
+                    TestData.Map.assertValidTypeUsingTransformation(valueTransformation, arrayTransformation,
+                                                                    dictionaryTransformation, optionalArrayTransformation, optionalDictionaryTransformation)
                 }
                 it("puts defaultValue to value if type is not valid") {
                     let delegate = DeserializableData(data: TestData.Map.invalidType, objectMapper: ObjectMapper())
@@ -167,17 +146,10 @@ class DeserializableMappableDataWrapperTest: QuickSpec {
                     data["optionalArray"].map(&optionalArrayTransformation, using: CustomIntTransformation(), or: [0])
                     data["optionalDictionary"].map(&optionalDictionaryTransformation, using: CustomIntTransformation(), or: ["a": 0])
 
-                    expect(value) == 0
-                    expect(array) == [0]
-                    expect(dictionary) == ["a": 0]
-                    expect(areEqual(optionalArray, [0])).to(beTrue())
-                    expect(areEqual(optionalDictionary, ["a": 0])).to(beTrue())
+                    TestData.Map.assertInvalidTypeOr(value, array, dictionary, optionalArray, optionalDictionary)
                     
-                    expect(valueTransformation) == 0
-                    expect(arrayTransformation) == [0]
-                    expect(dictionaryTransformation) == ["a": 0]
-                    expect(areEqual(optionalArrayTransformation, [0])).to(beTrue())
-                    expect(areEqual(optionalDictionaryTransformation, ["a": 0])).to(beTrue())
+                    TestData.Map.assertInvalidTypeOr(valueTransformation, arrayTransformation,
+                                                     dictionaryTransformation, optionalArrayTransformation, optionalDictionaryTransformation)
                 }
             }
             describe("map throws") {
@@ -210,17 +182,10 @@ class DeserializableMappableDataWrapperTest: QuickSpec {
                         try data["optionalArray"].map(&optionalArrayTransformation, using: CustomIntTransformation())
                         try data["optionalDictionary"].map(&optionalDictionaryTransformation, using: CustomIntTransformation())
                         
-                        expect(value) == 1
-                        expect(array) == [1, 2]
-                        expect(dictionary) == ["a": 1, "b": 2]
-                        expect(areEqual(optionalArray, [1, nil])).to(beTrue())
-                        expect(areEqual(optionalDictionary, ["a": 1, "b": nil])).to(beTrue())
+                        TestData.Map.assertValidType(value, array, dictionary, optionalArray, optionalDictionary)
                         
-                        expect(valueTransformation) == 2
-                        expect(arrayTransformation) == [2, 4]
-                        expect(dictionaryTransformation) == ["a": 2, "b": 4]
-                        expect(areEqual(optionalArrayTransformation, [2, nil])).to(beTrue())
-                        expect(areEqual(optionalDictionaryTransformation, ["a": 2, "b": nil])).to(beTrue())
+                        TestData.Map.assertValidTypeUsingTransformation(valueTransformation, arrayTransformation,
+                                                                        dictionaryTransformation, optionalArrayTransformation, optionalDictionaryTransformation)
                         
                         return 0
                         }.toNot(throwError())
@@ -259,16 +224,16 @@ class DeserializableMappableDataWrapperTest: QuickSpec {
                 let delegate = DeserializableData(data: TestData.Map.pathType, objectMapper: ObjectMapper(polymorph: StaticPolymorph()))
                 let data = DeserializableMappableDataWrapper(delegate: delegate)
                 it("returns DeserializableMappableDataWrapper with subData if path exists") {
-                    expect((data["a"]["b"] as? DeserializableMappableDataWrapper)?.delegate.data) == SupportedType.int(1)
+                    expect((data["a"]["b"] as? DeserializableMappableDataWrapper)?.delegate.raw) == SupportedType.int(1)
                 }
                 it("returns DeserializableMappableDataWrapper with .null if path does not exist") {
-                    expect((data["b"] as? DeserializableMappableDataWrapper)?.delegate.data) == SupportedType.null
+                    expect((data["b"] as? DeserializableMappableDataWrapper)?.delegate.raw) == SupportedType.null
                 }
                 it("accepts array") {
-                    expect((data[["a", "b"]] as? DeserializableMappableDataWrapper)?.delegate.data) == SupportedType.int(1)
+                    expect((data[["a", "b"]] as? DeserializableMappableDataWrapper)?.delegate.raw) == SupportedType.int(1)
                 }
                 it("accepts vararg") {
-                    expect((data["a", "b"] as? DeserializableMappableDataWrapper)?.delegate.data) == SupportedType.int(1)
+                    expect((data["a", "b"] as? DeserializableMappableDataWrapper)?.delegate.raw) == SupportedType.int(1)
                 }
                 it("passes correct ObjectMapper") {
                     expect((data["a"] as? DeserializableMappableDataWrapper)?.delegate.objectMapper) === data.delegate.objectMapper

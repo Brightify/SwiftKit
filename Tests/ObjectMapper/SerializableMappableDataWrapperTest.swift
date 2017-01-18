@@ -34,7 +34,7 @@ class SerializableMappableDataWrapperTest: QuickSpec {
                         data["optionalArray"].map(&optionalArray)
                         data["optionalDictionary"].map(&optionalDictionary)
                         
-                        expect((data as? SerializableMappableDataWrapper)?.delegate.data) == TestData.Map.validType
+                        expect((data as? SerializableMappableDataWrapper)?.delegate.raw) == TestData.Map.validType
                     }
                     it("sets .null if value is nil") {
                         let delegate = SerializableData(objectMapper: ObjectMapper())
@@ -52,7 +52,7 @@ class SerializableMappableDataWrapperTest: QuickSpec {
                         data["optionalArray"].map(&optionalArray)
                         data["optionalDictionary"].map(&optionalDictionary)
                         
-                        expect((data as? SerializableMappableDataWrapper)?.delegate.data) == TestData.Map.nullType
+                        expect((data as? SerializableMappableDataWrapper)?.delegate.raw) == TestData.Map.nullType
                     }
                 }
                 describe("using transformation") {
@@ -72,7 +72,7 @@ class SerializableMappableDataWrapperTest: QuickSpec {
                         data["optionalArray"].map(&optionalArrayTransformation, using: CustomIntTransformation())
                         data["optionalDictionary"].map(&optionalDictionaryTransformation, using: CustomIntTransformation())
                         
-                        expect((data as? SerializableMappableDataWrapper)?.delegate.data) == TestData.Map.validType
+                        expect((data as? SerializableMappableDataWrapper)?.delegate.raw) == TestData.Map.validType
                     }
                     it("sets .null if value is nil") {
                         let delegate = SerializableData(objectMapper: ObjectMapper())
@@ -90,7 +90,7 @@ class SerializableMappableDataWrapperTest: QuickSpec {
                         data["optionalArray"].map(&optionalArrayTransformation, using: CustomIntTransformation())
                         data["optionalDictionary"].map(&optionalDictionaryTransformation, using: CustomIntTransformation())
                         
-                        expect((data as? SerializableMappableDataWrapper)?.delegate.data) == TestData.Map.nullType
+                        expect((data as? SerializableMappableDataWrapper)?.delegate.raw) == TestData.Map.nullType
                     }
                 }
             }
@@ -112,7 +112,7 @@ class SerializableMappableDataWrapperTest: QuickSpec {
                         data["optionalArray"].map(&optionalArray, or: [0])
                         data["optionalDictionary"].map(&optionalDictionary, or: ["a": 0])
                         
-                        expect((data as? SerializableMappableDataWrapper)?.delegate.data) == TestData.Map.validType
+                        expect((data as? SerializableMappableDataWrapper)?.delegate.raw) == TestData.Map.validType
                     }
                 }
                 describe("using transformation") {
@@ -132,7 +132,7 @@ class SerializableMappableDataWrapperTest: QuickSpec {
                         data["optionalArray"].map(&optionalArrayTransformation, using: CustomIntTransformation(), or: [0])
                         data["optionalDictionary"].map(&optionalDictionaryTransformation, using: CustomIntTransformation(), or: ["a": 0])
                         
-                        expect((data as? SerializableMappableDataWrapper)?.delegate.data) == TestData.Map.validType
+                        expect((data as? SerializableMappableDataWrapper)?.delegate.raw) == TestData.Map.validType
                     }
                 }
             }
@@ -155,7 +155,7 @@ class SerializableMappableDataWrapperTest: QuickSpec {
                             try data["optionalArray"].map(&optionalArray)
                             try data["optionalDictionary"].map(&optionalDictionary)
                             
-                            expect((data as? SerializableMappableDataWrapper)?.delegate.data) == TestData.Map.validType
+                            expect((data as? SerializableMappableDataWrapper)?.delegate.raw) == TestData.Map.validType
                             
                             return 0
                             }.toNot(throwError())
@@ -179,7 +179,7 @@ class SerializableMappableDataWrapperTest: QuickSpec {
                             try data["optionalArray"].map(&optionalArrayTransformation, using: CustomIntTransformation())
                             try data["optionalDictionary"].map(&optionalDictionaryTransformation, using: CustomIntTransformation())
                             
-                            expect((data as? SerializableMappableDataWrapper)?.delegate.data) == TestData.Map.validType
+                            expect((data as? SerializableMappableDataWrapper)?.delegate.raw) == TestData.Map.validType
                             
                             return 0
                             }.toNot(throwError())
@@ -195,21 +195,21 @@ class SerializableMappableDataWrapperTest: QuickSpec {
                     
                     data["a"]["b"].map(&value)
                     
-                    expect(data.delegate.data) == TestData.Map.pathType
+                    expect(data.delegate.raw) == TestData.Map.pathType
                 }
                 it("accepts array") {
                     var data = SerializableMappableDataWrapper(delegate: delegate)
                     
                     data[["a", "b"]].map(&value)
                     
-                    expect(data.delegate.data) == TestData.Map.pathType
+                    expect(data.delegate.raw) == TestData.Map.pathType
                 }
                 it("accepts vararg") {
                     var data = SerializableMappableDataWrapper(delegate: delegate)
                     
                     data["a", "b"].map(&value)
                     
-                    expect(data.delegate.data) == TestData.Map.pathType
+                    expect(data.delegate.raw) == TestData.Map.pathType
                 }
                 it("passes correct ObjectMapper") {
                     var data = SerializableMappableDataWrapper(delegate: delegate)
