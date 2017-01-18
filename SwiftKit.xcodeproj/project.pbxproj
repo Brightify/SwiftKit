@@ -595,7 +595,7 @@
 				187C60A01B3CB73D00B8457A /* ObjectMapperTest_old.swift */,
 				1831E0171B58A79F0029C328 /* Operators */,
 			);
-			name = Old;
+			path = Old;
 			sourceTree = "<group>";
 		};
 		DC2C72E91E0EC64E00EE380C /* Map */ = {
@@ -606,7 +606,7 @@
 				DC2C72F71E0EC7C600EE380C /* SerializableData.swift */,
 				DC2C73061E0EC8DC00EE380C /* SerializableMappableDataWrapperTest.swift */,
 			);
-			name = Map;
+			path = Map;
 			sourceTree = "<group>";
 		};
 		DC2C72EA1E0EC67500EE380C /* Mappable */ = {
@@ -616,7 +616,7 @@
 				DC2C72F91E0EC7DE00EE380C /* MappableTest.swift */,
 				DC6540581E127243006BC731 /* SerializableTest.swift */,
 			);
-			name = Mappable;
+			path = Mappable;
 			sourceTree = "<group>";
 		};
 		DC2C72EB1E0EC67E00EE380C /* StaticPolymorph */ = {
@@ -627,7 +627,7 @@
 				DC2C72FF1E0EC82D00EE380C /* PolymorphicTest.swift */,
 				DC2C73011E0EC83D00EE380C /* StaticPolymorphTest.swift */,
 			);
-			name = StaticPolymorph;
+			path = StaticPolymorph;
 			sourceTree = "<group>";
 		};
 		DC2C72EC1E0EC6F700EE380C /* Transformation */ = {
@@ -643,7 +643,7 @@
 				DC6540681E12C102006BC731 /* Serializable */,
 				DC6540961E17BA0A006BC731 /* Transformations */,
 			);
-			name = Transformation;
+			path = Transformation;
 			sourceTree = "<group>";
 		};
 		DC4D91731DC3424B0095A348 /* StaticPolymorph */ = {
@@ -797,7 +797,7 @@
 			children = (
 				DC6540811E12C229006BC731 /* DictionaryUtilsTest.swift */,
 			);
-			name = Utils;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		DC6540671E12C0DF006BC731 /* Deserializable */ = {
@@ -809,7 +809,7 @@
 				DC6540731E12C199006BC731 /* DeserializableSupportedTypeConvertibleTest.swift */,
 				DC6540751E12C1CA006BC731 /* DeserializableTransformationTest.swift */,
 			);
-			name = Deserializable;
+			path = Deserializable;
 			sourceTree = "<group>";
 		};
 		DC6540681E12C102006BC731 /* Serializable */ = {
@@ -821,7 +821,7 @@
 				DC65407D1E12C203006BC731 /* SerializableSupportedTypeConvertibleTest.swift */,
 				DC65407F1E12C214006BC731 /* SerializableTransformationTest.swift */,
 			);
-			name = Serializable;
+			path = Serializable;
 			sourceTree = "<group>";
 		};
 		DC65408A1E16BA62006BC731 /* SupportedType */ = {
@@ -833,7 +833,7 @@
 				DC65408F1E16BB67006BC731 /* SupportedType+Equatable.swift */,
 				DC65408D1E16BB4E006BC731 /* SupportedType+SupportedNumber.swift */,
 			);
-			name = SupportedType;
+			path = SupportedType;
 			sourceTree = "<group>";
 		};
 		DC6540931E16C426006BC731 /* SupportedType */ = {
@@ -842,7 +842,7 @@
 				DC6540941E16C43F006BC731 /* SupportedNumberTest.swift */,
 				DC2C72E61E0EC53700EE380C /* SupportedTypeTest.swift */,
 			);
-			name = SupportedType;
+			path = SupportedType;
 			sourceTree = "<group>";
 		};
 		DC6540961E17BA0A006BC731 /* Transformations */ = {
@@ -853,7 +853,7 @@
 				DC6540981E17BA1B006BC731 /* Date */,
 				DC6540971E17BA16006BC731 /* Value */,
 			);
-			name = Transformations;
+			path = Transformations;
 			sourceTree = "<group>";
 		};
 		DC6540971E17BA16006BC731 /* Value */ = {
@@ -864,7 +864,7 @@
 				DC6540AA1E17BA8E006BC731 /* IntTransformationTest.swift */,
 				DC6540AC1E17BA99006BC731 /* StringTransformationTest.swift */,
 			);
-			name = Value;
+			path = Value;
 			sourceTree = "<group>";
 		};
 		DC6540981E17BA1B006BC731 /* Date */ = {
@@ -875,7 +875,7 @@
 				DC6540A21E17BA65006BC731 /* DateTransformationTest.swift */,
 				DC6540A41E17BA70006BC731 /* ISO8601DateTransformationTest.swift */,
 			);
-			name = Date;
+			path = Date;
 			sourceTree = "<group>";
 		};
 		DC6540991E17BA22006BC731 /* Convertibles */ = {
@@ -887,7 +887,7 @@
 				DC6540B41E17BC72006BC731 /* String+SupportedTypeConvertibleTest.swift */,
 				DC6540B61E17BC7E006BC731 /* URL+SupportedTypeConvertibleTest.swift */,
 			);
-			name = Convertibles;
+			path = Convertibles;
 			sourceTree = "<group>";
 		};
 		DC81E52B1E0AE0DB00E80FE3 /* Internal */ = {
