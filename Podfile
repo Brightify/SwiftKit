@@ -1,13 +1,8 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '9.0'
+platform :ios, '8.0'
 use_frameworks!
 
 target 'SwiftKit' do
-    pod 'SwiftyJSON', '~> 3.1'
-    pod 'Alamofire', '~> 4.0'
-    pod 'HTTPStatusCodes', '~> 3.1'
-    pod 'RxSwift'
-    pod 'Result'
 end
 
 target 'SwiftKitTests' do
