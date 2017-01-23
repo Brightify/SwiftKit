@@ -56,13 +56,13 @@ Pod::Spec.new do |spec|
         router.dependency 'SwiftKit/Internal'
         router.dependency 'SwiftKit/ObjectMapper'
         router.dependency 'Alamofire', '~> 2.0'
-        router.dependency 'SwiftyJSON', '~> 2.3'
+        router.dependency 'SwiftyJSON'
     end
 
     spec.subspec 'ObjectMapper' do |objectMapper|
         objectMapper.source_files = 'SwiftKit/ObjectMapper/**/*.swift'
         objectMapper.dependency 'SwiftKit/Internal'
-        objectMapper.dependency 'SwiftyJSON', '~> 2.3'
+        objectMapper.dependency 'SwiftyJSON'
     end
 
     spec.subspec 'ViewComposer' do |composer|
